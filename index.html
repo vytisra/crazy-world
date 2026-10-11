@@ -580,14 +580,14 @@ function setupAccounts(){const ov=$('account');if(CW_USER){ov.hidden=true;return
     if(!name||!pw){err('Įvesk vardą ir slaptažodį');return;}
     if(mode==='new'){if(name.length<2){err('Vardas per trumpas (bent 2 raidės)');return;}if(pw.length<3){err('Slaptažodis per trumpas (bent 3 simboliai)');return;}
       if(list[key]){err('Toks vardas jau užimtas');return;}
-      const first=!Object.keys(list).length;list[key]={name,pw:accHash(pw),created:Date.now()};
-      try{localStorage.setItem('cw-accounts',JSON.stringify(list));const old=first?localStorage.getItem('cw-save'):null;localStorage.setItem('cw-save:'+key,old||JSON.stringify({money:0,owned:{},ride:'car',mig:'v54',migMoney:'v63',migHour:'v68',migCrownCar:'v91'}));}catch(er){err('Nepavyko išsaugoti paskyros');return;}}
+      list[key]={name,pw:accHash(pw),created:Date.now()};
+      try{localStorage.setItem('cw-accounts',JSON.stringify(list));localStorage.setItem('cw-save:'+key,FRESH_SAVE());}catch(er){err('Nepavyko išsaugoti paskyros');return;}}
     else{const a=list[key];if(!a||a.pw!==accHash(pw)){err('Neteisingas vardas arba slaptažodis');return;}}
     try{sessionStorage.setItem('cw-user',(list[key]&&list[key].name)||name);}catch(er){}location.reload();};}
 function signOut(){try{saveGame(true);}catch(e){}try{sessionStorage.removeItem('cw-user');}catch(e){}location.reload();}
 setupAccounts();
 const save={money:0,owned:{},ride:'car'};
-try{Object.assign(save,JSON.parse(localStorage.getItem(SAVE_KEY)||'{}'));}catch(e){}
+try{if(CW_USER)Object.assign(save,JSON.parse(localStorage.getItem(SAVE_KEY)||'{}'));}catch(e){}
 function defaultClothes(){const h=prefs.hat&&prefs.hat!=='none'&&prefs.hat!=='banana'?prefs.hat:null;return{me:{owned:['party'].concat(h&&h!=='party'?[h]:[]),wear:{hat:h,face:null,back:null}},dog:{owned:[],wear:{hat:null,face:null,back:null}}};}
 if(!save.clothes||!save.clothes.me)save.clothes=defaultClothes();
 let cloudRef=null,cloudTimer=null;
@@ -6130,11 +6130,11 @@ function migHeads(){const me=save.clothes.me;if(save.migHeads)return;save.migHea
 function buildWorld(){migHeads();
   buildHub();buildSnow();buildSnowFun();buildDesertFun();buildLolli();buildTen();buildVolcano();buildVolcanoFun();buildCity();buildClownHouse();buildDesert();buildSheriff();buildAvenue();buildTraffic();buildCows();buildHubNPCs();buildCoins();buildMapImage();buildSettings();
   if(save.mig!=='v54'){save.mig='v54';save.pyrOpen=false;if(save.owned)save.owned.pyrKey=false;save.lamp=null;if(save.kingTasks&&save.kingTasks['Džinas'])save.kingTasks['Džinas']=save.kingTasks['Džinas'].filter(x=>x!=='Lempos paieška');saveGame(true);}
-  if(save.migMoney!=='v63'){save.migMoney='v63';money=100000;$('money').textContent=money;saveGame(true);}
+  if(save.migMoney!=='v63'){save.migMoney='v63';}
   worldBuilt=true;syncLamp();syncOasis();syncMantas();syncCrowns();initPaintUI();syncToolVis();if(save.owned.house){setupHouse();player.pos.copy(homeSpawn());const h=myHouse();player.yaw=Math.atan2(h.x-h.step.x,h.z-h.step.z);cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}if(homeIsVilla()||homeKind()==='igloo'||homeKind()==='volhome'||homeKind()==='oashome'){player.pos.copy(homeSpawn());player.yaw=homeIsVilla()?Math.PI:homeKind()==='volhome'?-Math.PI/2:0;cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}updatePowersHud();if(save.waypoint)setWaypoint(save.waypoint[0],save.waypoint[1],true);if(save.pos&&save.pos.length===3&&isFinite(save.pos[0])){const x=clamp(save.pos[0],-190,190),z=clamp(save.pos[2],-190,190);player.pos.set(x,groundAt(x,z,(+save.pos[1]||0)+1.5,.3),z);if(isFinite(save.yaw))player.yaw=save.yaw;cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}
   if(save.hour!=null&&isFinite(save.hour))hour=save.hour%24;
   if(save.migHour!=='v68'){save.migHour='v68';hour=19.5;save.hour=19.5;saveGame(true);}
-  if(save.migCrownCar!=='v91'){save.migCrownCar='v91';save.owned.crowncar=true;saveGame(true);setTimeout(()=>say(null,'Testavimo dovana: tavo garaže – slapta KARŪNOS MAŠINA! Iškviesk ją klavišu I.'),2500);}
+  if(save.migCrownCar!=='v91'){save.migCrownCar='v91';}
   syncPets();$("money").textContent=money;
   const snap=now=>{if(!started)return;const tp=inOas?V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z),OAS_SHORE.z):inVin?V(VIN_ENT.x-2.4,VIN_EY,VIN_ENT.z):inVlh?V(VLH_DOOR.x,VLH_Y,VLH_DOOR.z):inIgl?V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z),IGL_DOOR.z):inVil?V(VIL_DOOR.x,VIL_Y,VIL_DOOR.z-2):inDis?V(DIS_DOOR.x,DIS_Y,DIS_DOOR.z):inMus?V(MUS_EXIT.x,MUS_Y,MUS_EXIT.z):inPyr?V(-98.5,PYR_Y,-40):inside?myHouse().step:player.inCar&&car?car.pos:player.pos;save.pos=[+tp.x.toFixed(2),+tp.y.toFixed(2),+tp.z.toFixed(2)];save.yaw=+player.yaw.toFixed(3);save.hour=+hour.toFixed(3);saveGame(now);};
   setInterval(()=>snap(false),10000);
