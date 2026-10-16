@@ -214,6 +214,10 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--mint);outline-o
 #pinHud[hidden]{display:none}#pinHud h4{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:6px}#pinHud .pk{font-size:11.5px;opacity:.7;margin-bottom:4px}
 #pinHud li{list-style:none;display:flex;gap:6px;align-items:flex-start;margin:3px 0;line-height:1.25}#pinHud ul{margin:0;padding:0}#pinHud li.ok{opacity:.5;text-decoration:line-through}#pinHud .c{margin-left:auto;white-space:nowrap;font-size:11.5px;background:#ffd23f;border-radius:8px;padding:0 6px}
 @media (max-width:700px){#pinHud{width:220px;font-size:11.5px}}
+#emoPanel{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:60;background:rgba(255,248,231,.97);color:#1b1430;border:4px solid #1b1430;border-radius:18px;padding:12px 14px;box-shadow:0 6px 0 #1b1430;width:min(520px,94vw)}
+#emoPanel[hidden]{display:none}#emoPanel h3{margin:0 0 8px;font-size:18px}.emoGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.emoBtn{background:#fff;border:3px solid #1b1430;border-radius:12px;padding:6px 4px;font:inherit;font-weight:800;font-size:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:#1b1430}
+.emoBtn .e{font-size:26px}.emoBtn.lock{opacity:.45;cursor:default}.emoBtn:hover:not(.lock){background:#ffd23f}.emoBtn small{font-size:10px;opacity:.6}
 </style>
 
 <canvas id="game" tabindex="0"></canvas>
@@ -293,6 +297,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--mint);outline-o
       <dt><span class="kbd">Space</span></dt><dd>Pašokti (mašinoje – mašinos šuolis)</dd>
       <dt><span class="kbd">Tab</span></dt><dd>Žemėlapis</dd>
       <dt><span class="kbd">G</span></dt><dd>Pasiekimai</dd>
+      <dt><span class="kbd">C</span></dt><dd>Emotes (šokiai, mojavimas…)</dd>
       <dt><span class="kbd">R</span></dt><dd>Ragdoll (įjungti / atsikelti)</dd>
       <dt><span class="kbd">Shift</span></dt><dd>Bėgti</dd>
       <dt><span class="kbd">F</span></dt><dd>Kalbėtis, įlipti ar išlipti iš mašinos</dd>
@@ -360,6 +365,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--mint);outline-o
 <div id="achPanel" hidden><div id="achBox"><h2>🏆 Pasiekimai</h2><div class="sub" id="achSub"></div><div class="achList" id="achList"></div><div class="sub" style="margin:12px 0 0">G arba Esc – uždaryti</div></div></div>
 <div id="achToast"></div>
 <div id="pinHud" hidden></div>
+<div id="emoPanel" hidden><h3>😀 Emotes</h3><div class="emoGrid" id="emoGrid"></div><div style="font-size:11.5px;font-weight:700;opacity:.65;margin-top:8px">1–8 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti</div></div>
 <div id="stam" style="opacity:0"><i></i></div>
 <div id="start" class="overlay">
   <div class="panel card">
@@ -456,6 +462,8 @@ Object.assign(I18N_EN,{"krepšinio kamuolys": "basketball", "🏀 KREPŠINIO AIK
 Object.assign(I18N_EN,{"🏆 Pasiekimai": "🏆 Achievements", "G arba Esc – uždaryti": "G or Esc – close", "Pasiekimai": "Achievements", "Atrakinta": "Unlocked", "Pasiekimas": "Achievement", "Krepšys!": "Basket!", "Įmesk kamuolį į krepšį kalėjimo aikštelėje": "Score a basket on the prison court", "Turtuolis": "Rich", "Turėk $1000": "Have $1000", "Milijonierius… beveik": "Millionaire… almost", "Turėk $10 000": "Have $10,000", "Pirmas draugas": "First friend", "Nusipirk gyvūnėlį": "Buy a pet", "Vairuotojas": "Driver", "Nusipirk naują transporto priemonę": "Buy a new vehicle", "Pirma karūna": "First crown", "Padėk bent vienam karaliui": "Help at least one king", "Pasaulio gelbėtojas": "World saver", "Surink visas 4 karūnas": "Collect all 4 crowns", "Už grotų": "Behind bars", "Patek į kalėjimą": "Get sent to prison", "Didysis pabėgimas": "The great escape", "Pabėk iš kalėjimo": "Escape from prison", "Pagrobtas": "Abducted", "Leisk NLO tave pagrobti": "Get abducted by the UFO", "Sūrio meistras": "Cheese master", "Įmesk 10 sūrio gabaliukų į kalėjimo puodą": "Drop 10 pieces of cheese into the prison pot", "Gerasis": "Good soul", "Pradžiugink visus liūdnus vaikus mieste": "Cheer up all the sad kids in the city", "Virš debesų": "Above the clouds", "Paskraidyk oro balionu": "Fly in the hot-air balloon", "Paslapčių medžiotojas": "Secret hunter", "Gauk bet kurį slaptą drabužį": "Get any secret outfit"});
 Object.assign(I18N_EN,{"📌 Atsegti misijas nuo ekrano": "📌 Unpin missions from screen", "📌 Prisegti misijas ekrane": "📌 Pin missions on screen", "📌 Prisegtos misijos": "📌 Pinned missions"});
 Object.assign(I18N_EN,{"Online – žaidi kartu su draugais (iki 4 žaidėjų), net iš skirtingų kompiuterių: draugai atsidaro tą pačią žaidimo nuorodą, vienas sukuria lobby, kiti prisijungia.": "Online – play together with friends (up to 4 players), even from different computers: friends open the same game link, one creates a lobby, the others join."});
+Object.assign(I18N_EN,{"Skraidanti karvė": "Flying cow", "Gyvatėlė": "Snake", "Gaudyk kojines": "Catch the socks", "Space arba spustelk – plasnoti": "Space or click – flap", "Rodyklės arba WASD – sukti": "Arrows or WASD – turn", "A/D arba pelė – judinti krepšį": "A/D or mouse – move the basket", "Žaidimas baigtas!": "Game over!", "Taškai": "Score", "Rekordas": "Best", "Naujas rekordas!": "New record!", "Spustelk arba Space – žaisti dar": "Click or Space – play again"});
+Object.assign(I18N_EN,{"1–8 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–8 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -2699,7 +2707,7 @@ function dropAnchors(){hands.L.anchor=null;hands.R.anchor=null;}
 let car=null;
 const keys={},mouse={L:false,R:false};
 let crownChkT=0,started=false,settingsOpen=false,dialogOpen=false,chatOpen=false,mapOpen=false,locked=false;
-const uiBlocking=()=>achOpen||!!cine||!started||settingsOpen||dialogOpen||chatOpen||shopOpen||!!djGame||paintOpen||phoneOpen;
+const uiBlocking=()=>emoOpen||achOpen||!!cine||!started||settingsOpen||dialogOpen||chatOpen||shopOpen||!!djGame||paintOpen||phoneOpen;
 
 let vikingT=0;
 function ragdoll(auto,imp){
@@ -3529,7 +3537,7 @@ function exitPyramid(){
 /* ---------- museum (city) ---------- */
 let musCaseGlass=null,musPyrKey=null,musLock=null;const MUS_CODE=[4,7,1,9];
 let musUfo=null,musKnight=null,musKnightWave=0,musMeteor=null,musVases=[],musVolc=null,musVolcPuff=0;
-let MUS_Y=0,inMus=false,musBuilt=false,dino=null,dinoT=0,dinoWatched=true,musGuard=null,guardWake=0,musKey=null,musGold=null,musRock=null,musZzz=null,musFloatCol=null;
+let dinoDance=0,dinoDanceT=12,dinoSeen=0;let MUS_Y=0,inMus=false,musBuilt=false,dino=null,dinoT=0,dinoWatched=true,musGuard=null,guardWake=0,musKey=null,musGold=null,musRock=null,musZzz=null,musFloatCol=null;
 const MUS={x:170,y:300,z:-170,w:44,d:32,h:10},MUS_EXIT={x:-32,z:137.4};
 function buildMuseum(){
   const cx=-32,cz=148,y=minH(cx,cz,46,28)-.05;MUS_Y=y+.6;
@@ -3780,12 +3788,15 @@ function updateMuseum(dt,t){
   if(!inMus||!dino)return;
   const dp=V(MUS.x,MUS.y+3,MUS.z-2),fw=new THREE.Vector3();camera.getWorldDirection(fw);const to=dp.clone().sub(camera.position).normalize();
   const watched=fw.dot(to)>.55;
+  dinoDanceT-=dt;if(dinoDance>0){dinoDance-=dt;if(watched){dinoSeen+=dt;if(dinoSeen>1.5&&!(save.emotes&&save.emotes.dinodance))unlockDinoEmote();}if(Math.random()<dt*3)floaty(pick(['🎵','🎶','💃','🦖']),dp.clone().add(V(rand(-3,3),3,rand(-1,1))));}
+  else if(dinoDanceT<=0){dinoDanceT=rand(35,70);dinoDance=7;dinoSeen=0;floaty('🎵 '+tr('Dinozauras šoka?!'),player.pos);}
   if(!watched)dinoT+=dt;
   if(watched&&!dinoWatched&&dinoT>.6){floaty('?!',player.pos);}
   dinoWatched=watched;
-  const d=dino,a=dinoT;d.body.rotation.y=Math.sin(a*1.7)*.5;d.body.position.y=Math.abs(Math.sin(a*5))*.35;
+  const d=dino;if(dinoDance>0){const k=t*7;d.body.rotation.y=Math.sin(k*.5)*.6;d.body.position.y=Math.abs(Math.sin(k))*.6;d.body.rotation.z=Math.sin(k*.5)*.15;d.neck.rotation.x=-.3+Math.sin(k)*.4;d.head.rotation.y=Math.sin(k*.5)*.8;d.jaw.rotation.x=.4+Math.sin(k*2)*.3;d.tail.forEach((s,i)=>{s.rotation.y=Math.sin(k-i*.7)*.45;});}
+  else{const a=dinoT;d.body.rotation.z=0;d.body.rotation.y=Math.sin(a*1.7)*.5;d.body.position.y=Math.abs(Math.sin(a*5))*.35;
   d.neck.rotation.x=-.3+Math.sin(a*3)*.35;d.head.rotation.y=Math.sin(a*2.3)*.6;d.jaw.rotation.x=.15+Math.abs(Math.sin(a*8))*.45;
-  d.tail.forEach((s,i)=>{s.rotation.y=Math.sin(a*6-i*.6)*.25;});
+  d.tail.forEach((s,i)=>{s.rotation.y=Math.sin(a*6-i*.6)*.25;});}
   if(musRock){musRock.position.y=2.2+Math.sin(t*1.6)*.25;musRock.rotation.y=t*.8;musRock.rotation.x=t*.5;}
   if(musKey){musKey.visible=!!save.owned.pyrKey;musKey.rotation.y=t*1.2;}
   if(musGold)musGold.visible=!!save.pyrLoot;
@@ -6043,7 +6054,7 @@ let lockDropT=0,expectUnlock=false;
 function freeCursor(){if(document.pointerLockElement){expectUnlock=true;document.exitPointerLock();}}
 document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===canvas;
   if(!locked&&expectUnlock){expectUnlock=false;return;}if(locked)expectUnlock=false;
-  if(!locked&&started&&!achOpen&&!settingsOpen&&!chatOpen&&!dialogFree&&!shopOpen&&!mapOpen&&!djGame&&!paintOpen){lockDropT=performance.now();if(dialogOpen)closeDialog();else openSettings();}});
+  if(!locked&&started&&!emoOpen&&!achOpen&&!settingsOpen&&!chatOpen&&!dialogFree&&!shopOpen&&!mapOpen&&!djGame&&!paintOpen){lockDropT=performance.now();if(dialogOpen)closeDialog();else openSettings();}});
 canvas.addEventListener('mousedown',e=>{if(uiBlocking())return;if(!locked)tryLock();if(e.button===0)mouse.L=true;if(e.button===2)mouse.R=true;});
 addEventListener('mouseup',e=>{if(e.button===0)mouse.L=false;if(e.button===2)mouse.R=false;});
 addEventListener('contextmenu',e=>e.preventDefault());
@@ -6067,6 +6078,7 @@ addEventListener('keydown',e=>{
   if(djGame){e.preventDefault();if(e.code==='Escape'){if(!djGame.over){cancelJob();sfx('fail');say(null,'Palikai DJ pultą. Minia nusivylusi...');}return;}if(!e.repeat)djKey(e.code);return;}
   if(shopOpen){if(e.code==='Escape'||e.code==='KeyF'||e.code==='Tab'){e.preventDefault();closeClothesShop();tryLock();}return;}
   if(achOpen&&(e.code==='Escape'||e.code==='KeyG')){e.preventDefault();toggleAch();return;}
+  if(emoOpen){e.preventDefault();if(e.code==='Escape'||e.code==='KeyC'){toggleEmo();return;}const m=e.code.match(/^(?:Digit|Numpad)([1-8])$/);if(m){const E=EMOTES[+m[1]-1];if(E)pickEmote(E);}return;}
   if(e.code==='Tab'){e.preventDefault();if(started&&!settingsOpen)toggleMap();return;}
   if(e.code==='Escape'){if(!started||performance.now()-lockDropT<400)return;if(dialogOpen){closeDialog();if(!locked)tryLock();return;}if(mapOpen){toggleMap();return;}settingsOpen?(closeSettings(),tryLock()):openSettings();return;}
   if(!started||settingsOpen)return;
@@ -6084,6 +6096,7 @@ addEventListener('keydown',e=>{
   if(e.code==='KeyR'){if(player.rag)getUp();else ragdoll(0,V(rand(-1,1),4,rand(-1,1)));}
   if(e.code==='KeyT'){e.preventDefault();openChat();}
   if(e.code==='KeyG'&&started&&!dialogOpen&&!settingsOpen){e.preventDefault();toggleAch();return;}
+  if(e.code==='KeyC'&&started&&!dialogOpen&&!settingsOpen&&!player.inCar){e.preventDefault();toggleEmo();return;}
   if(e.code==='KeyI'){if(inside||inPyr||inMus||inDis||inVil||inIgl||inOas||inVlh||inVin)say(null,'Viduje transporto iškviesti negalima – pirmiausia išeik pro duris.');else if(player.inCar)say(null,'Pirmiausia išlipk (F), tada galėsi iškviesti kitą transportą.');else openVehicleMenu();}
 });
 addEventListener('keyup',e=>{keys[e.code]=false;});
@@ -6148,7 +6161,7 @@ const clock=new THREE.Clock();let T=0;
 function frame(){
   const dt=Math.min(clock.getDelta(),.05);T+=dt;
   if(keys.KeyQ&&!uiBlocking())cam.yaw+=dt*2;if(keys.KeyE&&!uiBlocking()&&!(player.inCar&&car&&(car.crater||car.lid||car.rocket||car.tank||car.police||car.flipCar||car.clown))&&!(!player.inCar&&hasPow('volcanohat')))cam.yaw-=dt*2;
-  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
+  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
   for(const a of anims)a(T,dt);
   lavaTimer-=dt;if(lavaTimer<=0){if(!volCalm())spawnLavaBall();lavaTimer=rand(1.8,3.6);}
   for(const c of coins){if(!c.on){c.t-=dt;if(c.t<=0){c.on=true;c.m.visible=true;}continue;}
@@ -6906,11 +6919,58 @@ function openPhone(view){phoneOpen=true;$('phoneUI').hidden=false;mouse.L=mouse.
   phStack=[];phView=view||(save.phone.num?'home':'setup');renderPhone();}
 function closePhone(){phoneOpen=false;$('phoneUI').hidden=true;cancelAnimationFrame(ttRaf);if(phCall)endCall(true);canvas.focus();tryLock();}
 function phGo(v){phStack.push(phView);phView=v;renderPhone();}
-function phBack(){if(phView==='call'){endCall();return;}if(phView==='ttcap'||phView==='ttemoji'){ttDraft=null;}phView=phStack.pop()||'home';if(phView==='call'||(phView==='setup'&&save.phone.num))phView='home';renderPhone();}
+function phBack(){PG.st=null;if(phView==='call'){endCall();return;}if(phView==='ttcap'||phView==='ttemoji'){ttDraft=null;}phView=phStack.pop()||'home';if(phView==='call'||(phView==='setup'&&save.phone.num))phView='home';renderPhone();}
 function phoneKey(e){e.preventDefault();if(e.code==='Escape'||e.code==='KeyP'){closePhone();return;}
   if(phView==='tt'&&ttFeed){if(e.code==='ArrowDown'||e.code==='KeyS')ttMove(1);if(e.code==='ArrowUp'||e.code==='KeyW')ttMove(-1);if(e.code==='Space'||e.code==='KeyL')ttLike();}
+  if(PG.st&&(phView==='gfly'||phView==='gsnake'||phView==='gsock'))phGameKey(e.code);
   if(e.code==='Backspace')phBack();}
 const phEl=(tag,attrs,html)=>{const el=document.createElement(tag);if(attrs)for(const k in attrs){if(k==='on')for(const ev in attrs.on)el.addEventListener(ev,attrs.on[ev]);else if(k==='cls')el.className=attrs[k];else el.setAttribute(k,attrs[k]);}if(html!=null)el.innerHTML=html;return el;};
+
+const PG={st:null};const PG_NAMES={gfly:'Skraidanti karvė',gsnake:'Gyvatėlė',gsock:'Gaudyk kojines'};
+function phGameStart(sc,id){const cv=phEl('canvas',{id:'ttCanvas'});sc.append(cv);const W=sc.clientWidth||300,H=sc.clientHeight||520,dpr=Math.min(2,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext('2d');g.scale(dpr,dpr);
+  const back=phEl('button',{cls:'phbtn',style:'position:absolute;left:8px;top:8px;padding:4px 10px;width:auto;z-index:2'},'←');back.onclick=()=>phBack();sc.append(back);
+  if(!save.phGames)save.phGames={};const S={id,g,W,H,cv,over:false,score:0,t:0,started:false};PG.st=S;
+  if(id==='gfly'){S.y=H*.45;S.vy=0;S.pipes=[];S.next=1.2;}
+  if(id==='gsnake'){S.n=16;S.cs=Math.floor(Math.min(W,H-120)/S.n);S.ox=Math.floor((W-S.cs*S.n)/2);S.oy=70;S.sn=[[8,8],[7,8],[6,8]];S.dir=[1,0];S.nd=[1,0];S.step=0;S.food=snFood(S);
+    const pad=phEl('div',{style:'position:absolute;left:0;right:0;bottom:14px;display:grid;grid-template-columns:repeat(3,52px);gap:6px;justify-content:center;z-index:2'});
+    [['',null],['▲','ArrowUp'],['',null],['◀','ArrowLeft'],['▼','ArrowDown'],['▶','ArrowRight']].forEach(([l,k])=>{const b=phEl('button',{cls:'phbtn',style:'width:52px;height:40px;padding:0;margin:0'+(k?'':';visibility:hidden')},l);if(k)b.onclick=()=>phGameKey(k);pad.append(b);});sc.append(pad);}
+  if(id==='gsock'){S.x=W/2;S.items=[];S.next=.6;S.lives=3;cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();S.x=(e.clientX-r.left)/r.width*W;});}
+  cv.addEventListener('pointerdown',e=>{if(S.over){phGameStart2(sc,id);return;}S.started=true;if(id==='gfly'){S.vy=-330;sfx('jump');}if(id==='gsock'){const r=cv.getBoundingClientRect();S.x=(e.clientX-r.left)/r.width*W;}});
+  let last=performance.now();const loop=now=>{if(PG.st!==S||!phoneOpen)return;const dt=Math.min(.05,(now-last)/1000);last=now;phGameStep(S,dt);phGameDraw(S);ttRaf=requestAnimationFrame(loop);};ttRaf=requestAnimationFrame(loop);}
+function phGameStart2(sc,id){cancelAnimationFrame(ttRaf);sc.innerHTML='';phGameStart(sc,id);}
+function snFood(S){let f;do{f=[Math.floor(Math.random()*S.n),Math.floor(Math.random()*S.n)];}while(S.sn.some(q=>q[0]===f[0]&&q[1]===f[1]));return f;}
+function phGameKey(k){const S=PG.st;if(!S)return;if(S.over){if(k==='Space'||k==='Enter')phGameStart2($('phScreen'),S.id);return;}S.started=true;
+  if(S.id==='gfly'&&(k==='Space'||k==='ArrowUp'||k==='KeyW')){S.vy=-330;sfx('jump');}
+  if(S.id==='gsnake'){const m={ArrowUp:[0,-1],KeyW:[0,-1],ArrowDown:[0,1],KeyS:[0,1],ArrowLeft:[-1,0],KeyA:[-1,0],ArrowRight:[1,0],KeyD:[1,0]}[k];if(m&&!(m[0]===-S.dir[0]&&m[1]===-S.dir[1]))S.nd=m;}
+  if(S.id==='gsock'){if(k==='ArrowLeft'||k==='KeyA')S.x-=34;if(k==='ArrowRight'||k==='KeyD')S.x+=34;}}
+function phGameOver(S){if(S.over)return;S.over=true;const b=save.phGames[S.id]||0;S.best=Math.max(b,S.score);S.newBest=S.score>b;save.phGames[S.id]=S.best;S.pay=Math.min(25,Math.floor(S.score/3));
+  if(S.pay>0){money+=S.pay;$('money').textContent=money;}saveGame(true);sfx(S.newBest&&S.score>0?'win':'fail');}
+function phGameStep(S,dt){if(S.over||!S.started)return;S.t+=dt;const W=S.W,H=S.H;
+  if(S.id==='gfly'){S.vy+=900*dt;S.y+=S.vy*dt;S.next-=dt;if(S.next<=0){S.next=1.5;const gap=150,cy=90+Math.random()*(H-260);S.pipes.push({x:W+30,cy,gap,pass:false});}
+    for(const p of S.pipes){p.x-=140*dt;if(!p.pass&&p.x<W*.3-30){p.pass=true;S.score++;sfx('coin');}if(Math.abs(p.x-W*.3)<44&&(S.y-16<p.cy-p.gap/2||S.y+16>p.cy+p.gap/2))phGameOver(S);}
+    S.pipes=S.pipes.filter(p=>p.x>-60);if(S.y>H-20||S.y<0)phGameOver(S);}
+  if(S.id==='gsnake'){S.step+=dt;const sp=Math.max(.07,.16-S.score*.004);if(S.step<sp)return;S.step=0;S.dir=S.nd;const h=S.sn[0],nh=[h[0]+S.dir[0],h[1]+S.dir[1]];
+    if(nh[0]<0||nh[1]<0||nh[0]>=S.n||nh[1]>=S.n||S.sn.some(q=>q[0]===nh[0]&&q[1]===nh[1])){phGameOver(S);return;}S.sn.unshift(nh);
+    if(nh[0]===S.food[0]&&nh[1]===S.food[1]){S.score++;sfx('coin');S.food=snFood(S);}else S.sn.pop();}
+  if(S.id==='gsock'){S.x=Math.max(30,Math.min(W-30,S.x));S.next-=dt;if(S.next<=0){S.next=Math.max(.28,.8-S.t*.012);S.items.push({x:20+Math.random()*(W-40),y:-20,bad:Math.random()<.25,v:120+Math.random()*80+S.t*3});}
+    for(const it of S.items){it.y+=it.v*dt;if(!it.done&&it.y>H-70&&it.y<H-40&&Math.abs(it.x-S.x)<38){it.done=true;if(it.bad){S.lives--;sfx('hurt');if(S.lives<=0)phGameOver(S);}else{S.score++;sfx('coin');}}
+      if(!it.done&&it.y>H-20&&!it.bad){it.done=true;}}
+    S.items=S.items.filter(it=>!it.done&&it.y<H+30);}}
+function phGameDraw(S){const g=S.g,W=S.W,H=S.H;g.clearRect(0,0,W,H);
+  if(S.id==='gfly'){const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#7fd4ff');gr.addColorStop(1,'#d8f3ff');g.fillStyle=gr;g.fillRect(0,0,W,H);g.fillStyle='#9be564';g.fillRect(0,H-18,W,18);
+    for(const p of S.pipes){g.fillStyle='#ff9b2f';g.fillRect(p.x-28,0,56,p.cy-p.gap/2);g.fillRect(p.x-28,p.cy+p.gap/2,56,H);g.fillStyle='#e07a10';g.fillRect(p.x-32,p.cy-p.gap/2-14,64,14);g.fillRect(p.x-32,p.cy+p.gap/2,64,14);}
+    g.save();g.translate(W*.3,S.y);g.rotate(Math.max(-.5,Math.min(.8,S.vy/600)));g.font='34px serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🐄',0,0);g.font='18px serif';g.fillText(Math.sin(S.t*20)>0?'🪽':'',-14,-14);g.restore();}
+  if(S.id==='gsnake'){g.fillStyle='#1b3a1b';g.fillRect(0,0,W,H);g.fillStyle='#2d5a2d';g.fillRect(S.ox,S.oy,S.cs*S.n,S.cs*S.n);
+    g.font=(S.cs-2)+'px serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🍎',S.ox+(S.food[0]+.5)*S.cs,S.oy+(S.food[1]+.5)*S.cs);
+    S.sn.forEach((q,i)=>{g.fillStyle=i?'#9be564':'#ffd23f';g.fillRect(S.ox+q[0]*S.cs+1,S.oy+q[1]*S.cs+1,S.cs-2,S.cs-2);});}
+  if(S.id==='gsock'){const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#3a2a6a');gr.addColorStop(1,'#c3a6ff');g.fillStyle=gr;g.fillRect(0,0,W,H);
+    g.font='30px serif';g.textAlign='center';g.textBaseline='middle';for(const it of S.items)g.fillText(it.bad?'🔥':'🧦',it.x,it.y);g.font='44px serif';g.fillText('🧺',S.x,H-52);
+    g.font='18px sans-serif';g.fillStyle='#ff3b6b';g.textAlign='right';g.fillText('❤'.repeat(Math.max(0,S.lives)),W-10,64);}
+  g.fillStyle='#fff';g.strokeStyle='#1b1430';g.lineWidth=4;g.font='800 30px "Baloo 2",sans-serif';g.textAlign='center';g.strokeText(String(S.score),W/2,60);g.fillText(String(S.score),W/2,60);
+  if(!S.started&&!S.over){g.font='800 18px "Baloo 2",sans-serif';const tip=S.id==='gfly'?tr('Space arba spustelk – plasnoti'):S.id==='gsnake'?tr('Rodyklės arba WASD – sukti'):tr('A/D arba pelė – judinti krepšį');g.strokeText(tr(PG_NAMES[S.id]),W/2,H*.38);g.fillText(tr(PG_NAMES[S.id]),W/2,H*.38);g.font='700 14px sans-serif';g.strokeText(tip,W/2,H*.38+30);g.fillText(tip,W/2,H*.38+30);}
+  if(S.over){g.fillStyle='rgba(20,14,40,.72)';g.fillRect(0,0,W,H);g.fillStyle='#fff';g.font='800 28px "Baloo 2",sans-serif';g.fillText(tr('Žaidimas baigtas!'),W/2,H*.36);
+    g.font='700 17px sans-serif';g.fillText(tr('Taškai')+': '+S.score+'   '+tr('Rekordas')+': '+S.best,W/2,H*.36+36);if(S.newBest&&S.score>0)g.fillText('🏆 '+tr('Naujas rekordas!'),W/2,H*.36+62);
+    if(S.pay)g.fillText('+$'+S.pay,W/2,H*.36+88);g.font='700 14px sans-serif';g.fillText(tr('Spustelk arba Space – žaisti dar'),W/2,H*.36+118);}}
 function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimationFrame(ttRaf);sc.innerHTML='';const P=save.phone;
   $('phTime').textContent=String(Math.floor(hour)).padStart(2,'0')+':'+String(Math.floor((hour%1)*60)).padStart(2,'0');$('phNum').textContent=P.num||'';
   if(phView==='setup'){const box=phEl('div',{cls:'phpad'});box.append(phEl('div',{cls:'phclock'},'📱'),phEl('h3',null,tr('Sveikas! Susikurk savo telefono numerį')),phEl('div',{cls:'phsub'},tr('Įrašyk 6 skaitmenis:')));
@@ -6919,7 +6979,8 @@ function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimati
     box.append(inp,phEl('button',{cls:'phbtn',on:{click:()=>{inp.value=String(Math.floor(100000+Math.random()*900000));}}},tr('🎲 Sugeneruoti')),phEl('button',{cls:'phbtn green',on:{click:ok}},tr('Išsaugoti numerį')),err);sc.append(box);setTimeout(()=>inp.focus(),30);return;}
   if(phView==='home'){sc.append(phEl('div',{cls:'phclock'},$('phTime').textContent),phEl('div',{cls:'phsub'},tr('Mano numeris:')+' '+P.num));
     const g=phEl('div',{cls:'phapps'});const app=(e,bg,name,go)=>{const a=phEl('div',{cls:'phapp',on:{click:go}});a.append(phEl('i',{style:'background:'+bg},e),phEl('span',null,tr(name)));g.append(a);};
-    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));sc.append(g);return;}
+    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));app('🐄','#3ec5ff','Skraidanti karvė',()=>phGo('gfly'));app('🐍','#9be564','Gyvatėlė',()=>phGo('gsnake'));app('🧦','#ff9b2f','Gaudyk kojines',()=>phGo('gsock'));sc.append(g);return;}
+  if(phView==='gfly'||phView==='gsnake'||phView==='gsock'){phGameStart(sc,phView);return;}
   if(phView==='tt'){const feed=ttFeed();ttIdx=((ttIdx%feed.length)+feed.length)%feed.length;const V0=feed[ttIdx];const cv=phEl('canvas',{id:'ttCanvas'});sc.append(cv);const liked=V0.liked();
     const top=phEl('div',{cls:'tt-logo'});top.append(document.createTextNode('🎵 Crazy TikTok '),phEl('button',{cls:'phbtn',style:'padding:2px 10px;margin-left:6px;font-size:13px',on:{click:()=>phGo('ttnew')}},'＋ '+tr('Kurti')));sc.append(top);
     const side=phEl('div',{cls:'tt-side'});side.append(phEl('button',{on:{click:ttLike}},liked?'❤':'🤍'),phEl('small',null,String(V0.likes())),phEl('button',{on:{click:()=>{V0.showCom=!V0.showCom;renderPhone();}}},'💬'),phEl('small',null,String(V0.comments.length+(V0.own?0:17+ttIdx*13%90))));
@@ -7732,6 +7793,31 @@ function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.find(q=>q.
   let h='<h4><span>'+(k.icon||'👑')+'</span><span></span></h4><div class="pk"></div><ul>';list.forEach(()=>h+='<li><span></span><span></span><span class="c"></span></li>');h+='</ul>';el.innerHTML=h;
   el.querySelector('h4 span:nth-child(2)').textContent=tr(k.name);el.querySelector('.pk').textContent=tr('📌 Prisegtos misijos')+' · '+done.length+'/'+k.tasks.length+(crowned?' · 👑':'');
   el.querySelectorAll('li').forEach((li,i)=>{const t=list[i],ok=done.includes(t.b);li.className=ok?'ok':'';li.children[0].textContent=ok?'✅':'⬜';li.children[1].textContent=tr(t.b);li.children[2].textContent=ok?'':tr(t.chip||'');if(ok||!t.chip)li.children[2].style.display='none';});}
+
+let emoOpen=false,emote=null;
+const EMOTES=[{id:'wave',e:'👋',n:'Mojuoti',d:3},{id:'dance',e:'💃',n:'Šokti',d:8},{id:'cheer',e:'🙌',n:'Valio!',d:3},{id:'laugh',e:'😂',n:'Juoktis',d:3},{id:'cry',e:'😢',n:'Verkti',d:4},{id:'sit',e:'🪑',n:'Sėdėti',d:999},{id:'spin',e:'🌀',n:'Suktis',d:3},{id:'dinodance',e:'🦖',n:'Dinozauro šokis',d:8,secret:true}];
+const emoOwned=E=>!E.secret||!!(save.emotes&&save.emotes[E.id]);
+function toggleEmo(){emoOpen=!emoOpen;$('emoPanel').hidden=!emoOpen;if(emoOpen){renderEmo();freeCursor();}else tryLock();}
+function renderEmo(){const G=$('emoGrid');G.innerHTML='';EMOTES.forEach((E,i)=>{const own=emoOwned(E);const b=document.createElement('button');b.type='button';b.className='emoBtn'+(own?'':' lock');
+  b.innerHTML='<span class="e"></span><span class="n"></span><small></small>';b.querySelector('.e').textContent=own?E.e:'🔒';b.querySelector('.n').textContent=own?tr(E.n):'???';b.querySelector('small').textContent=own?String(i+1):tr('Slaptas');
+  if(own)b.onclick=()=>pickEmote(E);G.append(b);});}
+function pickEmote(E){if(!emoOwned(E)){sfx('fail');return;}if(emoOpen)toggleEmo();if(player.inCar||player.rag)return;emote={id:E.id,t:0,dur:E.d};sfx('pop');floaty(E.e,player.pos.clone().add(V(0,1.2,0)));}
+function unlockDinoEmote(){if(!save.emotes)save.emotes={};save.emotes.dinodance=true;saveGame(true);sfx('win');
+  openDialog({name:'Crazyzauras',role:'Slaptas emote atrakintas!',color:'#e9dfc4',icon:'🦖',text:'Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!',tasks:[{b:'EMOTE',t:'🦖 Dinozauro šokis',chip:'C'}]});}
+function updateEmote(dt){if(!emote)return;const p=player,c=pc,t=performance.now()/1000;
+  const moving=keys.KeyW||keys.KeyA||keys.KeyS||keys.KeyD||keys.Space;if(moving||p.inCar||p.rag||uiBlocking()&&!emoOpen){c.tilt.position.y=0;c.tilt.rotation.set(0,0,0);emote=null;return;}
+  emote.t+=dt;if(emote.t>emote.dur){c.tilt.position.y=0;c.tilt.rotation.set(0,0,0);emote=null;return;}
+  const T=emote.t,A=c.armL.p.rotation,B=c.armR.p.rotation,L=c.legL.p.rotation,Rr=c.legR.p.rotation;
+  switch(emote.id){
+   case 'wave':B.set(-2.8,0,-.4+Math.sin(T*10)*.5);break;
+   case 'dance':{const k=T*8;A.set(-2.4+Math.sin(k)*.6,0,.4);B.set(-2.4-Math.sin(k)*.6,0,-.4);L.set(Math.max(0,Math.sin(k))*.7,0,0);Rr.set(Math.max(0,-Math.sin(k))*.7,0,0);c.tilt.rotation.z=Math.sin(k*.5)*.2;c.tilt.position.y=Math.abs(Math.sin(k))*.15;c.root.rotation.y=p.yaw+Math.sin(k*.25)*.6;break;}
+   case 'cheer':{A.set(-3,0,.3);B.set(-3,0,-.3);c.tilt.position.y=Math.abs(Math.sin(T*7))*.5;break;}
+   case 'laugh':{A.set(-.6,0,.2);B.set(-.6,0,-.2);c.tilt.rotation.x=-.25+Math.sin(T*25)*.08;if(Math.random()<dt*3)floaty(pick(['Cha!','Cha cha!','Hihi!']),p.pos.clone().add(V(0,2.6,0)));break;}
+   case 'cry':{A.set(-2.2,0,-.5);B.set(-2.2,0,.5);c.tilt.rotation.x=.3+Math.sin(T*12)*.04;if(Math.random()<dt*4)floaty('💧',p.pos.clone().add(V(rand(-.3,.3),2,0)));break;}
+   case 'sit':{L.set(-1.5,0,.1);Rr.set(-1.5,0,-.1);A.set(-.4,0,.1);B.set(-.4,0,-.1);c.tilt.position.y=-.55;break;}
+   case 'spin':{c.root.rotation.y=p.yaw+T*12;A.set(0,0,1.5);B.set(0,0,-1.5);c.tilt.position.y=Math.sin(Math.min(1,T/3)*Math.PI)*.4;break;}
+   case 'dinodance':{const k=T*7;A.set(-1.6+Math.sin(k*2)*.3,0,.1);B.set(-1.6-Math.sin(k*2)*.3,0,-.1);L.set(Math.max(0,Math.sin(k))*.9,0,0);Rr.set(Math.max(0,-Math.sin(k))*.9,0,0);
+     c.tilt.rotation.x=.35+Math.sin(k)*.08;c.tilt.rotation.z=Math.sin(k*.5)*.25;c.tilt.position.y=Math.abs(Math.sin(k))*.25;c.root.rotation.y=p.yaw+Math.sin(k*.5)*.8;if(Math.random()<dt*2)floaty(pick(['🦖','RAAAR!','🎵']),p.pos.clone().add(V(0,2.6,0)));break;}}}
 function start(){audioInit();
   started=true;$('start').hidden=true;curZone=null;tryLock();canvas.focus();
   say(null,'Sveikas atvykęs į Crazy World! Keliai iš centro veda į keturias karalystes.');$('money').textContent=money;
