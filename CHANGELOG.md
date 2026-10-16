@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-16 11:13 — v185 Lyderių lentelė telefone
+- Telefone nauja programėlė **🏆 Lyderiai** su 5 lentelėmis: ⏱ greičiausiai perėjo žaidimą (surinko 4 karūnas), 💰 daugiausia pinigų, 🐄 Skraidanti karvė, 🧦 Gaudyk kojines, 🐍 Gyvatėlė.
+- Rodomi visi žaidėjai šiame kompiuteryje ir draugai tavo online lobby (🌐). Tavo eilutė paryškinta.
+- Žaidimas dabar skaičiuoja žaidimo laiką; perėjimo laikas užfiksuojamas surinkus 4 karūnas.
+
 ## 2026-10-16 11:05 — v184 Emotes
 - **C** atidaro emotes lentelę: mojuoti, šokti, valio, juoktis, verkti, sėdėti, suktis (1–8 arba spustelk).
 - Slaptas emote **🦖 Dinozauro šokis** – gauni pamatęs, kaip muziejaus dinozauras šoka (jis kartais šoka net kai į jį žiūri).

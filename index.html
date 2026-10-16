@@ -464,6 +464,7 @@ Object.assign(I18N_EN,{"📌 Atsegti misijas nuo ekrano": "📌 Unpin missions f
 Object.assign(I18N_EN,{"Online – žaidi kartu su draugais (iki 4 žaidėjų), net iš skirtingų kompiuterių: draugai atsidaro tą pačią žaidimo nuorodą, vienas sukuria lobby, kiti prisijungia.": "Online – play together with friends (up to 4 players), even from different computers: friends open the same game link, one creates a lobby, the others join."});
 Object.assign(I18N_EN,{"Skraidanti karvė": "Flying cow", "Gyvatėlė": "Snake", "Gaudyk kojines": "Catch the socks", "Space arba spustelk – plasnoti": "Space or click – flap", "Rodyklės arba WASD – sukti": "Arrows or WASD – turn", "A/D arba pelė – judinti krepšį": "A/D or mouse – move the basket", "Žaidimas baigtas!": "Game over!", "Taškai": "Score", "Rekordas": "Best", "Naujas rekordas!": "New record!", "Spustelk arba Space – žaisti dar": "Click or Space – play again"});
 Object.assign(I18N_EN,{"1–8 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–8 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
+Object.assign(I18N_EN,{"Lyderiai": "Leaderboard", "Greičiausiai perėjo žaidimą": "Fastest to beat the game", "Daugiausia pinigų": "Most money", "Dar niekas neperėjo žaidimo – surink 4 karūnas!": "Nobody has beaten the game yet – collect 4 crowns!", "Dar nėra rezultatų.": "No results yet.", "tu": "you", "Rodomi šio kompiuterio žaidėjai ir draugai tavo online lobby 🌐": "Shows players on this computer and friends in your online lobby 🌐"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -6272,7 +6273,7 @@ function netPose(m){let pr=NET.peers.get(m.from);
   if(!pr){const v=makeChar({body:m.body||0xff8a3d});const root=new THREE.Group();root.add(v.root);scene.add(root);const nt=tag(m.name,'#7ee8ff',.6);nt.position.y=2.9;root.add(nt);
     pr={v,root,nt,name:m.name,body:m.body,wk:'',pos:V(...m.p),yaw:m.r[1],tp:V(...m.p),seen:0,carMesh:null,carType:null,cp:V(),cy:0,tcp:V(),tcy:0};NET.peers.set(m.from,pr);
     if(!NET.members.some(x=>x.id===m.from))NET.members.push({id:m.from,name:m.name});netHud();}
-  pr.seen=0;pr.tp.set(...m.p);pr.r=m.r;pr.l=m.l;pr.sc=m.sc;pr.vis=m.vis!==0;
+  pr.seen=0;pr.tp.set(...m.p);pr.r=m.r;pr.l=m.l;pr.sc=m.sc;pr.vis=m.vis!==0;if(m.lb&&typeof m.lb==='object')pr.lb=m.lb;
   if(m.body!==pr.body){pr.body=m.body;pr.v.bm.color.set(m.body);}
   if(m.wk!==pr.wk){pr.wk=m.wk;try{applyOutfit(pr.v,JSON.parse(m.wk));}catch(e){}}
   if((m.ct||null)!==pr.carType){if(pr.carMesh){scene.remove(pr.carMesh.root);pr.carMesh=null;}pr.carType=m.ct||null;
@@ -6280,7 +6281,7 @@ function netPose(m){let pr=NET.peers.get(m.from);
   if(pr.carType){pr.tcp.set(...m.cp);pr.tcy=m.cy;}
 }
 const r2=x=>Math.round(x*100)/100;
-function netState(){const v=pc,o={t:'st',name:NET.name,body:prefs.body||0xff8a3d,wk:JSON.stringify(save.clothes.me.wear),
+function netState(){const v=pc,o={t:'st',lb:myLbStats(),name:NET.name,body:prefs.body||0xff8a3d,wk:JSON.stringify(save.clothes.me.wear),
   p:[r2(v.root.position.x),r2(v.root.position.y),r2(v.root.position.z)],r:[r2(v.root.rotation.x),r2(v.root.rotation.y),r2(v.root.rotation.z)],sc:r2(v.root.scale.x),vis:v.root.visible?1:0,
   l:[r2(v.tilt.rotation.x),r2(v.tilt.rotation.y),r2(v.tilt.rotation.z)].concat(...LIMBS.map(k=>[r2(v[k].p.rotation.x),r2(v[k].p.rotation.z)]))};
   if(player.inCar&&car&&car.root){o.ct=car.type;o.cp=[r2(car.root.position.x),r2(car.root.position.y),r2(car.root.position.z)];o.cy=r2(car.root.rotation.y);}return o;}
@@ -6971,6 +6972,28 @@ function phGameDraw(S){const g=S.g,W=S.W,H=S.H;g.clearRect(0,0,W,H);
   if(S.over){g.fillStyle='rgba(20,14,40,.72)';g.fillRect(0,0,W,H);g.fillStyle='#fff';g.font='800 28px "Baloo 2",sans-serif';g.fillText(tr('Žaidimas baigtas!'),W/2,H*.36);
     g.font='700 17px sans-serif';g.fillText(tr('Taškai')+': '+S.score+'   '+tr('Rekordas')+': '+S.best,W/2,H*.36+36);if(S.newBest&&S.score>0)g.fillText('🏆 '+tr('Naujas rekordas!'),W/2,H*.36+62);
     if(S.pay)g.fillText('+$'+S.pay,W/2,H*.36+88);g.font='700 14px sans-serif';g.fillText(tr('Spustelk arba Space – žaisti dar'),W/2,H*.36+118);}}
+
+let lbTab='finish';
+const LB_TABS=[{id:'finish',e:'⏱',n:'Greičiausiai perėjo žaidimą',low:true},{id:'money',e:'💰',n:'Daugiausia pinigų'},{id:'gfly',e:'🐄',n:'Skraidanti karvė'},{id:'gsock',e:'🧦',n:'Gaudyk kojines'},{id:'gsnake',e:'🐍',n:'Gyvatėlė'}];
+function myLbStats(){const g=save.phGames||{};return {finish:save.finishT||0,money:money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0};}
+function lbFmtT(sec){sec=Math.round(sec);const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;return (h?h+':':'')+String(m).padStart(h?2:1,'0')+':'+String(x).padStart(2,'0');}
+function lbRows(){const rows=[],me=(CW_USER||'').toLowerCase(),acc=accList();
+  for(const k in acc){let st;if(k===me&&!CW_ONLINE)st=myLbStats();else{try{const o=JSON.parse(localStorage.getItem('cw-save:'+k)||'{}');const g=o.phGames||{};st={finish:o.finishT||0,money:o.money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0};}catch(e){continue;}}
+    rows.push({name:acc[k].name||k,me:k===me&&!CW_ONLINE,st,src:'local'});}
+  if(CW_ONLINE)rows.push({name:CW_USER||'Tu',me:true,st:myLbStats(),src:'online'});
+  if(NET.on)for(const [,pr] of NET.peers)if(pr.lb)rows.push({name:String(pr.name||'?').slice(0,20),me:false,st:pr.lb,src:'online'});
+  return rows;}
+function renderLb(sc){const box=phEl('div',{cls:'phpad',style:'height:100%;box-sizing:border-box;gap:6px;padding:12px;justify-content:flex-start'});box.append(phEl('h3',{style:'margin:0'},'🏆 '+tr('Lyderiai')));
+  const tabs=phEl('div',{style:'display:flex;flex-wrap:wrap;gap:4px;justify-content:center'});
+  for(const T of LB_TABS){const b=phEl('button',{cls:'phbtn',style:'width:auto;padding:4px 8px;margin:0;font-size:16px'+(T.id===lbTab?';background:#ffd23f;color:#1b1430':'')},T.e);b.title=tr(T.n);b.onclick=()=>{lbTab=T.id;renderPhone();};tabs.append(b);}
+  box.append(tabs);const T=LB_TABS.find(x=>x.id===lbTab);box.append(phEl('div',{cls:'phsub',style:'font-weight:800'},T.e+' '+tr(T.n)));
+  let rows=lbRows().filter(r=>T.id==='finish'?r.st.finish>0:true);rows.sort((a,b)=>T.low?a.st[T.id]-b.st[T.id]:b.st[T.id]-a.st[T.id]);rows=rows.slice(0,10);
+  const list=phEl('div',{style:'width:100%;display:flex;flex-direction:column;gap:4px;overflow:auto;flex:1'});
+  if(!rows.length)list.append(phEl('div',{cls:'phsub',style:'margin-top:20px'},T.id==='finish'?tr('Dar niekas neperėjo žaidimo – surink 4 karūnas!'):tr('Dar nėra rezultatų.')));
+  rows.forEach((r,i)=>{const v=r.st[T.id];const row=phEl('div',{style:'display:flex;align-items:center;gap:8px;background:'+(r.me?'rgba(255,210,63,.9)':'rgba(255,255,255,.2)')+';color:'+(r.me?'#1b1430':'#fff')+';border-radius:10px;padding:6px 10px;font-weight:800;font-size:14px'});
+    const medal=['🥇','🥈','🥉'][i]||(i+1)+'.';const nm=phEl('span',{style:'flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'});nm.textContent=r.name+(r.me?' ('+tr('tu')+')':'')+(r.src==='online'&&!r.me?' 🌐':'');
+    row.append(phEl('span',null,medal),nm,phEl('span',null,T.id==='finish'?lbFmtT(v):T.id==='money'?'$'+v:String(v)));list.append(row);});
+  box.append(list,phEl('div',{cls:'phsub',style:'font-size:11px;opacity:.8'},tr('Rodomi šio kompiuterio žaidėjai ir draugai tavo online lobby 🌐')));sc.append(box);}
 function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimationFrame(ttRaf);sc.innerHTML='';const P=save.phone;
   $('phTime').textContent=String(Math.floor(hour)).padStart(2,'0')+':'+String(Math.floor((hour%1)*60)).padStart(2,'0');$('phNum').textContent=P.num||'';
   if(phView==='setup'){const box=phEl('div',{cls:'phpad'});box.append(phEl('div',{cls:'phclock'},'📱'),phEl('h3',null,tr('Sveikas! Susikurk savo telefono numerį')),phEl('div',{cls:'phsub'},tr('Įrašyk 6 skaitmenis:')));
@@ -6979,8 +7002,9 @@ function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimati
     box.append(inp,phEl('button',{cls:'phbtn',on:{click:()=>{inp.value=String(Math.floor(100000+Math.random()*900000));}}},tr('🎲 Sugeneruoti')),phEl('button',{cls:'phbtn green',on:{click:ok}},tr('Išsaugoti numerį')),err);sc.append(box);setTimeout(()=>inp.focus(),30);return;}
   if(phView==='home'){sc.append(phEl('div',{cls:'phclock'},$('phTime').textContent),phEl('div',{cls:'phsub'},tr('Mano numeris:')+' '+P.num));
     const g=phEl('div',{cls:'phapps'});const app=(e,bg,name,go)=>{const a=phEl('div',{cls:'phapp',on:{click:go}});a.append(phEl('i',{style:'background:'+bg},e),phEl('span',null,tr(name)));g.append(a);};
-    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));app('🐄','#3ec5ff','Skraidanti karvė',()=>phGo('gfly'));app('🐍','#9be564','Gyvatėlė',()=>phGo('gsnake'));app('🧦','#ff9b2f','Gaudyk kojines',()=>phGo('gsock'));sc.append(g);return;}
+    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));app('🐄','#3ec5ff','Skraidanti karvė',()=>phGo('gfly'));app('🐍','#9be564','Gyvatėlė',()=>phGo('gsnake'));app('🧦','#ff9b2f','Gaudyk kojines',()=>phGo('gsock'));app('🏆','#ffd23f','Lyderiai',()=>phGo('lb'));sc.append(g);return;}
   if(phView==='gfly'||phView==='gsnake'||phView==='gsock'){phGameStart(sc,phView);return;}
+  if(phView==='lb'){renderLb(sc);return;}
   if(phView==='tt'){const feed=ttFeed();ttIdx=((ttIdx%feed.length)+feed.length)%feed.length;const V0=feed[ttIdx];const cv=phEl('canvas',{id:'ttCanvas'});sc.append(cv);const liked=V0.liked();
     const top=phEl('div',{cls:'tt-logo'});top.append(document.createTextNode('🎵 Crazy TikTok '),phEl('button',{cls:'phbtn',style:'padding:2px 10px;margin-left:6px;font-size:13px',on:{click:()=>phGo('ttnew')}},'＋ '+tr('Kurti')));sc.append(top);
     const side=phEl('div',{cls:'tt-side'});side.append(phEl('button',{on:{click:ttLike}},liked?'❤':'🤍'),phEl('small',null,String(V0.likes())),phEl('button',{on:{click:()=>{V0.showCom=!V0.showCom;renderPhone();}}},'💬'),phEl('small',null,String(V0.comments.length+(V0.own?0:17+ttIdx*13%90))));
@@ -7784,7 +7808,7 @@ function checkAch(){if(!save.ach)save.ach={};let ch=false;for(const a of ACH){if
 function toggleAch(){achOpen=!achOpen;$('achPanel').hidden=!achOpen;if(achOpen){checkAch();renderAch();if(document.exitPointerLock)document.exitPointerLock();}else tryLock();}
 function renderAch(){const got=ACH.filter(a=>save.ach&&save.ach[a.id]).length;$('achSub').textContent=tr('Atrakinta')+': '+got+' / '+ACH.length;const L=$('achList');L.innerHTML='';
   for(const a of ACH){const on=save.ach&&save.ach[a.id];const d=document.createElement('div');d.className='achItem'+(on?'':' lock');d.innerHTML='<div class="ic">'+(on?a.ic:'🔒')+'</div><div><b></b><span></span></div>';d.querySelector('b').textContent=tr(a.n);d.querySelector('span').textContent=tr(a.d);L.append(d);}}
-function updateAch(dt){if(!started)return;achT-=dt;if(achT<=0){achT=1;checkAch();renderPin();}
+function updateAch(dt){if(!started)return;save.playT=(save.playT||0)+dt;if(!save.finishT&&crownCount()>=4)save.finishT=Math.round(save.playT);achT-=dt;if(achT<=0){achT=1;checkAch();renderPin();}
   const el=$('achToast');if(achShowT>0){achShowT-=dt;if(achShowT<=0)el.classList.remove('show');}
   else if(achQ.length){const a=achQ.shift();el.textContent='🏆 '+tr('Pasiekimas')+': '+a.ic+' '+tr(a.n);el.classList.add('show');achShowT=3.5;sfx('win');}}
 
