@@ -3,6 +3,16 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-16 11:59 — v187 Laiko laboratorija ir Dinozaurų pasaulis
+- Sniego karalystėje (rytinėje dalyje) atsirado LAIKO LABORATORIJA su profesoriumi Kvarku ir laiko mašina.
+- Kelionė kainuoja $1000. Sumokėjus prasideda mokymai: parkūras spirale aplink laboratoriją iki aukso bokšto su LAIKO PASU (žalios platformos – kontroliniai taškai).
+- Su pasu laiko mašina nukelia į naują DINOZAURŲ PASAULĮ (grįžti galima per mašiną jo centre).
+- 4 nauji karaliai po 3 užduotis: T-Rex karalius (šiaurės džiunglės), Drakonė (rytų uolos), Spinozauras (vakarų pelkės), Megalodonas (pietų jūra, prieplauka).
+- Užduotys: kiaušiniai, kaulai, lenktynės su raptoriumi, gaisrų gesinimas, drakono kiaušiniai, brangakmeniai ant uolų, žuvų gaudymas, lelijos, lapai burei, jūros šiukšlės, perlai, megalodono dantis.
+- Crazy dalykai: raptoriai bėga atbuli, pterodaktiliai skraido aukštyn kojomis, brontozaurai plūduriuoja, megalodonas šokinėja – kol išgelbsti karalių.
+- Už užduotį $150, už karalių $300; išgelbėjus visus 4 – $1000 ir slapta T-Rex galvos kepurė (E – riaumojimas).
+- Nauji pasiekimai: „Laiko keliautojas“ ir „Dinozaurų gelbėtojas“.
+
 ## 2026-10-16 11:27 — v186 Žaidimas telefone
 - Telefone / planšetėje automatiškai atsiranda lietimo valdymas.
 - Kairėje – virtuali vairasvirtė judėti (veikia ir mašinose), dešinėje – braukimas pirštu suka kamerą, dviem pirštais – priartinimas.
