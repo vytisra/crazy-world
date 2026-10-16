@@ -3,6 +3,15 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-16 11:27 — v186 Žaidimas telefone
+- Telefone / planšetėje automatiškai atsiranda lietimo valdymas.
+- Kairėje – virtuali vairasvirtė judėti (veikia ir mašinose), dešinėje – braukimas pirštu suka kamerą, dviem pirštais – priartinimas.
+- Mygtukai: šuolis, F (kalbėtis / įlipti), E, kairė ir dešinė ranka, bėgimas, griuvimas; mašinoje – kameros sukimas.
+- Meniu mygtukai: nustatymai, žemėlapis, telefonas ir „⋯“ (transportas, emocijos, pasiekimai, pokalbis, pilnas ekranas).
+- Raudonas ✕ uždaro bet kurį atidarytą langą; paspaudus užuominą ekrane – atliekamas F veiksmas.
+- DJ darbe galima bakstelėti juostas pirštu; prisijungimo ir meniu langai slenka mažame ekrane.
+- Pasuktas stačiai telefonas parodo patarimą pasukti gulsčiai.
+
 ## 2026-10-16 11:13 — v185 Lyderių lentelė telefone
 - Telefone nauja programėlė **🏆 Lyderiai** su 5 lentelėmis: ⏱ greičiausiai perėjo žaidimą (surinko 4 karūnas), 💰 daugiausia pinigų, 🐄 Skraidanti karvė, 🧦 Gaudyk kojines, 🐍 Gyvatėlė.
 - Rodomi visi žaidėjai šiame kompiuteryje ir draugai tavo online lobby (🌐). Tavo eilutė paryškinta.
