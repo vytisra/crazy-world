@@ -3,6 +3,19 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-17 19:13 — v190 Dinozaurų pasaulis didesnis + reikia visų karūnų
+- Laiko mašina veikia tik surinkus visas 4 Crazy pasaulio karūnas (profesorius Kvarkas to reikalauja prieš mokėjimą ir kelionę).
+- Ugg kaimelis: urvinių žmonių trobelės, laužas su mėsa ant iešmo, 4 urviniai žmonės su patarimais.
+- Batutų grybai: 5 spalvoti grybai išmeta aukštyn; ant akmens stulpo – slaptas AUKSINIS KIAUŠINIS ($250).
+- Lynų trasa: medžio namelio bokštas džiunglėse ir lynas iki laiko mašinos.
+- Jodinėjimas triceratopsu (F prie triceratopso).
+- Ptero taksi ($15): pterodaktilis nuneša į bet kurią karalystę, ugnikalnį ar kaimelį.
+- Kasinėjimų vieta: kask fosilijas (kaulai, amonitai, T-Rex dantys) ir gauk pinigų.
+- Dinozaurų ugnikalnis, spjaudantis lavos bombas (pataikius – parverčia).
+- Krioklys su tvenkiniu ir purvo vonia pelkėse (atgauna jėgas).
+- Naktį krenta meteoritai – rink juos po $25.
+- Nauji pasiekimai: „Auksinis kiaušinis“ ir „Žvaigždžių rinkėjas“.
+
 ## 2026-10-17 15:13 — v189 Keleivis draugo transporte (online)
 - Online lobby: priėjęs prie draugo mašinos (ar kito transporto) spausk F – „sėsti pas … (keleivis)“.
 - Keleivis sėdi šalia vairuotojo ir važiuoja kartu; keli keleiviai susėda vienas ant kito (crazy!).

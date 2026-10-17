@@ -5899,7 +5899,7 @@ function nearestInteract(){
   if(player.inCar&&inPaintZone())return{label:'dažyti transportą ($'+PAINT_PRICE+')',act:openPaintShop};
   if(player.inCar)return{label:car.type==='moto'?'nulipti nuo motociklo':car.type==='quad'?'nulipti nuo keturačio':car.type==='cow'?'nulipti nuo karvės':car.type==='saucer'?'išlipti iš lėkštės':car.type==='carpet'?'nulipti nuo kilimo':car.type==='armchair'?'atsistoti nuo fotelio':car.type==='bed'?'nulipti nuo lovos':car.type==='rocketcar'?'nulipti nuo raketos':car.type==='tank'?'išlipti iš tanko':car.type==='horsecar'?'nuleisti arklį nuo pečių':car.type==='pengcar'?'nulipti nuo pingvino':car.type==='heli'?'išlipti iš sraigtasparnio':'išlipti iš mašinos',act:exitCar};
   if(sledRide)return{label:'nulipti nuo rogių',act:()=>leaveSled()};
-  if(netRide)return{label:'išlipti iš '+netRide.name+' transporto',act:()=>leaveRide()};
+  if(netRide)return{label:netRide.local?netRide.leaveLabel:'išlipti iš '+netRide.name+' transporto',act:()=>leaveRide()};
   let best=null,bd=1e9;const p=player.pos;
   if(NET.on)for(const [id,pr] of NET.peers){if(!pr.carMesh)continue;const cp=pr.carMesh.root.position,d=Math.hypot(cp.x-p.x,cp.z-p.z);if(d<((VEH[pr.carType]&&VEH[pr.carType].enterR)||4.6)&&Math.abs(cp.y-p.y)<3.5&&d<bd){bd=d;best={label:'sėsti pas '+pr.name+' (keleivis) 🚗',act:()=>enterRide(id,pr)};}}
   if(sled&&!sled.away&&Math.hypot(sled.pos.x-p.x,sled.pos.z-p.z)<2.6&&Math.abs(sled.pos.y-p.y)<2.5){bd=-1;best={label:'sėsti į roges',act:mountSled};}
@@ -6350,7 +6350,7 @@ function buildLab(){const X=LAB.x,Z=LAB.z;labY=terrainH(X,Z);const wall=mat(0xe8
   prof=makeProfessor();prof.root.position.set(X-3.5,labY+.25,Z-1);scene.add(prof.root);const pt=tag('Profesorius Kvarkas','#3ee6ff',.8);pt.position.set(X-3.5,labY+3.1,Z-1);scene.add(pt);
   anims.push(t=>{animTM(labTM,t);if(prof){prof.root.rotation.y=Math.atan2(player.pos.x-prof.root.position.x,player.pos.z-prof.root.position.z)*.6;prof.armR.p.rotation.x=-.4+Math.sin(t*2.3)*.4;prof.tilt.rotation.z=Math.sin(t*1.4)*.05;}});
   stations.push({pos:V(X-3.5,labY,Z-1),r:2.8,label:'kalbėtis: Profesorius Kvarkas',act:openProfessor});
-  stations.push({pos:V(X+3.8,labY,Z-1.5),r:2.8,get label(){return save.tmPass?'keliauti į dinozaurų pasaulį ⏳':'apžiūrėti laiko mašiną';},act:()=>{if(!save.tmPaid){say('Profesorius Kvarkas','Ei ei! Laiko mašina – ne žaislas. Kelionė kainuoja $'+TM_PRICE+'. Pasikalbėk su manimi.',true);sfx('fail');return;}if(!save.tmPass){say('Profesorius Kvarkas','Be LAIKO PASO mašina tavęs neįleis! Praeik mokymus aplink laboratoriją.',true);sfx('fail');return;}timeTravel(true);}});
+  stations.push({pos:V(X+3.8,labY,Z-1.5),r:2.8,get label(){return save.tmPass?'keliauti į dinozaurų pasaulį ⏳':'apžiūrėti laiko mašiną';},act:()=>{if(crownCount()<4){say('Profesorius Kvarkas','Laiko mašina veikia tik tikram herojui! Pirmiausia surink visas 4 Crazy pasaulio karūnas ('+crownCount()+'/4).',true);sfx('fail');return;}if(!save.tmPaid){say('Profesorius Kvarkas','Ei ei! Laiko mašina – ne žaislas. Kelionė kainuoja $'+TM_PRICE+'. Pasikalbėk su manimi.',true);sfx('fail');return;}if(!save.tmPass){say('Profesorius Kvarkas','Be LAIKO PASO mašina tavęs neįleis! Praeik mokymus aplink laboratoriją.',true);sfx('fail');return;}timeTravel(true);}});
   // spiral course around the lab
   const sizes=[2.6,2.2,2.2,2,1.8,3,2,1.6,1.8,1.5,3,1.6,1.4,1.6],cpI=[0,5,10];
   sizes.forEach((sz,i)=>{const a=.2-i*.36,x=X+Math.cos(a)*11,z=Z+Math.sin(a)*11,top=labY+.55+i*1.1,cp=cpI.includes(i);
@@ -6363,17 +6363,17 @@ function buildLab(){const X=LAB.x,Z=LAB.z;labY=terrainH(X,Z);const wall=mat(0xe8
   const ptag=tag('LAIKO PASAS','#ffd23f',.9);ptag.position.set(X,ftop+2.3,Z);scene.add(ptag);anims.push(t=>{pass.rotation.y=t*1.5;pass.position.y=ftop+1.2+Math.sin(t*2)*.15;pass.visible=ptag.visible=!save.tmPass;});
   const st=CRS[0];const ms=tag('MOKYMAI ▶','#3ee6b0',.9);ms.position.set(st.x,st.top+2,st.z);scene.add(ms);
   stations.push({pos:V(st.x,labY,st.z),r:2.6,cond:()=>!course&&!save.tmPass,label:'pradėti laiko keliautojų mokymus',act:startCourse});}
-function openProfessor(){const paid=!!save.tmPaid,pass=!!save.tmPass;
-  const text=!paid?'Sveikas! Aš – profesorius Kvarkas. Pastačiau LAIKO MAŠINĄ! Ji nukelia milijoną metų atgal – į DINOZAURŲ PASAULĮ. Ten taip pat viskas tapo crazy, o keturi dinozaurų karaliai laukia pagalbos. Kelionė kainuoja $'+TM_PRICE+'. Sumokėjęs praeisi mokymus ir gausi LAIKO PASĄ.'
+function openProfessor(){const paid=!!save.tmPaid,pass=!!save.tmPass,cn=crownCount(),crw=cn>=4;
+  const text=!crw?'Sveikas! Aš – profesorius Kvarkas. Pastačiau LAIKO MAŠINĄ, kuri nukelia į DINOZAURŲ PASAULĮ! Bet ji veikia tik tikram herojui: pirmiausia išgelbėk visus 4 Crazy pasaulio karalius ir surink visas karūnas. Tada grįžk – kelionė kainuos $'+TM_PRICE+'.':!paid?'Sveikas! Aš – profesorius Kvarkas. Pastačiau LAIKO MAŠINĄ! Ji nukelia milijoną metų atgal – į DINOZAURŲ PASAULĮ. Ten taip pat viskas tapo crazy, o keturi dinozaurų karaliai laukia pagalbos. Kelionė kainuoja $'+TM_PRICE+'. Sumokėjęs praeisi mokymus ir gausi LAIKO PASĄ.'
     :!pass?'Puiku, sumokėta! Dabar – mokymai. Lipk spirale aplink laboratoriją iki pat aukso bokšto virš stogo – ten tavęs laukia LAIKO PASAS. Žalios platformos – kontroliniai taškai: nukritęs pradėsi nuo paskutinio.'
     :'Turi LAIKO PASĄ! Lipk į laiko mašiną (F prie jos) ir keliauk į dinozaurų pasaulį. Grįžti galėsi ta pačia mašina ten, dinozaurų pasaulio centre.';
   const dn=Object.keys(save.dinoCrowns||{}).length;
   openDialog({name:'Profesorius Kvarkas',role:'Laiko laboratorija'+(pass?' · dinozaurų karaliai '+dn+'/4':''),color:'#3ee6ff',icon:'⏳',text,
-    tasks:[{b:'1. Sumokėti',t:'$'+TM_PRICE+' už kelionę laiku',chip:paid?'Atlikta ✓':'$'+TM_PRICE},{b:'2. Mokymai',t:'parkūras aplink laboratoriją',chip:pass?'Atlikta ✓':paid?'Laukia':'—'},{b:'3. Laiko pasas',t:'keliauk į dinozaurų pasaulį',chip:pass?'Turi 🛂':'Neturi'}],
-    actions:!paid?[{label:'Sumokėti $'+TM_PRICE,disabled:money<TM_PRICE,onClick:payProfessor},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]
+    tasks:[{b:'0. Karūnos',t:'surink visas 4 Crazy pasaulio karūnas',chip:crw?'Atlikta ✓':cn+'/4'},{b:'1. Sumokėti',t:'$'+TM_PRICE+' už kelionę laiku',chip:paid?'Atlikta ✓':'$'+TM_PRICE},{b:'2. Mokymai',t:'parkūras aplink laboratoriją',chip:pass?'Atlikta ✓':paid?'Laukia':'—'},{b:'3. Laiko pasas',t:'keliauk į dinozaurų pasaulį',chip:pass?'Turi 🛂':'Neturi'}],
+    actions:!crw?[{label:'Gerai, eisiu gelbėti karalių!',onClick:()=>{closeDialog();tryLock();}}]:!paid?[{label:'Sumokėti $'+TM_PRICE,disabled:money<TM_PRICE,onClick:payProfessor},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]
       :!pass?[{label:'▶ Pradėti mokymus',onClick:()=>{closeDialog();startCourse();tryLock();}},{label:'Vėliau',alt:true,onClick:()=>{closeDialog();tryLock();}}]
       :[{label:'Gerai!',onClick:()=>{closeDialog();tryLock();}}]});}
-function payProfessor(){if(save.tmPaid||money<TM_PRICE)return;money-=TM_PRICE;$('money').textContent=money;save.tmPaid=1;saveGame(true);sfx('buy');floaty('-$'+TM_PRICE,player.pos);closeDialog();openProfessor();}
+function payProfessor(){if(save.tmPaid||money<TM_PRICE)return;if(crownCount()<4){say('Profesorius Kvarkas','Laiko mašina veikia tik tikram herojui! Pirmiausia surink visas 4 Crazy pasaulio karūnas ('+crownCount()+'/4).',true);sfx('fail');return;}money-=TM_PRICE;$('money').textContent=money;save.tmPaid=1;saveGame(true);sfx('buy');floaty('-$'+TM_PRICE,player.pos);closeDialog();openProfessor();}
 function startCourse(){if(save.tmPass)return;if(!save.tmPaid){say('Profesorius Kvarkas','Mokymai – tik sumokėjusiems keliautojams! Užeik į laboratoriją pasikalbėti.',true);sfx('fail');return;}if(player.inCar){say(null,'Pirmiausia išlipk iš transporto.');return;}course={cp:0};const c=CRS[0];tpTo(V(c.x,c.top+.05,c.z));sfx('ding');
   say('Profesorius Kvarkas','Mokymai prasideda! Šokinėk (Space) aukštyn spirale. Bėgimas (Shift) padės peršokti didesnius tarpus. Sėkmės!',true);}
 function tpTo(v){const p=player;if(p.rag&&typeof getUp==='function')getUp();dropAnchors();p.pos.copy(v);p.vel.set(0,0,0);if(typeof camTarget!=='undefined')camTarget.copy(p.pos);}
@@ -6387,7 +6387,7 @@ function grantPass(){course=null;save.tmPass=1;saveGame(true);sfx('win');setTime
     actions:[{label:'⬇ Nusileisti prie laiko mašinos',onClick:()=>{closeDialog();tpTo(V(LAB.x+1,labY+.3,LAB.z+1));tryLock();}},{label:'Likti čia',alt:true,onClick:()=>{closeDialog();tryLock();}}]});}
 
 /* ---- time travel ---- */
-function timeTravel(toDino){if(tmBusy)return;if(player.inCar){say(null,'Pirmiausia išlipk iš transporto (F).');return;}tmBusy=true;course=null;
+function timeTravel(toDino){if(tmBusy)return;if(toDino){if(crownCount()<4){say('Profesorius Kvarkas','Laiko mašina veikia tik tikram herojui! Pirmiausia surink visas 4 Crazy pasaulio karūnas ('+crownCount()+'/4).',true);sfx('fail');return;}}if(player.inCar){say(null,'Pirmiausia išlipk iš transporto (F).');return;}tmBusy=true;course=null;
   let fl=$('tmFlash');if(!fl){fl=document.createElement('div');fl.id='tmFlash';fl.style.cssText='position:fixed;inset:0;z-index:85;pointer-events:none;background:radial-gradient(circle,#ffffff 0%,#9ff3ff 45%,#3ee6ff 100%);opacity:0;transition:opacity .45s';document.body.append(fl);}
   sfx('boom');tone(180,1900,1.1,'sawtooth',.1);tone(900,120,1.1,'sine',.1,.2);requestAnimationFrame(()=>fl.style.opacity='1');
   setTimeout(()=>{const d=toDino?dP(2.5,4):V(LAB.x+1,0,LAB.z+1);const y=terrainH(d.x,d.z);d.y=(toDino?y:labY)+.3;tpTo(d);player.yaw=Math.PI;
@@ -6409,7 +6409,7 @@ function dinoColor(x,z,h){const lx=x-DW.x,lz=z-DW.z,zn=dinoZone(x,z),n=(Math.sin
   return c;}
 function dOk(lx,lz,minD=4){const h=dinoH(DW.x+lx,lz);if(h<.35)return false;if(Math.hypot(lx,lz)<30)return false;if(Math.max(Math.abs(lx),Math.abs(lz))>118)return false;
   for(const P of DPADS)if(Math.hypot(lx-P.x,lz-P.z)<P.r+4)return false;if(Math.abs(lx-28)<5&&lz<-44&&lz>-128)return false;if(Math.abs(lx)<4&&lz>40)return false;
-  for(const q of DK.keep)if(Math.hypot(lx-q[0],lz-q[1])<minD)return false;return true;}
+  for(const q of DK.keep)if(Math.hypot(lx-q[0],lz-q[1])<minD)return false;for(const q of DK.zones||[])if(Math.hypot(lx-q[0],lz-q[1])<q[2])return false;return true;}
 function dSpot(zone,minD){for(let k=0;k<300;k++){const lx=drnd(-120,120),lz=drnd(-120,120);if(dinoZone(DW.x+lx,lz)!==zone)continue;if(dOk(lx,lz,minD)){DK.keep.push([lx,lz]);return[lx,lz];}}return null;}
 function dTree(lx,lz,s){const x=DW.x+lx,z=lz,y=terrainH(x,z);put(GEO.cyl,M.trunk,x,y+3*s,z,.35*s,6*s,.35*s);const lf=mat(0x2f8a3a);
   put(GEO.sph,lf,x,y+6.3*s,z,2.2*s,1.6*s,2.2*s);put(GEO.sph,mat(0x3fa548),x+1*s,y+5.6*s,z+.6*s,1.5*s,1.2*s,1.5*s);addCol(x,z,.8*s,.8*s,y+6*s);}
@@ -6421,7 +6421,7 @@ function dRock(lx,lz,s,col){const x=DW.x+lx,z=lz,y=terrainH(x,z);const r=put(GEO
 function dPick(key,lx,lz,mesh,yOff,bob){const x=DW.x+lx,z=lz,y=(yOff!=null&&yOff.abs!=null)?yOff.abs:terrainH(x,z)+(yOff||0);mesh.position.set(x,y,z);scene.add(mesh);
   const idx=DK.picks.filter(q=>q.key===key).length;const got=((save.dinoPick||{})[key]||[]).includes(idx);mesh.visible=!got;DK.picks.push({key,idx,mesh,pos:V(x,y,z),got,bob:bob||0});DK.keep.push([lx,lz]);}
 function dCarry(key,need,spots,mk,name,target){const done=(save.dinoCarry||{})[key]||0;spots.slice(done).forEach(([lx,lz])=>{const b=addBody({x:DW.x+lx,z:lz,r:.6,bounce:.25,fric:3,mesh:mk(),name,lift:.5});DK.carry.push({key,b,target,need});});}
-function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;
+function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;DK.zones=[[-40,-30,15],[-52,-64,10],[36,-44,7],[30,-36,5],[24,-28,5],[18,-20,5],[10,12,5],[58,-74,8],[104,-104,22],[-108,-108,12],[-62,14,6]];
   {const SEG=160,S=320;const g=new THREE.PlaneGeometry(S,S,SEG,SEG);g.rotateX(-Math.PI/2);g.translate(DW.x,0,DW.z);const p=g.attributes.position,cols=new Float32Array(p.count*3);
    for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),h=dinoH(x,z);p.setY(i,h);const c=dinoColor(x,z,h);cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;}
    g.setAttribute('color',new THREE.BufferAttribute(cols,3));g.computeVertexNormals();const t=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));t.receiveShadow=true;scene.add(t);
@@ -6504,6 +6504,7 @@ function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;
   for(let i=0;i<18;i++){const s=dSpot('ddrag',5);if(s)dRock(s[0],s[1],drnd(.8,2),i%3?0x4a2e2a:0x6a3a32);}
   for(let i=0;i<6;i++){const s=dSpot('ddrag',8);if(s){const x=DW.x+s[0],y=terrainH(x,s[1]);const lp=put(GEO.cyl,M.lava,x,y+.06,s[1],2.2,.08,2.2);lp.castShadow=false;}}
   for(let i=0;i<6;i++){const a=i/6*Math.PI*2;dPalm(Math.cos(a)*22,Math.sin(a)*22,.9);}
+  buildDino2();
   for(const k of dkings){const s=tag(k.name,k.color,1.2);scene.add(s);kingTags.push({k,s});}}
 function dCount(key){return ((save.dinoPick||{})[key]||[]).length;}
 function dDone(name,task){return kingDone({name}).includes(task);}
@@ -6540,6 +6541,7 @@ function trexRoar(){if(DK.roarCd>0)return;DK.roarCd=1.5;sfx('roar');tone(90,50,.
 function updateDino(dt){DK.roarCd=Math.max(0,DK.roarCd-dt);if(course)updateCourse();if(!DK.built||!isDino())return;const t=T,p=player.pos;
   for(const q of DK.picks){if(q.got)continue;if(q.bob)q.mesh.position.y=q.pos.y+Math.sin(t*2+q.idx)*.12;if(q.key==='gem')q.mesh.rotation.y=t*1.5;
     if(Math.hypot(q.pos.x-p.x,q.pos.z-p.z)<1.7&&Math.abs(q.pos.y-(p.y+1))<1.9){q.got=true;q.mesh.visible=false;save.dinoPick=Object.assign({},save.dinoPick);save.dinoPick[q.key]=[...(save.dinoPick[q.key]||[]),q.idx];saveGame(true);sfx('coin');
+      if(q.key==='gold'){money+=250;$('money').textContent=money;saveGame(true);sfx('win');floaty('🥚✨ '+tr('AUKSINIS KIAUŠINIS!')+' +$250',p);continue;}
       const need={egg:5,gem:6,lily:6,trash:6,pearl:3}[q.key],n=dCount(q.key),T2={egg:['T-Rex karalius','Kiaušinių paieška','🥚'],gem:['Drakonė','Brangakmenių lobis','💎'],lily:['Spinozauras','Pelkės lelijos','🌸'],trash:['Megalodonas','Jūros šiukšlės','🗑'],pearl:['Megalodonas','Perlų paieška','🦪']}[q.key];
       floaty(T2[2]+' '+n+'/'+need,p);if(n>=need)dTask(T2[0],T2[1]);}}
   for(const c of DK.carry.slice()){const b=c.b;if(!bodies.includes(b)){DK.carry.splice(DK.carry.indexOf(c),1);continue;}const d=Math.hypot(b.pos.x-c.target.x,b.pos.z-c.target.z);
@@ -6556,7 +6558,8 @@ function updateDino(dt){DK.roarCd=Math.max(0,DK.roarCd-dt);if(course)updateCours
   for(const D of DK.decor){const P=D.P,a=t*D.w+D.ph;const x=DW.x+D.cx+Math.cos(a)*D.R,z=D.cz+Math.sin(a)*D.R;let yaw=Math.atan2(-Math.sin(a)*D.w,Math.cos(a)*D.w);
     if(D.kind==='ptero'){P.root.position.set(x,D.h+Math.sin(t+D.ph)*3,z);P.root.rotation.y=yaw;P.root.rotation.z=dCalm('Drakonė')?Math.sin(t)*.2:Math.PI;animDino(P,t,8,false);continue;}
     const back=D.kind==='raptor'&&!dCalm('T-Rex karalius');const fl=D.kind==='bronto'&&!dCalm('Spinozauras');
-    P.root.position.set(x,terrainH(x,z)+(fl?3+Math.sin(t*1.3+D.ph)*.8:0),z);P.root.rotation.y=yaw+(back?Math.PI:0);if(fl)P.root.rotation.z=Math.sin(t+D.ph)*.15;else P.root.rotation.z=0;animDino(P,t,D.kind==='raptor'?14:5,!fl);}}
+    P.root.position.set(x,terrainH(x,z)+(fl?3+Math.sin(t*1.3+D.ph)*.8:0),z);P.root.rotation.y=yaw+(back?Math.PI:0);if(fl)P.root.rotation.z=Math.sin(t+D.ph)*.15;else P.root.rotation.z=0;animDino(P,t,D.kind==='raptor'?14:5,!fl);}
+  updateDino2(dt,t);}
 
 
 /* ---------- v189: ride as passenger in a friend's vehicle (online) ---------- */
@@ -6565,12 +6568,116 @@ function rideSeat(mesh,type,idx){const P=VEH[type]||{},ds=P.dogSeat||[.5,.62,-.3
 function rideCarOf(id){if(id===NET.id)return player.inCar&&car&&car.root?{mesh:car,type:car.type}:null;const pr=NET.peers.get(id);return pr&&pr.carMesh?{mesh:pr.carMesh,type:pr.carType}:null;}
 function enterRide(id,pr){if(player.inCar||netRide)return;if(player.rag&&typeof getUp==='function')getUp();let idx=0;for(const [pid,q] of NET.peers)if(pid!==id&&q.rd===id)idx++;
   dropAnchors();netRide={id,idx,name:pr.name};emote=null;sfx('door');floaty('🚗 '+tr('Keleivis!'),player.pos);say(null,tr('Įlipai į')+' '+pr.name+' '+tr('transportą! F – išlipti.'));}
-function leaveRide(msg){if(!netRide)return;const r=rideCarOf(netRide.id),p=player;netRide=null;
+function leaveRide(msg){if(!netRide)return;const r=netRide.local?{mesh:{root:netRide.obj}}:rideCarOf(netRide.id),p=player;netRide=null;
   if(r){const R0=r.mesh.root,a=R0.rotation.y+Math.PI/2;p.pos.set(R0.position.x+Math.sin(a)*2.8,0,R0.position.z+Math.cos(a)*2.8);p.pos.y=groundAt(p.pos.x,p.pos.z,R0.position.y+2.5,.3);}
   else p.pos.y=groundAt(p.pos.x,p.pos.z,p.pos.y+1,.3);
   p.vel.set(0,0,0);if(p.prevVel)p.prevVel.set(0,0,0);p.onGround=true;const c=pc;c.tilt.position.y=0;c.tilt.rotation.set(0,0,0);sfx('door');if(msg)say(null,msg);}
-function updateNetRide(){const r=NET.on&&rideCarOf(netRide.id),p=player;if(!r){leaveRide(tr('Vairuotojas išlipo – tu irgi išlipai.'));return;}
+function updateNetRide(){const p=player;if(netRide.local){const o=netRide.obj;o.updateMatrixWorld(true);const s=o.localToWorld(V(...netRide.off));p.pos.copy(s);p.vel.set(0,0,0);p.onGround=true;p.yaw=o.rotation.y;netRide.s=s;netRide.yaw=p.yaw;return;}const r=NET.on&&rideCarOf(netRide.id);if(!r){leaveRide(tr('Vairuotojas išlipo – tu irgi išlipai.'));return;}
   const s=rideSeat(r.mesh,r.type,netRide.idx);p.pos.copy(s);p.vel.set(0,0,0);p.onGround=true;p.yaw=r.mesh.root.rotation.y;netRide.s=s;netRide.yaw=p.yaw;}
+
+/* ---------- v190: more things in the dinosaur world ---------- */
+const DX={mush:[],digs:[],bombs:[],volT:3,meteors:[],metT:8,ride:null,trice:null,cave:[],built:false,mud:null};
+function dLocalRide(obj,off,name,leaveLabel){if(player.inCar||netRide)return false;if(player.rag&&typeof getUp==='function')getUp();dropAnchors();emote=null;netRide={local:true,obj,off,name,leaveLabel};return true;}
+function buildDino2(){if(DX.built)return;DX.built=true;const G=(lx,lz)=>terrainH(DW.x+lx,lz);
+  // --- caveman village (west of hub) ---
+  {const cx=-40,cz=-30,fur=mat(0x9a6a3d),hide=mat(0xc89a5a);
+   for(let i=0;i<4;i++){const a=i/4*Math.PI*2+.4,x=DW.x+cx+Math.cos(a)*9,z=cz+Math.sin(a)*9,y=G(cx+Math.cos(a)*9,cz+Math.sin(a)*9);
+     const h=put(GEO.cone,hide,x,y+1.6,z,2.4,3.2,2.4);put(GEO.box,M.dark,x-Math.cos(a)*2.1,y+.7,z-Math.sin(a)*2.1,.9,1.3,.9).rotation.y=-a;addCol(x,z,3.2,3.2,y+2.4);
+     for(let k=0;k<3;k++){const st=put(GEO.cyl,M.trunk,x+Math.cos(k*2.1)*.4,y+3.4,z+Math.sin(k*2.1)*.4,.06,1.2,.06);st.rotation.z=.3*Math.cos(k*2.1);}}
+   const fy=G(cx,cz);for(let k=0;k<6;k++)put(GEO.dode,mat(0x8a8a8a),DW.x+cx+Math.cos(k)*1.1,fy+.15,cz+Math.sin(k)*1.1,.35);
+   const fire=[];for(let k=0;k<3;k++)fire.push(put(GEO.cone,mat(k%2?0xffd23f:0xff6a1f,{emissive:k%2?0xffaa00:0xff3300,emissiveIntensity:1}),DW.x+cx+(k-1)*.3,fy+.6,cz,.4,1.2,.4));
+   const spit=put(GEO.cyl,M.trunk,DW.x+cx,fy+1.6,cz,.05,2.6,.05);spit.rotation.z=Math.PI/2;const meat=put(GEO.sph,mat(0xb0503a),DW.x+cx,fy+1.6,cz,.35,.35,.5);
+   anims.push(t=>{fire.forEach((c,k)=>c.scale.y=1.2*(.8+Math.sin(t*11+k*2)*.25));meat.rotation.x=t*2;});
+   const sg=signPlane(['UGG KAIMELIS','urviniai žmonės'],4,1,{bg:'#5a3a1a',fg:'#ffd23f'});sg.position.set(DW.x+cx+7,fy+2.6,cz+7);sg.rotation.y=-Math.PI/4;scene.add(sg);
+   const names=['Uggas','Bugga','Krugas','Mamutė'],lines=[['Ugg! Tu iš ateities? Ten irgi crazy?','Ugnis – šilta. Dinozauras – ne draugas. Ugg!','Aš išradau ratą. Jis kvadratinis.'],['Bugga mėgsta mėsą ant iešmo!','Pterodaktilis vėl pavogė mano kepurę.','Ar matei auksinį kiaušinį ant akmens stulpo? Grybai padeda užšokti!'],['Krugas stipriausias! Krugas kilnoja akmenis!','Naktį dangumi krenta šviečiantys akmenys. Rink juos – brangūs!','Lynas nuo medžio bokšto – greičiausias kelias namo!'],['Mamutė piešia ant sienų. Nori pamatyti?','Kasinėjimų vietoje šiaurės rytuose randama kaulų ir fosilijų.','Su pterodaktiliu gali nuskristi bet kur – stotelė prie laiko mašinos.']];
+   names.forEach((n,i)=>{const a=i/4*Math.PI*2+1.2,lx=cx+Math.cos(a)*4.5,lz=cz+Math.sin(a)*4.5,x=DW.x+lx,y=G(lx,lz);const v=makeChar({body:0x8a5a2b,head:0xe8b890,legs:0x6a4a2a});setHat(v,'none');
+     for(let k=0;k<7;k++)put(GEO.sph,mat(0x3a2410),Math.cos(k)*.32,2.1+Math.sin(k*2)*.06,Math.sin(k)*.28-.1,.16,.16,.16,v.tilt);
+     put(GEO.cyl,mat(0xd8b080),.75,1.2,.2,.07,.9,.07,v.tilt).rotation.x=.4;put(GEO.sph,mat(0xd8b080),.75,1.6,.38,.16,.2,.16,v.tilt);
+     v.root.position.set(x,y,lz);v.root.rotation.y=Math.atan2(DW.x+cx-x,cz-lz);scene.add(v.root);const tg=tag(n,'#ffd23f',.6);tg.position.set(x,y+2.8,lz);scene.add(tg);DX.cave.push({v,ph:i});
+     stations.push({pos:V(x,y,lz),r:2.4,label:'kalbėtis: '+n,act:()=>{v.root.position.y=y+.3;setTimeout(()=>v.root.position.y=y,200);say(n,pick(lines[i]),true);sfx('pop');}});});}
+  // --- mushroom trampolines + golden egg pillar ---
+  {const cx=-52,cz=-64,py=G(cx,cz);block(DW.x+cx,cz,3,3,6,mat(0x8a7a6a));const ptop=minH(DW.x+cx,cz,3,3)-.05+6;
+   const ge=new THREE.Group();put(GEO.sph,mat(0xffd23f,{metalness:.7,roughness:.2,emissive:0x664400,emissiveIntensity:.5}),0,.55,0,.45,.6,.45,ge);dPick('gold',cx,cz,ge,{abs:ptop+.15},1);
+   for(let i=0;i<5;i++){const a=i/5*Math.PI*2,lx=cx+Math.cos(a)*6,lz=cz+Math.sin(a)*6,x=DW.x+lx,y=G(lx,lz),top=y+1.6;
+     put(GEO.cyl,mat(0xf4ecd8),x,y+.8,lz,.35,1.6,.35);const cap=put(new THREE.SphereGeometry(1.6,18,10,0,Math.PI*2,0,Math.PI/2),mat([0xff3b6b,0xb06bff,0x3ec5ff,0xff9f68,0x9be564][i]),x,top-.15,lz,1,.55,1);
+     for(let k=0;k<5;k++)put(GEO.sph,M.white,x+Math.cos(k*1.3)*.9,top+.35-Math.abs(Math.sin(k))*.1,lz+Math.sin(k*1.3)*.9,.18,.08,.18);
+     addCol(x,lz,2.2,2.2,top+.5,y);DX.mush.push({x,z:lz,top:top+.5,cap});}
+   const tg=tag('BATUTŲ GRYBAI','#ff9ad5',.8);tg.position.set(DW.x+cx,py+8.5,cz+3);scene.add(tg);}
+  // --- zipline from treehouse tower to the hub ---
+  {const tx=36,tz=-44,x=DW.x+tx,y=G(tx,tz),top=y+11;const wood=M.wood;
+   for(const [dx,dz] of[[-1.6,-1.6],[1.6,-1.6],[-1.6,1.6],[1.6,1.6]])put(GEO.cyl,M.trunk,x+dx,y+5.5,tz+dz,.25,11,.25);
+   block(x,tz,4.4,4.4,.5,wood,{y:top-.5});
+   for(let i=0;i<10;i++){const a=i/10*Math.PI*1.8+Math.PI,sx=x+Math.cos(a)*3.6,sz=tz+Math.sin(a)*3.6;block(sx,sz,1.6,1.6,.4,wood,{y:y+.7+i*1.05-.4});}
+   const ex=DW.x+12,ez=-12,ey=G(12,-12)+2.4;const from=V(x,top+2.2,tz),to=V(ex,ey+.8,ez);
+   const len=from.distanceTo(to),line=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,len,6),M.dark);line.position.copy(from).add(to).multiplyScalar(.5);line.quaternion.setFromUnitVectors(V(0,1,0),to.clone().sub(from).normalize());scene.add(line);
+   put(GEO.cyl,M.trunk,ex,ey-1.2+.6,ez,.2,3.6,.2);put(GEO.cyl,M.trunk,x,top+1.1,tz,.15,2.2,.15);
+   const tg=tag('LYNŲ TRASA 🪂','#3ee6b0',.8);tg.position.set(x,top+3.2,tz);scene.add(tg);
+   stations.push({pos:V(x,top,tz),r:2.6,label:'leistis lynu į centrą 🪂',act:()=>{const o=new THREE.Group();o.position.copy(from);scene.add(o);const hk=put(GEO.box,mat(0xffd23f),0,0,0,.3,.3,.3,o);
+     if(!dLocalRide(o,[0,-2.3,0],'lyno','paleisti lyną'))return;o.rotation.y=Math.atan2(to.x-from.x,to.z-from.z);DX.ride={kind:'zip',o,from,to,t:0,dur:len/14};sfx('whoosh'in SFX?'whoosh':'jump');say(null,'Valio! Leidiesi lynu!');}});}
+  // --- triceratops riding ---
+  {const D=DK.decor.find(d=>d.kind==='trice');if(D){DX.trice=D;const st={pos:V(),r:3.2,cond:()=>!netRide,label:'joti triceratopsu 🦕',act:()=>{if(dLocalRide(D.P.root,[0,2.75,-.3],'triceratopso','nulipti nuo triceratopso')){sfx('moo');say(null,'Joji triceratopsu! F – nulipti.');}}};stations.push(st);DX.triceSt=st;}}
+  // --- pterodactyl taxi ---
+  {const px=10,pz=12,x=DW.x+px,y=G(px,pz);block(x,pz,3,3,2.5,mat(0x8a7a6a));put(GEO.cyl,M.trunk,x,y+3.5,pz,.12,2,.12);const P=makeDino('ptero',0xc06a4a,1.3);P.root.position.set(x,y+4.6,pz);scene.add(P.root);DX.taxiP=P;
+   const tg=tag('PTERO TAKSI $15','#ffd23f',.8);tg.position.set(x,y+6.4,pz);scene.add(tg);
+   const DEST=[['T-Rex karalystė',0,-90],['Drakonės karalystė',88,6],['Spinozauro karalystė',-80,6],['Megalodono prieplauka',3,44],['Ugnikalnis',96,-92],['Ugg kaimelis',-40,-20],['Laiko mašina',4,6]];
+   stations.push({pos:V(x,y,pz),r:3.4,label:'skristi pterodaktiliu ($15) 🦅',act:()=>openDialog({name:'Ptero taksi',role:'Skrydis – $15',color:'#ffd23f',icon:'🦅',text:'Kur skrendam? Pterodaktilis tave pakels ir nuneš per visą dinozaurų pasaulį!',tasks:[],
+     actions:DEST.map(([n,lx,lz])=>({label:n,disabled:money<15,onClick:()=>{closeDialog();tryLock();if(money<15)return;money-=15;$('money').textContent=money;saveGame(true);pteroFly(V(DW.x+lx,0,lz),n);}})).concat([{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}])})});}
+  // --- fossil dig site ---
+  {const cx=58,cz=-74,y0=G(cx,cz);const sg=signPlane(['KASINĖJIMAI','F – kasti fosilijas'],4,1,{bg:'#6a4a2a',fg:'#ffffff'});sg.position.set(DW.x+cx,y0+2.4,cz+6);scene.add(sg);put(GEO.cyl,M.trunk,DW.x+cx-1.6,y0+1,cz+6,.08,2,.08);put(GEO.cyl,M.trunk,DW.x+cx+1.6,y0+1,cz+6,.08,2,.08);
+   for(let i=0;i<6;i++){const a=i/6*Math.PI*2,lx=cx+Math.cos(a)*4,lz=cz+Math.sin(a)*4,x=DW.x+lx,y=G(lx,lz);const m=put(GEO.sph,mat(0x8a6a3a),x,y,lz,1.1,.45,1.1);const D={m,ready:0,x,y,z:lz};DX.digs.push(D);
+     stations.push({pos:V(x,y,lz),r:2,cond:()=>D.ready<=0,label:'kasti 🦴',act:()=>digFossil(D)});}
+   for(let k=0;k<4;k++){const b=put(GEO.cyl,M.white,DW.x+cx+k-1.5,y0+.1,cz+rand(-1,1),.12,1.3,.12);b.rotation.set(1.57,rand(0,3),0);}}
+  // --- volcano with lava bombs (north-east) ---
+  {const vx=104,vz=-104,x=DW.x+vx,y=G(vx,vz);const cone=put(new THREE.CylinderGeometry(4,16,22,24,1,true),mat(0x3a2626,{roughness:.95}),x,y+10,vz);addCol(x,vz,18,18,y+6);addCol(x,vz,10,10,y+16);
+   const lv=put(GEO.cyl,M.lavaGlow,x,y+20.6,vz,3.8,.3,3.8);DX.vol=V(x,y+21,vz);const tg=tag('🌋 Dinozaurų ugnikalnis','#ff9f68',1);tg.position.set(x,y+25,vz);scene.add(tg);}
+  // --- waterfall + pond (north-west) ---
+  {const wx=-108,wz=-108,x=DW.x+wx,y=G(wx,wz);const fall=new THREE.Mesh(new THREE.PlaneGeometry(6,24),new THREE.MeshStandardMaterial({color:0x9fe0ff,transparent:true,opacity:.7,emissive:0x2a6fb0,emissiveIntensity:.3,side:THREE.DoubleSide}));fall.position.set(x-3,y+12,wz-3);fall.rotation.y=Math.PI/4;scene.add(fall);
+   const pond=new THREE.Mesh(new THREE.CircleGeometry(7,24),mat(0x3ec5ff,{transparent:true,opacity:.75,roughness:.1}));pond.rotation.x=-Math.PI/2;pond.position.set(x+2,y+.12,wz+2);scene.add(pond);
+   const foam=[];for(let i=0;i<8;i++)foam.push(put(GEO.sph,M.white,x-2+rand(-2,2),y+.4,wz-2+rand(-2,2),.5));anims.push(t=>{fall.material.emissiveIntensity=.25+Math.sin(t*6)*.08;foam.forEach((f,i)=>{f.position.y=y+.3+Math.abs(Math.sin(t*4+i))*.6;});});
+   const tg=tag('Krioklys','#9fe0ff',.8);tg.position.set(x+2,y+4,wz+2);scene.add(tg);}
+  // --- mud bath in the swamp ---
+  {const mx=-62,mz=14,x=DW.x+mx,y=G(mx,mz);const mud=new THREE.Mesh(new THREE.CircleGeometry(3.4,20),mat(0x5a3a1a,{roughness:.6}));mud.rotation.x=-Math.PI/2;mud.position.set(x,y+.08,mz);scene.add(mud);
+   const bub=[];for(let i=0;i<5;i++)bub.push(put(GEO.sph,mat(0x7a5a3a),x+rand(-2,2),y+.1,mz+rand(-2,2),.25));anims.push(t=>bub.forEach((b,i)=>{const k=(t*.8+i*.37)%1;b.scale.setScalar(.15+k*.3);b.position.y=y+.1+k*.15;}));
+   DX.mud={x,z:mz,r:3.2,in:false};const tg=tag('Purvo vonia 🛁','#c89a5a',.7);tg.position.set(x,y+2.4,mz);scene.add(tg);}
+}
+function pteroFly(dest,name){const P=makeDino('ptero',0xc06a4a,2.2);const st=player.pos.clone();P.root.position.copy(st).add(V(0,3,0));scene.add(P.root);
+  if(!dLocalRide(P.root,[0,-1.2,.2],'pterodaktilio','paleisti (kris!)')){scene.remove(P.root);return;}const d=Math.hypot(dest.x-st.x,dest.z-st.z);DX.ride={kind:'ptero',P,o:P.root,from:st.clone().add(V(0,3,0)),to:V(dest.x,terrainH(dest.x,dest.z)+3,dest.z),t:0,dur:Math.max(4,d/16),name};sfx('jump');say(null,'Skrendam į: '+name+'!');}
+function digFossil(D){D.ready=90;D.m.scale.set(1,.15,1);sfx('dig'in SFX?'dig':'pop');const r=Math.random();const F=r<.08?['🦖 T-Rex dantis',60]:r<.3?['🐚 Amonitas',30]:r<.6?['🦴 Kaulas',15]:['🪨 Akmenukas',5];
+  money+=F[1];$('money').textContent=money;saveGame(true);floaty(F[0]+' +$'+F[1],V(D.x,D.y+1,D.z));if(F[1]>=30)sfx('coin');save.fossils=(save.fossils||0)+1;}
+function spawnMeteor(){const p=player.pos,a=rand(0,6.28),r=rand(10,28),x=clamp(p.x+Math.cos(a)*r,DW.x-118,DW.x+118),z=clamp(p.z+Math.sin(a)*r,-118,118),gy=terrainH(x,z);if(gy<0)return;
+  const m=put(GEO.dode,mat(0xffa94a,{emissive:0xff6a1f,emissiveIntensity:1.2}),x+20,gy+60,z-10,.5);const tr2=new THREE.Mesh(new THREE.CylinderGeometry(.05,.5,6,8),new THREE.MeshBasicMaterial({color:0xffd23f,transparent:true,opacity:.6}));scene.add(tr2);
+  DX.meteors.push({m,tr:tr2,x,z,gy,t:0,landed:false,life:60});}
+function updateDino2(dt,t){if(!DX.built)return;const p=player.pos;
+  // rides
+  const R=DX.ride;if(R){if(!netRide||netRide.obj!==R.o){if(R.kind==='ptero')setTimeout(()=>scene.remove(R.P.root),3000);if(R.kind==='zip')scene.remove(R.o);DX.ride=null;}
+    else{R.t+=dt;const k=Math.min(1,R.t/R.dur);if(R.kind==='zip'){R.o.position.lerpVectors(R.from,R.to,k);if(k>=1){leaveRide();scene.remove(R.o);DX.ride=null;sfx('land');}}
+      else{const pos=V().lerpVectors(R.from,R.to,k);pos.y+=Math.sin(k*Math.PI)*28;R.o.position.copy(pos);R.o.rotation.y=Math.atan2(R.to.x-R.from.x,R.to.z-R.from.z);animDino(R.P,t*1.6,8,false);
+        if(k>=1){leaveRide();const P2=R.P;DX.ride=null;sfx('ding');floaty('🦅 '+R.name,player.pos);let tt=0;const fl=()=>{tt+=.05;P2.root.position.y+=.6;P2.root.position.x+=.4;if(tt<3)setTimeout(fl,50);else scene.remove(P2.root);};fl();}}}}
+  // trice station follows the walking triceratops
+  if(DX.triceSt&&DX.trice){const q=DX.trice.P.root.position;DX.triceSt.pos.set(q.x,q.y,q.z);}
+  // mushroom bounce
+  if(player.onGround&&!netRide)for(const M2 of DX.mush){if(Math.hypot(p.x-M2.x,p.z-M2.z)<1.5&&Math.abs(p.y-M2.top)<.35){player.vel.y=15.5;player.onGround=false;sfx('boing');M2.cap.scale.y=.35;break;}}
+  for(const M2 of DX.mush)M2.cap.scale.y+=(.55-M2.cap.scale.y)*Math.min(1,dt*6);
+  // dig sites regrow
+  for(const D of DX.digs)if(D.ready>0){D.ready-=dt;if(D.ready<=0)D.m.scale.set(1,1,1);}
+  // volcano lava bombs
+  if(DX.vol&&Math.hypot(p.x-DX.vol.x,p.z-DX.vol.z)<70){DX.volT-=dt;if(DX.volT<=0){DX.volT=rand(1.2,2.6);const b=put(GEO.sph,M.lavaGlow,DX.vol.x,DX.vol.y,DX.vol.z,.6);const a=rand(0,6.28),sp=rand(5,10);DX.bombs.push({m:b,v:V(Math.cos(a)*sp,rand(14,20),Math.sin(a)*sp)});}}
+  for(const B of DX.bombs.slice()){B.v.y-=22*dt;B.m.position.addScaledVector(B.v,dt);const gy=terrainH(B.m.position.x,B.m.position.z);
+    if(B.m.position.distanceTo(V(p.x,p.y+1,p.z))<1.6&&!player.rag&&!netRide){ragdoll(0,V(B.v.x*.3,5,B.v.z*.3));floaty('🔥 '+tr('Karšta!'),p);sfx('hit');}
+    if(B.m.position.y<gy){scene.remove(B.m);DX.bombs.splice(DX.bombs.indexOf(B),1);}}
+  // mud bath
+  if(DX.mud){const inn=Math.hypot(p.x-DX.mud.x,p.z-DX.mud.z)<DX.mud.r&&!netRide&&!player.inCar;if(inn&&!DX.mud.in){floaty('🛁 '+tr('Purvo vonia! Jėgos atgautos!'),p);sfx('splash');stamina.v=1;stamina.tired=false;}DX.mud.in=inn;if(inn)stamina.v=1;}
+  // cavemen idle
+  for(const c of DX.cave){c.v.armR.p.rotation.x=-.5+Math.sin(t*2+c.ph)*.5;c.v.tilt.rotation.z=Math.sin(t*1.5+c.ph)*.06;}
+  if(DX.taxiP)animDino(DX.taxiP,t,6,false);
+  // night meteor shower
+  if(hour>=20||hour<5){DX.metT-=dt;if(DX.metT<=0&&DX.meteors.length<4){DX.metT=rand(5,9);spawnMeteor();}}
+  for(const M2 of DX.meteors.slice()){M2.t+=dt;if(!M2.landed){const k=Math.min(1,M2.t/1.4);M2.m.position.set(M2.x+20*(1-k),M2.gy+.4+60*(1-k),M2.z-10*(1-k));M2.tr.position.copy(M2.m.position).add(V(5,3,-2.5).multiplyScalar(.6));M2.tr.lookAt(M2.m.position);M2.tr.rotateX(Math.PI/2);
+      if(k>=1){M2.landed=true;scene.remove(M2.tr);sfx('boom');floaty('☄',M2.m.position);}}
+    else{M2.life-=dt;M2.m.rotation.y+=dt;M2.m.material.emissiveIntensity=.6+Math.sin(t*5)*.4;
+      if(Math.hypot(p.x-M2.x,p.z-M2.z)<1.8&&Math.abs(p.y-M2.gy)<2.5){money+=25;$('money').textContent=money;saveGame(true);sfx('coin');floaty('☄ '+tr('Meteoritas!')+' +$25',p);M2.life=0;save.meteors=(save.meteors||0)+1;}
+      if(M2.life<=0){scene.remove(M2.m);DX.meteors.splice(DX.meteors.indexOf(M2),1);}}}
+}
 
 /* ---------- build ---------- */
 const kingTags=[];
@@ -6719,7 +6826,7 @@ const r2=x=>Math.round(x*100)/100;
 function netState(){const v=pc,o={t:'st',lb:myLbStats(),name:NET.name,body:prefs.body||0xff8a3d,wk:JSON.stringify(save.clothes.me.wear),
   p:[r2(v.root.position.x),r2(v.root.position.y),r2(v.root.position.z)],r:[r2(v.root.rotation.x),r2(v.root.rotation.y),r2(v.root.rotation.z)],sc:r2(v.root.scale.x),vis:v.root.visible?1:0,
   l:[r2(v.tilt.rotation.x),r2(v.tilt.rotation.y),r2(v.tilt.rotation.z)].concat(...LIMBS.map(k=>[r2(v[k].p.rotation.x),r2(v[k].p.rotation.z)]))};
-  if(netRide){o.rd=netRide.id;o.rs=netRide.idx;}if(player.inCar&&car&&car.root){o.ct=car.type;o.cp=[r2(car.root.position.x),r2(car.root.position.y),r2(car.root.position.z)];o.cy=r2(car.root.rotation.y);}return o;}
+  if(netRide&&!netRide.local){o.rd=netRide.id;o.rs=netRide.idx;}if(player.inCar&&car&&car.root){o.ct=car.type;o.cp=[r2(car.root.position.x),r2(car.root.position.y),r2(car.root.position.z)];o.cy=r2(car.root.rotation.y);}return o;}
 const angLerp=(a,b,k)=>{let d=b-a;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;return a+d*k;};
 function updateNet(dt){if(!NET.on)return;
   const k=Math.min(1,dt*12);
@@ -8239,6 +8346,8 @@ const ACH=[
  {id:'lolli',ic:'🍭',n:'Gerasis',d:'Pradžiugink visus liūdnus vaikus mieste',f:()=>ownsC('lollihat')},
  {id:'balloon',ic:'🎈',n:'Virš debesų',d:'Paskraidyk oro balionu',f:()=>!!(save.achFlags&&save.achFlags.balloon)},
  {id:'tmpass',ic:'🛂',n:'Laiko keliautojas',d:'Gauk laiko pasą profesoriaus laboratorijoje',f:()=>!!save.tmPass},
+ {id:'goldegg',ic:'🥚',n:'Auksinis kiaušinis',d:'Rask auksinį kiaušinį dinozaurų pasaulyje',f:()=>!!((save.dinoPick||{}).gold||[]).length},
+ {id:'meteor',ic:'☄',n:'Žvaigždžių rinkėjas',d:'Surink meteoritą dinozaurų pasaulio naktį',f:()=>(save.meteors||0)>=1},
  {id:'dino4',ic:'🦖',n:'Dinozaurų gelbėtojas',d:'Išgelbėk visus 4 dinozaurų pasaulio karalius',f:()=>Object.keys(save.dinoCrowns||{}).length>=4},
  {id:'secret',ic:'🎭',n:'Paslapčių medžiotojas',d:'Gauk bet kurį slaptą drabužį',f:()=>CLOTHES.some(c=>c.secret&&c.id!=='sockhat'&&c.id!=='socks'&&ownsC(c.id))}];
 function achFlag(k){if(!save.achFlags)save.achFlags={};if(!save.achFlags[k]){save.achFlags[k]=1;saveGame(true);}}
