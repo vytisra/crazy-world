@@ -421,7 +421,7 @@ body.touch #tClose:not([hidden]){display:block}
 <div id="achPanel" hidden><div id="achBox"><h2>🏆 Pasiekimai</h2><div class="sub" id="achSub"></div><div class="achList" id="achList"></div><div class="sub" style="margin:12px 0 0">G arba Esc – uždaryti</div></div></div>
 <div id="achToast"></div>
 <div id="pinHud" hidden></div>
-<div id="emoPanel" hidden><h3>😀 Emotes</h3><div class="emoGrid" id="emoGrid"></div><div style="font-size:11.5px;font-weight:700;opacity:.65;margin-top:8px">1–9 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti</div></div>
+<div id="emoPanel" hidden><h3>😀 Emotes</h3><div class="emoGrid" id="emoGrid"></div><div style="font-size:11.5px;font-weight:700;opacity:.65;margin-top:8px">1–0 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti</div></div>
 <div id="stam" style="opacity:0"><i></i></div>
 <div id="start" class="overlay">
   <div class="panel card">
@@ -517,7 +517,7 @@ Object.assign(I18N_EN,{"🏆 Pasiekimai": "🏆 Achievements", "G arba Esc – u
 Object.assign(I18N_EN,{"📌 Atsegti misijas nuo ekrano": "📌 Unpin missions from screen", "📌 Prisegti misijas ekrane": "📌 Pin missions on screen", "📌 Prisegtos misijos": "📌 Pinned missions"});
 Object.assign(I18N_EN,{"Online – žaidi kartu su draugais (iki 4 žaidėjų), net iš skirtingų kompiuterių: draugai atsidaro tą pačią žaidimo nuorodą, vienas sukuria lobby, kiti prisijungia.": "Online – play together with friends (up to 4 players), even from different computers: friends open the same game link, one creates a lobby, the others join."});
 Object.assign(I18N_EN,{"Skraidanti karvė": "Flying cow", "Gyvatėlė": "Snake", "Gaudyk kojines": "Catch the socks", "Space arba spustelk – plasnoti": "Space or click – flap", "Rodyklės arba WASD – sukti": "Arrows or WASD – turn", "A/D arba pelė – judinti krepšį": "A/D or mouse – move the basket", "Žaidimas baigtas!": "Game over!", "Taškai": "Score", "Rekordas": "Best", "Naujas rekordas!": "New record!", "Spustelk arba Space – žaisti dar": "Click or Space – play again"});
-Object.assign(I18N_EN,{"1–9 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–9 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Kazačiokas": "Russian kick dance", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
+Object.assign(I18N_EN,{"1–0 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–0 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Kazačiokas": "Russian kick dance", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
 Object.assign(I18N_EN,{"Lyderiai": "Leaderboard", "Greičiausiai perėjo žaidimą": "Fastest to beat the game", "Daugiausia pinigų": "Most money", "Dar niekas neperėjo žaidimo – surink 4 karūnas!": "Nobody has beaten the game yet – collect 4 crowns!", "Dar nėra rezultatų.": "No results yet.", "tu": "you", "Rodomi šio kompiuterio žaidėjai ir draugai tavo online lobby 🌐": "Shows players on this computer and friends in your online lobby 🌐"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
@@ -724,8 +724,19 @@ function dinoH(x,z){const lx=x-DW.x,lz=z-DW.z;
   const e=Math.max(Math.abs(lx),Math.abs(lz));if(e>126)h+=Math.pow((e-126)/20,2)*45;
   return h;}
 function dinoZone(x,z){const lx=x-DW.x,lz=z-DW.z;if(Math.hypot(lx,lz)<28)return'dhub';if(Math.abs(lz)>=Math.abs(lx))return lz<0?'drex':'dmega';return lx>0?'ddrag':'dspino';}
+/* ---------- v194: underground world terrain (far west, x<-600) ---------- */
+const UW={x:-1000,z:0,ceil:30};
+const UPADS=[{x:0,z:-100,r:13,h:1.2},{x:-90,z:60,r:13,h:1},{x:90,z:60,r:13,h:1.2}];
+function underH(x,z){const lx=x-UW.x,lz=z-UW.z;
+  let h=.7+.6*Math.sin(lx*.08)+.5*Math.sin(lz*.07+lx*.03)+.35*Math.sin(lx*.21+lz*.17);
+  const r=Math.hypot(lx,lz);if(r<24){const w=clamp((r-16)/8,0,1);h=h*w+.3*(1-w);}
+  for(const P of UPADS){const d=Math.hypot(lx-P.x,lz-P.z);if(d<P.r+8){const w=clamp((d-P.r)/8,0,1);h=P.h*(1-w)+h*w;}}
+  const e=Math.max(Math.abs(lx),Math.abs(lz));if(e>120)h+=Math.pow((e-120)/9,2)*30;
+  return Math.min(h,UW.ceil+2);}
+function underZone(x,z){const lx=x-UW.x,lz=z-UW.z;if(Math.hypot(lx,lz)<26)return'uhub';if(lz<0&&Math.abs(lx)<Math.abs(lz)*1.7)return'umole';return lx<0?'uworm':'uant';}
 function terrainH(x,z){
   if(x>600)return dinoH(x,z);
+  if(x<-600)return underH(x,z);
   let h=0;
   const rv=Math.hypot(x-VOL.x,z-VOL.z);
   if(rv<VOL.r){h=rv<VOL.cr?VOL.h-4:VOL.h*Math.pow((VOL.r-rv)/(VOL.r-VOL.cr),1.35);}
@@ -738,7 +749,7 @@ function terrainH(x,z){
   if(e>176)h+=Math.pow((e-176)/24,2)*42;
   return h;
 }
-function zoneAt(x,z){if(x>600)return dinoZone(x,z);const r=Math.hypot(x,z);if(r<46)return'hub';if(Math.abs(z)>=Math.abs(x))return z<0?'snow':'city';return x>0?'volcano':'desert';}
+function zoneAt(x,z){if(x>600)return dinoZone(x,z);if(x<-600)return underZone(x,z);const r=Math.hypot(x,z);if(r<46)return'hub';if(Math.abs(z)>=Math.abs(x))return z<0?'snow':'city';return x>0?'volcano':'desert';}
 function roadAt(x,z){
   const r=Math.hypot(x,z),ax=Math.abs(x),az=Math.abs(z);
   if(r<46){return(r>7&&(ax<3.5||az<3.5))?'hub':null;}
@@ -850,7 +861,7 @@ let lolliTexC=null;function lolliTex(){if(lolliTexC)return lolliTexC;const cv=do
   lolliTexC=new THREE.CanvasTexture(cv);return lolliTexC;}
 function makeLolli(s=1){const g=new THREE.Group();put(GEO.cyl,M.white,0,.3*s,0,.025*s,.6*s,.025*s,g);const tm=new THREE.MeshStandardMaterial({map:lolliTex(),roughness:.25});
   const d=new THREE.Mesh(new THREE.CylinderGeometry(.24*s,.24*s,.07*s,28),[mat(0xff5fa2,{roughness:.3}),tm,tm]);d.rotation.x=Math.PI/2;d.position.y=.78*s;d.castShadow=true;g.add(d);return g;}
-const HEAD_SPLIT=.5,SUIT_HEADS=['spidersuit_h','ninjasuit_h','knight_h','robotsuit_h','chicken_h','policesuit_h','yetisuit_h','strongsuit_h','cheesesuit_h'];
+const HEAD_SPLIT=.5,SUIT_HEADS=['spidersuit_h','ninjasuit_h','knight_h','robotsuit_h','chicken_h','policesuit_h','yetisuit_h','strongsuit_h','cheesesuit_h','dsuit_trex_h','dsuit_raptor_h','dsuit_trice_h','dsuit_stego_h','dsuit_ptero_h','dsuit_dragon_h','dsuit_cave_h','dsuit_mole_h'];
 function setHat(c,type){
   c.hat.clear();
   if(type&&SUIT_HEADS.includes(type)){const tv={back:new THREE.Group()};buildSuit(tv,type.slice(0,-2));const g=new THREE.Group();g.position.set(0,-1.03,-.42);
@@ -894,6 +905,10 @@ function setHat(c,type){
   else if(type==='trexhat'){const gm=mat(0x5a9a3a),g2=mat(0x3f7a2a);put(GEO.sph,gm,0,-.18,.08,.52,.46,.58,c.hat);put(GEO.sph,gm,0,-.28,.55,.38,.26,.42,c.hat);put(GEO.sph,g2,0,-.48,.5,.34,.12,.38,c.hat);
     for(let i=0;i<4;i++)for(const sx of[-1,1]){const t=put(GEO.cone,M.white,sx*.28,-.38,.32+i*.17,.05,.15,.05,c.hat);t.rotation.x=Math.PI;}for(const sx of[-1,1]){put(GEO.sph,M.white,sx*.3,.02,.42,.1,.1,.1,c.hat);put(GEO.sph,M.dark,sx*.3,.02,.5,.05,.05,.05,c.hat);}
     for(let i=0;i<4;i++)put(GEO.cone,mat(0xffd23f),0,.25-i*.08,-.1-i*.18,.07,.22,.07,c.hat);c.hat.rotation.z=0;}
+  else if(type==='dhat_egg'){const sm=mat(0xf4ecd8,{roughness:.6});const sh=put(new THREE.SphereGeometry(.46,16,8,0,Math.PI*2,0,Math.PI/2),sm,0,-.12,0,1,.85,1,c.hat);sh.material.side=THREE.DoubleSide;
+    for(let i=0;i<10;i++){const a=i/10*Math.PI*2,cn=put(GEO.cone,sm,Math.cos(a)*.42,-.13,Math.sin(a)*.42,.08,.16,.08,c.hat);cn.rotation.x=Math.PI;}for(let i=0;i<6;i++)put(GEO.sph,mat(0x9be564),Math.cos(i*1.1)*.3,.12+(i%2)*.08,Math.sin(i*1.1)*.3,.06,.06,.03,c.hat);c.hat.rotation.z=0;}
+  else if(type==='dhat_fossil'){const bm=mat(0xf4ecd8,{roughness:.5});for(let i=0;i<9;i++){const a=i/9*Math.PI*2;put(GEO.cyl,bm,Math.cos(a)*.38,.05,Math.sin(a)*.38,.04,.3+(i%2)*.12,.04,c.hat);put(GEO.sph,bm,Math.cos(a)*.38,.22+(i%2)*.06,Math.sin(a)*.38,.07,.07,.07,c.hat);}
+    const t=new THREE.Mesh(new THREE.TorusGeometry(.38,.05,6,20),M.gold);t.rotation.x=Math.PI/2;t.position.y=-.06;c.hat.add(t);put(GEO.sph,bm,0,.12,.42,.13,.12,.1,c.hat);for(const sx of[-1,1])put(GEO.sph,M.dark,sx*.05,.14,.5,.03,.03,.02,c.hat);c.hat.rotation.z=0;}
   else if(type==='lollihat'){const L=makeLolli(1.6);L.position.set(.05,-.2,0);L.rotation.z=-.15;c.hat.add(L);put(GEO.cyl,mat(0xff5fa2),0,-.05,0,.42,.12,.42,c.hat);c.hat.rotation.z=0;}
   else if(type==='banana'){const b=new THREE.Mesh(new THREE.TorusGeometry(.35,.1,8,16,Math.PI*1.1),mat(0xffe14a));b.position.y=.1;b.rotation.set(0,0,.4);b.castShadow=true;c.hat.add(b);c.hat.rotation.z=0;}
 }
@@ -903,6 +918,27 @@ const CLOTHES=[
   {id:'cowboy',slot:'hat',name:'Kaubojaus skrybėlė',price:30},
   {id:'chef',slot:'hat',name:'Virėjo kepurė',price:30},
   {id:'turban',slot:'hat',name:'🔒 Karavano turbanas',price:0,secret:true,power:'Dykumos vėjas – dykumoje bėgi 25% greičiau'},
+  {id:'dsuit_trex',slot:'back',suit:true,dino:true,name:'🦖 T-Rex kostiumas',price:400},
+  {id:'dsuit_trex_h',slot:'hat',dino:true,name:'🦖 T-Rex galva',price:150},
+  {id:'dsuit_raptor',slot:'back',suit:true,dino:true,name:'🦎 Raptoriaus kostiumas',price:350,power:'Raptorių greitis – bėgi 15% greičiau'},
+  {id:'dsuit_raptor_h',slot:'hat',dino:true,name:'🦎 Raptoriaus galva',price:120},
+  {id:'dsuit_trice',slot:'back',suit:true,dino:true,name:'🦏 Triceratopso kostiumas',price:350},
+  {id:'dsuit_trice_h',slot:'hat',dino:true,name:'🦏 Triceratopso galva',price:130},
+  {id:'dsuit_stego',slot:'back',suit:true,dino:true,name:'🦕 Stegozauro kostiumas',price:350},
+  {id:'dsuit_stego_h',slot:'hat',dino:true,name:'🦕 Stegozauro galva',price:130},
+  {id:'dsuit_ptero',slot:'back',suit:true,dino:true,name:'🦅 Pterodaktilio kostiumas',price:450,power:'Sklandymas – krisdamas laikyk Space ir lėtai sklandai'},
+  {id:'dsuit_ptero_h',slot:'hat',dino:true,name:'🦅 Pterodaktilio galva',price:150},
+  {id:'dsuit_dragon',slot:'back',suit:true,dino:true,name:'🐉 Drakono kostiumas',price:600},
+  {id:'dsuit_dragon_h',slot:'hat',dino:true,name:'🐉 Drakono galva',price:200},
+  {id:'dsuit_cave',slot:'back',suit:true,dino:true,secret:true,name:'🔒 Urvinio žmogaus kailis',price:0},
+  {id:'dsuit_cave_h',slot:'hat',dino:true,secret:true,name:'🔒 Urvinio žmogaus plaukai',price:0},
+  {id:'dsuit_mole',slot:'back',suit:true,dino:true,secret:true,name:'🔒 Kurmio kostiumas',price:0},
+  {id:'dsuit_mole_h',slot:'hat',dino:true,secret:true,name:'🔒 Kurmio galva su akiniais',price:0},
+  {id:'dhat_egg',slot:'hat',dino:true,name:'🥚 Kiaušinio lukštas',price:80},
+  {id:'dhat_fossil',slot:'hat',dino:true,secret:true,name:'🔒 Fosilijų karūna',price:0},
+  {id:'dface_bone',slot:'face',dino:true,name:'🦴 Kaulų akiniai',price:70},
+  {id:'dfeet_claw',slot:'feet',dino:true,name:'🦶 Dinozauro letenos',price:90},
+  {id:'dback_tail',slot:'back',dino:true,name:'🦎 Dinozauro uodega',price:100},
   {id:'trexhat',slot:'hat',name:'🔒 T-Rex galva',price:0,secret:true,power:'Riaumojimas – spausk E ir visi aplink išsigąsta'},
   {id:'lollihat',slot:'hat',name:'🔒 Milžiniškas čiulpinukas',price:0,secret:true,power:'Cukraus šuolis – šoki 25% aukščiau'},
   {id:'banana',slot:'hat',name:'🔒 Slapta banano kepurė',price:0,secret:true,power:'Bananų prisilietimas – paliesk gyventoją ir jis tampa bananu'},
@@ -1012,7 +1048,7 @@ function grantMummy(){const me=save.clothes.me;
   openDialog({name:'Piramidės paslaptis',role:'Kodas teisingas',color:'#e9dfc4',icon:'🧟',text:'Piramidės sienos sudreba, iš sarkofago iškrenta seni tvarsčiai… Gavai slaptus mumijos drabužius ir MUMIJOS MAŠINĄ! Drabužius jau dėvi (nusiimti gali drabužių parduotuvėje), o mašiną iškviesk klavišu I.',tasks:[{b:'GALVA',t:'Slapti mumijos tvarsčiai',chip:'🧟'},{b:'NUGARA',t:'Slaptas mumijos apvyniojimas',chip:'🧟'},{b:'TRANSPORTAS',t:'Mumijos mašina',chip:'🧟'}]});
   say(null,'Gavai slaptus mumijos drabužius ir mumijos mašiną!');}
 const FLY_TIME=5,FLY_REST=3;
-const POWER_SHORT={trexhat:'Riaumojimas',policesuit:'Policininkas',lollihat:'Cukraus šuolis',turban:'Dykumos vėjas',yetisuit:'Ječio šiluma',strongsuit:'Stiprulis',spidersuit:'Sienos',ninjasuit:'Ištvermė',sockhat:'Ne crazy',gnomeskin:'Mažiukas',iceboots:'Ledo čiuožimas',lavamummy:'Mumijos prisilietimas',lavamummywrap:'Mumijos prisilietimas',volcanohat:'Išsiveržimas (E)',banana:'Bananų prisilietimas',mummy:'Mumijos prisilietimas',mummywrap:'Mumijos prisilietimas',propeller:'Skraidymas',viking:'Neparverčiamas',clown:'Aukšti šuoliai',shades:'Naktinis matymas',backpack:'Monetų magnetas',cape:'Greitis',wings:'Sklandymas'};
+const POWER_SHORT={dsuit_raptor:'Raptorių greitis',dsuit_ptero:'Sklandymas',trexhat:'Riaumojimas',policesuit:'Policininkas',lollihat:'Cukraus šuolis',turban:'Dykumos vėjas',yetisuit:'Ječio šiluma',strongsuit:'Stiprulis',spidersuit:'Sienos',ninjasuit:'Ištvermė',sockhat:'Ne crazy',gnomeskin:'Mažiukas',iceboots:'Ledo čiuožimas',lavamummy:'Mumijos prisilietimas',lavamummywrap:'Mumijos prisilietimas',volcanohat:'Išsiveržimas (E)',banana:'Bananų prisilietimas',mummy:'Mumijos prisilietimas',mummywrap:'Mumijos prisilietimas',propeller:'Skraidymas',viking:'Neparverčiamas',clown:'Aukšti šuoliai',shades:'Naktinis matymas',backpack:'Monetų magnetas',cape:'Greitis',wings:'Sklandymas'};
 const hasPow=id=>{const w=save.clothes.me.wear;return w.hat===id||w.face===id||w.back===id||w.feet===id;};
 function updatePowersHud(){const w=save.clothes.me.wear,l=[...new Set([w.hat,w.face,w.back,w.feet].filter(x=>x&&POWER_SHORT[x]).map(x=>POWER_SHORT[x]))];const el=$('powers');el.hidden=!l.length;el.textContent='⚡ '+l.join(' · ');}
 const SLOT_NAMES={hat:'Galva',face:'Veidas',back:'Nugara',feet:'Kojos'};
@@ -1021,6 +1057,7 @@ function buildFace(v,type){if(type==='mamaface'){if(!v.face){v.face=new THREE.Gr
     for(let k=0;k<3;k++){const l=put(GEO.box,M.dark,sx*(.12+k*.04),.12,.38,.015,.06,.01,v.face);l.rotation.z=sx*(.3+k*.25);}}return;}
   if(!v.face){v.face=new THREE.Group();v.face.position.set(0,1.85,0);v.tilt.add(v.face);}
   v.face.clear();const dz=v.isDog?.17:0;
+  if(type==='dface_bone'){const bm=mat(0xf4ecd8);for(const sx of[-1,1]){const r=new THREE.Mesh(new THREE.TorusGeometry(.11,.025,6,14),bm);r.position.set(sx*.15,.07,.38+dz);v.face.add(r);}const br=put(GEO.cyl,bm,0,.09,.39+dz,.02,.12,.02,v.face);br.rotation.z=Math.PI/2;return;}
   if(type==='shades'){const k=M.dark;for(const sx of[-1,1])put(GEO.box,k,sx*.15,.07,.37,.22,.14,.05,v.face);put(GEO.box,k,0,.09,.38,.12,.03,.03,v.face);
     for(const sx of[-1,1])put(GEO.box,k,sx*.3,.08,.2,.03,.03,.32,v.face);}
   else if(type==='mustache'){const m=mat(0x4a2c17);for(const sx of[-1,1]){const t=put(GEO.sph,m,sx*.1,-.13-(v.isDog?.03:0),.36+dz,.12,.05,.06,v.face);t.rotation.z=sx*.35;}}
@@ -1030,7 +1067,7 @@ function suitSleeves(v,am,lm){if(!v.armL||!v.legL)return null;if(!v.suitG)v.suit
   v.suitG.forEach((g,i)=>{const arm=i<2,len=arm?.42:.28,r=arm?.155:.19,s=new THREE.Mesh(new THREE.CapsuleGeometry(r,len,4,8),arm?am:lm);s.position.y=arm?-.275:-.22;s.castShadow=true;g.add(s);});return v.suitG;}
 function suitShell(v,m,lm){const sh=new THREE.Mesh(new THREE.CapsuleGeometry(.5,.55,6,14),m);sh.position.set(0,-.1,.42);sh.castShadow=true;v.back.add(sh);return suitSleeves(v,m,lm||m);}
 const HEAD=[0,.7,.42];
-function buildSuit(v,type){const B=v.back,glow=(c,i)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:i||1});
+function buildSuit(v,type){if(type&&type.startsWith('dsuit_')){buildDinoSuit(v,type);return;}const B=v.back,glow=(c,i)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:i||1});
   if(type==='yetisuit'){const fur=mat(0xf2f6ff,{roughness:1}),bl=mat(0x9fc5e8,{roughness:.8});const g=suitShell(v,fur);
     for(let i=0;i<22;i++){const a=i/22*Math.PI*2,yy=-.55+(i%5)*.25;put(GEO.sph,fur,Math.cos(a)*.5,yy,.42+Math.sin(a)*.5,.16,.2,.16,B);}
     const hood=put(GEO.sph,fur,0,.78,.36,.48,.46,.42,B);put(GEO.sph,bl,0,.62,.8,.24,.18,.06,B);for(const sx of[-1,1]){put(GEO.cone,mat(0xdfe8f5),sx*.28,1.16,.3,.08,.22,.08,B).rotation.z=-sx*.4;}
@@ -1116,6 +1153,7 @@ function buildSuit(v,type){const B=v.back,glow=(c,i)=>new THREE.MeshStandardMate
 function buildBack(v,type){
   if(!v.back){v.back=new THREE.Group();v.back.position.set(0,1.15,-.42);v.tilt.add(v.back);}
   v.back.clear();if(v.suitG)for(const g of v.suitG)g.clear();
+  if(type==='dback_tail'){const m=mat(0x5a9a3a);const tl=put(GEO.cone,m,0,-.6,-.3,.25,1.4,.25,v.back);tl.rotation.x=-Math.PI/2-.3;for(let i=0;i<4;i++)put(GEO.cone,mat(0xffd23f),0,-.45-i*.04,.1-i*.3,.06,.18,.06,v.back);return;}
   if(type&&CLOTHES.some(c=>c.id===type&&c.suit)){buildSuit(v,type);if(SUIT_HEADS.includes(type+'_h'))for(const o of [...v.back.children])if(o.position.y>=HEAD_SPLIT)v.back.remove(o);return;}
   if(type==='pressuit'){const dk=mat(0x2b2f45,{roughness:.6});
     const jk=new THREE.Mesh(new THREE.CylinderGeometry(.5,.5,.85,18,1,true,Math.PI*.18,Math.PI*1.64),dk);jk.material.side=THREE.DoubleSide;jk.position.set(0,-.1,.42);jk.rotation.y=Math.PI;v.back.add(jk);
@@ -1151,6 +1189,7 @@ const wearAnims=new Map();
 function buildFeet(v,type){if(!v.legL||!v.legL.tip)return;
   if(!v.feetG){v.feetG=[v.legL,v.legR].map(l=>{const g=new THREE.Group();l.tip.add(g);return g;});}
   for(const g of v.feetG)g.clear();
+  if(type==='dfeet_claw'){const m=mat(0x5a9a3a);for(const g of v.feetG){put(GEO.sph,m,0,.05,.1,.2,.14,.3,g);for(let i=-1;i<=1;i++){const c=put(GEO.cone,M.white,i*.09,.03,.38,.04,.14,.04,g);c.rotation.x=Math.PI/2;}}return;}
   if(type==='socks'){const w=mat(0xffffff,{roughness:.8});for(const g of v.feetG){put(GEO.cyl,w,0,.25,0,.19,.4,.19,g);put(GEO.sph,w,0,.05,.12,.17,.12,.26,g);
       for(const [y,cl] of[[.32,0xe63946],[.22,0x3ec5ff]])put(GEO.cyl,mat(cl),0,y,0,.2,.05,.2,g);put(GEO.sph,mat(0xe63946),0,.05,.33,.12,.1,.08,g);}}
   else if(type==='iceboots'){const ice=mat(0xbfefff,{roughness:.05,metalness:.2,transparent:true,opacity:.85,emissive:0x3aa8ff,emissiveIntensity:.25}),blade=mat(0xe8f2ff,{metalness:.9,roughness:.15});
@@ -1169,7 +1208,7 @@ function openClothesShop(tab){
   freeCursor();
   cam.yaw=player.yaw+.6;cam.pitch=.15;renderShop();
 }
-function closeClothesShop(){shopOpen=false;$('shop').hidden=true;canvas.focus();}
+function closeClothesShop(){shopOpen=false;shopDino=false;$('shop').hidden=true;canvas.focus();}
 function renderShop(){
   const who=clothesFor(shopTab),isDog=shopTab!=='me',hasDog=ownsPet();
   const tabs=$('shopTabs');tabs.innerHTML='';
@@ -1178,10 +1217,10 @@ function renderShop(){
   $('shopNote').textContent=isDog?'Drabužiai gyvūnėliui '+petName(shopTab)+' perkami atskirai. Jis juos dėvės visur. Galios veikia tik tau.':hasDog?'Drabužiai su ⚡ turi specialią galią – ji veikia, kol juos dėvi. Skirtukuose su gyvūnėlių vardais aprenk savo gyvūnėlius.':'Drabužiai su ⚡ turi specialią galią – ji veikia, kol juos dėvi. Nusipirkęs gyvūnėlį, galėsi aprengti ir jį.';
   const list=$('shopList');list.innerHTML='';
   for(const slot of['hat','face','back','feet']){
-    if(!CLOTHES.some(c=>c.slot===slot&&!(c.suit&&isDog)&&!(c.secret&&(isDog||!who.owned.includes(c.id)))))continue;
+    if(!CLOTHES.some(c=>c.slot===slot&&(shopDino?!!c.dino:(!c.dino||who.owned.includes(c.id)))&&!(c.suit&&isDog)&&!(c.secret&&(isDog||!who.owned.includes(c.id)))))continue;
     const h=document.createElement('h3');h.textContent=SLOT_NAMES[slot];list.append(h);
     const grid=document.createElement('div');grid.className='items';list.append(grid);
-    for(const it of CLOTHES.filter(c=>c.slot===slot)){
+    for(const it of CLOTHES.filter(c=>c.slot===slot&&(shopDino?!!c.dino:(!c.dino||who.owned.includes(c.id))))){
       if(it.secret&&(isDog||!who.owned.includes(it.id)))continue;if(it.suit&&isDog)continue;
       const own=who.owned.includes(it.id)||it.price===0&&!isDog,on=who.wear[slot]===it.id;
       const card=document.createElement('div');card.className='item'+(on?' on':'');
@@ -2812,7 +2851,7 @@ function updatePlayer(dt,t){
   if(running&&cocoaT<=0&&dateT<=0){stamina.v=Math.max(0,stamina.v-dt/((hasPow('ninjasuit')?10:5)*(1+(save.strength||0)*.05)));if(stamina.v<=0){stamina.tired=true;floaty('Pavargau…',p.pos);}}else stamina.v=Math.min(1,stamina.v+dt/7.5);
   const se=$('stam');se.style.opacity=stamina.v<1?'1':'0';se.firstChild.style.width=(stamina.v*100)+'%';se.classList.toggle('tired',stamina.tired);
   p.prevVel.copy(p.vel);
-  if(!p.rag){const acc=p.onGround?(ice||boots?1.4:13):3.5,k=1-Math.exp(-acc*dt);const hr=pets.get('horse'),rs=(hasPow('cape')?9.9:6.8)*(hr&&hr.onMe?.8:1)*(boots?1.35:1)*(running?1.55:1)*(lavaIceT>0?1.4:1)*(hasPow('yetisuit')?1.2:1)*(hasPow('turban')&&zoneAt(p.pos.x,p.pos.z)==='desert'?1.25:1);p.vel.x+=(dir.x*rs-p.vel.x)*k;p.vel.z+=(dir.z*rs-p.vel.z)*k;}
+  if(!p.rag){const acc=p.onGround?(ice||boots?1.4:13):3.5,k=1-Math.exp(-acc*dt);const hr=pets.get('horse'),rs=(hasPow('cape')?9.9:6.8)*(hr&&hr.onMe?.8:1)*(boots?1.35:1)*(running?1.55:1)*(lavaIceT>0?1.4:1)*(hasPow('yetisuit')?1.2:1)*(hasPow('dsuit_raptor')?1.15:1)*(hasPow('turban')&&zoneAt(p.pos.x,p.pos.z)==='desert'?1.25:1);p.vel.x+=(dir.x*rs-p.vel.x)*k;p.vel.z+=(dir.z*rs-p.vel.z)*k;}
   else if(p.onGround){const f=Math.exp(-2.5*dt);p.vel.x*=f;p.vel.z*=f;}
   const hanging=isHanging();climbCool=Math.max(0,climbCool-dt);
   if(ctrl&&jumpPressed&&hanging){
@@ -2830,7 +2869,7 @@ function updatePlayer(dt,t){
   if(wantFly&&p.flyFuel>0){
     p.flying=true;const ceil=terrainH(p.pos.x,p.pos.z)+45;
     p.vel.y+=G*dt;const tv=p.pos.y<ceil?3.2:0;p.vel.y+=(tv-p.vel.y)*(1-Math.exp(-2.5*dt));
-  }else if(ctrl&&hasPow('wings')&&!p.onGround&&keys.Space&&p.vel.y<-2.2){p.vel.y=-2.2;}
+  }else if(ctrl&&(hasPow('wings')||hasPow('dsuit_ptero'))&&!p.onGround&&keys.Space&&p.vel.y<-2.2){p.vel.y=-2.2;}
   const wasGround=p.onGround;
   p.pos.addScaledVector(p.vel,dt);
   const hit=pushOut(p.pos,p.pos.y,1.9,.5);
@@ -2851,7 +2890,7 @@ function updatePlayer(dt,t){
     if(len>1.3){d.divideScalar(len);p.pos.addScaledVector(d,1.3-len);const rn=V().subVectors(p.vel,av).dot(d);if(rn>0)p.vel.addScaledVector(d,-rn);}
   }
   if(isHanging()){const g2=groundAt(p.pos.x,p.pos.z,p.pos.y+.5,.3);if(p.pos.y<g2){p.pos.y=g2;if(p.vel.y<0)p.vel.y=0;p.onGround=true;}else if(p.pos.y>g2+.05)p.onGround=false;}
-  if(p.pos.x>600){p.pos.x=clamp(p.pos.x,DW.x-146,DW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else{p.pos.x=clamp(p.pos.x,-194,194);p.pos.z=clamp(p.pos.z,-194,194);}
+  if(p.pos.x>600){p.pos.x=clamp(p.pos.x,DW.x-146,DW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else if(p.pos.x<-600){p.pos.x=clamp(p.pos.x,UW.x-146,UW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else{p.pos.x=clamp(p.pos.x,-194,194);p.pos.z=clamp(p.pos.z,-194,194);}
   if(p.pos.y<-40){p.pos.copy(homeSpawn());p.vel.set(0,0,0);}
   // facing
   if(!p.rag){const armUp=hands.L.active||hands.R.active;
@@ -2969,7 +3008,7 @@ function updateBodies(dt,t){
         if(o.hop){o.hop-=dt;if(o.hop<=0){const a=rand(0,6.28);o.vel.set(Math.cos(a)*3.5,7.5,Math.sin(a)*3.5);o.hop=rand(1.5,3.5);}}}
       const hit=pushOut(o.pos,o.pos.y-o.r,o.r*2,o.r);
       if(hit){const vn=o.vel.x*hit.x+o.vel.z*hit.z;if(o.fragile&&vn<-3.2)o.broke='siena';if(vn<0){o.vel.x-=(1+o.bounce)*vn*hit.x;o.vel.z-=(1+o.bounce)*vn*hit.z;}}
-      if(o.pos.x>600){o.pos.x=clamp(o.pos.x,DW.x-146,DW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else{o.pos.x=clamp(o.pos.x,-194,194);o.pos.z=clamp(o.pos.z,-194,194);}if(o.pos.y<-30)o.pos.y=50;
+      if(o.pos.x>600){o.pos.x=clamp(o.pos.x,DW.x-146,DW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else if(o.pos.x<-600){o.pos.x=clamp(o.pos.x,UW.x-146,UW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else{o.pos.x=clamp(o.pos.x,-194,194);o.pos.z=clamp(o.pos.z,-194,194);}if(o.pos.y<-30)o.pos.y=50;
       // player
       const p=player;if(!p.inCar){const dx=o.pos.x-p.pos.x,dz=o.pos.z-p.pos.z,d=Math.hypot(dx,dz),rr=o.r+.5;
         if(d<rr&&d>1e-4&&o.pos.y-o.r<p.pos.y+1.9&&o.pos.y+o.r>p.pos.y+.1){
@@ -3131,9 +3170,9 @@ const ownedPets=()=>PET_IDS.filter(i=>save.owned[i]);
 function activePets(){if(!Array.isArray(save.active))save.active=ownedPets();return save.active.filter(i=>save.owned[i]);}
 function spawnPet(id,near){
   if(pets.has(id))return pets.get(id);
-  const base=near||player.pos,a=player.yaw+Math.PI*.75+pets.size*.9,x=clamp(base.x+Math.sin(a)*2.5,-190,190),z=clamp(base.z+Math.cos(a)*2.5,-190,190);
+  const base=near||player.pos,a=player.yaw+Math.PI*.75+pets.size*.9,x=Math.abs(base.x)>600?base.x+Math.sin(a)*2.5:clamp(base.x+Math.sin(a)*2.5,-190,190),z=Math.abs(base.x)>600?base.z+Math.cos(a)*2.5:clamp(base.z+Math.cos(a)*2.5,-190,190);
   const info=PET_INFO[id];
-  const n=addNPC({kind:'dog',petId:id,x,z,half:id==='penguin'?.7:id==='cat'?1.4:id==='tiger'?1.5:.72,r:.4,speed:6,vis:id==='penguin'?makePetPenguin():id==='unicorn'?makeUnicorn():id==='horse'?makePetHorse():id==='tiger'?makeTiger():id==='cat'?makeCat():id==='volpet'?makeVolPet():id==='giraffe'?makeGiraffe():makeDog(),name:petName(id),grabbable:true,lines:info.lines});
+  const n=addNPC({kind:'dog',petId:id,x,z,half:id==='penguin'?.7:id==='cat'?1.4:id==='tiger'?1.5:.72,r:.4,speed:6,vis:id==='penguin'?makePetPenguin():id==='unicorn'?makeUnicorn():id==='horse'?makePetHorse():id==='tiger'?makeTiger():id==='cat'?makeCat():id==='volpet'?makeVolPet():id==='giraffe'?makeGiraffe():id.startsWith('d_')?makeDinoPet(id):makeDog(),name:petName(id),grabbable:true,lines:info.lines});
   n.state='follow';n.vis.npc=n;applyOutfit(n.vis,petClothes(id).wear);makeNameTag(n);pets.set(id,n);dog=pets.values().next().value;return n;
 }
 function removePet(id){const n=pets.get(id);if(!n)return;if(n.nameTag)scene.remove(n.nameTag);wearAnims.delete(n.vis);scene.remove(n.vis.root);npcs.splice(npcs.indexOf(n),1);pets.delete(id);dog=pets.size?pets.values().next().value:null;}
@@ -3149,7 +3188,7 @@ function setMainHome(h){save.home=h;saveGame(true);syncHomePets();sfx('win');flo
 function spawnHomePet(id,at){
   const R=homeRoom();if(homePets.has(id)||!R.built)return;
   const x=at?at.x:R.x+rand(-R.hw,R.hw),z=at?at.z:R.z+rand(-R.hd,R.hd);
-  const n=addNPC({kind:'homepet',petId:id,x,z,half:id==='penguin'?.7:id==='cat'?1.4:id==='tiger'?1.5:.72,r:.4,range:3.5,speed:1.4,vis:id==='penguin'?makePetPenguin():id==='unicorn'?makeUnicorn():id==='horse'?makePetHorse():id==='tiger'?makeTiger():id==='cat'?makeCat():id==='volpet'?makeVolPet():id==='giraffe'?makeGiraffe():makeDog(),name:petName(id),grabbable:true,lines:PET_INFO[id].lines});
+  const n=addNPC({kind:'homepet',petId:id,x,z,half:id==='penguin'?.7:id==='cat'?1.4:id==='tiger'?1.5:.72,r:.4,range:3.5,speed:1.4,vis:id==='penguin'?makePetPenguin():id==='unicorn'?makeUnicorn():id==='horse'?makePetHorse():id==='tiger'?makeTiger():id==='cat'?makeCat():id==='volpet'?makeVolPet():id==='giraffe'?makeGiraffe():id.startsWith('d_')?makeDinoPet(id):makeDog(),name:petName(id),grabbable:true,lines:PET_INFO[id].lines});
   n.pos.y=R.y+n.half+.2;n.home=V(R.x+clamp(x-R.x,-R.hw,R.hw),0,R.z+clamp(z-R.z,-R.hd,R.hd));
   n.vis.npc=n;applyOutfit(n.vis,petClothes(id).wear);makeNameTag(n);homePets.set(id,n);
 }
@@ -5583,7 +5622,7 @@ function updateNPCs(dt,t){
         else n.vel.y=0;}
       const hit=pushOut(n.pos,n.pos.y-n.half,n.half*2,n.r);if(hit&&n.state==='walk'){n.state='idle';n.timer=.4;}
       if(hit&&n.kind==='dog'&&n.vel.y===0)n.vel.y=7.5;
-      if(n.pos.x>600){n.pos.x=clamp(n.pos.x,DW.x-146,DW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else{n.pos.x=clamp(n.pos.x,-194,194);n.pos.z=clamp(n.pos.z,-194,194);}if(n.pos.y<-30)n.pos.set(n.home.x,terrainH(n.home.x,n.home.z)+3,n.home.z);
+      if(n.pos.x>600){n.pos.x=clamp(n.pos.x,DW.x-146,DW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else if(n.pos.x<-600){n.pos.x=clamp(n.pos.x,UW.x-146,UW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else{n.pos.x=clamp(n.pos.x,-194,194);n.pos.z=clamp(n.pos.z,-194,194);}if(n.pos.y<-30)n.pos.set(n.home.x,terrainH(n.home.x,n.home.z)+3,n.home.z);
       if(!player.inCar){const dx=n.pos.x-player.pos.x,dz=n.pos.z-player.pos.z,d=Math.hypot(dx,dz),rr=n.r+.5;
         if(d<rr&&d>1e-4&&Math.abs(n.pos.y-n.half-player.pos.y)<1.5){n.pos.x=player.pos.x+dx/d*rr;n.pos.z=player.pos.z+dz/d*rr;}}
     }
@@ -5626,10 +5665,10 @@ function spawnCar(){
   const blocked=(x,z)=>boxes.some(b=>b.top>player.pos.y+1.2&&b.bot<player.pos.y+2.5&&x>b.x0-1.8&&x<b.x1+1.8&&z>b.z0-1.8&&z<b.z1+1.8);
   let x=player.pos.x,z=player.pos.z;
   const type=save.owned[save.ride]?save.ride:'car',SD=(VEH[type]&&VEH[type].spawnD)||4.5;
-  for(const da of[0,Math.PI/2,-Math.PI/2,Math.PI,Math.PI/4,-Math.PI/4]){const a=player.yaw+da,dw=player.pos.x>600,cx=dw?clamp(player.pos.x+Math.sin(a)*SD,DW.x-140,DW.x+140):clamp(player.pos.x+Math.sin(a)*SD,-185,185),cz=clamp(player.pos.z+Math.cos(a)*SD,dw?-140:-185,dw?140:185);
+  for(const da of[0,Math.PI/2,-Math.PI/2,Math.PI,Math.PI/4,-Math.PI/4]){const a=player.yaw+da,dw=player.pos.x>600,uw=player.pos.x<-600,cx=dw?clamp(player.pos.x+Math.sin(a)*SD,DW.x-140,DW.x+140):uw?clamp(player.pos.x+Math.sin(a)*SD,UW.x-140,UW.x+140):clamp(player.pos.x+Math.sin(a)*SD,-185,185),cz=clamp(player.pos.z+Math.cos(a)*SD,dw||uw?-140:-185,dw||uw?140:185);
     if(SD>10||!blocked(cx,cz)){x=cx;z=cz;break;}}
   if(car&&car.type!==type){scene.remove(car.root);car=null;}
-  if(!car){const c=type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():makeCar(0xff5fa2);scene.add(c.root);car=Object.assign(c,{type,P:VEH[type],pos:V(),yaw:0,speed:0,vy:0,steer:0,bounce:0,bv:0,pitch:0});}
+  if(!car){const c=type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():isDinoVeh(type)?makeDinoVeh(type):makeCar(0xff5fa2);scene.add(c.root);car=Object.assign(c,{type,P:VEH[type],pos:V(),yaw:0,speed:0,vy:0,steer:0,bounce:0,bv:0,pitch:0});}
   if(save.paint&&save.paint[type])applyPaint(car,save.paint[type]);
   car.pos.set(x,groundAt(x,z,player.pos.y+1.5)+2.5,z);car.yaw=player.yaw+Math.PI/2;car.speed=0;car.vy=0;car.bounce=-.6;car.bv=0;
   sfx('pop');floaty(type==='moto'?'Tavo motociklas!':type==='heli'?'Tavo sraigtasparnis!':type==='quad'?'Tavo keturatis!':type==='cow'?'Tavo skraidanti karvė! Mū!':type==='volcar'?'Tavo ugnikalnio mašina!':type==='trunkcar'?'Tavo mašina su bagažine!':type==='flipcar'?'Tavo apsivertusi mašina!':type==='mummycar'?'Tavo mumijos mašina! Mmmh…':type==='lavamummycar'?'Tavo lavos mumijos mašina! 🔥':type==='bananacar'?'Tavo banano mašina! 🍌':type==='lavaf1'?'Tavo LAVOS FORMULĖ! 🔥':type==='wingcar'?'Tavo mašina su sparnais! Space – skristi':type==='limo'?'Tavo limuzinas!':type==='bigmoto'?'Tavo MILŽINIŠKAS motociklas!':type==='lampcar'?'Tavo Džino lempa su ratais!':type==='clowncar'?'Tavo klauno mašina! BIP BIP!':type==='rocketcar'?'Tavo raketa! E – į kosmosą!':type==='saucer'?'Tavo ateivių lėkštė! Space – skristi, E – spindulys 🛸':type==='carpet'?'Tavo skraidantis kilimas! Space – skristi':type==='armchair'?'Tavo fotelis! Patogu…':type==='bed'?'Tavo lova! Važiuojam miegoti!':type==='tank'?'Tavo tankas! E – šauti!':type==='police'?'Tavo policijos mašina! E – švyturėliai!':type==='golfcart'?'Tavo golfo mašinėlė!':type==='horsecar'?'Ihaha! Arklys užšoko tau ant pečių – BĖK!':type==='snowcar'?'Tavo sniego mašina! ☃':type==='pengcar'?'Tavo pingvinas-mašina! Pyp! 🐧':type==='sledcar'?'Tavo rogutės su ratais! 🛷':type==='bigcar'?'Tavo MILŽINIŠKA mašina!':type==='crowncar'?'Tavo karūnos mašina! 👑':'Tavo mašina!',car.pos);
@@ -5652,14 +5691,14 @@ function updateCar(dt){
   const fx=Math.sin(c.yaw),fz=Math.cos(c.yaw);
   c.pos.x+=fx*c.speed*dt;c.pos.z+=fz*c.speed*dt;
   const hit=P.ghost?null:pushOut(c.pos,c.pos.y,2,P.rad);if(hit&&Math.abs(c.speed)>1){c.speed*=-.35;c.bv-=4;if(drive&&Math.abs(c.speed)>3)floaty('BUM!',c.pos);}
-  if(c.pos.x>600){c.pos.x=clamp(c.pos.x,DW.x-144,DW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else{c.pos.x=clamp(c.pos.x,-192,192);c.pos.z=clamp(c.pos.z,-192,192);}
+  if(c.pos.x>600){c.pos.x=clamp(c.pos.x,DW.x-144,DW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.x<-600){c.pos.x=clamp(c.pos.x,UW.x-144,UW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else{c.pos.x=clamp(c.pos.x,-192,192);c.pos.z=clamp(c.pos.z,-192,192);}
   if(c.type==='quad'){const want=drive&&keys.Space?32:grounded?0:14;c.spin=(c.spin||0)+(want-(c.spin||0))*Math.min(1,dt*(want>(c.spin||0)?2.2:1.2));
     c.spinAng=((c.spinAng||0)+c.spin*dt)%(Math.PI*2);
     if(c.spin>10){c.vy+=(drive&&keys.Space?G+9*(c.spin/32):G*.7)*dt;c.vy=clamp(c.vy,-4.5,9);if(c.pos.y>groundAt(c.pos.x,c.pos.z,c.pos.y,.5)+70)c.vy=Math.min(c.vy,0);
       if(grounded&&!c.airborne){c.airborne=true;floaty(pick(['Sukuosi!','Wiiii!','Skrendu kaip sraigtasparnis!']),c.pos);}}
     if(grounded&&c.spin<10)c.airborne=false;
     c.blur.material.opacity=clamp((c.spin-6)/26,0,1)*.35;c.ring.material.opacity=clamp((c.spin-6)/26,0,1)*.8;}
-  else if(c.type==='wingcar'||c.type==='carpet'||c.type==='saucer'){const up=drive&&keys.Space,tt=performance.now()/1000,cp=c.type!=='wingcar';
+  else if(c.type==='wingcar'||c.type==='carpet'||c.type==='saucer'||c.type==='pterocar'){const up=drive&&keys.Space,tt=performance.now()/1000,cp=c.type!=='wingcar'&&c.type!=='pterocar';
     if(up){c.vy+=(G+9)*dt;c.vy=Math.min(c.vy,7);if(grounded&&!c.airborne){c.airborne=true;sfx('boing');floaty(tr(pick(c.type==='saucer'?['Bip bup! Kylam!','Ateiviai skrenda!','Vuuuu!']:cp?['Skrendam kilimu!','Abra kadabra!','Šiuuu!']:['Skrendam!','Plast plast!','Kaip angelas!'])),c.pos.clone().add(V(0,2,0)));}}
     else if(!grounded){c.vy+=G*(cp?.9:.85)*dt;c.vy=Math.max(c.vy,cp?-2.2:-3);}
     if(c.pos.y>groundAt(c.pos.x,c.pos.z,c.pos.y,.5)+70)c.vy=Math.min(c.vy,0);
@@ -5904,7 +5943,7 @@ function nearestInteract(){
   if(NET.on)for(const [id,pr] of NET.peers){if(!pr.carMesh)continue;const cp=pr.carMesh.root.position,d=Math.hypot(cp.x-p.x,cp.z-p.z);if(d<((VEH[pr.carType]&&VEH[pr.carType].enterR)||4.6)&&Math.abs(cp.y-p.y)<3.5&&d<bd){bd=d;best={label:'sėsti pas '+pr.name+' (keleivis) 🚗',act:()=>enterRide(id,pr)};}}
   if(sled&&!sled.away&&Math.hypot(sled.pos.x-p.x,sled.pos.z-p.z)<2.6&&Math.abs(sled.pos.y-p.y)<2.5){bd=-1;best={label:'sėsti į roges',act:mountSled};}
   if(!inside&&!inPyr&&!inMus&&!inDis&&!inVil&&!inIgl&&!inOas&&!inVlh&&!inVin)for(const tr of traffic){const d=Math.hypot(tr.pos.x-p.x,tr.pos.z-p.z);if(d<3.4&&Math.abs(tr.pos.y-p.y)<3&&d<bd){bd=d;best={label:'kalbėtis su vairuotoju: '+tr.d.name,act:()=>{tr.speed=0;sfx(tr.d.penguin?'pyp':tr.d.dog?'bark':'honk');say(tr.d.name,pick(tr.d.lines),true);}};}}
-  for(const k of (p.x>600?dkings:kings)){const d=kingPos(k).distanceTo(p);if(d<k.talkR&&d<bd){bd=d;best={label:'kalbėtis: '+k.name,act:()=>openKing(k)};}}
+  for(const k of (p.x>600?dkings:p.x<-600?ukings:kings)){const d=kingPos(k).distanceTo(p);if(d<k.talkR&&d<bd){bd=d;best={label:'kalbėtis: '+k.name,act:()=>openKing(k)};}}
   if(car){const d=Math.hypot(car.pos.x-p.x,car.pos.z-p.z);if(d<(car.P.enterR||4.8)&&Math.abs(car.pos.y-p.y)<3){bd=-1;best={label:car.type==='moto'?'sėsti ant motociklo':car.type==='quad'?'sėsti ant keturačio':car.type==='cow'?'sėsti ant karvės':car.type==='saucer'?'sėsti į ateivių lėkštę':car.type==='carpet'?'sėsti ant kilimo':car.type==='armchair'?'atsisėsti į fotelį':car.type==='bed'?'atsigulti į lovą':car.type==='rocketcar'?'sėsti ant raketos':car.type==='tank'?'įlipti į tanką':car.type==='horsecar'?'leisti arkliui užjoti ant tavęs':car.type==='pengcar'?'joti ant pingvino':car.type==='heli'?'įlipti į sraigtasparnį':'įlipti į mašiną',act:enterCar};}}
   if(car&&car.lid&&!player.inCar){car.root.updateMatrixWorld(true);const rp=car.root.localToWorld(V(0,0,-2.6));if(Math.hypot(rp.x-p.x,rp.z-p.z)<1.7&&Math.abs(car.pos.y-p.y)<3){bd=-1;best={label:car.trunkOpen?'uždaryti bagažinę':'atidaryti bagažinę',act:toggleTrunk};}}
   for(const n of npcs){if(n.kind==='gnome'||n.state==='ride'||n.state==='held')continue;const d=n.onMe?2.4:n.pos.distanceTo(p);if(d<2.6&&d<bd){bd=d;best={label:n.kind==='homepet'?'pasiimti su savimi: '+n.name:n.kind==='dog'&&atHome()?'palikti namie: '+n.name:n.kind==='dog'&&n.petId==='horse'?(n.onMe?'nuleisti arklį: ':'leisti arkliui užjoti ant tavęs: ')+n.name:n.kind==='citizen'&&n.phone&&n.phone.visible?'atimti telefoną: gyventojas':n.lolli?(n.sad&&lolliHeld>0?tr('duoti čiulpinuką: ')+tr(n.name).toLowerCase():tr('kalbėtis: ')+tr(n.name).toLowerCase()):n.kind==='kid'?(n.happy?'pajuokinti dar: ':'pralinksminti: ')+tr(n.name).toLowerCase():n.kind==='dog'&&n.petId==='volpet'?'išsiveržk! – '+n.name:n.kind==='dog'?'paglostyti: '+n.name:'kalbėtis: '+tr(n.name).toLowerCase(),act:()=>{if(n.kind==='homepet'){takePetAlong(n.petId);return;}if(n.kind==='dog'&&atHome()){n.onMe=false;leavePetHome(n.petId);return;}if(n.kind==='dog'&&n.petId==='horse'){toggleHorseRide(n);return;}if(n.kind==='dog'&&n.petId==='volpet'){petErupt(n);return;}if(n.lolli){lolliKid(n);return;}if(n.kind==='kid'){cheerKid(n);return;}if(n.kind==='citizen'&&n.phone&&n.phone.visible){takePhone(n);return;}if(n.kind==='dog'&&n.petId==='tiger'){tigerRoar(n);return;}if(n.kind==='dog'){sfx(n.petId==='penguin'?'pyp':(n.petId==='unicorn'||n.petId==='horse')?'neigh':n.petId==='cat'?'meow':n.petId==='tiger'?'roar':'bark');say(n.name,pick(n.lines),true);n.vel.y=6.5;floaty('♥',n.pos);return;}say(n.name,pick(n.lines),true);n.yaw=Math.atan2(p.x-n.pos.x,p.z-n.pos.z);n.state='idle';n.timer=3;}};}}
@@ -5913,7 +5952,7 @@ function nearestInteract(){
 }
 function kingTaskList(k){const done=kingDone(k),lamp=k.name==='Džinas';return k.tasks.map(([b,t])=>({b,t,chip:done.includes(b)?'Atlikta ✓':k.prog&&k.prog(b)!=null?k.prog(b):lamp&&b==='Lempos paieška'?(save.lamp==='have'?'Turi lempą!':'Ieškok'):lamp&&b==='Oazės gaivinimas'?(save.genieWater||0)+'/'+WATER_NEED:lamp&&b==='Mumijos atgaivinimas'?(save.lamp!=='done'?'Reikia lempos':save.mantas==='follow'?'Mantas čia!':'Piramidėje'):b==='Pingvinukų gelbėjimas'?(save.pengBack||[]).length+'/'+LOST_PENGS.length:b===ICE_TASK?(kingIce?'Neši 🧊':'Muziejuje'):b==='Plyšių užkimšimas'?(save.volPlug||[]).length+'/'+LAVA_HOLES.length:b===SAC_TASK?Math.min(SAC_NEED,save.volSac||0)+'/'+SAC_NEED:b===TOUR_TASK?['Į piramidę','Į muziejų','Į sostą'][save.gnomeTour||0]:b===TL_TASK?(save.tlBack||[]).length+'/'+tLights.length:b===MUSPOP_TASK?Math.min(MUSPOP_NEED,save.musPop||0)+'/'+MUSPOP_NEED:b===PHONE_TASK?Math.min(PHONE_NEED,save.phonesTaken||0)+'/'+PHONE_NEED:b==='Rogučių lenktynės'?(save.owned.sled?'Ant kalno 🛷':'Reikia rogių'):'Netrukus'}));}
 function openKing(k){const done=kingDone(k),lamp=k.name==='Džinas';
-  const text=lamp&&save.mantas==='follow'&&save.lamp==='done'?'O! Mumija Mantas! Su mano lempa galiu jį atgaivinti – tik pasakyk!':lamp&&save.lamp==='have'?'Ar tai... MANO LEMPA?! Greičiau, atiduok ją man!':lamp&&save.lamp==='done'?'Mano lempa vėl su manimi! Bet dykuma vis dar crazy – man reikia dar pagalbos.':k.calmText&&((save.crowns&&save.crowns[k.name])||(save.dinoCrowns&&save.dinoCrowns[k.name]))?k.calmText:k.text;
+  const text=lamp&&save.mantas==='follow'&&save.lamp==='done'?'O! Mumija Mantas! Su mano lempa galiu jį atgaivinti – tik pasakyk!':lamp&&save.lamp==='have'?'Ar tai... MANO LEMPA?! Greičiau, atiduok ją man!':lamp&&save.lamp==='done'?'Mano lempa vėl su manimi! Bet dykuma vis dar crazy – man reikia dar pagalbos.':k.calmText&&((save.crowns&&save.crowns[k.name])||(save.dinoCrowns&&save.dinoCrowns[k.name])||(save.ugCrowns&&save.ugCrowns[k.name]))?k.calmText:k.text;
   openDialog({name:k.name,role:k.kingdom+' · užduotys '+done.length+'/'+k.tasks.length,color:k.color,icon:k.icon,text,
     tasks:kingTaskList(k),
     actions:(()=>{const a=[];if(lamp&&save.lamp==='have')a.push({label:'Atiduoti lempą (+$'+LAMP_PAY+')',onClick:giveLamp});
@@ -6074,7 +6113,7 @@ function drawMap(){
   g.save();g.translate(tx(pp.x),tx(pp.z));g.rotate(-yaw+Math.PI);g.fillStyle='#ffd23f';g.strokeStyle='#1b1430';g.lineWidth=3;
   g.beginPath();g.moveTo(0,-11);g.lineTo(8,9);g.lineTo(0,4);g.lineTo(-8,9);g.closePath();g.stroke();g.fill();g.restore();
 }
-function toggleMap(){if(!mapOpen&&isDino()){say(null,'Dinozaurų pasaulyje žemėlapio nėra! Šiaurėje – T-Rex karalius, rytuose – Drakonė, vakaruose – Spinozauras, pietuose (prieplauka) – Megalodonas. Laiko mašina – centre.');return;}mapOpen=!mapOpen;$('map').hidden=!mapOpen;
+function toggleMap(){if(!mapOpen&&isUnder()){say(null,'Požemyje žemėlapio nėra! Šiaurėje – Kurmis, pietvakariuose – Sliekas, pietryčiuose – Skruzdė karalienė. Grąžto liftas – centre.');return;}if(!mapOpen&&isDino()){say(null,'Dinozaurų pasaulyje žemėlapio nėra! Šiaurėje – T-Rex karalius, rytuose – Drakonė, vakaruose – Spinozauras, pietuose (prieplauka) – Megalodonas. Laiko mašina – centre.');return;}mapOpen=!mapOpen;$('map').hidden=!mapOpen;
   if(mapOpen){mouse.L=mouse.R=false;freeCursor();drawMap();}
   else{canvas.focus();tryLock();}}
 let waypoint=null,wpBeam=null;
@@ -6143,12 +6182,12 @@ addEventListener('wheel',e=>{if(phoneOpen)return;if(started&&!settingsOpen)cam.d
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;mouse.L=mouse.R=false;});
 const chatInput=$('chatInput');
 chatInput.addEventListener('keydown',e=>{e.stopPropagation();
-  if(e.key==='Enter'){const v=chatInput.value.trim();if(v){say('Tu',v);setBubble(v);if(NET.on)netSend({t:'chat',name:NET.name,text:v});if(inPyr&&v.replace(/\s/g,'')==='666')setTimeout(tryPyrVolcano,300);else if(inPyr&&v.replace(/\s/g,'')===MUMMY_CODE)setTimeout(grantMummy,300);else if(inVin&&v.replace(/\s/g,'')===MUMMY_CODE)setTimeout(grantLavaMummy,300);else npcReply();}closeChat();}
+  if(e.key==='Enter'){const v=chatInput.value.trim();if(v){say('Tu',v);setBubble(v);if(isDino()&&/^R+A{2,}R+!*$/i.test(v.replace(/\s/g,'')))setTimeout(unlockRoarEmote,400);if(NET.on)netSend({t:'chat',name:NET.name,text:v});if(inPyr&&v.replace(/\s/g,'')==='666')setTimeout(tryPyrVolcano,300);else if(inPyr&&v.replace(/\s/g,'')===MUMMY_CODE)setTimeout(grantMummy,300);else if(inVin&&v.replace(/\s/g,'')===MUMMY_CODE)setTimeout(grantLavaMummy,300);else npcReply();}closeChat();}
   else if(e.key==='Escape'){closeChat();}});
 function openChat(){chatOpen=true;chatInput.hidden=false;chatInput.value='';for(const k in keys)keys[k]=false;mouse.L=mouse.R=false;setTimeout(()=>chatInput.focus(),0);}
 function closeChat(){chatOpen=false;chatInput.hidden=true;chatInput.blur();canvas.focus();}
 function npcReply(){let best=null,bd=8;for(const n of npcs){const d=n.pos.distanceTo(player.pos);if(d<bd){bd=d;best=n;}}
-  for(const k of kings.concat(dkings)){const d=kingPos(k).distanceTo(player.pos);if(d<bd+2){bd=d;best={name:k.name,lines:[k.text.split('. ')[0]+'.']};}}
+  for(const k of kings.concat(dkings,ukings)){const d=kingPos(k).distanceTo(player.pos);if(d<bd+2){bd=d;best={name:k.name,lines:[k.text.split('. ')[0]+'.']};}}
   if(best)setTimeout(()=>say(best.name,pick(best.lines),true),900);}
 addEventListener('keydown',e=>{
   if(chatOpen)return;
@@ -6158,7 +6197,7 @@ addEventListener('keydown',e=>{
   if(djGame){e.preventDefault();if(e.code==='Escape'){if(!djGame.over){cancelJob();sfx('fail');say(null,'Palikai DJ pultą. Minia nusivylusi...');}return;}if(!e.repeat)djKey(e.code);return;}
   if(shopOpen){if(e.code==='Escape'||e.code==='KeyF'||e.code==='Tab'){e.preventDefault();closeClothesShop();tryLock();}return;}
   if(achOpen&&(e.code==='Escape'||e.code==='KeyG')){e.preventDefault();toggleAch();return;}
-  if(emoOpen){e.preventDefault();if(e.code==='Escape'||e.code==='KeyC'){toggleEmo();return;}const m=e.code.match(/^(?:Digit|Numpad)([1-9])$/);if(m){const E=EMOTES[+m[1]-1];if(E)pickEmote(E);}return;}
+  if(emoOpen){e.preventDefault();if(e.code==='Escape'||e.code==='KeyC'){toggleEmo();return;}const m=e.code.match(/^(?:Digit|Numpad)([0-9])$/);if(m){const E=EMOTES[(+m[1]||10)-1];if(E)pickEmote(E);}return;}
   if(e.code==='Tab'){e.preventDefault();if(started&&!settingsOpen)toggleMap();return;}
   if(e.code==='Escape'){if(!started||performance.now()-lockDropT<400)return;if(dialogOpen){closeDialog();if(!locked)tryLock();return;}if(mapOpen){toggleMap();return;}settingsOpen?(closeSettings(),tryLock()):openSettings();return;}
   if(!started||settingsOpen)return;
@@ -6246,6 +6285,7 @@ function updateSky(dt){
   sun.position.set(c.x+Math.cos(sa)*70,c.y+Math.max(.25,Math.abs(Math.sin(sa)))*90,c.z+35);sun.target.position.copy(c);
   stars.material.opacity=1-day;stars.position.copy(camera.position);
   M.lamp.emissiveIntensity=.3+(1-day)*1.8;
+  if(c.x<-600){skyCol.setHex(0x150c22);scene.background=skyCol;scene.fog.color.copy(skyCol);scene.fog.near=25;scene.fog.far=170;sun.intensity=.3;hemi.intensity=.85;hemi.color.setHex(0xc8b8ff);stars.material.opacity=0;M.lamp.emissiveIntensity=2;}else{hemi.color.setHex(0xdcefff);scene.fog.near=90;scene.fog.far=330;}
   const hh=Math.floor(hour),mm=Math.floor((hour-hh)*60);
   const ph=hour>=6&&hour<18?'Diena':hour>=18&&hour<20?'Saulėlydis':'Naktis';
   $('clock').textContent=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+' · '+ph;
@@ -6391,7 +6431,7 @@ function grantPass(){course=null;save.tmPass=1;saveGame(true);sfx('win');setTime
 function timeTravel(toDino){if(tmBusy)return;if(toDino){if(crownCount()<4){say('Profesorius Kvarkas','Laiko mašina veikia tik tikram herojui! Pirmiausia surink visas 4 Crazy pasaulio karūnas ('+crownCount()+'/4).',true);sfx('fail');return;}}if(player.inCar){say(null,'Pirmiausia išlipk iš transporto (F).');return;}tmBusy=true;course=null;
   let fl=$('tmFlash');if(!fl){fl=document.createElement('div');fl.id='tmFlash';fl.style.cssText='position:fixed;inset:0;z-index:85;pointer-events:none;background:radial-gradient(circle,#ffffff 0%,#9ff3ff 45%,#3ee6ff 100%);opacity:0;transition:opacity .45s';document.body.append(fl);}
   sfx('boom');tone(180,1900,1.1,'sawtooth',.1);tone(900,120,1.1,'sine',.1,.2);requestAnimationFrame(()=>fl.style.opacity='1');
-  setTimeout(()=>{const d=toDino?dP(2.5,4):V(LAB.x+1,0,LAB.z+1);const y=terrainH(d.x,d.z);d.y=(toDino?y:labY)+.3;tpTo(d);player.yaw=Math.PI;
+  setTimeout(()=>{const d=toDino?dinoArrival():V(LAB.x+1,labY+.3,LAB.z+1);tpTo(d);player.yaw=Math.PI;
     let i=0;for(const n of pets.values()){n.pos.set(d.x-1.5+i*1.2,d.y+n.half+.3,d.z+1.5);n.vel.set(0,0,0);n.state='follow';i++;}
     curZone=null;if(toDino&&!DK.built)buildDino();saveGame(true);
     setTimeout(()=>{fl.style.opacity='0';tmBusy=false;sfx('ding');floaty(toDino?'🦖 '+tr('Dinozaurų pasaulis!'):'🌍 '+tr('Grįžai į Crazy pasaulį!'),player.pos);
@@ -6422,7 +6462,7 @@ function dRock(lx,lz,s,col){const x=DW.x+lx,z=lz,y=terrainH(x,z);const r=put(GEO
 function dPick(key,lx,lz,mesh,yOff,bob){const x=DW.x+lx,z=lz,y=(yOff!=null&&yOff.abs!=null)?yOff.abs:terrainH(x,z)+(yOff||0);mesh.position.set(x,y,z);scene.add(mesh);
   const idx=DK.picks.filter(q=>q.key===key).length;const got=((save.dinoPick||{})[key]||[]).includes(idx);mesh.visible=!got;DK.picks.push({key,idx,mesh,pos:V(x,y,z),got,bob:bob||0});DK.keep.push([lx,lz]);}
 function dCarry(key,need,spots,mk,name,target){const done=(save.dinoCarry||{})[key]||0;spots.slice(done).forEach(([lx,lz])=>{const b=addBody({x:DW.x+lx,z:lz,r:.6,bounce:.25,fric:3,mesh:mk(),name,lift:.5});DK.carry.push({key,b,target,need});});}
-function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;DK.zones=[[-40,-30,15],[-52,-64,10],[36,-44,7],[30,-36,5],[24,-28,5],[18,-20,5],[10,12,5],[58,-74,8],[104,-104,22],[-108,-108,12],[-62,14,6]];
+function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;DK.zones=[[-40,-30,15],[-52,-64,10],[36,-44,7],[30,-36,5],[24,-28,5],[18,-20,5],[10,12,5],[58,-74,8],[104,-104,22],[-108,-108,12],[-62,14,6],[-60,-6,10],[-20,-44,11],[55,38,10],[-115,-115,9],[40,-15,16]];
   {const SEG=160,S=320;const g=new THREE.PlaneGeometry(S,S,SEG,SEG);g.rotateX(-Math.PI/2);g.translate(DW.x,0,DW.z);const p=g.attributes.position,cols=new Float32Array(p.count*3);
    for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),h=dinoH(x,z);p.setY(i,h);const c=dinoColor(x,z,h);cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;}
    g.setAttribute('color',new THREE.BufferAttribute(cols,3));g.computeVertexNormals();const t=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));t.receiveShadow=true;scene.add(t);
@@ -6505,7 +6545,7 @@ function buildDino(){if(DK.built)return;DK.built=true;DK.keep=[];dseed=8675309;D
   for(let i=0;i<18;i++){const s=dSpot('ddrag',5);if(s)dRock(s[0],s[1],drnd(.8,2),i%3?0x4a2e2a:0x6a3a32);}
   for(let i=0;i<6;i++){const s=dSpot('ddrag',8);if(s){const x=DW.x+s[0],y=terrainH(x,s[1]);const lp=put(GEO.cyl,M.lava,x,y+.06,s[1],2.2,.08,2.2);lp.castShadow=false;}}
   for(let i=0;i<6;i++){const a=i/6*Math.PI*2;dPalm(Math.cos(a)*22,Math.sin(a)*22,.9);}
-  buildDino2();
+  buildDino2();buildDino3();buildDrill();
   for(const k of dkings){const s=tag(k.name,k.color,1.2);scene.add(s);kingTags.push({k,s});}}
 function dCount(key){return ((save.dinoPick||{})[key]||[]).length;}
 function dDone(name,task){return kingDone({name}).includes(task);}
@@ -6591,6 +6631,7 @@ function buildDino2(){if(DX.built)return;DX.built=true;const G=(lx,lz)=>terrainH
    anims.push(t=>{fire.forEach((c,k)=>c.scale.y=1.2*(.8+Math.sin(t*11+k*2)*.25));meat.rotation.x=t*2;});
    const sg=signPlane(['UGG KAIMELIS','urviniai žmonės'],4,1,{bg:'#5a3a1a',fg:'#ffd23f'});sg.position.set(DW.x+cx+7,fy+2.6,cz+7);sg.rotation.y=-Math.PI/4;scene.add(sg);
    const names=['Uggas','Bugga','Krugas','Mamutė'],lines=[['Ugg! Tu iš ateities? Ten irgi crazy?','Ugnis – šilta. Dinozauras – ne draugas. Ugg!','Aš išradau ratą. Jis kvadratinis.'],['Bugga mėgsta mėsą ant iešmo!','Pterodaktilis vėl pavogė mano kepurę.','Ar matei auksinį kiaušinį ant akmens stulpo? Grybai padeda užšokti!'],['Krugas stipriausias! Krugas kilnoja akmenis!','Naktį dangumi krenta šviečiantys akmenys. Rink juos – brangūs!','Lynas nuo medžio bokšto – greičiausias kelias namo!'],['Mamutė piešia ant sienų. Nori pamatyti?','Kasinėjimų vietoje šiaurės rytuose randama kaulų ir fosilijų.','Su pterodaktiliu gali nuskristi bet kur – stotelė prie laiko mašinos.']];
+   lines[0].push('Už krioklio kažkas blizga… ar ten urvas?','Ugg riaumoja pokalbyje: RAAAR! Pabandyk ir tu.');lines[1].push('Senas laivas nuskendo vakarų jūroje. Sako, ten lobis!');lines[2].push('Ant ugnikalnio šlaito yra slapti akmenys – kas užlips, ras karštą kiaušinį.');lines[3].push('Naktį aplink bėgioja AUKSINIS raptorius. Pagauk!');
    names.forEach((n,i)=>{const a=i/4*Math.PI*2+1.2,lx=cx+Math.cos(a)*4.5,lz=cz+Math.sin(a)*4.5,x=DW.x+lx,y=G(lx,lz);const v=makeChar({body:0x8a5a2b,head:0xe8b890,legs:0x6a4a2a});setHat(v,'none');
      for(let k=0;k<7;k++)put(GEO.sph,mat(0x3a2410),Math.cos(k)*.32,2.1+Math.sin(k*2)*.06,Math.sin(k)*.28-.1,.16,.16,.16,v.tilt);
      put(GEO.cyl,mat(0xd8b080),.75,1.2,.2,.07,.9,.07,v.tilt).rotation.x=.4;put(GEO.sph,mat(0xd8b080),.75,1.6,.38,.16,.2,.16,v.tilt);
@@ -6632,7 +6673,7 @@ function buildDino2(){if(DX.built)return;DX.built=true;const G=(lx,lz)=>terrainH
   {const vx=104,vz=-104,x=DW.x+vx,y=G(vx,vz);const cone=put(new THREE.CylinderGeometry(4,16,22,24,1,true),mat(0x3a2626,{roughness:.95}),x,y+10,vz);addCol(x,vz,18,18,y+6);addCol(x,vz,10,10,y+16);
    const lv=put(GEO.cyl,M.lavaGlow,x,y+20.6,vz,3.8,.3,3.8);DX.vol=V(x,y+21,vz);const tg=tag('🌋 Dinozaurų ugnikalnis','#ff9f68',1);tg.position.set(x,y+25,vz);scene.add(tg);}
   // --- waterfall + pond (north-west) ---
-  {const wx=-108,wz=-108,x=DW.x+wx,y=G(wx,wz);const fall=new THREE.Mesh(new THREE.PlaneGeometry(6,24),new THREE.MeshStandardMaterial({color:0x9fe0ff,transparent:true,opacity:.7,emissive:0x2a6fb0,emissiveIntensity:.3,side:THREE.DoubleSide}));fall.position.set(x-3,y+12,wz-3);fall.rotation.y=Math.PI/4;scene.add(fall);
+  {const wx=-108,wz=-108,x=DW.x+wx,y=G(wx,wz);const fall=new THREE.Mesh(new THREE.PlaneGeometry(6,24),new THREE.MeshStandardMaterial({color:0x9fe0ff,transparent:true,opacity:.7,emissive:0x2a6fb0,emissiveIntensity:.3,side:THREE.DoubleSide}));fall.position.set(x-7,y+12,wz-2.6);fall.rotation.y=0;scene.add(fall);
    const pond=new THREE.Mesh(new THREE.CircleGeometry(7,24),mat(0x3ec5ff,{transparent:true,opacity:.75,roughness:.1}));pond.rotation.x=-Math.PI/2;pond.position.set(x+2,y+.12,wz+2);scene.add(pond);
    const foam=[];for(let i=0;i<8;i++)foam.push(put(GEO.sph,M.white,x-2+rand(-2,2),y+.4,wz-2+rand(-2,2),.5));anims.push(t=>{fall.material.emissiveIntensity=.25+Math.sin(t*6)*.08;foam.forEach((f,i)=>{f.position.y=y+.3+Math.abs(Math.sin(t*4+i))*.6;});});
    const tg=tag('Krioklys','#9fe0ff',.8);tg.position.set(x+2,y+4,wz+2);scene.add(tg);}
@@ -6680,6 +6721,400 @@ function updateDino2(dt,t){if(!DX.built)return;const p=player.pos;
       if(M2.life<=0){scene.remove(M2.m);DX.meteors.splice(DX.meteors.indexOf(M2),1);}}}
 }
 
+/* ---------- v192: dinosaur shops, suits, pets, rides (hoisted model builders) ---------- */
+function buildDinoSuit(v,type){const k=type.slice(6),B=v.back;
+  const C={trex:[0x5a9a3a,0xd8e8a0],raptor:[0xff8a3d,0xffe0b0],trice:[0x9a8a5a,0xffd9a0],stego:[0x4a8a7a,0xc8f0d0],ptero:[0xc06a4a,0xffd0a0],dragon:[0x9b4dff,0xffc8e6],cave:[0x8a5a2b,0xc89a5a],mole:[0x4a4048,0x8a7a88]}[k]||[0x5a9a3a,0xd8e8a0];
+  const m=mat(C[0],{roughness:.85}),m2=mat(C[1],{roughness:.85});suitShell(v,m);
+  if(k==='mole'){put(GEO.sph,m,0,.74,.4,.48,.47,.47,B);put(GEO.sph,mat(0xff9fb5),0,.64,.86,.14,.12,.12,B);for(const sx of[-1,1])put(GEO.box,M.dark,sx*.16,.82,.82,.2,.1,.04,B);put(GEO.box,M.dark,0,.83,.84,.12,.03,.03,B);put(GEO.sph,m2,0,-.15,.86,.36,.42,.1,B);return;}
+  if(k==='cave'){const dk=mat(0x5a3a1a),hair=mat(0x3a2410);for(let i=0;i<10;i++)put(GEO.sph,dk,Math.cos(i)*.45,-.5+(i%4)*.2,.42+Math.sin(i)*.45,.12,.08,.12,B);
+    put(GEO.sph,hair,0,.95,.38,.46,.32,.44,B);for(let i=0;i<8;i++)put(GEO.sph,hair,Math.cos(i*.8)*.4,.9+Math.sin(i*1.7)*.08,.38+Math.sin(i*.8)*.35,.15,.15,.15,B);
+    const bn=put(GEO.cyl,mat(0xf4ecd8),0,1.18,.38,.05,.7,.05,B);bn.rotation.z=Math.PI/2;for(const sx of[-1,1])put(GEO.sph,mat(0xf4ecd8),sx*.36,1.18,.38,.08,.08,.08,B);return;}
+  put(GEO.sph,m2,0,-.15,.86,.36,.42,.1,B);
+  const tail=put(GEO.cone,m,0,-.5,-.45,.32,1.5,.32,B);tail.rotation.x=-Math.PI/2-.35;
+  put(GEO.sph,m,0,.74,.4,.48,.47,.47,B);
+  if(k==='ptero'){const bk=put(GEO.cone,mat(0xffc04a),0,.7,.98,.12,.6,.12,B);bk.rotation.x=Math.PI/2;const cr=put(GEO.cone,m,0,1.05,.1,.1,.7,.1,B);cr.rotation.x=-1.9;
+    for(const sx of[-1,1]){const w=put(GEO.box,m2,sx*.95,.1,.3,1.3,.05,.8,B);w.rotation.z=sx*-.25;}}
+  else{put(GEO.sph,m,0,.6,.82,.3,.2,.3,B);for(let i=0;i<4;i++)for(const sx of[-1,1]){const t=put(GEO.cone,M.white,sx*.2,.52,.7+i*.08,.03,.08,.03,B);t.rotation.x=Math.PI;}}
+  for(const sx of[-1,1]){put(GEO.sph,M.white,sx*.2,.9,.78,.09,.1,.06,B);put(GEO.sph,M.dark,sx*.2,.9,.83,.045,.05,.03,B);}
+  if(k==='trice'){const fr=new THREE.Mesh(new THREE.CircleGeometry(.62,18),mat(0xffb347,{side:THREE.DoubleSide}));fr.position.set(0,.95,.12);fr.rotation.x=-.25;B.add(fr);
+    for(const sx of[-.22,.22]){const h=put(GEO.cone,M.white,sx,1.0,.8,.06,.4,.06,B);h.rotation.x=1.1;}const h3=put(GEO.cone,M.white,0,.68,1.05,.05,.25,.05,B);h3.rotation.x=1.3;}
+  if(k==='stego'){const pm=mat(0xff7a5a);for(let i=0;i<5;i++)put(GEO.box,pm,0,-.45+i*.18,-.1-Math.sin(i*.7)*.05,.06,.3+Math.sin(i*.6)*.12,.3,B);put(GEO.box,pm,0,1.18,.3,.05,.22,.22,B);put(GEO.box,pm,0,1.1,.05,.05,.2,.2,B);}
+  if(k==='raptor'){for(let i=0;i<3;i++)put(GEO.box,m2,0,-.3+i*.2,-.05,.9,.06,.12,B);for(let i=0;i<4;i++){const f=put(GEO.cone,mat(0x3ec5ff),0,1.1,.5-i*.13,.05,.3,.05,B);f.rotation.x=-.6;}}
+  if(k==='trex')put(GEO.sph,m,0,.6,.95,.34,.22,.36,B);
+  if(k==='dragon'){const gm=mat(0xffd23f);for(const sx of[-1,1]){const h=put(GEO.cone,gm,sx*.22,1.18,.3,.07,.35,.07,B);h.rotation.x=-.5;
+      const w=new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape([new THREE.Vector2(0,0),new THREE.Vector2(sx*1.4,.5),new THREE.Vector2(sx*1.2,-.6),new THREE.Vector2(sx*.5,-.8)])),mat(0xb06bff,{side:THREE.DoubleSide}));w.position.set(sx*.3,.15,0);w.rotation.y=sx*.3;B.add(w);}
+    for(let i=0;i<4;i++)put(GEO.cone,gm,0,.1-i*.18,-.12,.06,.2,.06,B).rotation.x=-.4;}}
+function isDinoVeh(t){return t==='trexcar'||t==='raptorcar'||t==='tricecar'||t==='brontocar'||t==='pterocar'||t==='eggcar'||t==='bonecar'||t==='goldraptor';}
+function makeDinoVeh(type){const g=new THREE.Group(),body=new THREE.Group();g.add(body);let P=null,paint=mat(0xffffff),wheels=[],front=[],wings=null;
+  const ride=(kind,col,s,sy,py)=>{P=makeDino(kind,col,s);P.root.position.y=py||0;body.add(P.root);paint=mat(col);P.root.traverse(o=>{if(o.isMesh&&o.material&&o.material.color&&o.material.color.getHex()===col)o.material=paint;});
+    put(GEO.box,mat(0x7a3a1a),0,sy,-.1,.95,.16,1.1,body);put(GEO.box,M.gold,0,sy+.05,.45,.9,.2,.08,body);};
+  const wheel=(x,y,z,r,m)=>{const piv=new THREE.Group();piv.position.set(x,y,z);g.add(piv);const w=new THREE.Group();piv.add(w);const t=put(GEO.cyl,m||M.dark,0,0,0,r,.3,r,w);t.rotation.z=Math.PI/2;wheels.push(w);if(z>0)front.push(piv);};
+  if(type==='trexcar')ride('trex',0x5a9a3a,.75,2.35);
+  else if(type==='raptorcar')ride('raptor',0xff8a3d,.55,1.78);
+  else if(type==='goldraptor'){ride('raptor',0xffc93c,.6,1.95);paint.metalness=.8;paint.roughness=.2;paint.emissive.setHex(0x664400);paint.emissiveIntensity=.5;}
+  else if(type==='tricecar')ride('trice',0x9a8a5a,.8,2.33);
+  else if(type==='brontocar')ride('bronto',0x8a9aa0,.6,2.76);
+  else if(type==='pterocar'){ride('ptero',0xc06a4a,1.6,1.5,1);wings=[P.w1,P['w-1']];}
+  else if(type==='eggcar'){paint=mat(0xf4ecd8,{roughness:.6});put(GEO.sph,paint,0,1.35,0,.95,1.15,.95,body);for(let i=0;i<14;i++){const a=i*1.7;put(GEO.sph,mat(0x9be564),Math.cos(a)*.9,.9+(i%5)*.25,Math.sin(a)*.9,.12,.12,.06,body);}
+    for(let i=0;i<10;i++){const a=i/10*Math.PI*2,c=put(GEO.cone,paint,Math.cos(a)*.62,2.3,Math.sin(a)*.62,.14,.35,.14,body);c.rotation.set(Math.sin(a)*.3,0,-Math.cos(a)*.3);}
+    const bh=put(GEO.sph,mat(0x5a9a3a),0,2.3,.75,.3,.28,.36,body);for(const sx of[-1,1])put(GEO.sph,M.white,sx*.12,2.42,.98,.06,.06,.04,body);
+    for(const [x,z] of[[.85,.7],[-.85,.7],[.85,-.7],[-.85,-.7]])wheel(x,.35,z,.35);}
+  else if(type==='bonecar'){paint=mat(0xf4ecd8,{roughness:.5});const sp=put(GEO.cyl,paint,0,.75,0,.14,3.2,.14,body);sp.rotation.x=Math.PI/2;
+    for(let i=0;i<6;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(.55,.06,6,16,Math.PI),paint);r.position.set(0,.75,-1.1+i*.42);r.rotation.y=Math.PI/2;r.rotation.z=Math.PI;body.add(r);}
+    put(GEO.sph,paint,0,1.0,1.65,.45,.42,.5,body);for(const sx of[-1,1])put(GEO.sph,M.dark,sx*.17,1.08,2.05,.11,.13,.06,body);for(let i=0;i<5;i++)put(GEO.box,paint,-.2+i*.1,.68,2.08,.06,.12,.04,body);
+    put(GEO.box,mat(0x7a3a1a),0,.82,-.3,.9,.12,.9,body);for(const [x,z] of[[1,1.1],[-1,1.1],[1,-1.1],[-1,-1.1]])wheel(x,.42,z,.42,mat(0x3a2a1a));}
+  return{root:g,body,wheels,front,paint,dinoP:P,wings,hover:false};}
+function makeDinoPet(id){const k=id.slice(2);const C={rex:[0x5a9a3a,0x3f7a2a],trice:[0xd08a3a,0xa86a2a],ptero:[0xc06a4a,0x9a4a3a],stego:[0x4a8a7a,0x3a6a5a],dragon:[0x9b4dff,0x7a2dd0]}[k]||[0x5a9a3a,0x3f7a2a];
+  const v=makeChar({body:C[0],head:C[0],legs:C[1]});const bm=v.bm,m2=mat(C[1]),wh=M.white;
+  if(k!=='ptero'){put(GEO.sph,bm,0,1.74,.38,.3,.22,.32,v.tilt);for(let i=0;i<3;i++)for(const sx of[-1,1]){const t=put(GEO.cone,wh,sx*.17,1.62,.42+i*.08,.03,.08,.03,v.tilt);t.rotation.x=Math.PI;}}
+  else{const bk=put(GEO.cone,mat(0xffc04a),0,1.78,.6,.1,.6,.1,v.tilt);bk.rotation.x=Math.PI/2;const cr=put(GEO.cone,bm,0,2.2,-.2,.08,.6,.08,v.tilt);cr.rotation.x=-1.9;
+    for(const L of[v.armL,v.armR]){const sx=L===v.armL?1:-1;const w=put(GEO.box,m2,sx*.45,-.35,0,.9,.04,.6,L.p);w.rotation.z=sx*.2;}}
+  const tail=new THREE.Group();tail.position.set(0,.8,-.38);v.tilt.add(tail);const tc=put(GEO.cone,bm,0,-.1,-.45,.2,.9,.2,tail);tc.rotation.x=-Math.PI/2-.3;v.tail=tail;
+  put(GEO.sph,mat(k==='dragon'?0xffc8e6:0xf4ecd8),0,1.05,.36,.3,.34,.1,v.tilt);
+  if(k==='rex'){v.armL.p.scale.setScalar(.55);v.armR.p.scale.setScalar(.55);}
+  if(k==='trice'){const fr=new THREE.Mesh(new THREE.CircleGeometry(.5,16),mat(0xffd23f,{side:THREE.DoubleSide}));fr.position.set(0,2.0,-.08);fr.rotation.x=-.3;v.tilt.add(fr);
+    for(const sx of[-.18,.18]){const h=put(GEO.cone,wh,sx,2.15,.25,.05,.35,.05,v.tilt);h.rotation.x=.9;}const h3=put(GEO.cone,wh,0,1.82,.66,.04,.2,.04,v.tilt);h3.rotation.x=1.2;}
+  if(k==='stego')for(let i=0;i<5;i++)put(GEO.box,mat(0xff7a5a),0,1.0+i*.22,-.42+Math.sin(i*.6)*.05,.05,.28,.26,v.tilt);
+  if(k==='dragon'){for(const sx of[-1,1]){const h=put(GEO.cone,mat(0xffd23f),sx*.2,2.3,-.05,.06,.3,.06,v.tilt);h.rotation.x=-.4;
+      const w=new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape([new THREE.Vector2(0,0),new THREE.Vector2(sx*1.1,.4),new THREE.Vector2(sx*.9,-.5),new THREE.Vector2(sx*.35,-.6)])),mat(0xff7ac0,{side:THREE.DoubleSide}));w.position.set(sx*.25,1.45,-.4);w.rotation.y=sx*.4;v.tilt.add(w);}}
+  v.isDog=true;return v;}
+
+/* ---------- v192: dinosaur market, houses and secrets ---------- */
+Object.assign(VEH,{trexcar:{max:24,acc:13,turn:1.8,rad:1.5,smash:2.4,box:[1,2.8,1.8],seat:[0,2.45,-.15],dogSeat:[0,2.55,-1],lean:.008,leanMax:.12,legs:-.7},
+  raptorcar:{max:31,acc:17,turn:2.5,rad:1.1,smash:1.6,box:[.7,2,1.4],seat:[0,1.88,-.1],dogSeat:[0,1.95,-.85],lean:.016,leanMax:.25,legs:-.7},
+  goldraptor:{max:35,acc:19,turn:2.6,rad:1.1,smash:1.8,box:[.75,2.1,1.5],seat:[0,2.05,-.1],dogSeat:[0,2.1,-.9],lean:.016,leanMax:.25,legs:-.7},
+  tricecar:{max:18,acc:10,turn:1.5,rad:1.6,smash:3.2,box:[1.1,2.5,1.8],seat:[0,2.43,-.3],dogSeat:[0,2.5,-1.1],lean:.006,leanMax:.1,legs:-.7},
+  brontocar:{max:16,acc:8,turn:1.2,rad:2,smash:3.5,box:[1.2,3,2.4],seat:[0,2.86,-.4],dogSeat:[0,2.95,-1.3],lean:.004,leanMax:.08,legs:-.7},
+  pterocar:{max:26,acc:14,turn:2.2,rad:1.2,smash:1.5,box:[1,1.8,1.2],seat:[0,1.6,-.2],dogSeat:[0,1.65,-.8],lean:.02,leanMax:.3,legs:-1.2},
+  eggcar:{max:22,acc:13,turn:2.1,rad:1.1,smash:1.8,box:[.9,2.5,.9],seat:[0,1.9,0],dogSeat:[0,2.1,-.5],lean:.02,leanMax:.25,legs:-1.5},
+  bonecar:{max:27,acc:16,turn:2.2,rad:1.4,smash:2,box:[1,1.4,1.6],seat:[0,.95,-.3],dogSeat:[0,1.05,-1.1],lean:.014,leanMax:.2,legs:-1.5}});
+const DINO_VEH_SHOP=[{id:'eggcar',name:'Kiaušinio mašina',price:700,desc:'Milžiniškas dinozauro kiaušinis su ratais – iš viršaus kyšo mažylis T-Rex.'},
+  {id:'raptorcar',name:'Raptorių bėgikas',price:900,desc:'Greičiausias dinozauras! Lieknas raptorius su balnu – bėga kaip vėjas.'},
+  {id:'bonecar',name:'Kaulų bagis',price:1000,desc:'Bagis iš dinozauro skeleto: šonkauliai, stuburas ir kaukolė priekyje.'},
+  {id:'tricecar',name:'Triceratopsas su balnu',price:1200,desc:'Lėtas, bet labai stiprus – su ragais nušluoja viską kelyje.'},
+  {id:'trexcar',name:'T-Rex su balnu',price:1500,desc:'Jok tikru T-Rex! Didelis, baisus ir kojomis trepsi žemę.'},
+  {id:'brontocar',name:'Brontozauras su balnu',price:1800,desc:'Aukščiausias transportas – nuo brontozauro nugaros matai viską.'},
+  {id:'pterocar',name:'Pterodaktilis su balnu',price:2000,desc:'SKRENDA! Laikyk Space – pterodaktilis mosuoja sparnais ir kyla, paleidus sklendžia žemyn.'}];
+VEHICLE_LIST.push(...DINO_VEH_SHOP.map(v=>({id:v.id,name:v.name,desc:v.desc})),{id:'goldraptor',name:'🔒 Auksinis raptorius',desc:'Slaptas! Greičiausias padaras laike.'});
+PET_IDS.push('d_rex','d_trice','d_ptero','d_stego','d_dragon');
+Object.assign(PET_INFO,{d_rex:{noun:'Mažylis T-Rex',def:'Rexis',lines:['RAR! …mano rankytės per trumpos apsikabinti.','Aš užaugsiu DIDELIS! Pažadu!','RRR… ar čia skanu?'],pet:'Rar rar!',hello:'RAR! Aš – tavo mažylis T-Rex!'},
+  d_trice:{noun:'Triceratopsiukas',def:'Ragiukas',lines:['Mano ragai – trys! O tavo?','Bum! Atsiprašau, užkliuvau ragu.','Mėgstu lapus. Ir tave.'],pet:'Mū… tai yra, trice!',hello:'Labas! Aš su trimis ragais!'},
+  d_ptero:{noun:'Pterodaktiliukas',def:'Skrydis',lines:['Kiek-kiek! Matau tave iš viršaus!','Mano sparnai dar maži, bet aš stengiuosi!','Kiek! Kur žuvys?'],pet:'Kiek-kiek!',hello:'Kiek! Skrendu su tavimi!'},
+  d_stego:{noun:'Stegozauriukas',def:'Plokštelė',lines:['Mano nugaroje – plokštelės. Kaip stogas!','Aš lėtas, bet ištikimas.','Ar matei mano uodegos spyglius?'],pet:'Hmmmm…',hello:'Sveikas! Aš stegozauriukas!'},
+  d_dragon:{noun:'Drakoniukas',def:'Kibirkštis',lines:['Apči! Oi… vėl dūmai.','Mama Drakonė sako, kad tu geras.','Aš moku skristi! …beveik.'],pet:'Prrr~',hello:'Kibirkštis! Aš iš ugnikalnio viršūnės!'}});
+Object.assign(I18N_EN,{'Dino bėgikas':'Dino runner','Space arba spustelk – šokti per kaktusus, po paukščiais – ne!':'Space or tap – jump over cacti, but not under the birds!','Uggas':'Ugg',
+ 'RAAAR! Atsiprašau, skambinu nosimi – rankytės per trumpos.':'RAAAR! Sorry, I am calling with my nose – my arms are too short.','Ar matei mano kiaušinius? A, tu juos radai. RAAAR, ačiū!':'Have you seen my eggs? Oh, you found them. RAAAR, thanks!','Raptoriai vėl bėga atbuli? Ne? Puiku!':'Are the raptors running backwards again? No? Great!','Atvažiuok į džiungles – surengsim lenktynes!':'Come to the jungle – let\'s race!',
+ 'Apči! Oi… vėl padegiau telefoną.':'Achoo! Oops… I set the phone on fire again.','Mano drakoniukai klausia, kada vėl atskrisi.':'My baby dragons ask when you will fly back.','Ar žinai, kad ugnikalnio viršūnėje kažkas slepiasi?':'Did you know something is hiding on top of the volcano?',
+ 'Blup… skambinu iš po vandens. Girdi?':'Bloop… I am calling from under water. Can you hear me?','Pagavau žuvį! Ji buvo didesnė už mane. Beveik.':'I caught a fish! It was bigger than me. Almost.','Pelkėje šiandien labai purvina. Ateik išsimaudyti!':'The swamp is very muddy today. Come for a bath!',
+ 'BLUP-BLUP! Čia didžiausias jūros karalius!':'BLOOP-BLOOP! This is the biggest king of the sea!','Kažkas vėl numetė šiukšlę į mano jūrą! Tai ne tu?':'Someone dropped trash in my sea again! Was it you?','Prie nuskendusio laivo blizga kažkas auksinio…':'Something golden shines near the sunken ship…',
+ 'Alio! Laiko mašina veikia puikiai. Beveik. Kartais nukelia į antradienį.':'Hello! The time machine works perfectly. Almost. Sometimes it takes you to Tuesday.','Ar dinozaurai tave dar nesuvalgė? Puiku!':'The dinosaurs haven\'t eaten you yet? Great!','Mano naujas išradimas – laikrodis, kuris eina atgal. Jau vėluoju vakar.':'My new invention – a clock that runs backwards. I am already late for yesterday.',
+ 'UGG! Telefonas – akmuo, kuris kalba! UGG!':'UGG! Phone – a stone that talks! UGG!','Uggas išrado ratą. Jis vis dar kvadratinis.':'Ugg invented the wheel. It is still square.','Naktį bėga auksinis raptorius. Uggas nepagavo. Tu pagauk!':'At night the golden raptor runs. Ugg did not catch it. You catch it!',
+ 'Rar! Rar rar! (Tai reiškia: myliu tave!)':'Rar! Rar rar! (That means: I love you!)','Aš užaugau 1 centimetru! RAR!':'I grew 1 centimetre! RAR!','Ar atneši man guminį kaulą?':'Will you bring me a rubber bone?'});i18nRe=null;i18nCache.clear();
+Object.assign(PET_TOYS,{d_rex:{name:'guminis kaulas',snd:'RAR! Kaulas!'},d_trice:{name:'lapų kamuolys',snd:'Mmm, lapai!'},d_ptero:{name:'plunksna',snd:'Kiek-kiek!'},d_stego:{name:'kankorėžis',snd:'Hmmm, kankorėžis!'},d_dragon:{name:'karštas akmenukas',snd:'Prrr! Šilta!'}});
+Object.assign(I18N_EN,{'guminis kaulas':'rubber bone','lapų kamuolys':'leaf ball','plunksna':'feather','kankorėžis':'pine cone','karštas akmenukas':'hot pebble'});
+const DINO_PET_SHOP=[{id:'d_trice',name:'Triceratopsiukas',price:350,desc:'Mažas triceratopsas su trimis ragais ir apykakle.'},{id:'d_stego',name:'Stegozauriukas',price:380,desc:'Lėtas, bet ištikimas – su plokštelėmis ant nugaros.'},
+  {id:'d_rex',name:'Mažylis T-Rex',price:400,desc:'Mažas T-Rex su mažytėmis rankytėmis. Labai drąsus!'},{id:'d_ptero',name:'Pterodaktiliukas',price:450,desc:'Mažas pterodaktilis su sparnais ant rankų.'}];
+const DHOUSES=[{id:'cave',name:'Urvo namas',price:1500,lx:-60,lz:-6,wall:0x6a6a70,raised:0},{id:'tree',name:'Medžio namelis',price:2500,lx:-20,lz:-44,wall:0x9a6a3d,raised:3.6},{id:'villa',name:'Fosilijų vila',price:4000,lx:55,lz:38,wall:0xe3b866,raised:0}];
+const DX3={stalls:[],houses:{},gold:null,goldSpots:[[-10,-40],[30,20],[-30,30],[50,-30]],ship:null,built:false};
+let shopDino=false;
+function dinoArrival(){if(!DK.built)buildDino();const H=save.dinoHome&&DX3.houses[save.dinoHome];if(H&&save.dinoHouses&&save.dinoHouses[save.dinoHome])return H.inside.clone();const p=dP(2.5,4);p.y=terrainH(p.x,p.z)+.3;return p;}
+function dStall(lx,lz,title,col,act,deco){const x=DW.x+lx,z=lz,y=terrainH(x,z),face=Math.atan2(-lx,-lz);
+  block(x,z,3.6,1.6,1.1,mat(0x8a5a2b),{rotY:face});for(const sx of[-1,1]){const px=x+Math.cos(face)*sx*1.7,pz=z-Math.sin(face)*sx*1.7;put(GEO.cyl,M.trunk,px,y+1.6,pz,.1,3.2,.1);}
+  const rf=put(GEO.box,mat(col),x,y+3.25,z,4.4,.25,3,);rf.rotation.y=face;const sg=signPlane([title],4.2,.9,{bg:'#2a1f47',fg:'#'+col.toString(16).padStart(6,'0')});sg.position.set(x+Math.sin(face)*1.0,y+2.75,z+Math.cos(face)*1.0);sg.rotation.y=face;scene.add(sg);
+  if(deco){const o=deco();o.position.set(x-Math.sin(face)*1.6,y,z-Math.cos(face)*1.6);o.rotation.y=face;scene.add(o);DX3.stalls.push(o);}
+  stations.push({pos:V(x+Math.sin(face)*1.4,y,z+Math.cos(face)*1.4),r:3.4,label:title.toLowerCase(),act});}
+function openDinoVehShop(){const actions=[];for(const it of DINO_VEH_SHOP)if(!save.owned[it.id]){const lack=it.price-money;actions.push(lack>0?{label:it.name+': trūksta $'+lack,disabled:true}:{label:'Pirkti: '+it.name+' $'+it.price,onClick:()=>buyVehicle(it)});}
+  openDialog({name:'Dinozaurų transportas',role:'Parduotuvė',color:'#9be564',icon:'🦖',text:'Joti dinozaurais – geriau nei vairuoti! Nupirktą transportą iškviesi klavišu I (bet kuriame pasaulyje).',
+    tasks:DINO_VEH_SHOP.map(it=>({b:it.name+' – $'+it.price,t:it.desc,chip:save.owned[it.id]?'Nupirkta':'Parduodama'})),actions:actions.concat([{label:'Uždaryti',alt:true,onClick:()=>{closeDialog();tryLock();}}])});}
+function openDinoPetShop(){const actions=[];for(const it of DINO_PET_SHOP)if(!save.owned[it.id]){const lack=it.price-money;actions.push(lack>0?{label:it.name+': trūksta $'+lack,disabled:true}:{label:'Pirkti: '+it.name+' $'+it.price,onClick:()=>buyPet(it)});}
+  openDialog({name:'Dinozaurų gyvūnėliai',role:'Parduotuvė',color:'#ff9f68',icon:'🦕',text:'Mažyliai dinozaurai ieško draugo! Nupirkti seks paskui tave abiejuose pasauliuose. Vardus pakeisi įprastoje gyvūnėlių parduotuvėje.',
+    tasks:DINO_PET_SHOP.map(it=>({b:it.name+' – $'+it.price,t:it.desc,chip:save.owned[it.id]?'Tavo':'Parduodama'})),actions:actions.concat([{label:'Uždaryti',alt:true,onClick:()=>{closeDialog();tryLock();}}])});}
+function openDinoClothes(){shopDino=true;openClothesShop('me');}
+function dHouse(H){const x=DW.x+H.lx,z=H.lz,g0=minH(x,z,9,9)-.05,base=g0+H.raised+.3,wm=mat(H.wall,{roughness:.9}),own=()=>!!(save.dinoHouses&&save.dinoHouses[H.id]);
+  if(H.raised){for(const [dx,dz] of[[-4,-4],[4,-4],[-4,4],[4,4]])put(GEO.cyl,M.trunk,x+dx,g0+H.raised/2,z+dz,.3,H.raised,.3);
+    for(let i=0;i<4;i++)block(x+2.6,z+5.2+ (3-i)*1.3,1.8,1.3,.3,M.wood,{y:g0+.6+i*.95-.3});block(x+2.6,z+4.6,1.8,1.2,.3,M.wood,{y:base-.3});}
+  block(x,z,9,9,.3,H.raised?M.wood:mat(0x9a8a7a),{y:base-.3});
+  block(x,z-4.3,9,.4,3.4,wm,{y:base});block(x-4.3,z,.4,9,3.4,wm,{y:base});block(x+4.3,z,.4,9,3.4,wm,{y:base});
+  block(x-2.9,z+4.3,3.2,.4,3.4,wm,{y:base});block(x+2.9,z+4.3,3.2,.4,3.4,wm,{y:base});block(x,z+4.3,2.6,.4,1,wm,{y:base+2.4});
+  block(x,z,9.6,9.6,.3,mat(H.id==='tree'?0x3f8a3a:H.id==='cave'?0x55555c:0xc9a55a),{y:base+3.4});
+  if(H.id==='cave'){const d=put(new THREE.SphereGeometry(6.4,20,10,0,Math.PI*2,0,Math.PI/2),mat(0x6a6a70,{roughness:1}),x,base+3.3,z,1,.55,1);d.castShadow=false;for(let i=0;i<6;i++)put(GEO.dode,mat(0x5a5a60),x+Math.cos(i)*5.5,g0+.5,z+Math.sin(i)*5.5,.9);}
+  if(H.id==='tree'){put(GEO.cone,mat(0x3fae5a),x,base+5.4,z,6.2,4,6.2);put(GEO.cyl,M.trunk,x-5.6,g0+5,z-5.6,.8,10,.8);put(GEO.sph,mat(0x2f8a3a),x-5.6,g0+10.5,z-5.6,3.4,2.6,3.4);addCol(x-5.6,z-5.6,1.6,1.6,g0+9);}
+  if(H.id==='villa'){const sk=mat(0xf4ecd8);put(GEO.sph,sk,x,base+4.6,z,1.8,1.4,2);for(const sx of[-1,1])put(GEO.sph,M.dark,x+sx*.7,base+4.9,z+1.7,.4,.45,.2);for(let i=0;i<6;i++)put(GEO.box,sk,x-.75+i*.3,base+3.75,z+1.9,.18,.4,.1);
+    for(const [dx,dz] of[[-4.6,-4.6],[4.6,-4.6],[-4.6,4.6],[4.6,4.6]]){put(GEO.cyl,sk,x+dx,base+1.7,z+dz,.25,3.4,.25);put(GEO.sph,sk,x+dx,base+3.5,z+dz,.4,.3,.4);}}
+  // interior
+  block(x-2.6,z-2.4,1.8,2.8,.55,mat(0x7a3a1a),{y:base});put(GEO.box,mat(0x3ec5ff),x-2.6,base+.62,z-2.1,1.7,.12,2,);put(GEO.box,M.white,x-2.6,base+.75,z-3.4,1.2,.2,.5);
+  block(x+2.4,z-2.6,1.6,1.6,.9,M.wood,{y:base});const rug=new THREE.Mesh(new THREE.CircleGeometry(1.6,20),mat(0xff9f68));rug.rotation.x=-Math.PI/2;rug.position.set(x,base+.02,z);scene.add(rug);
+  const ns=signPlane([H.name],2.6,.6,{bg:'#2a1f47',fg:'#ffd23f'});ns.position.set(x,base+3.0,z+4.55);scene.add(ns);
+  // door (blocks entry until bought)
+  const door=put(GEO.box,mat(0x6a3a1a),x,base+1.2,z+4.3,2.6,2.4,.25);const col={x0:x-1.3,x1:x+1.3,z0:z+4.1,z1:z+4.5,top:base+2.4,bot:base-1};
+  const D={H,door,col,inside:V(x,base+.1,z+1.5),bed:V(x-2.6,base,z-2.4)};DX3.houses[H.id]=D;
+  const sync=()=>{const o=own();door.visible=!o;const i=boxes.indexOf(col);if(o&&i>=0)boxes.splice(i,1);if(!o&&i<0)boxes.push(col);};D.sync=sync;sync();
+  stations.push({pos:V(x,base,z+5.4),r:2.4,cond:()=>!own(),label:'pirkti namą: '+H.name+' ($'+H.price+')',act:()=>openDialog({name:H.name,role:'Namas pardavimui – $'+H.price,color:'#ffd23f',icon:'🏠',
+    text:'Jaukūs namai dinozaurų pasaulyje! Nusipirkęs gali čia miegoti (lova praleidžia naktį), o laiko mašina tave atnešis tiesiai į šiuos namus.',tasks:[],
+    actions:[{label:money>=H.price?'Pirkti $'+H.price:'Trūksta $'+(H.price-money),disabled:money<H.price,onClick:()=>buyDinoHouse(H)},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]})});
+  stations.push({pos:D.bed.clone(),r:2.2,cond:own,label:'miegoti 💤',act:()=>{hour=7;save.hour=7;save.dinoHome=H.id;saveGame(true);sfx('ding');floaty('💤 '+tr('Labas rytas!'),player.pos);say(null,'Išsimiegojai! Dabar laiko mašina tave atneš čia – į „'+H.name+'“.');}});}
+function buyDinoHouse(H){if(money<H.price)return;money-=H.price;$('money').textContent=money;save.dinoHouses=Object.assign({},save.dinoHouses,{[H.id]:1});save.dinoHome=H.id;saveGame(true);closeDialog();tryLock();
+  sfx('buy');setTimeout(()=>sfx('win'),250);floaty('🏠 -$'+H.price,player.pos);DX3.houses[H.id].sync();say(null,'Nusipirkai namą „'+H.name+'“! Durys atsidarė. Laiko mašina dabar atneš tave čia.');}
+function dsecDone(){const s=save.dsec||{};return [!!s.cave,!!s.ship,!!save.owned.d_dragon,!!save.owned.goldraptor,!!(save.emotes&&save.emotes.trexroar)].filter(Boolean).length;}
+function dsecMsg(name,text){const n=dsecDone();openDialog({name,role:'Slaptas dalykas! ('+n+'/5)',color:'#ffd23f',icon:'🗝',text:text+(n>=5?' Tu radai VISAS dinozaurų pasaulio paslaptis!':''),tasks:[],actions:[{label:'Valio!',onClick:()=>{closeDialog();tryLock();}}]});}
+function grantDCloth(ids,wear){const me=save.clothes.me;for(const id of ids)if(!me.owned.includes(id))me.owned.push(id);if(wear){for(const id of ids){const c=CLOTHES.find(q=>q.id===id);if(c)me.wear[c.slot]=id;}applyOutfit(pc,me.wear);updatePowersHud();}saveGame(true);}
+function unlockRoarEmote(){if(save.emotes&&save.emotes.trexroar)return;if(!save.emotes)save.emotes={};save.emotes.trexroar=true;saveGame(true);sfx('roar');sfx('win');dsecMsg('T-Rex riaumojimas','Tavo riaumojimas toks garsus, kad net T-Rex karalius išsigando! Gavai slaptą emote T-REX RIAUMOJIMAS (C).');}
+function buildDino3(){if(DX3.built)return;DX3.built=true;
+  dStall(-20,-3,'DINO TRANSPORTAS',0x9be564,openDinoVehShop,()=>{const P=makeDino('raptor',0xff8a3d,.5);anims.push(t=>animDino(P,t,3,false));return P.root;});
+  dStall(-15,13,'DINO DRABUŽIAI',0xff7ac0,openDinoClothes,()=>{const v=makeChar({body:0xff8a3d});applyOutfit(v,{hat:'dsuit_trex_h',back:'dsuit_trex',face:null,feet:'dfeet_claw'});return v.root;});
+  dStall(-4,20,'DINO GYVŪNĖLIAI',0xff9f68,openDinoPetShop,()=>{const v=makeDinoPet('d_trice');v.root.scale.setScalar(.8);anims.push(t=>{v.root.position.y=Math.abs(Math.sin(t*3))*.15;});return v.root;});
+  for(const H of DHOUSES)dHouse(H);
+  // A: cave behind the waterfall
+  {const cx=DW.x-115,cz=-115.5,y=terrainH(cx,cz),rk=mat(0x4a4a52,{roughness:1});
+   block(cx,cz-4,8.4,.6,4.2,rk);block(cx-4,cz,.6,8.4,4.2,rk);block(cx+4,cz,.6,8.4,4.2,rk);block(cx-2.6,cz+4,3,.6,4.2,rk);block(cx+2.6,cz+4,3,.6,4.2,rk);block(cx,cz,8.6,8.6,.5,rk,{y:minH(cx,cz,8,8)+4.1});
+   for(let i=0;i<6;i++){const c=put(GEO.cone,mat([0x3ec5ff,0xb06bff,0x9be564][i%3],{emissive:[0x1a6aa8,0x5a2a99,0x3a8a2a][i%3],emissiveIntensity:.9}),cx-3+i*1.2,y+.5,cz-3.4+(i%2)*.6,.2,1+(i%3)*.4,.2);c.rotation.z=(i%2?.2:-.2);}
+   const ch=new THREE.Group();put(GEO.box,mat(0x7a4a1a),0,.35,0,1.2,.7,.8,ch);const lid=put(GEO.box,M.gold,0,.78,0,1.25,.18,.85,ch);ch.position.set(cx,y,cz-2);scene.add(ch);
+   stations.push({pos:V(cx,y,cz-2),r:2.2,cond:()=>!(save.dsec&&save.dsec.cave),label:'atidaryti slaptą skrynią 🗝',act:()=>{save.dsec=Object.assign({},save.dsec,{cave:1});money+=500;$('money').textContent=money;lid.rotation.x=-1;grantDCloth(['dsuit_cave','dsuit_cave_h'],true);sfx('win');floaty('+$500',player.pos);
+     dsecMsg('Urvas už krioklio','Radai slaptą urvą už krioklio! Skrynioje – $500 ir slaptas URVINIO ŽMOGAUS KAILIS su plaukais.');}});
+   if(save.dsec&&save.dsec.cave)lid.rotation.x=-1;}
+  // B: secret stepping stones up the dinosaur volcano → baby dragon egg
+  {const vx=DW.x+104,vz=-104,vy=terrainH(vx,vz),rk=mat(0x2a1c1a,{roughness:.95});
+   for(let i=0;i<20;i++){const a=2.4-i*.5,r=i<17?14:14-(i-16)*2.6,top=vy+1+i*1.1;block(vx+Math.cos(a)*r,vz+Math.sin(a)*r,1.7,1.7,.5,rk,{y:top-.5});}
+   const a=2.4-19*.5,ex=vx+Math.cos(a)*3.6,ez=vz+Math.sin(a)*3.6,ey=vy+22;block(ex,ez,3,3,.5,rk,{y:ey-.5});
+   const egg=put(GEO.sph,mat(0x9b4dff,{emissive:0x5a2a99,emissiveIntensity:.6}),ex,ey+.55,ez,.45,.6,.45);anims.push(t=>{egg.rotation.y=t;egg.visible=!save.owned.d_dragon;});
+   stations.push({pos:V(ex,ey,ez),r:2,cond:()=>!save.owned.d_dragon,label:'paimti drakono kiaušinį 🥚',act:()=>{save.owned.d_dragon=true;save.active=activePets().filter(i=>i!=='d_dragon').concat(['d_dragon']);saveGame(true);syncPets();sfx('win');
+     dsecMsg('Drakoniukas!','Ugnikalnio viršūnėje radai karštą kiaušinį – ir iš jo išsirito DRAKONIUKAS! Šis slaptas gyvūnėlis dabar seks paskui tave.');}});}
+  // E: sunken ship with a chest
+  {const sx=DW.x-98,sz=96,g=new THREE.Group();g.position.set(sx,-1.4,sz);g.rotation.set(.15,.7,.25);scene.add(g);const wd=mat(0x6a4a2a);put(GEO.box,wd,0,.6,0,3,1.4,7,g);put(GEO.box,mat(0x4a3420),0,1.35,0,2.6,.15,6.4,g);const ms=put(GEO.cyl,wd,0,3,.5,.15,4,.15,g);ms.rotation.z=.5;
+   const sl=new THREE.Mesh(new THREE.PlaneGeometry(2,1.6),mat(0xe8e0c8,{side:THREE.DoubleSide,transparent:true,opacity:.85}));sl.position.set(.9,3.4,.5);sl.rotation.set(0,.3,.5);g.add(sl);
+   const ch=put(GEO.box,M.gold,sx+2.6,terrainH(sx+2.6,sz+2)+.35,sz+2,.9,.6,.6);DX3.ship={ch,pos:ch.position.clone()};ch.visible=!(save.dsec&&save.dsec.ship);}
+}
+function updateDino3(dt,t){
+  if(car&&car.dinoP&&car.type!=='pterocar'){const sp=Math.abs(car.speed||0);animDino(car.dinoP,t,4+sp*.45,sp>.6);}
+  if(NET.on)for(const pr of NET.peers.values())if(pr.carMesh&&pr.carMesh.dinoP)animDino(pr.carMesh.dinoP,t,9,true);
+  if(!DX3.built||!isDino())return;const p=player.pos;
+  if(DX3.ship&&!(save.dsec&&save.dsec.ship)&&Math.hypot(p.x-DX3.ship.pos.x,p.z-DX3.ship.pos.z)<2&&Math.abs(p.y-DX3.ship.pos.y)<2.5){save.dsec=Object.assign({},save.dsec,{ship:1});DX3.ship.ch.visible=false;money+=300;$('money').textContent=money;grantDCloth(['dhat_fossil'],true);sfx('win');
+    dsecMsg('Nuskendęs laivas','Jūros dugne, prie nuskendusio laivo, radai lobį: $300 ir slaptą FOSILIJŲ KARŪNĄ!');}
+  const night=hour>=20||hour<5;
+  if(night&&!save.owned.goldraptor&&!DX3.gold){const s=pick(DX3.goldSpots);const P=makeDino('raptor',0xffc93c,.6);P.root.traverse(o=>{if(o.isMesh&&o.material&&o.material.color&&o.material.color.getHex()===0xffc93c)o.material=mat(0xffc93c,{metalness:.8,roughness:.2,emissive:0x886600,emissiveIntensity:.8});});scene.add(P.root);DX3.gold={P,cx:s[0],cz:s[1],ph:rand(0,6)};}
+  if(DX3.gold){const G2=DX3.gold;if(!night||save.owned.goldraptor){scene.remove(G2.P.root);DX3.gold=null;}
+    else{const a=t*.9+G2.ph,x=DW.x+G2.cx+Math.cos(a)*7,z=G2.cz+Math.sin(a)*7;G2.P.root.position.set(x,terrainH(x,z),z);G2.P.root.rotation.y=Math.atan2(-Math.sin(a),Math.cos(a));animDino(G2.P,t,16,true);if(Math.random()<dt*3)floaty('✨',G2.P.root.position.clone().add(V(0,2,0)));
+      if(Math.hypot(p.x-x,p.z-z)<2.6&&!player.inCar){save.owned.goldraptor=true;saveGame(true);scene.remove(G2.P.root);DX3.gold=null;sfx('win');dsecMsg('Auksinis raptorius','Pagavai naktinį AUKSINĮ RAPTORIŲ! Jis dabar tavo – iškviesk jį klavišu I. Tai greičiausias padaras dinozaurų pasaulyje!');}}}}
+Object.assign(I18N_EN,{'DINO TRANSPORTAS':'DINO RIDES','DINO DRABUŽIAI':'DINO CLOTHES','DINO GYVŪNĖLIAI':'DINO PETS','dino transportas':'dino rides','dino drabužiai':'dino clothes','dino gyvūnėliai':'dino pets','Dinozaurų transportas':'Dinosaur rides','Dinozaurų gyvūnėliai':'Dinosaur pets',
+  'Kiaušinio mašina':'Egg car','Raptorių bėgikas':'Raptor runner','Kaulų bagis':'Bone buggy','Triceratopsas su balnu':'Saddled triceratops','T-Rex su balnu':'Saddled T-Rex','Brontozauras su balnu':'Saddled brontosaurus','Pterodaktilis su balnu':'Saddled pterodactyl','🔒 Auksinis raptorius':'🔒 Golden raptor',
+  'Milžiniškas dinozauro kiaušinis su ratais – iš viršaus kyšo mažylis T-Rex.':'A giant dinosaur egg on wheels – a baby T-Rex peeks out of the top.','Greičiausias dinozauras! Lieknas raptorius su balnu – bėga kaip vėjas.':'The fastest dinosaur! A slim saddled raptor – runs like the wind.',
+  'Bagis iš dinozauro skeleto: šonkauliai, stuburas ir kaukolė priekyje.':'A buggy made from a dinosaur skeleton: ribs, a spine and a skull at the front.','Lėtas, bet labai stiprus – su ragais nušluoja viską kelyje.':'Slow but very strong – its horns sweep everything away.',
+  'Jok tikru T-Rex! Didelis, baisus ir kojomis trepsi žemę.':'Ride a real T-Rex! Big, scary and stomping the ground.','Aukščiausias transportas – nuo brontozauro nugaros matai viską.':'The tallest ride – from a brontosaurus back you can see everything.',
+  'SKRENDA! Laikyk Space – pterodaktilis mosuoja sparnais ir kyla, paleidus sklendžia žemyn.':'IT FLIES! Hold Space – the pterodactyl flaps its wings and climbs, let go to glide down.','Slaptas! Greičiausias padaras laike.':'Secret! The fastest creature in time.',
+  'Joti dinozaurais – geriau nei vairuoti! Nupirktą transportą iškviesi klavišu I (bet kuriame pasaulyje).':'Riding dinosaurs beats driving! Call your ride with I (in any world).',
+  'Mažyliai dinozaurai ieško draugo! Nupirkti seks paskui tave abiejuose pasauliuose. Vardus pakeisi įprastoje gyvūnėlių parduotuvėje.':'Baby dinosaurs are looking for a friend! They follow you in both worlds. You can rename them at the normal pet shop.',
+  'Mažylis T-Rex':'Baby T-Rex','Triceratopsiukas':'Baby triceratops','Pterodaktiliukas':'Baby pterodactyl','Stegozauriukas':'Baby stegosaurus','Drakoniukas':'Baby dragon','Rexis':'Rexy','Ragiukas':'Horny','Skrydis':'Flappy','Plokštelė':'Plates','Kibirkštis':'Sparky',
+  'Mažas triceratopsas su trimis ragais ir apykakle.':'A little triceratops with three horns and a frill.','Lėtas, bet ištikimas – su plokštelėmis ant nugaros.':'Slow but loyal – with plates on its back.','Mažas T-Rex su mažytėmis rankytėmis. Labai drąsus!':'A little T-Rex with tiny arms. Very brave!','Mažas pterodaktilis su sparnais ant rankų.':'A little pterodactyl with wings on its arms.',
+  'Urvo namas':'Cave house','Medžio namelis':'Treehouse','Fosilijų vila':'Fossil villa','Jaukūs namai dinozaurų pasaulyje! Nusipirkęs gali čia miegoti (lova praleidžia naktį), o laiko mašina tave atnešis tiesiai į šiuos namus.':'A cosy home in the dinosaur world! Once you buy it you can sleep here (the bed skips the night), and the time machine will bring you straight here.',
+  'miegoti 💤':'sleep 💤','Labas rytas!':'Good morning!','pirkti namą: ':'buy house: ','Namas pardavimui – $':'House for sale – $','Ne dabar':'Not now','Uždaryti':'Close','Valio!':'Hooray!',
+  '🦖 T-Rex kostiumas':'🦖 T-Rex suit','🦖 T-Rex galva':'🦖 T-Rex head','🦎 Raptoriaus kostiumas':'🦎 Raptor suit','🦎 Raptoriaus galva':'🦎 Raptor head','🦏 Triceratopso kostiumas':'🦏 Triceratops suit','🦏 Triceratopso galva':'🦏 Triceratops head','🦕 Stegozauro kostiumas':'🦕 Stegosaurus suit','🦕 Stegozauro galva':'🦕 Stegosaurus head',
+  '🦅 Pterodaktilio kostiumas':'🦅 Pterodactyl suit','🦅 Pterodaktilio galva':'🦅 Pterodactyl head','🐉 Drakono kostiumas':'🐉 Dragon suit','🐉 Drakono galva':'🐉 Dragon head','🔒 Urvinio žmogaus kailis':'🔒 Caveman fur','🔒 Urvinio žmogaus plaukai':'🔒 Caveman hair','🥚 Kiaušinio lukštas':'🥚 Egg shell','🔒 Fosilijų karūna':'🔒 Fossil crown','🦴 Kaulų akiniai':'🦴 Bone glasses','🦶 Dinozauro letenos':'🦶 Dino claws','🦎 Dinozauro uodega':'🦎 Dino tail',
+  'Raptorių greitis – bėgi 15% greičiau':'Raptor speed – you run 15% faster','Sklandymas – krisdamas laikyk Space ir lėtai sklandai':'Gliding – hold Space while falling to glide slowly','Raptorių greitis':'Raptor speed','Sklandymas':'Gliding',
+  'Urvas už krioklio':'Cave behind the waterfall','Nuskendęs laivas':'Sunken ship','Auksinis raptorius':'Golden raptor','T-Rex riaumojimas':'T-Rex roar','atidaryti slaptą skrynią 🗝':'open the secret chest 🗝','paimti drakono kiaušinį 🥚':'take the dragon egg 🥚',
+  'Radai slaptą urvą už krioklio! Skrynioje – $500 ir slaptas URVINIO ŽMOGAUS KAILIS su plaukais.':'You found the secret cave behind the waterfall! The chest holds $500 and the secret CAVEMAN FUR with hair.',
+  'Ugnikalnio viršūnėje radai karštą kiaušinį – ir iš jo išsirito DRAKONIUKAS! Šis slaptas gyvūnėlis dabar seks paskui tave.':'On top of the volcano you found a hot egg – and a BABY DRAGON hatched! This secret pet now follows you.',
+  'Jūros dugne, prie nuskendusio laivo, radai lobį: $300 ir slaptą FOSILIJŲ KARŪNĄ!':'At the bottom of the sea, next to the sunken ship, you found treasure: $300 and the secret FOSSIL CROWN!',
+  'Pagavai naktinį AUKSINĮ RAPTORIŲ! Jis dabar tavo – iškviesk jį klavišu I. Tai greičiausias padaras dinozaurų pasaulyje!':'You caught the night-time GOLDEN RAPTOR! It is yours now – call it with I. It is the fastest creature in the dinosaur world!',
+  'Tavo riaumojimas toks garsus, kad net T-Rex karalius išsigando! Gavai slaptą emote T-REX RIAUMOJIMAS (C).':'Your roar is so loud that even the T-Rex King got scared! You got the secret emote T-REX ROAR (C).',
+  ' Tu radai VISAS dinozaurų pasaulio paslaptis!':' You found ALL the secrets of the dinosaur world!','Slaptas dalykas! (':'Secret thing! (',
+  'Už krioklio kažkas blizga… ar ten urvas?':'Something shines behind the waterfall… is there a cave?','Senas laivas nuskendo vakarų jūroje. Sako, ten lobis!':'An old ship sank in the western sea. They say there is treasure!',
+  'Ant ugnikalnio šlaito yra slapti akmenys – kas užlips, ras karštą kiaušinį.':'There are secret stones on the volcano slope – whoever climbs them finds a hot egg.','Naktį aplink bėgioja AUKSINIS raptorius. Pagauk!':'At night a GOLDEN raptor runs around. Catch it!','Ugg riaumoja pokalbyje: RAAAR! Pabandyk ir tu.':'Ugg roars in chat: RAAAR! Try it too.'});
+i18nRe=null;i18nCache.clear();
+
+/* ---------- v194: the great drill (dino island) + underground world ---------- */
+const DRL={lx:40,lz:-15},DRL_PRICE=1000,UG_PAY=200,UG_CROWN_PAY=600,UG_FINAL_PAY=1500;
+const isUnder=()=>player.pos.x<-600;
+const ukings=[];const UG={picks:[],carry:[],press:{},course:null,crs:[],movers:[],built:false,race:null,racer:null,timer:null,mosq:[],kv:{}};
+let drillBusy=false;
+const uP=(lx,lz)=>V(UW.x+lx,0,UW.z+lz);
+Object.assign(ZINFO,{uhub:['Požeminis pasaulis','Grąžto liftas – kelias atgal į dinozaurų salą'],umole:['Kurmio karalystė','Kurmis karalius kasa tunelius šiaurėje'],uworm:['Slieko karalystė','Sliekas karalius raitosi vakarų purve'],uant:['Skruzdžių karalystė','Skruzdė karalienė valdo rytų skruzdėlyną']});
+Object.assign(KING_TALK,{'Kurmis':['Kas čia? Nieko nematau… mano akiniai!','Kasti, kasti, kasti!','Šaknys – skaniausios pasaulyje.'],'Sliekas':['Raitausi, raitausi…','Kur mano obuoliai?','Purvas – mano pagalvė.'],'Skruzdė':['Darbo! Visi dirbti!','Cukrus! Daugiau cukraus!','Mano skruzdėlės pasiklydo…']});
+Object.assign(I18N_EN,{'Požeminis pasaulis':'Underground World','Kurmio karalystė':'Mole Kingdom','Slieko karalystė':'Worm Kingdom','Skruzdžių karalystė':'Ant Kingdom','Kurmis':'Mole King','Sliekas':'Worm King','Skruzdė':'Ant Queen','Kasėjas Kastytis':'Digger Dave','DIDYSIS GRĄŽTAS':'THE GREAT DRILL','GRĄŽTO MOKYMAI':'DRILL TRAINING','Grąžto liftas – kelias atgal į dinozaurų salą':'Drill lift – the way back to dinosaur island','Kurmis karalius kasa tunelius šiaurėje':'The Mole King digs tunnels in the north','Sliekas karalius raitosi vakarų purve':'The Worm King wriggles in the western mud','Skruzdė karalienė valdo rytų skruzdėlyną':'The Ant Queen rules the eastern anthill',
+  'leistis grąžtu į požeminį pasaulį ⛏':'ride the drill to the underground world ⛏','kilti grąžto liftu į dinozaurų salą ⛏':'take the drill lift up to dinosaur island ⛏','kalbėtis: Kasėjas Kastytis':'talk: Digger Dave','pradėti grąžto mokymus':'start the drill training','Grąžto pasas':'Drill pass','GRĄŽTO PASAS':'DRILL PASS'});
+/* ---- drill site + very hard parkour on dinosaur island ---- */
+function makeDigger(){const v=makeChar({body:0xff8a1f,head:0xf2c9a0,legs:0x2a3a6a});setHat(v,'none');const hm=put(new THREE.SphereGeometry(.46,16,8,0,Math.PI*2,0,Math.PI/2),mat(0xffd23f),0,2.0,0,1,.8,1,v.tilt);
+  put(GEO.cyl,mat(0xffd23f),0,2.0,0,.52,.06,.52,v.tilt);put(GEO.sph,mat(0xfff3b0,{emissive:0xffd36b,emissiveIntensity:1}),0,2.22,.4,.1,.1,.06,v.tilt);for(const sx of[-1,1])put(GEO.box,mat(0xd0d0d0),sx*.3,1.3,.38,.1,.4,.04,v.tilt);
+  const pk=put(GEO.cyl,M.trunk,.75,1.2,.3,.05,1.4,.05,v.tilt);pk.rotation.x=.3;return v;}
+function buildDrill(){const X=DW.x+DRL.lx,Z=DRL.lz,y=minH(X,Z,8,8)-.05;const st=mat(0x8a8a90,{metalness:.6,roughness:.35}),yl=mat(0xffd23f),dk=M.dark;
+  const hole=new THREE.Mesh(new THREE.CircleGeometry(2.6,24),mat(0x120a08));hole.rotation.x=-Math.PI/2;hole.position.set(X,y+.06,Z);scene.add(hole);
+  for(const [dx,dz] of[[-2.6,-2.6],[2.6,-2.6],[-2.6,2.6],[2.6,2.6]]){const l=put(GEO.cyl,yl,X+dx,y+7,Z+dz,.18,14,.18);l.rotation.set(-dz*.05,0,dx*.05);addCol(X+dx,Z+dz,.5,.5,y+14);}
+  for(let k=1;k<5;k++)for(const [a,b,c,d] of[[-2.6,-2.6,2.6,-2.6],[2.6,-2.6,2.6,2.6],[2.6,2.6,-2.6,2.6],[-2.6,2.6,-2.6,-2.6]]){const s=1-k*.05,bm=put(GEO.cyl,yl,X+(a+c)/2*s,y+k*3,Z+(b+d)/2*s,.07,5.2*s,.07);bm.rotation.set(b===d?0:Math.PI/2,0,b===d?Math.PI/2:0);}
+  put(GEO.box,st,X,y+14.2,Z,3.6,.6,3.6);
+  const bit=new THREE.Group();bit.position.set(X,y,Z);scene.add(bit);put(GEO.cyl,st,0,8,0,.35,12,.35,bit);const cone=put(GEO.cone,mat(0xb0b0b8,{metalness:.8,roughness:.25}),0,1.2,0,1.3,3.2,1.3,bit);cone.rotation.x=Math.PI;
+  for(let i=0;i<6;i++){const sp=put(GEO.box,st,Math.cos(i)*.9,2+i*.6,Math.sin(i)*.9,.2,.3,1.2,bit);sp.rotation.y=i;}
+  const eng=put(GEO.box,mat(0xff5f3a),X+4.6,y+1,Z+1,2.2,2,3);addCol(X+4.6,Z+1,2.2,3,y+2);put(GEO.cyl,dk,X+4.6,y+2.8,Z,.25,1.6,.25);
+  UG.bit=bit;UG.drillY=y;anims.push(t=>{bit.rotation.y=t*(UG.drilling?14:1.4);bit.position.y=y+(UG.drilling?-Math.min(8,(UG.drilling-0)*0):0);});
+  const sg=signPlane(['DIDYSIS GRĄŽTAS','kelias į POŽEMINĮ PASAULĮ'],6,1.3,{bg:'#1b1430',fg:'#ffd23f'});sg.position.set(X,y+3.2,Z+6.5);scene.add(sg);put(GEO.cyl,M.trunk,X-2.6,y+1.6,Z+6.45,.1,3.2,.1);put(GEO.cyl,M.trunk,X+2.6,y+1.6,Z+6.45,.1,3.2,.1);
+  const dg=makeDigger();dg.root.position.set(X-4,y,Z+4);dg.root.rotation.y=.6;scene.add(dg.root);UG.digger=dg;const tg=tag('Kasėjas Kastytis','#ffd23f',.75);tg.position.set(X-4,y+3,Z+4);scene.add(tg);
+  anims.push(t=>{dg.armR.p.rotation.x=-.6+Math.sin(t*2)*.5;});
+  stations.push({pos:V(X-4,y,Z+4),r:2.8,label:'kalbėtis: Kasėjas Kastytis',act:openDigger});
+  stations.push({pos:V(X,y,Z+3.2),r:3,cond:()=>!!save.ugPass,label:'leistis grąžtu į požeminį pasaulį ⛏',act:()=>drillTravel(true)});
+  // spiral course around the drill tower
+  const cp=[0,10,20,29];for(let i=0;i<30;i++){const a=.3-i*.42,x=X+Math.cos(a)*10,z=Z+Math.sin(a)*10,top=y+.6+i*1.0,isCp=cp.includes(i);
+    const kind=isCp?'cp':i%6===3?'lift':i%7===5?'blink':'n',sz=isCp?2.4:1.2;
+    const m=put(GEO.box,mat(isCp?0x3ee6b0:kind==='lift'?0x3ec5ff:kind==='blink'?0xff5fa2:0xff9f68),x,top-.25,z,sz,.5,sz);
+    const col={x0:x-sz/2,x1:x+sz/2,z0:z-sz/2,z1:z+sz/2,top,bot:top-.5};boxes.push(col);
+    const c={x,z,top,s:sz,cp:isCp,kind,m,col,base:top,ph:i*.7};UG.crs.push(c);if(kind!=='n'&&kind!=='cp')UG.movers.push(c);}
+  const L=UG.crs[UG.crs.length-1],ft=y+31.5;[[.33,.5],[.66,.95]].forEach(([f,dy])=>{const x=L.x+(X-L.x)*f,z=L.z+(Z-L.z)*f,top=L.top+dy;block(x,z,1.1,1.1,.5,mat(0xffd23f),{y:top-.5});UG.crs.push({x,z,top,s:1.1});});
+  block(X,Z,3.2,3.2,.5,M.gold,{y:ft-.5});UG.crs.push({x:X,z:Z,top:ft,s:3.2,fin:true});
+  const pass=new THREE.Group();put(GEO.box,mat(0xff8a1f),0,0,0,.7,.95,.12,pass);put(GEO.cone,M.white,0,0,.08,.15,.4,.05,pass).rotation.x=Math.PI;pass.position.set(X,ft+1.2,Z);scene.add(pass);
+  const pt=tag('GRĄŽTO PASAS','#ffd23f',.9);pt.position.set(X,ft+2.3,Z);scene.add(pt);anims.push(t=>{pass.rotation.y=t*1.5;pass.visible=pt.visible=!save.ugPass;});
+  const c0=UG.crs[0],mt=tag('GRĄŽTO MOKYMAI ▶','#3ee6b0',.9);mt.position.set(c0.x,c0.top+2,c0.z);scene.add(mt);
+  stations.push({pos:V(c0.x,y,c0.z),r:2.6,cond:()=>!UG.course&&!save.ugPass,label:'pradėti grąžto mokymus',act:startUgCourse});}
+function ugDinoDone(){return Object.keys(save.dinoCrowns||{}).length;}
+function openDigger(){const n=ugDinoDone(),ok=n>=4,paid=!!save.ugPaid,pass=!!save.ugPass;
+  const text=!ok?'Ei, keliautojau! Aš – kasėjas Kastytis. Šis DIDYSIS GRĄŽTAS kasa tiesiai į žemę – į POŽEMINĮ PASAULĮ, kur gyvena Kurmis, Sliekas ir Skruzdė karalienė. Bet ten leidžiu tik didvyriams: pirmiausia išgelbėk visus 4 dinozaurų karalius ('+n+'/4).'
+    :!paid?'Tu išgelbėjai visus dinozaurų karalius! Dabar gali leistis grąžtu. Kelionė kainuoja $'+DRL_PRICE+'. Po to – mokymai: LABAI SUNKUS parkūras aplink grąžto bokštą. Mėlynos platformos kyla ir leidžiasi, rožinės – dingsta!'
+    :!pass?'Sumokėta! Dabar – mokymai. Užlipk spirale iki pat grąžto viršūnės ir paimk GRĄŽTO PASĄ. Mėlynos platformos juda aukštyn-žemyn, rožinės kas kelias sekundes dingsta. Žalios – kontroliniai taškai. Sėkmės – jos tau prireiks!'
+    :'Turi GRĄŽTO PASĄ! Stok prie grąžto ir spausk F – nusileisi į požeminį pasaulį. Grįžti galėsi grąžto liftu ten, apačioje.';
+  openDialog({name:'Kasėjas Kastytis',role:'Didysis grąžtas'+(pass?' · požemio karaliai '+Object.keys(save.ugCrowns||{}).length+'/3':''),color:'#ffd23f',icon:'⛏',text,
+    tasks:[{b:'0. Dinozaurai',t:'išgelbėk 4 dinozaurų karalius',chip:ok?'Atlikta ✓':n+'/4'},{b:'1. Sumokėti',t:'$'+DRL_PRICE+' už kelionę',chip:paid?'Atlikta ✓':'$'+DRL_PRICE},{b:'2. Mokymai',t:'labai sunkus parkūras',chip:pass?'Atlikta ✓':paid?'Laukia':'—'},{b:'3. Grąžto pasas',t:'leiskis į požemį',chip:pass?'Turi ⛏':'Neturi'}],
+    actions:!ok?[{label:'Gerai!',onClick:()=>{closeDialog();tryLock();}}]:!paid?[{label:'Sumokėti $'+DRL_PRICE,disabled:money<DRL_PRICE,onClick:()=>{if(money<DRL_PRICE)return;money-=DRL_PRICE;$('money').textContent=money;save.ugPaid=1;saveGame(true);sfx('buy');closeDialog();openDigger();}},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]
+      :!pass?[{label:'▶ Pradėti mokymus',onClick:()=>{closeDialog();startUgCourse();tryLock();}},{label:'Vėliau',alt:true,onClick:()=>{closeDialog();tryLock();}}]:[{label:'Gerai!',onClick:()=>{closeDialog();tryLock();}}]});}
+function startUgCourse(){if(save.ugPass)return;if(ugDinoDone()<4||!save.ugPaid){openDigger();return;}if(player.inCar){say(null,'Pirmiausia išlipk iš transporto.');return;}UG.course={cp:0};const c=UG.crs[0];tpTo(V(c.x,c.top+.05,c.z));sfx('ding');
+  say('Kasėjas Kastytis','Pirmyn! Bėk (Shift) ir šok (Space). Mėlynos – juda, rožinės – dingsta. Nukritęs pradėsi nuo žalios platformos.',true);}
+function updateUgCourse(dt,t){if(!UG.crs.length)return;const near=isDino()&&Math.hypot(player.pos.x-(DW.x+DRL.lx),player.pos.z-DRL.lz)<60;
+  for(const c of UG.movers){if(c.kind==='lift'){const nt=c.base+Math.sin(t*1.9+c.ph)*1.3;c.top=nt;c.col.top=nt;c.col.bot=nt-.5;c.m.position.y=nt-.25;}
+    else{const ph=(t+c.ph)%3.4,on=ph<2.2;if(near&&on!==c.on){c.on=on;const i=boxes.indexOf(c.col);if(on&&i<0)boxes.push(c.col);if(!on&&i>=0)boxes.splice(i,1);}c.m.visible=on&&(ph<1.6||Math.sin(t*30)>0);}}
+  const C=UG.course;if(!C)return;const p=player.pos;
+  if(player.inCar||Math.hypot(p.x-(DW.x+DRL.lx),p.z-DRL.lz)>30){UG.course=null;say(null,'Grąžto mokymai nutraukti. Pradėk iš naujo prie žalios platformos.');return;}
+  for(let i=0;i<UG.crs.length;i++){const c=UG.crs[i];if(Math.abs(p.x-c.x)<c.s/2+.3&&Math.abs(p.z-c.z)<c.s/2+.3&&Math.abs(p.y-c.top)<.5){if(c.fin){ugGrantPass();return;}if(c.cp&&i>C.cp){C.cp=i;sfx('ding');floaty('✅ '+tr('Kontrolinis taškas!'),p);}}}
+  const cp=UG.crs[C.cp];if(player.onGround&&p.y<cp.top-2.5){tpTo(V(cp.x,cp.top+.05,cp.z));sfx('boing');floaty(tr('Bandyk dar kartą!'),player.pos);}}
+function ugGrantPass(){UG.course=null;save.ugPass=1;saveGame(true);sfx('win');setTimeout(()=>sfx('ding'),300);floaty('⛏ '+tr('GRĄŽTO PASAS!'),player.pos);
+  openDialog({name:'GRĄŽTO PASAS',role:'Sunkiausi mokymai įveikti!',color:'#ffd23f',icon:'⛏',text:'NEĮTIKĖTINA! Įveikei sunkiausią parkūrą pasaulyje ir gavai GRĄŽTO PASĄ. Dabar didysis grąžtas tave nuneš į POŽEMINĮ PASAULĮ, kur laukia Kurmis, Sliekas ir Skruzdė karalienė – kiekvienas su 5 misijomis.',tasks:[],
+    actions:[{label:'⬇ Nusileisti prie grąžto',onClick:()=>{closeDialog();tpTo(V(DW.x+DRL.lx-3,UG.drillY+.3,DRL.lz+5));tryLock();}},{label:'Likti čia',alt:true,onClick:()=>{closeDialog();tryLock();}}]});}
+function drillTravel(down){if(drillBusy)return;if(player.inCar){say(null,'Pirmiausia išlipk iš transporto (F).');return;}if(down&&!save.ugPass)return;drillBusy=true;UG.drilling=1;
+  let fl=$('tmFlash');if(!fl){fl=document.createElement('div');fl.id='tmFlash';fl.style.cssText='position:fixed;inset:0;z-index:85;pointer-events:none;opacity:0;transition:opacity .45s';document.body.append(fl);}
+  fl.style.background='radial-gradient(circle,#3a2410 0%,#120a08 70%)';sfx('boom');tone(70,40,1.6,'sawtooth',.14);tone(140,60,1.4,'square',.06,.2);shake=Math.max(shake||0,.6);requestAnimationFrame(()=>fl.style.opacity='1');
+  setTimeout(()=>{let d;if(down){if(!UG.built)buildUnder();d=uP(3,4);d.y=terrainH(d.x,d.z)+.3;}else d=V(DW.x+DRL.lx-3,UG.drillY+.3,DRL.lz+5);tpTo(d);player.yaw=Math.PI;
+    let i=0;for(const n of pets.values()){n.pos.set(d.x-1.5+i*1.2,d.y+n.half+.3,d.z+1.5);n.vel.set(0,0,0);n.state='follow';i++;}curZone=null;saveGame(true);
+    setTimeout(()=>{fl.style.opacity='0';drillBusy=false;UG.drilling=0;sfx('ding');floaty(down?'⛏ '+tr('Požeminis pasaulis!'):'🦖 '+tr('Dinozaurų sala!'),player.pos);
+      if(down&&!save.ugSeen){save.ugSeen=1;saveGame(true);openDialog({name:'Požeminis pasaulis',role:'Giliai po dinozaurų sala',color:'#b06bff',icon:'⛏',text:'Grąžtas pragręžė žemę ir tu atsidūrei POŽEMINIAME PASAULYJE! Čia šviečia kristalai ir grybai, o trys požemio karaliai laukia pagalbos – kiekvienas turi po 5 misijas.',
+        tasks:[{b:'Kurmis',t:'šiaurės tuneliai',chip:'⬆ šiaurė'},{b:'Sliekas',t:'vakarų purvas',chip:'↙ pietvakariai'},{b:'Skruzdė',t:'rytų skruzdėlynas',chip:'↘ pietryčiai'}],actions:[{label:'Pirmyn!',onClick:()=>{closeDialog();tryLock();}}]});}},500);},900);}
+/* ---- underground models ---- */
+function makeMoleKing(){const v=makeChar({body:0x4a4048,head:0x4a4048,legs:0x3a3038});setHat(v,'none');put(GEO.sph,mat(0xff9fb5),0,1.76,.44,.14,.12,.12,v.tilt);
+  for(const sx of[-1,1])put(GEO.box,M.dark,sx*.15,1.92,.39,.2,.1,.04,v.tilt);put(GEO.box,M.dark,0,1.93,.4,.12,.03,.03,v.tilt);
+  for(const L of[v.armL,v.armR])for(let i=-1;i<=1;i++){const c=put(GEO.cone,M.white,i*.07,-.95,.05,.04,.18,.04,L.p);c.rotation.x=Math.PI;}
+  put(GEO.sph,mat(0x8a7a88),0,1.05,.36,.3,.34,.1,v.tilt);const cr=makeCrown(.9);cr.position.y=.1;v.hat.add(cr);v.root.scale.setScalar(2.3);return v;}
+function makeWormKing(){const g=new THREE.Group(),pk=mat(0xff8fa8,{roughness:.6}),segs=[];for(let i=0;i<16;i++){const s=put(GEO.sph,pk,0,0,0,.75-i*.015,.75-i*.015,.75-i*.015,g);segs.push(s);if(i%3===1){const r=new THREE.Mesh(new THREE.TorusGeometry(.72-i*.015,.06,6,14),mat(0xe06a88));s.add(r);r.rotation.y=Math.PI/2;r.scale.setScalar(1/(.75-i*.015));}}
+  const head=segs[0];for(const sx of[-1,1]){put(GEO.sph,M.white,sx*.3,.25,.6,.2,.22,.12,head);put(GEO.sph,M.dark,sx*.3,.25,.72,.1,.11,.06,head);}put(GEO.box,mat(0x7a2a3a),0,-.15,.7,.4,.08,.05,head);
+  const cr=makeCrown(.8);cr.position.y=.75;head.add(cr);return{root:g,segs,head};}
+function makeAntQueen(){const g=new THREE.Group(),rd=mat(0x8a2a1a,{roughness:.5}),dk=mat(0x3a0f0a);
+  put(GEO.sph,rd,0,1.6,-1.6,1.1,.9,1.4,g);put(GEO.sph,rd,0,1.7,0,.6,.55,.75,g);const head=new THREE.Group();head.position.set(0,2.1,1);g.add(head);put(GEO.sph,rd,0,0,0,.6,.55,.55,head);
+  for(const sx of[-1,1]){put(GEO.sph,M.dark,sx*.3,.15,.4,.14,.16,.1,head);const an=put(GEO.cyl,dk,sx*.2,.7,.2,.03,.8,.03,head);an.rotation.set(-.4,0,sx*-.4);put(GEO.sph,dk,sx*.37,1.05,.05,.07,.07,.07,head);
+    for(let k=0;k<3;k++){const l=put(GEO.cyl,dk,sx*.9,.9,-.5+k*.5,.05,1.8,.05,g);l.rotation.z=sx*1.0;}
+    const w=put(GEO.box,mat(0xd8f0ff,{transparent:true,opacity:.45}),sx*.9,2.4,-.6,1.6,.03,.7,g);w.rotation.z=sx*.3;}
+  const cr=makeCrown(.9);cr.position.y=.5;head.add(cr);return{root:g,head};}
+function makeAnt(s=1){const g=new THREE.Group(),m=mat(0x2a1a14);put(GEO.sph,m,0,.25,-.3,.22,.18,.28,g);put(GEO.sph,m,0,.25,0,.12,.1,.14,g);put(GEO.sph,m,0,.3,.22,.14,.13,.13,g);for(const sx of[-1,1])for(let k=0;k<3;k++){const l=put(GEO.cyl,m,sx*.18,.15,-.1+k*.1,.02,.3,.02,g);l.rotation.z=sx*1.1;}g.scale.setScalar(s);return g;}
+/* ---- generic underground task engine ---- */
+function uPick(key,pos,mesh,bob,move){const x=UW.x+pos[0],z=pos[1],y=pos[2]!=null?pos[2]:terrainH(x,z)+.4;mesh.position.set(x,y,z);scene.add(mesh);const idx=UG.picks.filter(q=>q.key===key).length;
+  const got=((save.ugPick||{})[key]||[]).includes(idx);mesh.visible=!got;UG.picks.push({key,idx,mesh,pos:V(x,y,z),base:V(x,y,z),got,bob,move});}
+function uCarry(key,spots,mk,name,target,need){need=need||spots.length;const done=(save.ugCarry||{})[key]||0;spots.slice(done).forEach(([lx,lz])=>{const b=addBody({x:UW.x+lx,z:lz,r:.6,bounce:.25,fric:3,mesh:mk(),name,lift:.5});UG.carry.push({key,b,target,need});});}
+function uPress(key,spots,mk,label,onDone,opts={}){const got=()=>(opts.temp?(UG.tmp[key]||[]):((save.ugPress||{})[key]||[]));spots.forEach(([lx,lz],i)=>{const x=UW.x+lx,y=terrainH(x,lz);const o=mk(i);o.position.set(x,y,lz);scene.add(o);o.userData.done=false;
+  const sync=()=>{const d=got().includes(i);if(o.userData.set)o.userData.set(d);};sync();(UG.press[key]=UG.press[key]||[]).push(sync);
+  stations.push({pos:V(x,y,lz),r:2.4,cond:()=>!got().includes(i)&&!ugTaskDone(opts.king,opts.task),label,act:()=>{if(opts.before&&!opts.before())return;if(opts.temp){UG.tmp[key]=[...(UG.tmp[key]||[]),i];}else{save.ugPress=Object.assign({},save.ugPress);save.ugPress[key]=[...(save.ugPress[key]||[]),i];saveGame(true);}
+    sfx('ding');UG.press[key].forEach(f=>f());const n=got().length;floaty('✔ '+n+'/'+spots.length,player.pos);if(n>=spots.length)onDone();}});});}
+UG.tmp={};
+function ugTaskDone(name,task){return !!name&&kingDone({name}).includes(task);}
+function ugTask(name,task){if(ugTaskDone(name,task))return;save.kingTasks=Object.assign({},save.kingTasks);save.kingTasks[name]=Array.from(new Set([...(save.kingTasks[name]||[]),task]));money+=UG_PAY;$('money').textContent=money;saveGame(true);sfx('win');floaty('+$'+UG_PAY,player.pos);
+  const n=kingDone({name}).length;say(name,pick(['Nuostabu! Misija įvykdyta!','Ačiū, požemio drauge!','Tu tikras herojus!'])+' ('+n+'/5)',true);say(null,'Misija „'+task+'“ atlikta! '+name+': '+n+'/5. +$'+UG_PAY);
+  for(const k of ukings){if(save.ugCrowns&&save.ugCrowns[k.name])continue;if(kingDone(k).length<5)continue;save.ugCrowns=Object.assign({},save.ugCrowns,{[k.name]:1});money+=UG_CROWN_PAY;$('money').textContent=money;const c=Object.keys(save.ugCrowns).length;saveGame(true);
+    if(c>=3){const me=save.clothes.me;for(const id of['dsuit_mole','dsuit_mole_h'])if(!me.owned.includes(id))me.owned.push(id);me.wear.back='dsuit_mole';me.wear.hat='dsuit_mole_h';applyOutfit(pc,me.wear);updatePowersHud();money+=UG_FINAL_PAY;$('money').textContent=money;saveGame(true);
+      openDialog({name:'Požeminis pasaulis išgelbėtas!',role:'Visi 3 požemio karaliai',color:'#b06bff',icon:'⛏',text:'Tu išgelbėjai Kurmį, Slieką ir Skruzdę karalienę! Požemis – nebe crazy. Karaliai tau dovanoja $'+(UG_CROWN_PAY+UG_FINAL_PAY)+' ir slaptą KURMIO KOSTIUMĄ su tamsiais akiniais!',tasks:[],actions:[{label:'Valio!',onClick:()=>{closeDialog();tryLock();}}]});}
+    else openDialog({name:k.name,role:k.kingdom+' išgelbėta!',color:k.color,icon:k.icon,text:k.calmText+' Gavai $'+UG_CROWN_PAY+'. Požemio karaliai: '+c+'/3.',tasks:[],actions:[{label:'Puiku!',onClick:()=>{closeDialog();tryLock();}}]});}}
+function uCount(key){return ((save.ugPick||{})[key]||[]).length;}
+function uC(key){return (save.ugCarry||{})[key]||0;}
+function uP2(key){return ((save.ugPress||{})[key]||[]).length;}
+/* ---- build the underground ---- */
+function buildUnder(){if(UG.built)return;UG.built=true;dseed=424242;
+  {const SEG=160,S=320;const g=new THREE.PlaneGeometry(S,S,SEG,SEG);g.rotateX(-Math.PI/2);g.translate(UW.x,0,UW.z);const p=g.attributes.position,cols=new Float32Array(p.count*3);
+   for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),h=underH(x,z);p.setY(i,h);const zn=underZone(x,z),n=(Math.sin(x*.3)*Math.cos(z*.27)+1)/2;const Z={uhub:[0x4a3a5a,0x3a2c4a],umole:[0x5a3a24,0x4a2e1c],uworm:[0x7a4a3a,0x6a3a2e],uant:[0xb07a3a,0x9a6a2e]}[zn];
+     const c=C(Z[0]).lerp(C(Z[1]),n);const e=Math.max(Math.abs(x-UW.x),Math.abs(z));if(e>118)c.lerp(C(0x2a2030),clamp((e-118)/8,0,1));cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;}
+   g.setAttribute('color',new THREE.BufferAttribute(cols,3));g.computeVertexNormals();const t=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));t.receiveShadow=true;scene.add(t);
+   const ceil=new THREE.Mesh(new THREE.PlaneGeometry(S,S),mat(0x241a30,{roughness:1,side:THREE.DoubleSide}));ceil.rotation.x=Math.PI/2;ceil.position.set(UW.x,UW.ceil,0);ceil.castShadow=false;scene.add(ceil);
+   for(let i=0;i<70;i++){const x=UW.x+drnd(-115,115),z=drnd(-115,115),l=drnd(2,7);const st=put(GEO.cone,mat(0x3a2c44),x,UW.ceil-l/2,z,drnd(.5,1.4),l,drnd(.5,1.4));st.rotation.x=Math.PI;st.castShadow=false;}}
+  const G=(lx,lz)=>terrainH(UW.x+lx,lz),ok=(lx,lz)=>{if(Math.hypot(lx,lz)<28)return false;for(const P of UPADS)if(Math.hypot(lx-P.x,lz-P.z)<P.r+5)return false;return Math.max(Math.abs(lx),Math.abs(lz))<115;};
+  const crys=[0x3ec5ff,0xb06bff,0x9be564,0xff5fa2];
+  for(let i=0;i<40;i++){const lx=drnd(-112,112),lz=drnd(-112,112);if(!ok(lx,lz))continue;const x=UW.x+lx,y=G(lx,lz),c=crys[i%4];for(let k=0;k<3;k++){const cr=put(GEO.cone,mat(c,{emissive:c,emissiveIntensity:.9,roughness:.2}),x+Math.cos(k*2)*.6,y+.8+k*.2,lz+Math.sin(k*2)*.6,.3,1.6+k*.5,.3);cr.rotation.set(Math.sin(k)*.3,0,Math.cos(k)*.3);}addCol(x,lz,1.4,1.4,y+1.8);}
+  for(let i=0;i<30;i++){const lx=drnd(-112,112),lz=drnd(-112,112);if(!ok(lx,lz))continue;const x=UW.x+lx,y=G(lx,lz),h=drnd(2,5);put(GEO.cyl,mat(0xe8e0d0),x,y+h/2,lz,.2,h,.2);const cap=put(new THREE.SphereGeometry(1,16,8,0,Math.PI*2,0,Math.PI/2),mat(0x3ec5ff,{emissive:0x1a6aa8,emissiveIntensity:.8}),x,y+h,lz,drnd(1,2),.6,drnd(1,2));addCol(x,lz,.5,.5,y+h);}
+  for(let i=0;i<30;i++){const lx=drnd(-112,112),lz=drnd(-112,112);if(!ok(lx,lz))continue;const x=UW.x+lx,y=G(lx,lz),h=drnd(2,6);put(GEO.cone,mat(0x5a4a60),x,y+h/2,lz,drnd(.6,1.2),h,drnd(.6,1.2));addCol(x,lz,1.2,1.2,y+h*.6);}
+  // hub: drill lift
+  {const x=UW.x,y=G(0,0);const shaft=put(GEO.cyl,mat(0x8a8a90,{metalness:.6,roughness:.35}),x,(y+UW.ceil)/2,0,.5,UW.ceil-y,.5);const cone=put(GEO.cone,mat(0xb0b0b8,{metalness:.8,roughness:.25}),x,y+2.2,0,1.3,3.2,1.3);cone.rotation.x=Math.PI;
+   const cage=put(GEO.cyl,mat(0xffd23f,{transparent:true,opacity:.35}),x,y+1.6,0,2.2,3.2,2.2);addCol(x,0,1.2,1.2,y+3.8);UG.liftBit=cone;anims.push(t=>{cone.rotation.y=t*1.5;});
+   stations.push({pos:V(x,y,0),r:3.2,label:'kilti grąžto liftu į dinozaurų salą ⛏',act:()=>drillTravel(false)});
+   const sg=signPlane(['POŽEMINIS PASAULIS','⬆ Kurmis · ↙ Sliekas · ↘ Skruzdė'],7,1.4,{bg:'#1b1430',fg:'#b06bff'});sg.position.set(x,y+3.4,7);scene.add(sg);
+   for(let i=0;i<8;i++){const a=i/8*Math.PI*2,c=crys[i%4];put(GEO.cone,mat(c,{emissive:c,emissiveIntensity:1}),x+Math.cos(a)*12,y+1,Math.sin(a)*12,.4,2.2,.4);}}
+  // ===== MOLE KING (north) =====
+  {const ky=G(0,-104);const v=makeMoleKing();v.root.position.set(UW.x,ky,-106);scene.add(v.root);UG.kv.mole=v;block(UW.x,-110,8,3,2.5,mat(0x5a3a24));
+   const K='Kurmis';ukings.push({name:K,kingdom:'Kurmio karalystė',color:'#b0a0b8',icon:'⛏',pos:V(UW.x,ky,-101),talkR:8,tagY:6.5,
+     text:'Kas čia? Aš beveik nieko nematau – esu Kurmis, požemio tunelių karalius! Mano karalystė crazy: tuneliai tamsūs, akiniai pasimetė, šaknys išsibarstė, o deimantai iššoko ant stulpų. Padėk!',
+     calmText:'Pagaliau matau! Tuneliai šviesūs, šaknys sandėlyje, deimantai vietoje. Kurmio karalystė – nebe crazy!',
+     tasks:[['Akinių paieška','rask 4 mano pamestus akinius tuneliuose'],['Tunelių žibintai','uždek 5 žibintus (F prie žibinto)'],['Šaknų sandėlis','atnešk 3 milžiniškas šaknis į sandėlį šalia manęs'],['Kasimo varžybos','per 40 sekundžių iškask 6 žemės kauburėlius (F)'],['Deimantų gysla','surink 5 deimantus ant kristalų stulpų']],
+     prog:b=>b==='Akinių paieška'?uCount('glasses')+'/4':b==='Tunelių žibintai'?uP2('lantern')+'/5':b==='Šaknų sandėlis'?uC('root')+'/3':b==='Kasimo varžybos'?(UG.timer?Math.ceil(UG.timer.t)+' s':'0/6'):b==='Deimantų gysla'?uCount('diamond')+'/5':null});
+   [[-30,-60],[35,-75],[-55,-100],[15,-112]].forEach(p=>{const g=new THREE.Group();for(const sx of[-1,1]){const r=new THREE.Mesh(new THREE.TorusGeometry(.18,.04,6,14),M.dark);r.position.x=sx*.22;g.add(r);}put(GEO.box,M.dark,0,0,0,.14,.04,.04,g);uPick('glasses',p,g,1);});
+   uPress('lantern',[[-20,-45],[20,-50],[-45,-80],[45,-95],[0,-70]],i=>{const g=new THREE.Group();put(GEO.cyl,M.trunk,0,1.2,0,.08,2.4,.08,g);const l=put(GEO.sph,mat(0x444444),0,2.5,0,.3,.36,.3,g);g.userData.set=d=>{l.material=d?mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:1.4}):mat(0x444444);};return g;},'uždegti žibintą 🏮',()=>ugTask(K,'Tunelių žibintai'),{king:K,task:'Tunelių žibintai'});
+   const st=V(UW.x+12,G(12,-92),-92);put(GEO.box,mat(0x6a4a2a),st.x,st.y+.4,st.z,3,.8,3);const stg=tag('šaknų sandėlis','#c8a070',.7);stg.position.set(st.x,st.y+2,st.z);scene.add(stg);
+   uCarry('root',[[-60,-50],[60,-55],[-25,-112]],()=>{const g=new THREE.Group();const r=put(GEO.cyl,mat(0xc8a070),0,0,0,.18,1.6,.18,g);r.rotation.z=1.4;for(let k=0;k<3;k++){const b=put(GEO.cyl,mat(0xb08a5a),.4-k*.4,-.2,0,.06,.6,.06,g);b.rotation.z=.6;}return g;},'milžiniška šaknis',{x:st.x,z:st.z,r:4});
+   uPress('mound',[0,1,2,3,4,5].map(i=>[-20+Math.cos(i/6*Math.PI*2)*5,-85+Math.sin(i/6*Math.PI*2)*5]),i=>{const g=new THREE.Group();const m=put(GEO.sph,mat(0x6a4a2a),0,0,0,1,.45,1,g);g.userData.set=d=>{m.scale.set(1,d?.1:.45,1);};return g;},'kasti kauburėlį ⛏',
+     ()=>{UG.timer=null;UG.tmp.mound=[];ugTask(K,'Kasimo varžybos');},{temp:true,king:K,task:'Kasimo varžybos',before:()=>{if(!UG.timer){UG.timer={t:40};say(K,'Varžybos prasidėjo! 40 sekundžių – kask!',true);}return true;}});
+   const dtag=tag('KASIMO VARŽYBOS','#ffd23f',.7);dtag.position.set(UW.x-20,G(-20,-85)+2.5,-85);scene.add(dtag);
+   [[50,-110],[-70,-112],[70,-80],[-80,-70],[30,-38]].forEach(([lx,lz])=>{const x=UW.x+lx,cm=mat(0x8a5ab0,{emissive:0x3a1a60,emissiveIntensity:.6,roughness:.3});block(x-2.5,lz+2.5,1.7,1.7,1.4,cm);block(x-2.5,lz,1.7,1.7,2.7,cm);block(x,lz,1.8,1.8,4,cm);const top=minH(x,lz,1.8,1.8)-.05+4;
+     uPick('diamond',[lx,lz,top+.9],new THREE.Mesh(new THREE.OctahedronGeometry(.4),mat(0xe8f8ff,{emissive:0x6ac8ff,emissiveIntensity:.8,metalness:.3,roughness:.1})),1);});}
+  // ===== WORM KING (south-west) =====
+  {const ky=G(-90,60);const W=makeWormKing();W.root.position.set(UW.x-90,ky,62);W.root.rotation.y=Math.atan2(90,-62);scene.add(W.root);UG.kv.worm=W;
+   const K='Sliekas';ukings.push({name:K,kingdom:'Slieko karalystė',color:'#ff8fa8',icon:'🪱',pos:V(UW.x-86,ky,52),talkR:9,tagY:6,
+     text:'Raitausi, raitausi… Labas! Aš – Sliekas, purvo karalius. Mano karalystė crazy: lietus nebelyja į požemį, obuoliai nusirito, aš susimazgiau, o grybai nebeauga. Pagelbėk!',
+     calmText:'Purvas vėl minkštas, obuoliai skanūs, mazgai atrišti, grybai auga! Slieko karalystė – nebe crazy. Raitausi iš laimės!',
+     tasks:[['Lietaus lašai','surink 6 šviečiančius lietaus lašus'],['Obuolių puota','atnešk 3 obuolius prie mano burnos'],['Mazgų išrišimas','atrišk 4 mazgus aplink mane (F)'],['Purvo lenktynės','aplenk sliekiuką iki vėliavos'],['Grybų sodas','pasodink 5 grybų sėklas sode (F)']],
+     prog:b=>b==='Lietaus lašai'?uCount('drop')+'/6':b==='Obuolių puota'?uC('apple')+'/3':b==='Mazgų išrišimas'?uP2('knot')+'/4':b==='Grybų sodas'?uP2('seed')+'/5':null});
+   [[-40,30],[-60,20],[-110,30],[-70,100],[-30,90],[-100,110]].forEach(p=>uPick('drop',p,put(GEO.sph,mat(0x9fe0ff,{emissive:0x3ec5ff,emissiveIntensity:.8,transparent:true,opacity:.85}),0,0,0,.3,.42,.3),1));
+   uCarry('apple',[[-50,50],[-110,90],[-28,108]],()=>{const g=new THREE.Group();put(GEO.sph,mat(0xd02a2a),0,0,0,.6,.55,.6,g);put(GEO.cyl,M.trunk,0,.6,0,.05,.3,.05,g);put(GEO.sph,mat(0x3fae5a),.15,.7,0,.15,.06,.1,g);return g;},'obuolys',{x:UW.x-84,z:54,r:4});
+   uPress('knot',[[-102,48],[-106,66],[-96,80],[-76,74]],i=>{const g=new THREE.Group();const k=new THREE.Mesh(new THREE.TorusKnotGeometry(.5,.16,48,8),mat(0xff8fa8));k.position.y=1;g.add(k);g.userData.set=d=>{k.visible=!d;};return g;},'atrišti mazgą 🪢',()=>ugTask(K,'Mazgų išrišimas'),{king:K,task:'Mazgų išrišimas'});
+   uPress('seed',[0,1,2,3,4].map(i=>[-66+Math.cos(i/5*Math.PI*2)*4,22+Math.sin(i/5*Math.PI*2)*4]),i=>{const g=new THREE.Group();put(GEO.cyl,mat(0x4a2e1c),0,.05,0,.7,.1,.7,g);const ms=new THREE.Group();g.add(ms);put(GEO.cyl,mat(0xe8e0d0),0,.8,0,.12,1.6,.12,ms);put(GEO.sph,mat(0xff5fa2,{emissive:0x992255,emissiveIntensity:.6}),0,1.6,0,.6,.3,.6,ms);g.userData.set=d=>{ms.visible=d;};return g;},'pasodinti grybą 🍄',()=>ugTask(K,'Grybų sodas'),{king:K,task:'Grybų sodas'});
+   const gs=tag('grybų sodas','#ff9ad5',.7);gs.position.set(UW.x-66,G(-66,22)+2.5,22);scene.add(gs);
+   const s=uP(-40,40),f=uP(-40,110);for(const [q,l] of[[s,'START'],[f,'FINIŠAS']]){const y=terrainH(q.x,q.z);put(GEO.cyl,M.white,q.x-2,y+1.5,q.z,.07,3,.07);put(GEO.cyl,M.white,q.x+2,y+1.5,q.z,.07,3,.07);const bn=signPlane([l],4,.8,{bg:'#1b1430',fg:'#ff8fa8'});bn.position.set(q.x,y+2.8,q.z);scene.add(bn);}
+   const rw=new THREE.Group(),segs=[];for(let i=0;i<6;i++)segs.push(put(GEO.sph,mat(0xffb0c0),0,.3,-i*.45,.32-i*.03,.32-i*.03,.32-i*.03,rw));for(const sx of[-1,1])put(GEO.sph,M.dark,sx*.12,.42,.25,.06,.06,.04,rw);rw.position.set(s.x+1.5,terrainH(s.x,s.z),s.z);scene.add(rw);UG.racer={g:rw,segs,s,f};
+   const rt=tag('Sliekiukas','#ffb0c0',.6);UG.racer.tag=rt;scene.add(rt);
+   stations.push({pos:V(s.x,terrainH(s.x,s.z),s.z),r:3.5,cond:()=>!UG.race&&!ugTaskDone(K,'Purvo lenktynės'),label:'lenktyniauti su sliekiuku 🏁',act:()=>{tpTo(V(s.x-1.5,terrainH(s.x,s.z)+.1,s.z));player.yaw=0;cam.yaw=Math.PI;rw.position.set(s.x+1.5,terrainH(s.x,s.z),s.z);UG.race={ph:'count',t:3.2,last:4};say('Sliekiukas','Aš greitas kaip žaibas! Na, kaip žaibas sliekas.',true);}});}
+  // ===== ANT QUEEN (south-east) =====
+  {const ky=G(90,60);const hill=put(GEO.cone,mat(0xb07a3a),UW.x+100,ky+4,70,9,9,9);addCol(UW.x+100,70,9,9,ky+5);const Q=makeAntQueen();Q.root.position.set(UW.x+88,ky,58);Q.root.rotation.y=-Math.PI*.75;scene.add(Q.root);UG.kv.ant=Q;
+   const K='Skruzdė';ukings.push({name:K,kingdom:'Skruzdžių karalystė',color:'#ff7a5a',icon:'🐜',pos:V(UW.x+84,ky,54),talkR:9,tagY:5,
+     text:'Darbo, darbo! Aš – Skruzdė, skruzdėlyno karalienė. Mano karalystė crazy: cukrus išsibarstė, skruzdėlės pasiklydo, kiaušinėliai šąla, medus ant grybų, o uodai nedavo ramybės. Padėk mums!',
+     calmText:'Skruzdėlynas vėl dirba kaip laikrodis! Cukrus sandėlyje, visi namie, uodai išvaikyti. Skruzdžių karalystė – nebe crazy!',
+     tasks:[['Cukraus kalnas','atnešk 4 cukraus gabalus į sandėlį prie skruzdėlyno'],['Pasiklydusios skruzdėlės','rask 5 pasiklydusias skruzdėles'],['Kiaušinėlių šildymas','sušildyk 4 kiaušinėlius (F)'],['Medaus lašai','surink 5 medaus lašus ant aukštų grybų'],['Uodų vaikymas','pagauk 5 skraidančius uodus']],
+     prog:b=>b==='Cukraus kalnas'?uC('sugar')+'/4':b==='Pasiklydusios skruzdėlės'?uCount('ant')+'/5':b==='Kiaušinėlių šildymas'?uP2('aegg')+'/4':b==='Medaus lašai'?uCount('honey')+'/5':b==='Uodų vaikymas'?uCount('mosq')+'/5':null});
+   const st=V(UW.x+76,G(76,48),48);put(GEO.box,mat(0x9a6a2e),st.x,st.y+.3,st.z,3,.6,3);const stg=tag('cukraus sandėlis','#ffffff',.7);stg.position.set(st.x,st.y+2,st.z);scene.add(stg);
+   uCarry('sugar',[[40,40],[110,22],[60,108],[112,100]],()=>put(GEO.box,mat(0xffffff,{roughness:.4}),0,0,0,.9,.9,.9),'cukraus gabalas',{x:st.x,z:st.z,r:4},4);
+   [[30,60],[50,90],[100,110],[112,40],[70,22]].forEach(p=>{const a=makeAnt(1.6);uPick('ant',p,a,0);});
+   uPress('aegg',[[104,48],[108,60],[80,72],[94,80]],i=>{const g=new THREE.Group();const e=put(GEO.sph,mat(0xdfe8f5),0,.5,0,.4,.55,.4,g);g.userData.set=d=>{e.material=d?mat(0xfff3d6,{emissive:0xffaa55,emissiveIntensity:.6}):mat(0xdfe8f5);};return g;},'sušildyti kiaušinėlį 🥚',()=>ugTask(K,'Kiaušinėlių šildymas'),{king:K,task:'Kiaušinėlių šildymas'});
+   [[40,100],[65,30],[112,82],[50,62],[85,110]].forEach(([lx,lz])=>{const x=UW.x+lx,y=G(lx,lz);const mk=(dx,dz,h,c)=>{put(GEO.cyl,mat(0xe8e0d0),x+dx,y+h/2,lz+dz,.25,h,.25);put(new THREE.SphereGeometry(1.2,14,8,0,Math.PI*2,0,Math.PI/2),mat(c,{emissive:c,emissiveIntensity:.4}),x+dx,y+h-.1,lz+dz,1,.5,1);addCol(x+dx,lz+dz,2,2,y+h+.4,y+h-.3);return y+h+.4;};
+     mk(-2.6,0,1.4,0xff9f68);mk(-2.6,2.6,2.8,0xffd23f);const top=mk(0,0,4.2,0xff5fa2);uPick('honey',[lx,lz,top+.7],put(GEO.sph,mat(0xffb020,{emissive:0xaa6600,emissiveIntensity:.6,roughness:.2}),0,0,0,.3,.38,.3),1);});
+   [[60,80],[40,32],[100,30],[80,100],[30,100]].forEach(([lx,lz],i)=>{const g=new THREE.Group();put(GEO.sph,mat(0x3a3a3a),0,0,0,.15,.12,.3,g);for(const sx of[-1,1]){const w=put(GEO.box,mat(0xd8f0ff,{transparent:true,opacity:.6}),sx*.25,.08,0,.4,.02,.18,g);w.rotation.z=sx*.3;}
+     uPick('mosq',[lx,lz,G(lx,lz)+1.6],g,0,(q,t)=>{const a=t*1.1+i;q.pos.set(q.base.x+Math.cos(a)*5,q.base.y+Math.sin(t*3+i)*.8,q.base.z+Math.sin(a*1.3)*5);q.mesh.position.copy(q.pos);q.mesh.rotation.y=a;});});}
+  for(const k of ukings){const s=tag(k.name,k.color,1.2);scene.add(s);kingTags.push({k,s});}}
+function updateUnder(dt,t){updateUgCourse(dt,t);if(!UG.built)return;
+  if(UG.timer){UG.timer.t-=dt;if(UG.timer.t<=0){UG.timer=null;UG.tmp.mound=[];(UG.press.mound||[]).forEach(f=>f());sfx('fail');say('Kurmis','Laikas baigėsi! Bandyk dar kartą – spausk F prie kauburėlio.',true);}}
+  if(!isUnder())return;const p=player.pos;
+  for(const q of UG.picks){if(q.got)continue;if(q.move)q.move(q,t);else if(q.bob)q.mesh.position.y=q.pos.y+Math.sin(t*2+q.idx)*.12;if(q.key==='diamond')q.mesh.rotation.y=t*1.5;
+    if(Math.hypot(q.pos.x-p.x,q.pos.z-p.z)<1.8&&Math.abs(q.pos.y-(p.y+1))<1.9){q.got=true;q.mesh.visible=false;save.ugPick=Object.assign({},save.ugPick);save.ugPick[q.key]=[...(save.ugPick[q.key]||[]),q.idx];saveGame(true);sfx('coin');
+      const D={glasses:[4,'Kurmis','Akinių paieška','👓'],diamond:[5,'Kurmis','Deimantų gysla','💎'],drop:[6,'Sliekas','Lietaus lašai','💧'],ant:[5,'Skruzdė','Pasiklydusios skruzdėlės','🐜'],honey:[5,'Skruzdė','Medaus lašai','🍯'],mosq:[5,'Skruzdė','Uodų vaikymas','🦟']}[q.key];
+      const n=uCount(q.key);floaty(D[3]+' '+n+'/'+D[0],p);if(n>=D[0])ugTask(D[1],D[2]);}}
+  for(const c of UG.carry.slice()){const b=c.b;if(!bodies.includes(b)){UG.carry.splice(UG.carry.indexOf(c),1);continue;}const d=Math.hypot(b.pos.x-c.target.x,b.pos.z-c.target.z);
+    if((!b.held&&d<c.target.r)||(b.held&&d<c.target.r-1.5)){for(const s2 of['L','R'])if(hands[s2].obj===b){release(b);hands[s2].obj=null;}bodies.splice(bodies.indexOf(b),1);scene.remove(b.mesh);UG.carry.splice(UG.carry.indexOf(c),1);
+      save.ugCarry=Object.assign({},save.ugCarry);const n=(save.ugCarry[c.key]||0)+1;save.ugCarry[c.key]=n;saveGame(true);sfx('ding');floaty('✔ '+n+'/'+c.need,b.pos);
+      const T={root:['Kurmis','Šaknų sandėlis'],apple:['Sliekas','Obuolių puota'],sugar:['Skruzdė','Cukraus kalnas']}[c.key];if(n>=c.need)ugTask(T[0],T[1]);}}
+  // race
+  const R=UG.racer;if(R){R.tag.position.set(R.g.position.x,R.g.position.y+1.6,R.g.position.z);R.segs.forEach((s,i)=>{s.position.x=Math.sin(t*8-i*.8)*.15;});const st=UG.race;
+    if(st){if(st.ph==='count'){st.t-=dt;const n=Math.ceil(st.t);if(n<st.last&&n>0){st.last=n;floaty(String(n),p);sfx('ui');}if(st.t<=0){st.ph='run';floaty(tr('BĖK!'),p);sfx('ding');}}
+      else{if(player.inCar){UG.race=null;say(null,'Diskvalifikuota! Lenktynės – tik pėsčiomis.');return;}const dz=R.f.z-R.g.position.z;R.g.position.z+=Math.sign(dz)*Math.min(Math.abs(dz),7.4*dt);R.g.position.y=terrainH(R.g.position.x,R.g.position.z);
+        if(Math.hypot(p.x-R.f.x,p.z-R.f.z)<3.5&&p.z>R.f.z-2){UG.race=null;sfx('win');floaty('🏆 '+tr('Laimėjai!'),p);setTimeout(()=>R.g.position.set(R.s.x+1.5,terrainH(R.s.x,R.s.z),R.s.z),2500);ugTask('Sliekas','Purvo lenktynės');}
+        else if(Math.abs(dz)<.3){UG.race=null;sfx('fail');say('Sliekiukas','Cha! Aš pirmas! Bandyk dar – ir bėk su Shift!',true);setTimeout(()=>R.g.position.set(R.s.x+1.5,terrainH(R.s.x,R.s.z),R.s.z),2500);}}}}
+  // kings idle
+  const W=UG.kv.worm;
+  if(W){W.segs.forEach((s,i)=>{if(i<6){s.position.set(Math.sin(t*1.5+i*.6)*.4,.7+(5-i)*.55,0);}else{s.position.set(Math.sin(t*1.5+i*.6)*.6,.7,-(i-5)*1.0);}});}
+  const Mk=UG.kv.mole;if(Mk){Mk.armL.p.rotation.x=-1+Math.sin(t*4)*.6;Mk.armR.p.rotation.x=-1-Math.sin(t*4)*.6;}
+  const Q=UG.kv.ant;if(Q)Q.head.rotation.y=Math.sin(t*.8)*.3;}
+
 /* ---------- build ---------- */
 const kingTags=[];
 function migHeads(){const me=save.clothes.me;if(save.migHeads)return;save.migHeads=1;for(const h of SUIT_HEADS){const b=h.slice(0,-2);if(me.owned.includes(b)&&!me.owned.includes(h))me.owned.push(h);}saveGame(true);}
@@ -6692,7 +7127,7 @@ function buildWorld(){migHeads();
   if(save.migHour!=='v68'){save.migHour='v68';hour=19.5;save.hour=19.5;saveGame(true);}
   if(save.migCrownCar!=='v91'){save.migCrownCar='v91';}
   syncPets();$("money").textContent=money;
-  const snap=now=>{if(!started)return;const tp=isDino()?V(LAB.x,labY,LAB.z+8):inOas?V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z),OAS_SHORE.z):inVin?V(VIN_ENT.x-2.4,VIN_EY,VIN_ENT.z):inVlh?V(VLH_DOOR.x,VLH_Y,VLH_DOOR.z):inIgl?V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z),IGL_DOOR.z):inVil?V(VIL_DOOR.x,VIL_Y,VIL_DOOR.z-2):inDis?V(DIS_DOOR.x,DIS_Y,DIS_DOOR.z):inMus?V(MUS_EXIT.x,MUS_Y,MUS_EXIT.z):inPyr?V(-98.5,PYR_Y,-40):inside?myHouse().step:player.inCar&&car?car.pos:player.pos;save.pos=[+tp.x.toFixed(2),+tp.y.toFixed(2),+tp.z.toFixed(2)];save.yaw=+player.yaw.toFixed(3);save.hour=+hour.toFixed(3);saveGame(now);};
+  const snap=now=>{if(!started)return;const tp=(isDino()||isUnder())?V(LAB.x,labY,LAB.z+8):inOas?V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z),OAS_SHORE.z):inVin?V(VIN_ENT.x-2.4,VIN_EY,VIN_ENT.z):inVlh?V(VLH_DOOR.x,VLH_Y,VLH_DOOR.z):inIgl?V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z),IGL_DOOR.z):inVil?V(VIL_DOOR.x,VIL_Y,VIL_DOOR.z-2):inDis?V(DIS_DOOR.x,DIS_Y,DIS_DOOR.z):inMus?V(MUS_EXIT.x,MUS_Y,MUS_EXIT.z):inPyr?V(-98.5,PYR_Y,-40):inside?myHouse().step:player.inCar&&car?car.pos:player.pos;save.pos=[+tp.x.toFixed(2),+tp.y.toFixed(2),+tp.z.toFixed(2)];save.yaw=+player.yaw.toFixed(3);save.hour=+hour.toFixed(3);saveGame(now);};
   setInterval(()=>snap(false),10000);
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')snap(true);});
   addEventListener('pagehide',()=>snap(true));
@@ -6704,7 +7139,7 @@ const clock=new THREE.Clock();let T=0;
 function frame(){
   const dt=Math.min(clock.getDelta(),.05);T+=dt;
   if(keys.KeyQ&&!uiBlocking())cam.yaw+=dt*2;if(keys.KeyE&&!uiBlocking()&&!(player.inCar&&car&&(car.crater||car.lid||car.rocket||car.tank||car.police||car.flipCar||car.clown))&&!(!player.inCar&&hasPow('volcanohat')))cam.yaw-=dt*2;
-  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
+  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateDino3(dt,T);updateUnder(dt,T);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
   for(const a of anims)a(T,dt);
   lavaTimer-=dt;if(lavaTimer<=0){if(!volCalm())spawnLavaBall();lavaTimer=rand(1.8,3.6);}
   for(const c of coins){if(!c.on){c.t-=dt;if(c.t<=0){c.on=true;c.m.visible=true;}continue;}
@@ -6809,7 +7244,7 @@ function netRecv(m){if(!m||m.from===NET.id)return;
 }
 function netBubble(pr,text){if(pr.bub){pr.root.remove(pr.bub);}const b=tag(text.slice(0,28),'#ffffff',.9);b.position.y=3.6;pr.root.add(b);pr.bub=b;pr.bubT=4;}
 function netDrop(id,said){const pr=NET.peers.get(id);if(!pr)return;scene.remove(pr.root);if(pr.carMesh)scene.remove(pr.carMesh.root);NET.peers.delete(id);if(said)say(null,pr.name+' '+tr('išėjo iš lobby.'));netHud();}
-function makeVehMesh(type){return type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():makeCar(0xff5fa2);}
+function makeVehMesh(type){return type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():isDinoVeh(type)?makeDinoVeh(type):makeCar(0xff5fa2);}
 const LIMBS=['armL','armR','legL','legR'];
 function netPose(m){let pr=NET.peers.get(m.from);
   if(!pr){const v=makeChar({body:m.body||0xff8a3d});const root=new THREE.Group();root.add(v.root);scene.add(root);const nt=tag(m.name,'#7ee8ff',.6);nt.position.y=2.9;root.add(nt);
@@ -6889,7 +7324,7 @@ const speakers=[],bubbles=[];let ambT=4;const _sv=V();
 function npcSpk(n){return{key:n,pos:()=>n.pos,top:n.half+.8};}
 function kingSpk(k){return{key:k,pos:()=>{const p=kingPos(k);return _sv.set(p.x,k.npc?p.y-k.npc.half:p.y,p.z);},top:k.tagY+.75};}
 function findSpeaker(who){if(!who||who==='Tu')return null;
-  for(const k of kings.concat(dkings))if(k.name===who)return kingSpk(k);
+  for(const k of kings.concat(dkings,ukings))if(k.name===who)return kingSpk(k);
   let best=null,bd=45;for(const n of npcs){if(n.name!==who||!n.vis)continue;const d=n.pos.distanceTo(player.pos);if(d<bd){bd=d;best=n;}}
   if(best)return npcSpk(best);
   {let tb=null,td=40;for(const t of traffic){if(!t.d||t.d.name!==who)continue;const d=t.pos.distanceTo(player.pos);if(d<td){td=d;tb=t;}}
@@ -6919,7 +7354,7 @@ function updateSpeech(dt){
   const pool=[];const pp=player.pos;
   for(const n of npcs){if(!n.vis||!n.lines||!n.lines.length||n.kind==='gnome'||n.state==='held'||n.state==='fly'||n.state==='ride')continue;
     if(!n.vis.root||!n.vis.root.visible||!n.vis.root.parent)continue;const d=n.pos.distanceTo(pp);if(d<24&&d>1.2&&!bubbles.some(b=>b.spk.key===n))pool.push(()=>speakAt(npcSpk(n),pick(n.lines),4.5));}
-  for(const k of kings.concat(dkings)){const L=KING_TALK[k.name];if(!L)continue;const d=kingPos(k).distanceTo(pp);if(d<26&&!bubbles.some(b=>b.spk.key===k))pool.push(()=>speakAt(kingSpk(k),pick(L),5));}
+  for(const k of kings.concat(dkings,ukings)){const L=KING_TALK[k.name];if(!L)continue;const d=kingPos(k).distanceTo(pp);if(d<26&&!bubbles.some(b=>b.spk.key===k))pool.push(()=>speakAt(kingSpk(k),pick(L),5));}
   for(const s of speakers){const d=s.obj.getWorldPosition(_sv).distanceTo(pp);if(d<18&&!bubbles.some(b=>b.spk.key===s)&&s.lines)pool.push(()=>speakAt({key:s,pos:()=>s.obj.getWorldPosition(_sv),top:s.top},pick(s.lines),4.5));}
   if(pool.length)pick(pool)();
   if(pool.length>4&&Math.random()<.5)pick(pool)();}
@@ -7442,7 +7877,15 @@ const PH_CONTACTS=[{n:'Mama',e:'👩',l:['Labas, vaikeli! Ar pavalgei?','Nepamir
  {n:'Ledynų karalius',e:'🐧',l:['Brrr! Čia Ledynų karalius. Ar turi ledų?','Pingvinai vėl pasiklydo… Pyp!']},
  {n:'Ugnikalnio karalius',e:'🌋',l:['HMPH! Kas skambina karaliui?!','Lava šiandien labai karšta. Kaip visada.']},
  {n:'Bulius',e:'💪',l:['KAS ČIA?! A, tu. Ateik pasportuoti!','Aš ką tik pakėliau 500 kg. Su viena ranka.']},
- {n:'Vairuotojas Petras',e:'🚗',l:['Važiuoju ratu jau trečią dieną. Kur aš?','Pyp pyp! Atsiprašau, čia mano labas.']}];
+ {n:'Vairuotojas Petras',e:'🚗',l:['Važiuoju ratu jau trečią dieną. Kur aš?','Pyp pyp! Atsiprašau, čia mano labas.']},
+ {n:'T-Rex karalius',e:'🦖',dino:1,l:['RAAAR! Atsiprašau, skambinu nosimi – rankytės per trumpos.','Ar matei mano kiaušinius? A, tu juos radai. RAAAR, ačiū!','Raptoriai vėl bėga atbuli? Ne? Puiku!','Atvažiuok į džiungles – surengsim lenktynes!']},
+ {n:'Drakonė',e:'🐉',dino:1,l:['Apči! Oi… vėl padegiau telefoną.','Mano drakoniukai klausia, kada vėl atskrisi.','Ar žinai, kad ugnikalnio viršūnėje kažkas slepiasi?']},
+ {n:'Spinozauras',e:'🐊',dino:1,l:['Blup… skambinu iš po vandens. Girdi?','Pagavau žuvį! Ji buvo didesnė už mane. Beveik.','Pelkėje šiandien labai purvina. Ateik išsimaudyti!']},
+ {n:'Megalodonas',e:'🦈',dino:1,l:['BLUP-BLUP! Čia didžiausias jūros karalius!','Kažkas vėl numetė šiukšlę į mano jūrą! Tai ne tu?','Prie nuskendusio laivo blizga kažkas auksinio…']},
+ {n:'Profesorius Kvarkas',e:'🧪',dino:1,l:['Alio! Laiko mašina veikia puikiai. Beveik. Kartais nukelia į antradienį.','Ar dinozaurai tave dar nesuvalgė? Puiku!','Mano naujas išradimas – laikrodis, kuris eina atgal. Jau vėluoju vakar.']},
+ {n:'Uggas',e:'🍖',dino:1,l:['UGG! Telefonas – akmuo, kuris kalba! UGG!','Uggas išrado ratą. Jis vis dar kvadratinis.','Naktį bėga auksinis raptorius. Uggas nepagavo. Tu pagauk!']},
+ {n:'Mažylis T-Rex',e:'🦕',dino:1,l:['Rar! Rar rar! (Tai reiškia: myliu tave!)','Aš užaugau 1 centimetru! RAR!','Ar atneši man guminį kaulą?']}];
+function phContacts(){return PH_CONTACTS.filter(c=>!c.dino||save.dinoSeen);}
 PH_CONTACTS.forEach((c,i)=>{let h=7;for(const ch of c.n)h=(h*31+ch.charCodeAt(0))%1e6;c.num='+777 '+String(100000+h%900000);});
 const TT=[{by:'@pingvinas_pingas',cap:'Šoku ant ledo! #crazy #pyp',bg:['#9fd8ff','#e6f7ff'],d:(g,t,w,h)=>{em(g,'🐧',w/2+Math.sin(t*4)*50,h*.6-Math.abs(Math.sin(t*6))*60,90,Math.sin(t*6)*.5);notes(g,t,w,h);}},
  {by:'@skraidanti_karve',cap:'Kai pagaliau išmoksti skristi 🐄☁',bg:['#7ec8ff','#d8f1ff'],d:(g,t,w,h)=>{for(let i=0;i<4;i++)em(g,'☁',((t*30+i*110)%(w+120))-60,80+i*90,50);em(g,'🐄',(t*90%(w+160))-80,h*.45+Math.sin(t*3)*30,80,Math.sin(t*3)*.2);}},
@@ -7467,26 +7910,29 @@ function phGo(v){phStack.push(phView);phView=v;renderPhone();}
 function phBack(){PG.st=null;if(phView==='call'){endCall();return;}if(phView==='ttcap'||phView==='ttemoji'){ttDraft=null;}phView=phStack.pop()||'home';if(phView==='call'||(phView==='setup'&&save.phone.num))phView='home';renderPhone();}
 function phoneKey(e){e.preventDefault();if(e.code==='Escape'||e.code==='KeyP'){closePhone();return;}
   if(phView==='tt'&&ttFeed){if(e.code==='ArrowDown'||e.code==='KeyS')ttMove(1);if(e.code==='ArrowUp'||e.code==='KeyW')ttMove(-1);if(e.code==='Space'||e.code==='KeyL')ttLike();}
-  if(PG.st&&(phView==='gfly'||phView==='gsnake'||phView==='gsock'))phGameKey(e.code);
+  if(PG.st&&(phView==='gfly'||phView==='gsnake'||phView==='gsock'||phView==='gdino'))phGameKey(e.code);
   if(e.code==='Backspace')phBack();}
 const phEl=(tag,attrs,html)=>{const el=document.createElement(tag);if(attrs)for(const k in attrs){if(k==='on')for(const ev in attrs.on)el.addEventListener(ev,attrs.on[ev]);else if(k==='cls')el.className=attrs[k];else el.setAttribute(k,attrs[k]);}if(html!=null)el.innerHTML=html;return el;};
 
-const PG={st:null};const PG_NAMES={gfly:'Skraidanti karvė',gsnake:'Gyvatėlė',gsock:'Gaudyk kojines'};
+const PG={st:null};const PG_NAMES={gfly:'Skraidanti karvė',gsnake:'Gyvatėlė',gsock:'Gaudyk kojines',gdino:'Dino bėgikas'};
+function dinoJump(S){if(S.y<=0&&!S.over){S.vy=470;sfx('jump');}}
 function phGameStart(sc,id){const cv=phEl('canvas',{id:'ttCanvas'});sc.append(cv);const W=sc.clientWidth||300,H=sc.clientHeight||520,dpr=Math.min(2,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;const g=cv.getContext('2d');g.scale(dpr,dpr);
   const back=phEl('button',{cls:'phbtn',style:'position:absolute;left:8px;top:8px;padding:4px 10px;width:auto;z-index:2'},'←');back.onclick=()=>phBack();sc.append(back);
   if(!save.phGames)save.phGames={};const S={id,g,W,H,cv,over:false,score:0,t:0,started:false};PG.st=S;
   if(id==='gfly'){S.y=H*.45;S.vy=0;S.pipes=[];S.next=1.2;}
+  if(id==='gdino'){S.y=0;S.vy=0;S.obs=[];S.next=1.2;S.gy=H-110;S.dist=0;}
   if(id==='gsnake'){S.n=16;S.cs=Math.floor(Math.min(W,H-120)/S.n);S.ox=Math.floor((W-S.cs*S.n)/2);S.oy=70;S.sn=[[8,8],[7,8],[6,8]];S.dir=[1,0];S.nd=[1,0];S.step=0;S.food=snFood(S);
     const pad=phEl('div',{style:'position:absolute;left:0;right:0;bottom:14px;display:grid;grid-template-columns:repeat(3,52px);gap:6px;justify-content:center;z-index:2'});
     [['',null],['▲','ArrowUp'],['',null],['◀','ArrowLeft'],['▼','ArrowDown'],['▶','ArrowRight']].forEach(([l,k])=>{const b=phEl('button',{cls:'phbtn',style:'width:52px;height:40px;padding:0;margin:0'+(k?'':';visibility:hidden')},l);if(k)b.onclick=()=>phGameKey(k);pad.append(b);});sc.append(pad);}
   if(id==='gsock'){S.x=W/2;S.items=[];S.next=.6;S.lives=3;cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();S.x=(e.clientX-r.left)/r.width*W;});}
-  cv.addEventListener('pointerdown',e=>{if(S.over){phGameStart2(sc,id);return;}S.started=true;if(id==='gfly'){S.vy=-330;sfx('jump');}if(id==='gsock'){const r=cv.getBoundingClientRect();S.x=(e.clientX-r.left)/r.width*W;}});
+  cv.addEventListener('pointerdown',e=>{if(S.over){phGameStart2(sc,id);return;}S.started=true;if(id==='gfly'){S.vy=-330;sfx('jump');}if(id==='gdino')dinoJump(S);if(id==='gsock'){const r=cv.getBoundingClientRect();S.x=(e.clientX-r.left)/r.width*W;}});
   let last=performance.now();const loop=now=>{if(PG.st!==S||!phoneOpen)return;const dt=Math.min(.05,(now-last)/1000);last=now;phGameStep(S,dt);phGameDraw(S);ttRaf=requestAnimationFrame(loop);};ttRaf=requestAnimationFrame(loop);}
 function phGameStart2(sc,id){cancelAnimationFrame(ttRaf);sc.innerHTML='';phGameStart(sc,id);}
 function snFood(S){let f;do{f=[Math.floor(Math.random()*S.n),Math.floor(Math.random()*S.n)];}while(S.sn.some(q=>q[0]===f[0]&&q[1]===f[1]));return f;}
 function phGameKey(k){const S=PG.st;if(!S)return;if(S.over){if(k==='Space'||k==='Enter')phGameStart2($('phScreen'),S.id);return;}S.started=true;
   if(S.id==='gfly'&&(k==='Space'||k==='ArrowUp'||k==='KeyW')){S.vy=-330;sfx('jump');}
   if(S.id==='gsnake'){const m={ArrowUp:[0,-1],KeyW:[0,-1],ArrowDown:[0,1],KeyS:[0,1],ArrowLeft:[-1,0],KeyA:[-1,0],ArrowRight:[1,0],KeyD:[1,0]}[k];if(m&&!(m[0]===-S.dir[0]&&m[1]===-S.dir[1]))S.nd=m;}
+  if(S.id==='gdino'&&(k==='Space'||k==='ArrowUp'||k==='KeyW'))dinoJump(S);
   if(S.id==='gsock'){if(k==='ArrowLeft'||k==='KeyA')S.x-=34;if(k==='ArrowRight'||k==='KeyD')S.x+=34;}}
 function phGameOver(S){if(S.over)return;S.over=true;const b=save.phGames[S.id]||0;S.best=Math.max(b,S.score);S.newBest=S.score>b;save.phGames[S.id]=S.best;S.pay=Math.min(25,Math.floor(S.score/3));
   if(S.pay>0){money+=S.pay;$('money').textContent=money;}saveGame(true);sfx(S.newBest&&S.score>0?'win':'fail');}
@@ -7497,6 +7943,13 @@ function phGameStep(S,dt){if(S.over||!S.started)return;S.t+=dt;const W=S.W,H=S.H
   if(S.id==='gsnake'){S.step+=dt;const sp=Math.max(.07,.16-S.score*.004);if(S.step<sp)return;S.step=0;S.dir=S.nd;const h=S.sn[0],nh=[h[0]+S.dir[0],h[1]+S.dir[1]];
     if(nh[0]<0||nh[1]<0||nh[0]>=S.n||nh[1]>=S.n||S.sn.some(q=>q[0]===nh[0]&&q[1]===nh[1])){phGameOver(S);return;}S.sn.unshift(nh);
     if(nh[0]===S.food[0]&&nh[1]===S.food[1]){S.score++;sfx('coin');S.food=snFood(S);}else S.sn.pop();}
+  if(S.id==='gdino'){const sp=190+S.t*7;S.vy-=1350*dt;S.y=Math.max(0,S.y+S.vy*dt);if(S.y<=0)S.vy=0;S.next-=dt;
+    if(S.next<=0){S.next=Math.max(.55,1.25-S.t*.012)+Math.random()*.6;const r=Math.random();S.obs.push(r<.6?{x:W+30,k:'c'}:r<.85?{x:W+30,k:'p',h:52+Math.random()*12}:{x:W+30,k:'e',h:70});}
+    const dx=W*.22,dt0=S.gy-S.y;for(const o of S.obs){o.x-=sp*dt;if(o.done)continue;
+      if(o.k==='e'){if(Math.abs(o.x-dx)<24&&Math.abs((S.gy-o.h)-(dt0-18))<26){o.done=true;S.score+=3;sfx('coin');}continue;}
+      const hit=o.k==='c'?(Math.abs(o.x-dx)<24&&dt0>S.gy-34):(Math.abs(o.x-dx)<26&&dt0-36<S.gy-o.h+10&&dt0>S.gy-o.h-14);
+      if(hit){phGameOver(S);return;}if(o.x<dx-30&&!o.pass){o.pass=true;S.score++;sfx('coin');}}
+    S.obs=S.obs.filter(o=>o.x>-40&&!(o.k==='e'&&o.done));}
   if(S.id==='gsock'){S.x=Math.max(30,Math.min(W-30,S.x));S.next-=dt;if(S.next<=0){S.next=Math.max(.28,.8-S.t*.012);S.items.push({x:20+Math.random()*(W-40),y:-20,bad:Math.random()<.25,v:120+Math.random()*80+S.t*3});}
     for(const it of S.items){it.y+=it.v*dt;if(!it.done&&it.y>H-70&&it.y<H-40&&Math.abs(it.x-S.x)<38){it.done=true;if(it.bad){S.lives--;sfx('hurt');if(S.lives<=0)phGameOver(S);}else{S.score++;sfx('coin');}}
       if(!it.done&&it.y>H-20&&!it.bad){it.done=true;}}
@@ -7508,21 +7961,25 @@ function phGameDraw(S){const g=S.g,W=S.W,H=S.H;g.clearRect(0,0,W,H);
   if(S.id==='gsnake'){g.fillStyle='#1b3a1b';g.fillRect(0,0,W,H);g.fillStyle='#2d5a2d';g.fillRect(S.ox,S.oy,S.cs*S.n,S.cs*S.n);
     g.font=(S.cs-2)+'px serif';g.textAlign='center';g.textBaseline='middle';g.fillText('🍎',S.ox+(S.food[0]+.5)*S.cs,S.oy+(S.food[1]+.5)*S.cs);
     S.sn.forEach((q,i)=>{g.fillStyle=i?'#9be564':'#ffd23f';g.fillRect(S.ox+q[0]*S.cs+1,S.oy+q[1]*S.cs+1,S.cs-2,S.cs-2);});}
+  if(S.id==='gdino'){const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#ff9f68');gr.addColorStop(1,'#ffe0a0');g.fillStyle=gr;g.fillRect(0,0,W,H);
+    g.font='60px serif';g.textAlign='center';g.textBaseline='bottom';g.fillText('🌋',W*.75-(S.t*8%(W+120))+60,S.gy-30);g.fillStyle='#c98a4a';g.fillRect(0,S.gy,W,H-S.gy);g.fillStyle='#8a5a2b';for(let i=0;i<12;i++)g.fillRect(((i*47-S.t*190)%W+W)%W,S.gy+12+(i%3)*14,10,4);
+    g.font='34px serif';for(const o of S.obs){if(o.k==='c')g.fillText('🌵',o.x,S.gy+4);else if(o.k==='p'){g.save();g.translate(o.x,S.gy-o.h);g.fillText(Math.sin(S.t*14)>0?'🦅':'🪶',0,14);g.restore();}else g.fillText('🥚',o.x,S.gy-o.h+16);}
+    g.save();g.translate(W*.22,S.gy-S.y+4);g.scale(-1,1);g.font='40px serif';g.fillText('🦖',0,0);g.restore();}
   if(S.id==='gsock'){const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#3a2a6a');gr.addColorStop(1,'#c3a6ff');g.fillStyle=gr;g.fillRect(0,0,W,H);
     g.font='30px serif';g.textAlign='center';g.textBaseline='middle';for(const it of S.items)g.fillText(it.bad?'🔥':'🧦',it.x,it.y);g.font='44px serif';g.fillText('🧺',S.x,H-52);
     g.font='18px sans-serif';g.fillStyle='#ff3b6b';g.textAlign='right';g.fillText('❤'.repeat(Math.max(0,S.lives)),W-10,64);}
   g.fillStyle='#fff';g.strokeStyle='#1b1430';g.lineWidth=4;g.font='800 30px "Baloo 2",sans-serif';g.textAlign='center';g.strokeText(String(S.score),W/2,60);g.fillText(String(S.score),W/2,60);
-  if(!S.started&&!S.over){g.font='800 18px "Baloo 2",sans-serif';const tip=S.id==='gfly'?tr('Space arba spustelk – plasnoti'):S.id==='gsnake'?tr('Rodyklės arba WASD – sukti'):tr('A/D arba pelė – judinti krepšį');g.strokeText(tr(PG_NAMES[S.id]),W/2,H*.38);g.fillText(tr(PG_NAMES[S.id]),W/2,H*.38);g.font='700 14px sans-serif';g.strokeText(tip,W/2,H*.38+30);g.fillText(tip,W/2,H*.38+30);}
+  if(!S.started&&!S.over){g.font='800 18px "Baloo 2",sans-serif';const tip=S.id==='gdino'?tr('Space arba spustelk – šokti per kaktusus, po paukščiais – ne!'):S.id==='gfly'?tr('Space arba spustelk – plasnoti'):S.id==='gsnake'?tr('Rodyklės arba WASD – sukti'):tr('A/D arba pelė – judinti krepšį');g.strokeText(tr(PG_NAMES[S.id]),W/2,H*.38);g.fillText(tr(PG_NAMES[S.id]),W/2,H*.38);g.font='700 14px sans-serif';g.strokeText(tip,W/2,H*.38+30);g.fillText(tip,W/2,H*.38+30);}
   if(S.over){g.fillStyle='rgba(20,14,40,.72)';g.fillRect(0,0,W,H);g.fillStyle='#fff';g.font='800 28px "Baloo 2",sans-serif';g.fillText(tr('Žaidimas baigtas!'),W/2,H*.36);
     g.font='700 17px sans-serif';g.fillText(tr('Taškai')+': '+S.score+'   '+tr('Rekordas')+': '+S.best,W/2,H*.36+36);if(S.newBest&&S.score>0)g.fillText('🏆 '+tr('Naujas rekordas!'),W/2,H*.36+62);
     if(S.pay)g.fillText('+$'+S.pay,W/2,H*.36+88);g.font='700 14px sans-serif';g.fillText(tr('Spustelk arba Space – žaisti dar'),W/2,H*.36+118);}}
 
 let lbTab='finish';
-const LB_TABS=[{id:'finish',e:'⏱',n:'Greičiausiai perėjo žaidimą',low:true},{id:'money',e:'💰',n:'Daugiausia pinigų'},{id:'gfly',e:'🐄',n:'Skraidanti karvė'},{id:'gsock',e:'🧦',n:'Gaudyk kojines'},{id:'gsnake',e:'🐍',n:'Gyvatėlė'}];
-function myLbStats(){const g=save.phGames||{};return {finish:save.finishT||0,money:money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0};}
+const LB_TABS=[{id:'finish',e:'⏱',n:'Greičiausiai perėjo žaidimą',low:true},{id:'money',e:'💰',n:'Daugiausia pinigų'},{id:'gfly',e:'🐄',n:'Skraidanti karvė'},{id:'gsock',e:'🧦',n:'Gaudyk kojines'},{id:'gsnake',e:'🐍',n:'Gyvatėlė'},{id:'gdino',e:'🦖',n:'Dino bėgikas'}];
+function myLbStats(){const g=save.phGames||{};return {finish:save.finishT||0,money:money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0,gdino:g.gdino||0};}
 function lbFmtT(sec){sec=Math.round(sec);const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;return (h?h+':':'')+String(m).padStart(h?2:1,'0')+':'+String(x).padStart(2,'0');}
 function lbRows(){const rows=[],me=(CW_USER||'').toLowerCase(),acc=accList();
-  for(const k in acc){let st;if(k===me&&!CW_ONLINE)st=myLbStats();else{try{const o=JSON.parse(localStorage.getItem('cw-save:'+k)||'{}');const g=o.phGames||{};st={finish:o.finishT||0,money:o.money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0};}catch(e){continue;}}
+  for(const k in acc){let st;if(k===me&&!CW_ONLINE)st=myLbStats();else{try{const o=JSON.parse(localStorage.getItem('cw-save:'+k)||'{}');const g=o.phGames||{};st={finish:o.finishT||0,money:o.money|0,gfly:g.gfly||0,gsock:g.gsock||0,gsnake:g.gsnake||0,gdino:g.gdino||0};}catch(e){continue;}}
     rows.push({name:acc[k].name||k,me:k===me&&!CW_ONLINE,st,src:'local'});}
   if(CW_ONLINE)rows.push({name:CW_USER||'Tu',me:true,st:myLbStats(),src:'online'});
   if(NET.on)for(const [,pr] of NET.peers)if(pr.lb)rows.push({name:String(pr.name||'?').slice(0,20),me:false,st:pr.lb,src:'online'});
@@ -7546,8 +8003,8 @@ function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimati
     box.append(inp,phEl('button',{cls:'phbtn',on:{click:()=>{inp.value=String(Math.floor(100000+Math.random()*900000));}}},tr('🎲 Sugeneruoti')),phEl('button',{cls:'phbtn green',on:{click:ok}},tr('Išsaugoti numerį')),err);sc.append(box);setTimeout(()=>inp.focus(),30);return;}
   if(phView==='home'){sc.append(phEl('div',{cls:'phclock'},$('phTime').textContent),phEl('div',{cls:'phsub'},tr('Mano numeris:')+' '+P.num));
     const g=phEl('div',{cls:'phapps'});const app=(e,bg,name,go)=>{const a=phEl('div',{cls:'phapp',on:{click:go}});a.append(phEl('i',{style:'background:'+bg},e),phEl('span',null,tr(name)));g.append(a);};
-    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));app('🐄','#3ec5ff','Skraidanti karvė',()=>phGo('gfly'));app('🐍','#9be564','Gyvatėlė',()=>phGo('gsnake'));app('🧦','#ff9b2f','Gaudyk kojines',()=>phGo('gsock'));app('🏆','#ffd23f','Lyderiai',()=>phGo('lb'));sc.append(g);return;}
-  if(phView==='gfly'||phView==='gsnake'||phView==='gsock'){phGameStart(sc,phView);return;}
+    app('🎵','#1b1430','Crazy TikTok',()=>{phGo('tt');});app('📞','#3ee6b0','Telefonas',()=>phGo('calls'));app('🐄','#3ec5ff','Skraidanti karvė',()=>phGo('gfly'));app('🐍','#9be564','Gyvatėlė',()=>phGo('gsnake'));app('🧦','#ff9b2f','Gaudyk kojines',()=>phGo('gsock'));app('🦖','#ff9f68','Dino bėgikas',()=>phGo('gdino'));app('🏆','#ffd23f','Lyderiai',()=>phGo('lb'));sc.append(g);return;}
+  if(phView==='gfly'||phView==='gsnake'||phView==='gsock'||phView==='gdino'){phGameStart(sc,phView);return;}
   if(phView==='lb'){renderLb(sc);return;}
   if(phView==='tt'){const feed=ttFeed();ttIdx=((ttIdx%feed.length)+feed.length)%feed.length;const V0=feed[ttIdx];const cv=phEl('canvas',{id:'ttCanvas'});sc.append(cv);const liked=V0.liked();
     const top=phEl('div',{cls:'tt-logo'});top.append(document.createTextNode('🎵 Crazy TikTok '),phEl('button',{cls:'phbtn',style:'padding:2px 10px;margin-left:6px;font-size:13px',on:{click:()=>phGo('ttnew')}},'＋ '+tr('Kurti')));sc.append(top);
@@ -7577,13 +8034,13 @@ function renderPhone(){if(!phoneOpen)return;const sc=$('phScreen');cancelAnimati
     box.append(phEl('button',{cls:'phbtn green',on:{click:()=>ttUpload({type:'rec',frames:D.frames,cap:(D.cap||'').trim()||'#crazyworld'})}},'⬆ '+tr('Įkelti video')),phEl('button',{cls:'phbtn red',on:{click:()=>{ttDraft=null;phView='tt';renderPhone();}}},tr('Ištrinti')));sc.append(box);
     const imgs=D.frames.map(f=>{const im=new Image();im.src=f;return im;});const g=cv.getContext('2d');ttT0=performance.now();const loop=()=>{cv.width=180;cv.height=320;const t=(performance.now()-ttT0)/1000,im=imgs[Math.floor(t*REC_FPS)%imgs.length];if(im&&im.complete)g.drawImage(im,0,0,180,320);ttRaf=requestAnimationFrame(loop);};loop();return;}
   if(phView==='calls'){const box=phEl('div',{cls:'phpad',style:'height:100%;box-sizing:border-box'});box.append(phEl('h3',null,'📞 '+tr('Telefonas')));
-    box.append(phEl('button',{cls:'phbtn',on:{click:()=>startCall(pick(PH_CONTACTS))}},tr('🎲 Skambinti atsitiktiniam')));
+    box.append(phEl('button',{cls:'phbtn',on:{click:()=>startCall(pick(phContacts()))}},tr('🎲 Skambinti atsitiktiniam')));
     const L=phEl('div',{cls:'phlist'});const fr=(typeof NET!=='undefined'&&NET.on)?NET.members.filter(m=>m.id!==NET.id):[];
     L.append(phEl('div',{cls:'phsub',style:'text-align:left'},tr('Draugai')));
     if(!fr.length)L.append(phEl('div',{cls:'phsub',style:'text-align:left;font-size:12px'},tr('Draugų nėra – žaisk Online lobby su draugais.')));
     for(const f of fr){const r=phEl('div',{cls:'phrow',on:{click:()=>startCall({friend:true,id:f.id,n:f.name,e:'🙂'})}});r.append(phEl('span',null,'🙂'),phEl('b',null,f.name),phEl('small',null,'📞'));L.append(r);}
     L.append(phEl('div',{cls:'phsub',style:'text-align:left'},tr('Kontaktai')));
-    for(const c of PH_CONTACTS){const r=phEl('div',{cls:'phrow',on:{click:()=>startCall(c)}});r.append(phEl('span',null,c.e),phEl('b',null,tr(c.n)),phEl('small',null,c.num));L.append(r);}
+    for(const c of phContacts()){const r=phEl('div',{cls:'phrow',on:{click:()=>startCall(c)}});r.append(phEl('span',null,c.e),phEl('b',null,tr(c.n)),phEl('small',null,c.num));L.append(r);}
     box.append(L);sc.append(box);return;}
   if(phView==='call'&&phCall){const C=phCall,box=phEl('div',{cls:'phcall'});box.append(phEl('div',{cls:'phav'},C.e||'🙂'),phEl('h3',{style:'margin:0'},tr(C.n)),phEl('div',{cls:'phsub'},C.ended?tr('Pokalbis baigtas'):C.live?'⏱ '+fmtCall(C):tr('Skambinama…')));
     const ms=phEl('div',{cls:'phmsgs'});for(const m of C.msgs){const d=phEl('div',m.me?{cls:'me'}:null);d.textContent=m.sys?'— '+m.t+' —':m.t;if(m.sys)d.style.cssText='background:transparent;color:#fff;align-self:center;opacity:.8';ms.append(d);}box.append(ms);setTimeout(()=>{ms.scrollTop=1e6;},0);
@@ -7644,7 +8101,7 @@ $('phAns').onclick=answerRing;$('phDec').onclick=declineRing;$('phClose').onclic
 function updatePhone(dt){if(!started||!save.phone||!save.phone.owned)return;
   if(phRingInfo){phRingT-=dt;if(Math.random()<dt*1.2)sfx('ding');if(phRingT<=0)declineRing();}
   if(phoneOpen&&phView==='call'&&phCall&&phCall.live&&!phCall.ended){const el=document.querySelector('#phScreen .phsub');if(el)el.textContent='⏱ '+fmtCall(phCall);}
-  if(phoneOpen||cine||dialogOpen||phRingInfo||!save.phone.num)return;phNextCall-=dt;if(phNextCall<=0){phNextCall=rand(180,360);const c=pick(PH_CONTACTS);phoneIncoming({c,name:c.n,num:c.num});}}
+  if(phoneOpen||cine||dialogOpen||phRingInfo||!save.phone.num)return;phNextCall-=dt;if(phNextCall<=0){const dw=isDino();phNextCall=dw?rand(80,170):rand(180,360);const c=dw&&Math.random()<.75?pick(PH_CONTACTS.filter(q=>q.dino)):pick(phContacts());phoneIncoming({c,name:c.n,num:c.num});}}
 /* ---------- lots of new things in the volcano kingdom ---------- */
 let lavaIceT=0,trailT=0;const VF={geysers:[],jelly:null,crystals:[],dragon:null,golem:null,fish:[],wisps:[]};
 const glowM=(c,i)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:i||1});
@@ -8349,6 +8806,11 @@ const ACH=[
  {id:'tmpass',ic:'🛂',n:'Laiko keliautojas',d:'Gauk laiko pasą profesoriaus laboratorijoje',f:()=>!!save.tmPass},
  {id:'goldegg',ic:'🥚',n:'Auksinis kiaušinis',d:'Rask auksinį kiaušinį dinozaurų pasaulyje',f:()=>!!((save.dinoPick||{}).gold||[]).length},
  {id:'meteor',ic:'☄',n:'Žvaigždžių rinkėjas',d:'Surink meteoritą dinozaurų pasaulio naktį',f:()=>(save.meteors||0)>=1},
+ {id:'dhouse',ic:'🏡',n:'Namai prieš milijoną metų',d:'Nusipirk namą dinozaurų pasaulyje',f:()=>!!(save.dinoHouses&&Object.keys(save.dinoHouses).length)},
+ {id:'dride',ic:'🦕',n:'Dinozaurų raitelis',d:'Nusipirk dinozaurų transportą',f:()=>DINO_VEH_SHOP.some(v=>save.owned[v.id])},
+ {id:'dsecret',ic:'🗝',n:'Dinozaurų paslaptys',d:'Rask visas 5 dinozaurų pasaulio paslaptis',f:()=>dsecDone()>=5},
+ {id:'ugpass',ic:'⛏',n:'Grąžto meistras',d:'Įveik sunkiausią parkūrą ir gauk grąžto pasą',f:()=>!!save.ugPass},
+ {id:'ug3',ic:'🐜',n:'Požemio gelbėtojas',d:'Išgelbėk Kurmį, Slieką ir Skruzdę karalienę',f:()=>Object.keys(save.ugCrowns||{}).length>=3},
  {id:'dino4',ic:'🦖',n:'Dinozaurų gelbėtojas',d:'Išgelbėk visus 4 dinozaurų pasaulio karalius',f:()=>Object.keys(save.dinoCrowns||{}).length>=4},
  {id:'secret',ic:'🎭',n:'Paslapčių medžiotojas',d:'Gauk bet kurį slaptą drabužį',f:()=>CLOTHES.some(c=>c.secret&&c.id!=='sockhat'&&c.id!=='socks'&&ownsC(c.id))}];
 function achFlag(k){if(!save.achFlags)save.achFlags={};if(!save.achFlags[k]){save.achFlags[k]=1;saveGame(true);}}
@@ -8360,14 +8822,14 @@ function updateAch(dt){if(!started)return;save.playT=(save.playT||0)+dt;if(!save
   const el=$('achToast');if(achShowT>0){achShowT-=dt;if(achShowT<=0)el.classList.remove('show');}
   else if(achQ.length){const a=achQ.shift();el.textContent='🏆 '+tr('Pasiekimas')+': '+a.ic+' '+tr(a.n);el.classList.add('show');achShowT=3.5;sfx('win');}}
 
-function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.concat(dkings).find(q=>q.name===save.pinKing);if(!k||!started){el.hidden=true;return;}el.hidden=false;
+function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.concat(dkings,ukings).find(q=>q.name===save.pinKing);if(!k||!started){el.hidden=true;return;}el.hidden=false;
   const list=kingTaskList(k),done=kingDone(k),crowned=save.crowns&&save.crowns[k.name];
   let h='<h4><span>'+(k.icon||'👑')+'</span><span></span></h4><div class="pk"></div><ul>';list.forEach(()=>h+='<li><span></span><span></span><span class="c"></span></li>');h+='</ul>';el.innerHTML=h;
   el.querySelector('h4 span:nth-child(2)').textContent=tr(k.name);el.querySelector('.pk').textContent=tr('📌 Prisegtos misijos')+' · '+done.length+'/'+k.tasks.length+(crowned?' · 👑':'');
   el.querySelectorAll('li').forEach((li,i)=>{const t=list[i],ok=done.includes(t.b);li.className=ok?'ok':'';li.children[0].textContent=ok?'✅':'⬜';li.children[1].textContent=tr(t.b);li.children[2].textContent=ok?'':tr(t.chip||'');if(ok||!t.chip)li.children[2].style.display='none';});}
 
 let emoOpen=false,emote=null;
-const EMOTES=[{id:'wave',e:'👋',n:'Mojuoti',d:3},{id:'dance',e:'💃',n:'Šokti',d:8},{id:'cheer',e:'🙌',n:'Valio!',d:3},{id:'laugh',e:'😂',n:'Juoktis',d:3},{id:'cry',e:'😢',n:'Verkti',d:4},{id:'sit',e:'🪑',n:'Sėdėti',d:999},{id:'spin',e:'🌀',n:'Suktis',d:3},{id:'kickdance',e:'🦵',n:'Kazačiokas',d:8},{id:'dinodance',e:'🦖',n:'Dinozauro šokis',d:8,secret:true}];
+const EMOTES=[{id:'wave',e:'👋',n:'Mojuoti',d:3},{id:'dance',e:'💃',n:'Šokti',d:8},{id:'cheer',e:'🙌',n:'Valio!',d:3},{id:'laugh',e:'😂',n:'Juoktis',d:3},{id:'cry',e:'😢',n:'Verkti',d:4},{id:'sit',e:'🪑',n:'Sėdėti',d:999},{id:'spin',e:'🌀',n:'Suktis',d:3},{id:'kickdance',e:'🦵',n:'Kazačiokas',d:8},{id:'dinodance',e:'🦖',n:'Dinozauro šokis',d:8,secret:true},{id:'trexroar',e:'🦖',n:'T-Rex riaumojimas',d:3,secret:true}];
 const emoOwned=E=>!E.secret||!!(save.emotes&&save.emotes[E.id]);
 function toggleEmo(){emoOpen=!emoOpen;$('emoPanel').hidden=!emoOpen;if(emoOpen){renderEmo();freeCursor();}else tryLock();}
 function renderEmo(){const G=$('emoGrid');G.innerHTML='';EMOTES.forEach((E,i)=>{const own=emoOwned(E);const b=document.createElement('button');b.type='button';b.className='emoBtn'+(own?'':' lock');
@@ -8388,6 +8850,7 @@ function updateEmote(dt){if(!emote)return;const p=player,c=pc,t=performance.now(
    case 'cry':{A.set(-2.2,0,-.5);B.set(-2.2,0,.5);c.tilt.rotation.x=.3+Math.sin(T*12)*.04;if(Math.random()<dt*4)floaty('💧',p.pos.clone().add(V(rand(-.3,.3),2,0)));break;}
    case 'sit':{L.set(-1.5,0,.1);Rr.set(-1.5,0,-.1);A.set(-.4,0,.1);B.set(-.4,0,-.1);c.tilt.position.y=-.55;break;}
    case 'spin':{c.root.rotation.y=p.yaw+T*12;A.set(0,0,1.5);B.set(0,0,-1.5);c.tilt.position.y=Math.sin(Math.min(1,T/3)*Math.PI)*.4;break;}
+   case 'trexroar':{if(T<dt*1.5){sfx('roar');shake=Math.max(shake,.3);floaty('🦖 RAAAAR!',p.pos.clone().add(V(0,2.4,0)));}A.set(-1.1,0,-.6);B.set(-1.1,0,.6);c.tilt.rotation.x=.45+Math.sin(T*30)*.04;c.tilt.position.y=-.1;c.root.rotation.y=p.yaw+Math.sin(T*8)*.15;break;}
    case 'kickdance':{const k=T*9,ph=Math.floor(k/Math.PI)%2,kk=Math.abs(Math.sin(k));A.set(-1.45,-.9,-.9);B.set(-1.45,.9,.9);
      L.set(ph?-1.5*kk:-.15,0,.1);Rr.set(ph?-.15:-1.5*kk,0,-.1);c.tilt.position.y=-.55+kk*.12;c.tilt.rotation.x=-.12;c.tilt.rotation.z=Math.sin(k)*.08;
      if(Math.random()<dt*1.6)floaty(pick(['Hej!','Op-pa!','🦵','🎶']),p.pos.clone().add(V(0,2.2,0)));break;}

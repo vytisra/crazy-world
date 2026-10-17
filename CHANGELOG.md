@@ -3,6 +3,32 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-17 21:57 — v194 Didysis grąžtas ir Požeminis pasaulis
+- Dinozaurų saloje (į rytus nuo centro) stovi DIDYSIS GRĄŽTAS, kasantis tiesiai į žemę, o šalia – kasėjas Kastytis.
+- Leistis gali tik išgelbėjęs visus 4 dinozaurų karalius; kelionė kainuoja $1000.
+- Po mokėjimo – LABAI SUNKŪS mokymai: 30 mažų platformų spirale aplink grąžto bokštą; mėlynos kyla ir leidžiasi, rožinės dingsta; žalios – kontroliniai taškai. Viršuje – GRĄŽTO PASAS.
+- Grąžtas nuneša į naują POŽEMINĮ PASAULĮ: tamsūs urvai, šviečiantys kristalai ir grybai, stalaktitai; atgal – grąžto liftu centre.
+- 3 požemio karaliai po 5 misijas:
+  - Kurmis: akiniai, žibintai, šaknų sandėlis, kasimo varžybos per 40 s, deimantai ant kristalų stulpų.
+  - Sliekas: lietaus lašai, obuolių puota, mazgų išrišimas, purvo lenktynės su sliekiuku, grybų sodas.
+  - Skruzdė karalienė: cukraus kalnas, pasiklydusios skruzdėlės, kiaušinėlių šildymas, medus ant aukštų grybų, uodų gaudymas.
+- Atlygis: $200 už misiją, $600 už karalių; išgelbėjus visus 3 – $1500 ir slaptas KURMIO KOSTIUMAS.
+- Nauji pasiekimai: „Grąžto meistras“ ir „Požemio gelbėtojas“.
+
+## 2026-10-17 20:42 — v193 Dinozaurai skambina + Dino bėgikas telefone
+- Telefone atsirado 7 nauji kontaktai iš dinozaurų pasaulio: T-Rex karalius, Drakonė, Spinozauras, Megalodonas, Profesorius Kvarkas, urvinis Uggas ir Mažylis T-Rex (matomi aplankius dinozaurų pasaulį).
+- Jie patys tau skambina – dinozaurų pasaulyje dažniau (dažniausiai skambina dinozaurai), kartais duoda užuominų apie paslaptis.
+- Naujas telefono žaidimas 🦖 „Dino bėgikas“: šokinėk per kaktusus (Space / bakstelėjimas), po pterodaktiliais – nešok, rink kiaušinius (+3). Rekordas lyderių lentelėje ir iki $25 už žaidimą.
+
+## 2026-10-17 20:26 — v192 Dinozaurų turgus, namai ir paslaptys
+- Dinozaurų pasaulio centre – 3 nauji stendai: DINO TRANSPORTAS, DINO DRABUŽIAI, DINO GYVŪNĖLIAI.
+- 7 dinozaurų transportai: Kiaušinio mašina, Raptorių bėgikas, Kaulų bagis, Triceratopsas, T-Rex, Brontozauras su balnu ir SKRAIDANTIS Pterodaktilis (Space). Iškviečiami klavišu I abiejuose pasauliuose.
+- Dinozaurų drabužiai: 6 kostiumai su galvomis (T-Rex, Raptorius ⚡ greitis, Triceratopsas, Stegozauras, Pterodaktilis ⚡ sklandymas, Drakonas) + kiaušinio lukštas, kaulų akiniai, letenos ir uodega.
+- 4 dinozaurų gyvūnėliai: Mažylis T-Rex, Triceratopsiukas, Pterodaktiliukas, Stegozauriukas (su žaislais).
+- 3 namai: Urvo namas ($1500), Medžio namelis ($2500), Fosilijų vila ($4000) – lova praleidžia naktį, laiko mašina atneša tiesiai į namus.
+- 5 paslaptys: urvas už krioklio (urvinio žmogaus kailis + $500), nuskendęs laivas (fosilijų karūna + $300), slapti akmenys į ugnikalnio viršūnę (drakoniukas), naktinis auksinis raptorius (slaptas transportas), „RAAAR“ pokalbyje (slaptas emote T-Rex riaumojimas). Urviniai žmonės duoda užuominų.
+- Nauji pasiekimai: „Namai prieš milijoną metų“, „Dinozaurų raitelis“, „Dinozaurų paslaptys“.
+
 ## 2026-10-17 19:55 — v191 Anglų kalba: kojinės animacija ir Dinozaurų pasaulis
 - Kojinės šventovės animacija (užrašas „IT'S IMPOSSIBLE! I finally got a NON-CRAZY thing!“) dabar pilnai angliškai, kai pasirinkta English.
 - Visas Dinozaurų pasaulis išverstas į anglų kalbą: karaliai, jų kalbos, užduotys, ženklai, laboratorija, profesorius Kvarkas, mokymai, ptero taksi, kaimelis, kasinėjimai, pasiekimai.
