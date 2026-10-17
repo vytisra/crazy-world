@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-17 15:13 — v189 Keleivis draugo transporte (online)
+- Online lobby: priėjęs prie draugo mašinos (ar kito transporto) spausk F – „sėsti pas … (keleivis)“.
+- Keleivis sėdi šalia vairuotojo ir važiuoja kartu; keli keleiviai susėda vienas ant kito (crazy!).
+- F arba R – išlipti; jei vairuotojas išlipa, keleiviai išlipa automatiškai.
+- Vairuotojas gauna pranešimą, kai kas nors įlipa ar išlipa; visi lobby žaidėjai mato keleivius mašinoje.
+
 ## 2026-10-17 13:53 — v188 Emote „Kazačiokas“
 - Nauja emocija 🦵 Kazačiokas (rusiškas spyrių šokis): pritūpęs, sukryžiuotos rankos, kojos pakaitomis spiria į priekį, „Hej! Op-pa!“.
 - Emocijų lentelė (C): Kazačiokas – 8 klavišas, slaptas Dinozauro šokis – 9 (veikia 1–9).

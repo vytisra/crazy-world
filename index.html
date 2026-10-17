@@ -2800,6 +2800,7 @@ const stamina={v:1,tired:false};
 function updatePlayer(dt,t){
   const p=player;
   if(p.inCar)return;
+  if(netRide){updateNetRide();return;}
   if(sledRide){updateSledRide(dt,t);return;}
   const ctrl=!p.rag&&!uiBlocking();
   let ix=0,iz=0;if(ctrl){if(keys.KeyW)iz++;if(keys.KeyS)iz--;if(keys.KeyA)ix--;if(keys.KeyD)ix++;}
@@ -2867,6 +2868,8 @@ function updatePlayer(dt,t){
 
 function animPlayer(dt,t){
   const c=pc,p=player;
+  if(netRide&&netRide.s){c.root.position.copy(netRide.s);c.root.rotation.set(0,netRide.yaw,0);c.tilt.rotation.set(0,0,0);c.tilt.position.y=0;
+    c.legL.p.rotation.set(-1.5,0,.1);c.legR.p.rotation.set(-1.5,0,-.1);c.armL.p.rotation.set(-2.6+Math.sin(t*3)*.15,0,.5);c.armR.p.rotation.set(-.4,0,-.2);return;}
   if(p.inCar&&car){
     const P=car.P,seat=car.body.localToWorld(V(...P.seat));c.root.position.copy(seat);c.root.rotation.set(0,car.yaw+(car.type==='quad'?car.spinAng||0:0),0);
     c.tilt.rotation.set(car.body.rotation.x+(car.type==='moto'?.35:0),0,car.body.rotation.z);
@@ -5896,7 +5899,9 @@ function nearestInteract(){
   if(player.inCar&&inPaintZone())return{label:'dažyti transportą ($'+PAINT_PRICE+')',act:openPaintShop};
   if(player.inCar)return{label:car.type==='moto'?'nulipti nuo motociklo':car.type==='quad'?'nulipti nuo keturačio':car.type==='cow'?'nulipti nuo karvės':car.type==='saucer'?'išlipti iš lėkštės':car.type==='carpet'?'nulipti nuo kilimo':car.type==='armchair'?'atsistoti nuo fotelio':car.type==='bed'?'nulipti nuo lovos':car.type==='rocketcar'?'nulipti nuo raketos':car.type==='tank'?'išlipti iš tanko':car.type==='horsecar'?'nuleisti arklį nuo pečių':car.type==='pengcar'?'nulipti nuo pingvino':car.type==='heli'?'išlipti iš sraigtasparnio':'išlipti iš mašinos',act:exitCar};
   if(sledRide)return{label:'nulipti nuo rogių',act:()=>leaveSled()};
+  if(netRide)return{label:'išlipti iš '+netRide.name+' transporto',act:()=>leaveRide()};
   let best=null,bd=1e9;const p=player.pos;
+  if(NET.on)for(const [id,pr] of NET.peers){if(!pr.carMesh)continue;const cp=pr.carMesh.root.position,d=Math.hypot(cp.x-p.x,cp.z-p.z);if(d<((VEH[pr.carType]&&VEH[pr.carType].enterR)||4.6)&&Math.abs(cp.y-p.y)<3.5&&d<bd){bd=d;best={label:'sėsti pas '+pr.name+' (keleivis) 🚗',act:()=>enterRide(id,pr)};}}
   if(sled&&!sled.away&&Math.hypot(sled.pos.x-p.x,sled.pos.z-p.z)<2.6&&Math.abs(sled.pos.y-p.y)<2.5){bd=-1;best={label:'sėsti į roges',act:mountSled};}
   if(!inside&&!inPyr&&!inMus&&!inDis&&!inVil&&!inIgl&&!inOas&&!inVlh&&!inVin)for(const tr of traffic){const d=Math.hypot(tr.pos.x-p.x,tr.pos.z-p.z);if(d<3.4&&Math.abs(tr.pos.y-p.y)<3&&d<bd){bd=d;best={label:'kalbėtis su vairuotoju: '+tr.d.name,act:()=>{tr.speed=0;sfx(tr.d.penguin?'pyp':tr.d.dog?'bark':'honk');say(tr.d.name,pick(tr.d.lines),true);}};}}
   for(const k of (p.x>600?dkings:kings)){const d=kingPos(k).distanceTo(p);if(d<k.talkR&&d<bd){bd=d;best={label:'kalbėtis: '+k.name,act:()=>openKing(k)};}}
@@ -6169,11 +6174,11 @@ addEventListener('keydown',e=>{
   if(e.code==='KeyE'&&!player.inCar&&hasPow('volcanohat')&&!uiBlocking()){eruptHat();return;}
   if(e.code==='KeyE'&&!player.inCar&&hasPow('trexhat')&&!uiBlocking()){trexRoar();return;}
   if(e.code==='KeyE'&&player.inCar&&car){if(car.saucerLights&&car.caps){toggleSaucerBeam();return;}if(car.crater){eruptCar();return;}if(car.rocket){launchRocket();return;}if(car.clown){clownHonk();return;}if(car.tank){fireTank();return;}if(car.police){togglePolice();return;}if(car.flipCar){flipTrick();return;}if(car.lid){toggleTrunk();return;}}
-  if(e.code==='KeyR'){if(player.rag)getUp();else ragdoll(0,V(rand(-1,1),4,rand(-1,1)));}
+  if(e.code==='KeyR'){if(netRide){leaveRide();return;}if(player.rag)getUp();else ragdoll(0,V(rand(-1,1),4,rand(-1,1)));}
   if(e.code==='KeyT'){e.preventDefault();openChat();}
   if(e.code==='KeyG'&&started&&!dialogOpen&&!settingsOpen){e.preventDefault();toggleAch();return;}
   if(e.code==='KeyC'&&started&&!dialogOpen&&!settingsOpen&&!player.inCar){e.preventDefault();toggleEmo();return;}
-  if(e.code==='KeyI'){if(inside||inPyr||inMus||inDis||inVil||inIgl||inOas||inVlh||inVin)say(null,'Viduje transporto iškviesti negalima – pirmiausia išeik pro duris.');else if(player.inCar)say(null,'Pirmiausia išlipk (F), tada galėsi iškviesti kitą transportą.');else openVehicleMenu();}
+  if(e.code==='KeyI'){if(netRide){say(null,'Pirmiausia išlipk iš draugo transporto (F).');return;}if(inside||inPyr||inMus||inDis||inVil||inIgl||inOas||inVlh||inVin)say(null,'Viduje transporto iškviesti negalima – pirmiausia išeik pro duris.');else if(player.inCar)say(null,'Pirmiausia išlipk (F), tada galėsi iškviesti kitą transportą.');else openVehicleMenu();}
 });
 addEventListener('keyup',e=>{keys[e.code]=false;});
 
@@ -6553,6 +6558,20 @@ function updateDino(dt){DK.roarCd=Math.max(0,DK.roarCd-dt);if(course)updateCours
     const back=D.kind==='raptor'&&!dCalm('T-Rex karalius');const fl=D.kind==='bronto'&&!dCalm('Spinozauras');
     P.root.position.set(x,terrainH(x,z)+(fl?3+Math.sin(t*1.3+D.ph)*.8:0),z);P.root.rotation.y=yaw+(back?Math.PI:0);if(fl)P.root.rotation.z=Math.sin(t+D.ph)*.15;else P.root.rotation.z=0;animDino(P,t,D.kind==='raptor'?14:5,!fl);}}
 
+
+/* ---------- v189: ride as passenger in a friend's vehicle (online) ---------- */
+let netRide=null;
+function rideSeat(mesh,type,idx){const P=VEH[type]||{},ds=P.dogSeat||[.5,.62,-.3];mesh.root.updateMatrixWorld(true);const b=mesh.body||mesh.root;return b.localToWorld(V(ds[0],ds[1]+idx*.95,ds[2]));}
+function rideCarOf(id){if(id===NET.id)return player.inCar&&car&&car.root?{mesh:car,type:car.type}:null;const pr=NET.peers.get(id);return pr&&pr.carMesh?{mesh:pr.carMesh,type:pr.carType}:null;}
+function enterRide(id,pr){if(player.inCar||netRide)return;if(player.rag&&typeof getUp==='function')getUp();let idx=0;for(const [pid,q] of NET.peers)if(pid!==id&&q.rd===id)idx++;
+  dropAnchors();netRide={id,idx,name:pr.name};emote=null;sfx('door');floaty('🚗 '+tr('Keleivis!'),player.pos);say(null,tr('Įlipai į')+' '+pr.name+' '+tr('transportą! F – išlipti.'));}
+function leaveRide(msg){if(!netRide)return;const r=rideCarOf(netRide.id),p=player;netRide=null;
+  if(r){const R0=r.mesh.root,a=R0.rotation.y+Math.PI/2;p.pos.set(R0.position.x+Math.sin(a)*2.8,0,R0.position.z+Math.cos(a)*2.8);p.pos.y=groundAt(p.pos.x,p.pos.z,R0.position.y+2.5,.3);}
+  else p.pos.y=groundAt(p.pos.x,p.pos.z,p.pos.y+1,.3);
+  p.vel.set(0,0,0);if(p.prevVel)p.prevVel.set(0,0,0);p.onGround=true;const c=pc;c.tilt.position.y=0;c.tilt.rotation.set(0,0,0);sfx('door');if(msg)say(null,msg);}
+function updateNetRide(){const r=NET.on&&rideCarOf(netRide.id),p=player;if(!r){leaveRide(tr('Vairuotojas išlipo – tu irgi išlipai.'));return;}
+  const s=rideSeat(r.mesh,r.type,netRide.idx);p.pos.copy(s);p.vel.set(0,0,0);p.onGround=true;p.yaw=r.mesh.root.rotation.y;netRide.s=s;netRide.yaw=p.yaw;}
+
 /* ---------- build ---------- */
 const kingTags=[];
 function migHeads(){const me=save.clothes.me;if(save.migHeads)return;save.migHeads=1;for(const h of SUIT_HEADS){const b=h.slice(0,-2);if(me.owned.includes(b)&&!me.owned.includes(h))me.owned.push(h);}saveGame(true);}
@@ -6688,6 +6707,7 @@ function netPose(m){let pr=NET.peers.get(m.from);
   if(!pr){const v=makeChar({body:m.body||0xff8a3d});const root=new THREE.Group();root.add(v.root);scene.add(root);const nt=tag(m.name,'#7ee8ff',.6);nt.position.y=2.9;root.add(nt);
     pr={v,root,nt,name:m.name,body:m.body,wk:'',pos:V(...m.p),yaw:m.r[1],tp:V(...m.p),seen:0,carMesh:null,carType:null,cp:V(),cy:0,tcp:V(),tcy:0};NET.peers.set(m.from,pr);
     if(!NET.members.some(x=>x.id===m.from))NET.members.push({id:m.from,name:m.name});netHud();}
+  pr.rd=m.rd||null;pr.rs=m.rs||0;if(m.rd===NET.id&&!pr.rdMe){pr.rdMe=1;say(null,pr.name+' '+tr('įlipo į tavo transportą! 🚗'));sfx('door');}else if(m.rd!==NET.id&&pr.rdMe){pr.rdMe=0;say(null,pr.name+' '+tr('išlipo iš tavo transporto.'));}
   pr.seen=0;pr.tp.set(...m.p);pr.r=m.r;pr.l=m.l;pr.sc=m.sc;pr.vis=m.vis!==0;if(m.lb&&typeof m.lb==='object')pr.lb=m.lb;
   if(m.body!==pr.body){pr.body=m.body;pr.v.bm.color.set(m.body);}
   if(m.wk!==pr.wk){pr.wk=m.wk;try{applyOutfit(pr.v,JSON.parse(m.wk));}catch(e){}}
@@ -6699,7 +6719,7 @@ const r2=x=>Math.round(x*100)/100;
 function netState(){const v=pc,o={t:'st',lb:myLbStats(),name:NET.name,body:prefs.body||0xff8a3d,wk:JSON.stringify(save.clothes.me.wear),
   p:[r2(v.root.position.x),r2(v.root.position.y),r2(v.root.position.z)],r:[r2(v.root.rotation.x),r2(v.root.rotation.y),r2(v.root.rotation.z)],sc:r2(v.root.scale.x),vis:v.root.visible?1:0,
   l:[r2(v.tilt.rotation.x),r2(v.tilt.rotation.y),r2(v.tilt.rotation.z)].concat(...LIMBS.map(k=>[r2(v[k].p.rotation.x),r2(v[k].p.rotation.z)]))};
-  if(player.inCar&&car&&car.root){o.ct=car.type;o.cp=[r2(car.root.position.x),r2(car.root.position.y),r2(car.root.position.z)];o.cy=r2(car.root.rotation.y);}return o;}
+  if(netRide){o.rd=netRide.id;o.rs=netRide.idx;}if(player.inCar&&car&&car.root){o.ct=car.type;o.cp=[r2(car.root.position.x),r2(car.root.position.y),r2(car.root.position.z)];o.cy=r2(car.root.rotation.y);}return o;}
 const angLerp=(a,b,k)=>{let d=b-a;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;return a+d*k;};
 function updateNet(dt){if(!NET.on)return;
   const k=Math.min(1,dt*12);
@@ -6708,7 +6728,8 @@ function updateNet(dt){if(!NET.on)return;
     if(pr.r){v.root.rotation.x+=(pr.r[0]-v.root.rotation.x)*k;v.root.rotation.y=angLerp(v.root.rotation.y,pr.r[1],k);v.root.rotation.z+=(pr.r[2]-v.root.rotation.z)*k;}
     if(pr.sc)v.root.scale.setScalar(pr.sc);v.root.visible=pr.vis;
     if(pr.l){v.tilt.rotation.set(pr.l[0],pr.l[1],pr.l[2]);LIMBS.forEach((n,i)=>{v[n].p.rotation.x+=(pr.l[3+i*2]-v[n].p.rotation.x)*k;v[n].p.rotation.z+=(pr.l[4+i*2]-v[n].p.rotation.z)*k;});}
-    pr.nt.position.set(v.root.position.x,v.root.position.y+2.9*(pr.sc||1)+(pr.carType?.6:0),v.root.position.z);
+    if(pr.rd){const rc=rideCarOf(pr.rd);if(rc){v.root.position.copy(rideSeat(rc.mesh,rc.type,pr.rs||0));v.root.rotation.set(0,rc.mesh.root.rotation.y,0);}}
+    pr.nt.position.set(v.root.position.x,v.root.position.y+2.9*(pr.sc||1)+(pr.carType||pr.rd?.6:0),v.root.position.z);
     if(pr.bub){pr.bub.position.set(pr.nt.position.x,pr.nt.position.y+.7,pr.nt.position.z);pr.bubT-=dt;if(pr.bubT<=0){pr.root.remove(pr.bub);pr.bub=null;}}
     if(pr.carMesh){const c=pr.carMesh.root;if(pr.tcp.distanceTo(c.position)>12)c.position.copy(pr.tcp);else c.position.lerp(pr.tcp,k);c.rotation.y=angLerp(c.rotation.y,pr.tcy,k);}}
 }
