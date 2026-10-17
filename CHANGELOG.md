@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-17 13:53 — v188 Emote „Kazačiokas“
+- Nauja emocija 🦵 Kazačiokas (rusiškas spyrių šokis): pritūpęs, sukryžiuotos rankos, kojos pakaitomis spiria į priekį, „Hej! Op-pa!“.
+- Emocijų lentelė (C): Kazačiokas – 8 klavišas, slaptas Dinozauro šokis – 9 (veikia 1–9).
+
 ## 2026-10-16 11:59 — v187 Laiko laboratorija ir Dinozaurų pasaulis
 - Sniego karalystėje (rytinėje dalyje) atsirado LAIKO LABORATORIJA su profesoriumi Kvarku ir laiko mašina.
 - Kelionė kainuoja $1000. Sumokėjus prasideda mokymai: parkūras spirale aplink laboratoriją iki aukso bokšto su LAIKO PASU (žalios platformos – kontroliniai taškai).

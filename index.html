@@ -421,7 +421,7 @@ body.touch #tClose:not([hidden]){display:block}
 <div id="achPanel" hidden><div id="achBox"><h2>🏆 Pasiekimai</h2><div class="sub" id="achSub"></div><div class="achList" id="achList"></div><div class="sub" style="margin:12px 0 0">G arba Esc – uždaryti</div></div></div>
 <div id="achToast"></div>
 <div id="pinHud" hidden></div>
-<div id="emoPanel" hidden><h3>😀 Emotes</h3><div class="emoGrid" id="emoGrid"></div><div style="font-size:11.5px;font-weight:700;opacity:.65;margin-top:8px">1–8 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti</div></div>
+<div id="emoPanel" hidden><h3>😀 Emotes</h3><div class="emoGrid" id="emoGrid"></div><div style="font-size:11.5px;font-weight:700;opacity:.65;margin-top:8px">1–9 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti</div></div>
 <div id="stam" style="opacity:0"><i></i></div>
 <div id="start" class="overlay">
   <div class="panel card">
@@ -517,7 +517,7 @@ Object.assign(I18N_EN,{"🏆 Pasiekimai": "🏆 Achievements", "G arba Esc – u
 Object.assign(I18N_EN,{"📌 Atsegti misijas nuo ekrano": "📌 Unpin missions from screen", "📌 Prisegti misijas ekrane": "📌 Pin missions on screen", "📌 Prisegtos misijos": "📌 Pinned missions"});
 Object.assign(I18N_EN,{"Online – žaidi kartu su draugais (iki 4 žaidėjų), net iš skirtingų kompiuterių: draugai atsidaro tą pačią žaidimo nuorodą, vienas sukuria lobby, kiti prisijungia.": "Online – play together with friends (up to 4 players), even from different computers: friends open the same game link, one creates a lobby, the others join."});
 Object.assign(I18N_EN,{"Skraidanti karvė": "Flying cow", "Gyvatėlė": "Snake", "Gaudyk kojines": "Catch the socks", "Space arba spustelk – plasnoti": "Space or click – flap", "Rodyklės arba WASD – sukti": "Arrows or WASD – turn", "A/D arba pelė – judinti krepšį": "A/D or mouse – move the basket", "Žaidimas baigtas!": "Game over!", "Taškai": "Score", "Rekordas": "Best", "Naujas rekordas!": "New record!", "Spustelk arba Space – žaisti dar": "Click or Space – play again"});
-Object.assign(I18N_EN,{"1–8 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–8 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
+Object.assign(I18N_EN,{"1–9 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–9 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Kazačiokas": "Russian kick dance", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
 Object.assign(I18N_EN,{"Lyderiai": "Leaderboard", "Greičiausiai perėjo žaidimą": "Fastest to beat the game", "Daugiausia pinigų": "Most money", "Dar niekas neperėjo žaidimo – surink 4 karūnas!": "Nobody has beaten the game yet – collect 4 crowns!", "Dar nėra rezultatų.": "No results yet.", "tu": "you", "Rodomi šio kompiuterio žaidėjai ir draugai tavo online lobby 🌐": "Shows players on this computer and friends in your online lobby 🌐"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
@@ -6153,7 +6153,7 @@ addEventListener('keydown',e=>{
   if(djGame){e.preventDefault();if(e.code==='Escape'){if(!djGame.over){cancelJob();sfx('fail');say(null,'Palikai DJ pultą. Minia nusivylusi...');}return;}if(!e.repeat)djKey(e.code);return;}
   if(shopOpen){if(e.code==='Escape'||e.code==='KeyF'||e.code==='Tab'){e.preventDefault();closeClothesShop();tryLock();}return;}
   if(achOpen&&(e.code==='Escape'||e.code==='KeyG')){e.preventDefault();toggleAch();return;}
-  if(emoOpen){e.preventDefault();if(e.code==='Escape'||e.code==='KeyC'){toggleEmo();return;}const m=e.code.match(/^(?:Digit|Numpad)([1-8])$/);if(m){const E=EMOTES[+m[1]-1];if(E)pickEmote(E);}return;}
+  if(emoOpen){e.preventDefault();if(e.code==='Escape'||e.code==='KeyC'){toggleEmo();return;}const m=e.code.match(/^(?:Digit|Numpad)([1-9])$/);if(m){const E=EMOTES[+m[1]-1];if(E)pickEmote(E);}return;}
   if(e.code==='Tab'){e.preventDefault();if(started&&!settingsOpen)toggleMap();return;}
   if(e.code==='Escape'){if(!started||performance.now()-lockDropT<400)return;if(dialogOpen){closeDialog();if(!locked)tryLock();return;}if(mapOpen){toggleMap();return;}settingsOpen?(closeSettings(),tryLock()):openSettings();return;}
   if(!started||settingsOpen)return;
@@ -8236,7 +8236,7 @@ function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.concat(dki
   el.querySelectorAll('li').forEach((li,i)=>{const t=list[i],ok=done.includes(t.b);li.className=ok?'ok':'';li.children[0].textContent=ok?'✅':'⬜';li.children[1].textContent=tr(t.b);li.children[2].textContent=ok?'':tr(t.chip||'');if(ok||!t.chip)li.children[2].style.display='none';});}
 
 let emoOpen=false,emote=null;
-const EMOTES=[{id:'wave',e:'👋',n:'Mojuoti',d:3},{id:'dance',e:'💃',n:'Šokti',d:8},{id:'cheer',e:'🙌',n:'Valio!',d:3},{id:'laugh',e:'😂',n:'Juoktis',d:3},{id:'cry',e:'😢',n:'Verkti',d:4},{id:'sit',e:'🪑',n:'Sėdėti',d:999},{id:'spin',e:'🌀',n:'Suktis',d:3},{id:'dinodance',e:'🦖',n:'Dinozauro šokis',d:8,secret:true}];
+const EMOTES=[{id:'wave',e:'👋',n:'Mojuoti',d:3},{id:'dance',e:'💃',n:'Šokti',d:8},{id:'cheer',e:'🙌',n:'Valio!',d:3},{id:'laugh',e:'😂',n:'Juoktis',d:3},{id:'cry',e:'😢',n:'Verkti',d:4},{id:'sit',e:'🪑',n:'Sėdėti',d:999},{id:'spin',e:'🌀',n:'Suktis',d:3},{id:'kickdance',e:'🦵',n:'Kazačiokas',d:8},{id:'dinodance',e:'🦖',n:'Dinozauro šokis',d:8,secret:true}];
 const emoOwned=E=>!E.secret||!!(save.emotes&&save.emotes[E.id]);
 function toggleEmo(){emoOpen=!emoOpen;$('emoPanel').hidden=!emoOpen;if(emoOpen){renderEmo();freeCursor();}else tryLock();}
 function renderEmo(){const G=$('emoGrid');G.innerHTML='';EMOTES.forEach((E,i)=>{const own=emoOwned(E);const b=document.createElement('button');b.type='button';b.className='emoBtn'+(own?'':' lock');
@@ -8257,6 +8257,9 @@ function updateEmote(dt){if(!emote)return;const p=player,c=pc,t=performance.now(
    case 'cry':{A.set(-2.2,0,-.5);B.set(-2.2,0,.5);c.tilt.rotation.x=.3+Math.sin(T*12)*.04;if(Math.random()<dt*4)floaty('💧',p.pos.clone().add(V(rand(-.3,.3),2,0)));break;}
    case 'sit':{L.set(-1.5,0,.1);Rr.set(-1.5,0,-.1);A.set(-.4,0,.1);B.set(-.4,0,-.1);c.tilt.position.y=-.55;break;}
    case 'spin':{c.root.rotation.y=p.yaw+T*12;A.set(0,0,1.5);B.set(0,0,-1.5);c.tilt.position.y=Math.sin(Math.min(1,T/3)*Math.PI)*.4;break;}
+   case 'kickdance':{const k=T*9,ph=Math.floor(k/Math.PI)%2,kk=Math.abs(Math.sin(k));A.set(-1.45,-.9,-.9);B.set(-1.45,.9,.9);
+     L.set(ph?-1.5*kk:-.15,0,.1);Rr.set(ph?-.15:-1.5*kk,0,-.1);c.tilt.position.y=-.55+kk*.12;c.tilt.rotation.x=-.12;c.tilt.rotation.z=Math.sin(k)*.08;
+     if(Math.random()<dt*1.6)floaty(pick(['Hej!','Op-pa!','🦵','🎶']),p.pos.clone().add(V(0,2.2,0)));break;}
    case 'dinodance':{const k=T*7;A.set(-1.6+Math.sin(k*2)*.3,0,.1);B.set(-1.6-Math.sin(k*2)*.3,0,-.1);L.set(Math.max(0,Math.sin(k))*.9,0,0);Rr.set(Math.max(0,-Math.sin(k))*.9,0,0);
      c.tilt.rotation.x=.35+Math.sin(k)*.08;c.tilt.rotation.z=Math.sin(k*.5)*.25;c.tilt.position.y=Math.abs(Math.sin(k))*.25;c.root.rotation.y=p.yaw+Math.sin(k*.5)*.8;if(Math.random()<dt*2)floaty(pick(['🦖','RAAAR!','🎵']),p.pos.clone().add(V(0,2.6,0)));break;}}}
 function start(){audioInit();
