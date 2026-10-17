@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-17 19:55 — v191 Anglų kalba: kojinės animacija ir Dinozaurų pasaulis
+- Kojinės šventovės animacija (užrašas „IT'S IMPOSSIBLE! I finally got a NON-CRAZY thing!“) dabar pilnai angliškai, kai pasirinkta English.
+- Visas Dinozaurų pasaulis išverstas į anglų kalbą: karaliai, jų kalbos, užduotys, ženklai, laboratorija, profesorius Kvarkas, mokymai, ptero taksi, kaimelis, kasinėjimai, pasiekimai.
+- Taip pat išversti keleivio (online) ir Kazačioko pranešimai.
+- Pataisyta: vėliau pridėti vertimai dabar veikia ir sudėtiniuose sakiniuose.
+
 ## 2026-10-17 19:13 — v190 Dinozaurų pasaulis didesnis + reikia visų karūnų
 - Laiko mašina veikia tik surinkus visas 4 Crazy pasaulio karūnas (profesorius Kvarkas to reikalauja prieš mokėjimą ir kelionę).
 - Ugg kaimelis: urvinių žmonių trobelės, laužas su mėsa ant iešmo, 4 urviniai žmonės su patarimais.
