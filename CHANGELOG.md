@@ -3,6 +3,23 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-18 10:30 — v196 Žemėlapiai, skambučiai iš požemio ir Šikšnosparnio žaidimas
+- Tab dabar atidaro žemėlapį ir požeminiame, ir dinozaurų pasaulyje: karalystės, karaliai su misijų progresu, stendai, kasykla, ežeras, paslaptys ir tavo vieta.
+- Telefone nauji požemio kontaktai: Kurmis, Sliekas, Skruzdė, Kasėjas Kastytis ir Kurmiukas. Požemyje jie skambina tau dažniausiai (ir dažniau nei paviršiuje).
+- Naujas telefono žaidimas „🦇 Šikšnosparnis“: laikyk tarpą arba pirštą, kad kiltum, venk stalaktitų ir stalagmitų, gaudyk kandis (+2). Yra lyderių lentelėje.
+
+## 2026-10-18 10:14 — v195 Daug naujų dalykų požeminiame pasaulyje
+- Požemio turgus prie grąžto lifto: POŽEMIO TRANSPORTAS (Kasyklos vagonėlis $800, Grąžtomobilis su besisukančiu grąžtu $2500), KALNAKASIO DRABUŽIAI (šalmas su lempa, kasėjo akiniai, kirtiklis ant nugaros), POŽEMIO GYVŪNĖLIAI (Šikšnosparniukas, Kurmiukas).
+- Vagonėlių geležinkelis aplink centrą – sėsk ir apvažiuok ratą.
+- Kasykla: 8 rūdos gyslos – kask akmenį, sidabrą, auksą ar deimantus (iki $90).
+- Požeminis ežeras su šviečiančiomis žuvimis ir kriokliu iš lubų.
+- Lavos plyšys su tilteliu (karšta – parverčia!).
+- Aido urvas: parašyk pokalbyje ir išgirsi aidą.
+- Šikšnosparniai po lubomis, milžino fosilija sienoje, skruzdėlių greitkelis su lapais.
+- Perkamas namas „Požeminis urvelis“ ($3000) – grąžtas atneša tiesiai į jį.
+- Paslaptys: kristalų melodija 1-3-5-3-1 (slapta Kristalų karūna + $300), lobis po X ženklu ($1000), švytintys batutai su slaptu gyvūnėliu Švytuku.
+- Nauji pasiekimai: „Kalnakasys“, „Kristalų muzikantas“, „Lobių ieškotojas“.
+
 ## 2026-10-17 21:57 — v194 Didysis grąžtas ir Požeminis pasaulis
 - Dinozaurų saloje (į rytus nuo centro) stovi DIDYSIS GRĄŽTAS, kasantis tiesiai į žemę, o šalia – kasėjas Kastytis.
 - Leistis gali tik išgelbėjęs visus 4 dinozaurų karalius; kelionė kainuoja $1000.
