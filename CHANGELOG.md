@@ -3,6 +3,17 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-18 11:11 — v198 Oro uostas ir Debesų sala
+- Mieste (netoli centro, pietvakarių pusėje) atsirado CRAZY ORO UOSTAS: kilimo takas, terminalas, bokštas ir pilotė Rūta.
+- Lėktuvu gali skristi į Dinozaurų salą (0, jei praėjai laiko mašinos mokymus), į Požeminį pasaulį (0, jei praėjai grąžto mokymus) ir į Debesų salą (pirmas bilietas 000, vėliau 0).
+- Skrydžio metu sėdi ant lėktuvo ir matai visą Crazy pasaulį iš viršaus; skrydis į Debesų salą trunka 1 minutę, viršuje rodomas laikmatis.
+- DEBESŲ SALA: minkšti debesų kalneliai, debesų batutai ir 3 dangaus karaliai po 5 misijas:
+  - Dievas (šiaurė, auksinė šventykla): žaibai, kolonos, žvaigždžių žibintai, varpai per 30 s, debesų laiptai iki auksinio rakto.
+  - Erelis (pietvakariai, uolų lizdas): kiaušiniai į lizdą, plunksnos, vėjo žiedai virš batutų, šakelės lizdui, vėjo lenktynės per 45 s.
+  - Debesėlis (pietryčiai): lietaus lašeliai, vaivorykštės kristalai (atsiranda vaivorykštė), debesų avytės į gardą, bėgiojantys saulės spinduliai, audros debesų nuraminimas.
+- Už kiekvieną misiją 00, už karūną 00, o išgelbėjus visus tris – 500 ir slapti ANGELO SPARNAI (sklandymas) bei AUREOLĖ.
+- Atgal parskrendi tuo pačiu lėktuvu iš salos centro. Tab rodo Debesų salos žemėlapį. Viskas išversta į anglų kalbą.
+
 ## 2026-10-18 10:41 — v197 Gyvūnėliai dinozaurų ir požemio namuose
 - Nupirktuose dinozaurų pasaulio namuose (Urvo namas, Medžio namelis, Fosilijų vila) ir požemio „Požeminiame urvelyje“ dabar galima palikti gyvūnėlius: namo viduje prie gyvūnėlio spausk F – „palikti namie“.
 - Kiekvienas gyvūnėlis prisimena, kuriuose namuose jį palikai, ir lauks tavęs būtent ten (nepasirodys kituose namuose).

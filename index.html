@@ -734,9 +734,20 @@ function underH(x,z){const lx=x-UW.x,lz=z-UW.z;
   const e=Math.max(Math.abs(lx),Math.abs(lz));if(e>120)h+=Math.pow((e-120)/9,2)*30;
   return Math.min(h,UW.ceil+2);}
 function underZone(x,z){const lx=x-UW.x,lz=z-UW.z;if(Math.hypot(lx,lz)<26)return'uhub';if(lz<0&&Math.abs(lx)<Math.abs(lz)*1.7)return'umole';return lx<0?'uworm':'uant';}
+/* ---------- v198: Cloud Island terrain (far north, z>600) ---------- */
+const CLW={x:0,z:1000};
+const CPADS=[{x:0,z:-104,r:15,h:1.6},{x:-90,z:60,r:13,h:3.5},{x:90,z:60,r:13,h:1.4}];
+function cldH(x,z){const lx=x-CLW.x,lz=z-CLW.z;let h=1.1+.7*Math.sin(lx*.06)*Math.cos(lz*.05)+.45*Math.sin(lx*.13+lz*.11)+.3*Math.sin(lz*.19-lx*.07);
+  const r=Math.hypot(lx,lz);if(r<26){const w=clamp((r-18)/8,0,1);h=h*w+.5*(1-w);}
+  for(const P of CPADS){const d=Math.hypot(lx-P.x,lz-P.z);if(d<P.r+8){const w=clamp((d-P.r)/8,0,1);h=P.h*(1-w)+h*w;}}
+  const e=Math.max(Math.abs(lx),Math.abs(lz));if(e>120)h+=Math.min(40,Math.pow((e-120)/9,2)*30);return h;}
+function cldZone(x,z){const lx=x-CLW.x,lz=z-CLW.z;if(Math.hypot(lx,lz)<26)return'chub';if(lz<0&&Math.abs(lx)<Math.abs(lz)*1.7)return'cgod';return lx<0?'ceagle':'ccloud';}
+const APT={x:-38,z:46},FLT={on:false,t:0,dur:0,dest:null,plane:null,ending:false};
+const ckings=[];const CLD={picks:[],carry:[],press:{},tmp:{},timers:{},pads:[],kv:{},anims:[],built:false,rainbow:null,apt:false};
 function terrainH(x,z){
   if(x>600)return dinoH(x,z);
   if(x<-600)return underH(x,z);
+  if(z>600)return cldH(x,z);
   let h=0;
   const rv=Math.hypot(x-VOL.x,z-VOL.z);
   if(rv<VOL.r){h=rv<VOL.cr?VOL.h-4:VOL.h*Math.pow((VOL.r-rv)/(VOL.r-VOL.cr),1.35);}
@@ -749,7 +760,7 @@ function terrainH(x,z){
   if(e>176)h+=Math.pow((e-176)/24,2)*42;
   return h;
 }
-function zoneAt(x,z){if(x>600)return dinoZone(x,z);if(x<-600)return underZone(x,z);const r=Math.hypot(x,z);if(r<46)return'hub';if(Math.abs(z)>=Math.abs(x))return z<0?'snow':'city';return x>0?'volcano':'desert';}
+function zoneAt(x,z){if(x>600)return dinoZone(x,z);if(x<-600)return underZone(x,z);if(z>600)return cldZone(x,z);const r=Math.hypot(x,z);if(r<46)return'hub';if(Math.abs(z)>=Math.abs(x))return z<0?'snow':'city';return x>0?'volcano':'desert';}
 function roadAt(x,z){
   const r=Math.hypot(x,z),ax=Math.abs(x),az=Math.abs(z);
   if(r<46){return(r>7&&(ax<3.5||az<3.5))?'hub':null;}
@@ -907,6 +918,7 @@ function setHat(c,type){
     for(let i=0;i<4;i++)put(GEO.cone,mat(0xffd23f),0,.25-i*.08,-.1-i*.18,.07,.22,.07,c.hat);c.hat.rotation.z=0;}
   else if(type==='uhat_miner'){const ym=mat(0xffd23f,{roughness:.4});put(new THREE.SphereGeometry(.46,16,8,0,Math.PI*2,0,Math.PI/2),ym,0,-.12,0,1,.85,1,c.hat);put(GEO.cyl,ym,0,-.12,.05,.5,.05,.55,c.hat);put(GEO.cyl,M.dark,0,.05,.42,.1,.12,.1,c.hat).rotation.x=Math.PI/2;
     put(GEO.sph,mat(0xfff3b0,{emissive:0xffd36b,emissiveIntensity:1.5}),0,.05,.49,.08,.08,.03,c.hat);c.hat.rotation.z=0;}
+  else if(type==='shat_halo'){const h=new THREE.Mesh(new THREE.TorusGeometry(.32,.05,8,24),mat(0xffd23f,{emissive:0xffb000,emissiveIntensity:1.3}));h.rotation.x=Math.PI/2;h.position.y=.6;c.hat.add(h);c.hat.rotation.z=0;}
   else if(type==='uhat_crystal'){const cols=[0x3ec5ff,0xb06bff,0x9be564,0xff5fa2,0xffd23f];for(let i=0;i<7;i++){const a=i/7*Math.PI*2,cc=cols[i%5];const cr=put(GEO.cone,mat(cc,{emissive:cc,emissiveIntensity:1,roughness:.2}),Math.cos(a)*.34,.12,Math.sin(a)*.34,.08,.38+(i%2)*.15,.08,c.hat);cr.rotation.set(Math.sin(a)*.2,0,-Math.cos(a)*.2);}
     const t=new THREE.Mesh(new THREE.TorusGeometry(.36,.05,6,20),mat(0xd8e8ff,{metalness:.8,roughness:.2}));t.rotation.x=Math.PI/2;t.position.y=-.05;c.hat.add(t);c.hat.rotation.z=0;}
   else if(type==='dhat_egg'){const sm=mat(0xf4ecd8,{roughness:.6});const sh=put(new THREE.SphereGeometry(.46,16,8,0,Math.PI*2,0,Math.PI/2),sm,0,-.12,0,1,.85,1,c.hat);sh.material.side=THREE.DoubleSide;
@@ -942,6 +954,8 @@ const CLOTHES=[
   {id:'uface_goggles',slot:'face',dino:true,under:true,name:'🥽 Kasėjo akiniai',price:90},
   {id:'uback_pick',slot:'back',dino:true,under:true,name:'⛏ Kirtiklis ant nugaros',price:120},
   {id:'uhat_crystal',slot:'hat',dino:true,under:true,secret:true,name:'🔒 Kristalų karūna',price:0},
+  {id:'shat_halo',slot:'hat',secret:true,name:'🔒 Angelo aureolė',price:0},
+  {id:'sback_angel',slot:'back',secret:true,name:'🔒 Angelo sparnai',price:0,power:'Sklandymas – ore laikyk Space ir lėtai sklandyk'},
   {id:'dhat_egg',slot:'hat',dino:true,name:'🥚 Kiaušinio lukštas',price:80},
   {id:'dhat_fossil',slot:'hat',dino:true,secret:true,name:'🔒 Fosilijų karūna',price:0},
   {id:'dface_bone',slot:'face',dino:true,name:'🦴 Kaulų akiniai',price:70},
@@ -1191,6 +1205,8 @@ function buildBack(v,type){
     const bl=new THREE.Mesh(new THREE.CylinderGeometry(.5,.5,.6,18,1,true),mat(0xff8fab));bl.material.side=THREE.DoubleSide;bl.position.set(0,.05,.42);v.back.add(bl);
     const bag=new THREE.Group();bag.position.set(.62,-.25,.42);v.back.add(bag);put(GEO.box,mat(0xe63946),0,-.2,0,.16,.36,.42,bag);const hd=new THREE.Mesh(new THREE.TorusGeometry(.15,.025,6,12,Math.PI),mat(0x7a1f2a));hd.rotation.y=Math.PI/2;bag.add(hd);
     bag.userData.anim=(t,vv)=>{const sp=vv.speed||0;bag.rotation.x=Math.sin(t*7)*Math.min(sp*.06,.5);};}
+  else if(type==='sback_angel'){for(const sx of[-1,1]){const piv=new THREE.Group();piv.position.set(sx*.14,.3,-.08);v.back.add(piv);const am=mat(0xffffff,{roughness:.4,emissive:0xfff3c0,emissiveIntensity:.25});
+    for(let k=0;k<3;k++){const w=put(GEO.sph,am,sx*(.45+k*.12),.25-k*.22,0,.55-k*.08,.2,.06,piv);w.rotation.z=sx*(.55-k*.25);}piv.userData.anim=t=>{piv.rotation.y=sx*(.3+Math.sin(t*4)*.25);};}}
   else if(type==='wings'){for(const sx of[-1,1]){const piv=new THREE.Group();piv.position.set(sx*.12,.25,-.05);v.back.add(piv);
     const w=put(GEO.sph,mat(0xffffff,{roughness:.5}),sx*.45,.15,0,.5,.28,.06,piv);w.rotation.z=sx*.4;
     piv.userData.anim=t=>{piv.rotation.y=sx*(.35+Math.sin(t*9)*.45);};}}
@@ -2879,7 +2895,7 @@ function updatePlayer(dt,t){
   if(wantFly&&p.flyFuel>0){
     p.flying=true;const ceil=terrainH(p.pos.x,p.pos.z)+45;
     p.vel.y+=G*dt;const tv=p.pos.y<ceil?3.2:0;p.vel.y+=(tv-p.vel.y)*(1-Math.exp(-2.5*dt));
-  }else if(ctrl&&(hasPow('wings')||hasPow('dsuit_ptero'))&&!p.onGround&&keys.Space&&p.vel.y<-2.2){p.vel.y=-2.2;}
+  }else if(ctrl&&(hasPow('wings')||hasPow('dsuit_ptero')||hasPow('sback_angel'))&&!p.onGround&&keys.Space&&p.vel.y<-2.2){p.vel.y=-2.2;}
   const wasGround=p.onGround;
   p.pos.addScaledVector(p.vel,dt);
   const hit=pushOut(p.pos,p.pos.y,1.9,.5);
@@ -2900,7 +2916,7 @@ function updatePlayer(dt,t){
     if(len>1.3){d.divideScalar(len);p.pos.addScaledVector(d,1.3-len);const rn=V().subVectors(p.vel,av).dot(d);if(rn>0)p.vel.addScaledVector(d,-rn);}
   }
   if(isHanging()){const g2=groundAt(p.pos.x,p.pos.z,p.pos.y+.5,.3);if(p.pos.y<g2){p.pos.y=g2;if(p.vel.y<0)p.vel.y=0;p.onGround=true;}else if(p.pos.y>g2+.05)p.onGround=false;}
-  if(p.pos.x>600){p.pos.x=clamp(p.pos.x,DW.x-146,DW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else if(p.pos.x<-600){p.pos.x=clamp(p.pos.x,UW.x-146,UW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else{p.pos.x=clamp(p.pos.x,-194,194);p.pos.z=clamp(p.pos.z,-194,194);}
+  if(p.pos.x>600){p.pos.x=clamp(p.pos.x,DW.x-146,DW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else if(p.pos.x<-600){p.pos.x=clamp(p.pos.x,UW.x-146,UW.x+146);p.pos.z=clamp(p.pos.z,-146,146);}else if(p.pos.z>600){p.pos.x=clamp(p.pos.x,CLW.x-146,CLW.x+146);p.pos.z=clamp(p.pos.z,CLW.z-146,CLW.z+146);}else{p.pos.x=clamp(p.pos.x,-194,194);p.pos.z=clamp(p.pos.z,-194,194);}
   if(p.pos.y<-40){p.pos.copy(homeSpawn());p.vel.set(0,0,0);}
   // facing
   if(!p.rag){const armUp=hands.L.active||hands.R.active;
@@ -3018,7 +3034,7 @@ function updateBodies(dt,t){
         if(o.hop){o.hop-=dt;if(o.hop<=0){const a=rand(0,6.28);o.vel.set(Math.cos(a)*3.5,7.5,Math.sin(a)*3.5);o.hop=rand(1.5,3.5);}}}
       const hit=pushOut(o.pos,o.pos.y-o.r,o.r*2,o.r);
       if(hit){const vn=o.vel.x*hit.x+o.vel.z*hit.z;if(o.fragile&&vn<-3.2)o.broke='siena';if(vn<0){o.vel.x-=(1+o.bounce)*vn*hit.x;o.vel.z-=(1+o.bounce)*vn*hit.z;}}
-      if(o.pos.x>600){o.pos.x=clamp(o.pos.x,DW.x-146,DW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else if(o.pos.x<-600){o.pos.x=clamp(o.pos.x,UW.x-146,UW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else{o.pos.x=clamp(o.pos.x,-194,194);o.pos.z=clamp(o.pos.z,-194,194);}if(o.pos.y<-30)o.pos.y=50;
+      if(o.pos.x>600){o.pos.x=clamp(o.pos.x,DW.x-146,DW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else if(o.pos.x<-600){o.pos.x=clamp(o.pos.x,UW.x-146,UW.x+146);o.pos.z=clamp(o.pos.z,-146,146);}else if(o.pos.z>600){o.pos.x=clamp(o.pos.x,CLW.x-146,CLW.x+146);o.pos.z=clamp(o.pos.z,CLW.z-146,CLW.z+146);}else{o.pos.x=clamp(o.pos.x,-194,194);o.pos.z=clamp(o.pos.z,-194,194);}if(o.pos.y<-30)o.pos.y=50;
       // player
       const p=player;if(!p.inCar){const dx=o.pos.x-p.pos.x,dz=o.pos.z-p.pos.z,d=Math.hypot(dx,dz),rr=o.r+.5;
         if(d<rr&&d>1e-4&&o.pos.y-o.r<p.pos.y+1.9&&o.pos.y+o.r>p.pos.y+.1){
@@ -3180,7 +3196,7 @@ const ownedPets=()=>PET_IDS.filter(i=>save.owned[i]);
 function activePets(){if(!Array.isArray(save.active))save.active=ownedPets();return save.active.filter(i=>save.owned[i]);}
 function spawnPet(id,near){
   if(pets.has(id))return pets.get(id);
-  const base=near||player.pos,a=player.yaw+Math.PI*.75+pets.size*.9,x=Math.abs(base.x)>600?base.x+Math.sin(a)*2.5:clamp(base.x+Math.sin(a)*2.5,-190,190),z=Math.abs(base.x)>600?base.z+Math.cos(a)*2.5:clamp(base.z+Math.cos(a)*2.5,-190,190);
+  const base=near||player.pos,a=player.yaw+Math.PI*.75+pets.size*.9,x=(Math.abs(base.x)>600||base.z>600)?base.x+Math.sin(a)*2.5:clamp(base.x+Math.sin(a)*2.5,-190,190),z=(Math.abs(base.x)>600||base.z>600)?base.z+Math.cos(a)*2.5:clamp(base.z+Math.cos(a)*2.5,-190,190);
   const info=PET_INFO[id];
   const n=addNPC({kind:'dog',petId:id,x,z,half:id==='penguin'?.7:id==='cat'?1.4:id==='tiger'?1.5:.72,r:.4,speed:6,vis:id==='penguin'?makePetPenguin():id==='unicorn'?makeUnicorn():id==='horse'?makePetHorse():id==='tiger'?makeTiger():id==='cat'?makeCat():id==='volpet'?makeVolPet():id==='giraffe'?makeGiraffe():(id.startsWith('d_')||id.startsWith('u_'))?makeDinoPet(id):makeDog(),name:petName(id),grabbable:true,lines:info.lines});
   n.state='follow';n.vis.npc=n;applyOutfit(n.vis,petClothes(id).wear);makeNameTag(n);pets.set(id,n);dog=pets.values().next().value;return n;
@@ -5637,7 +5653,7 @@ function updateNPCs(dt,t){
         else n.vel.y=0;}
       const hit=pushOut(n.pos,n.pos.y-n.half,n.half*2,n.r);if(hit&&n.state==='walk'){n.state='idle';n.timer=.4;}
       if(hit&&n.kind==='dog'&&n.vel.y===0)n.vel.y=7.5;
-      if(n.pos.x>600){n.pos.x=clamp(n.pos.x,DW.x-146,DW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else if(n.pos.x<-600){n.pos.x=clamp(n.pos.x,UW.x-146,UW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else{n.pos.x=clamp(n.pos.x,-194,194);n.pos.z=clamp(n.pos.z,-194,194);}if(n.pos.y<-30)n.pos.set(n.home.x,terrainH(n.home.x,n.home.z)+3,n.home.z);
+      if(n.pos.x>600){n.pos.x=clamp(n.pos.x,DW.x-146,DW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else if(n.pos.x<-600){n.pos.x=clamp(n.pos.x,UW.x-146,UW.x+146);n.pos.z=clamp(n.pos.z,-146,146);}else if(n.pos.z>600){n.pos.x=clamp(n.pos.x,CLW.x-146,CLW.x+146);n.pos.z=clamp(n.pos.z,CLW.z-146,CLW.z+146);}else{n.pos.x=clamp(n.pos.x,-194,194);n.pos.z=clamp(n.pos.z,-194,194);}if(n.pos.y<-30)n.pos.set(n.home.x,terrainH(n.home.x,n.home.z)+3,n.home.z);
       if(!player.inCar){const dx=n.pos.x-player.pos.x,dz=n.pos.z-player.pos.z,d=Math.hypot(dx,dz),rr=n.r+.5;
         if(d<rr&&d>1e-4&&Math.abs(n.pos.y-n.half-player.pos.y)<1.5){n.pos.x=player.pos.x+dx/d*rr;n.pos.z=player.pos.z+dz/d*rr;}}
     }
@@ -5680,7 +5696,7 @@ function spawnCar(){
   const blocked=(x,z)=>boxes.some(b=>b.top>player.pos.y+1.2&&b.bot<player.pos.y+2.5&&x>b.x0-1.8&&x<b.x1+1.8&&z>b.z0-1.8&&z<b.z1+1.8);
   let x=player.pos.x,z=player.pos.z;
   const type=save.owned[save.ride]?save.ride:'car',SD=(VEH[type]&&VEH[type].spawnD)||4.5;
-  for(const da of[0,Math.PI/2,-Math.PI/2,Math.PI,Math.PI/4,-Math.PI/4]){const a=player.yaw+da,dw=player.pos.x>600,uw=player.pos.x<-600,cx=dw?clamp(player.pos.x+Math.sin(a)*SD,DW.x-140,DW.x+140):uw?clamp(player.pos.x+Math.sin(a)*SD,UW.x-140,UW.x+140):clamp(player.pos.x+Math.sin(a)*SD,-185,185),cz=clamp(player.pos.z+Math.cos(a)*SD,dw||uw?-140:-185,dw||uw?140:185);
+  for(const da of[0,Math.PI/2,-Math.PI/2,Math.PI,Math.PI/4,-Math.PI/4]){const a=player.yaw+da,dw=player.pos.x>600,uw=player.pos.x<-600,cw=player.pos.z>600,cx=cw?clamp(player.pos.x+Math.sin(a)*SD,CLW.x-140,CLW.x+140):dw?clamp(player.pos.x+Math.sin(a)*SD,DW.x-140,DW.x+140):uw?clamp(player.pos.x+Math.sin(a)*SD,UW.x-140,UW.x+140):clamp(player.pos.x+Math.sin(a)*SD,-185,185),cz=cw?clamp(player.pos.z+Math.cos(a)*SD,CLW.z-140,CLW.z+140):clamp(player.pos.z+Math.cos(a)*SD,dw||uw?-140:-185,dw||uw?140:185);
     if(SD>10||!blocked(cx,cz)){x=cx;z=cz;break;}}
   if(car&&car.type!==type){scene.remove(car.root);car=null;}
   if(!car){const c=type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():isDinoVeh(type)?makeDinoVeh(type):makeCar(0xff5fa2);scene.add(c.root);car=Object.assign(c,{type,P:VEH[type],pos:V(),yaw:0,speed:0,vy:0,steer:0,bounce:0,bv:0,pitch:0});}
@@ -5706,7 +5722,7 @@ function updateCar(dt){
   const fx=Math.sin(c.yaw),fz=Math.cos(c.yaw);
   c.pos.x+=fx*c.speed*dt;c.pos.z+=fz*c.speed*dt;
   const hit=P.ghost?null:pushOut(c.pos,c.pos.y,2,P.rad);if(hit&&Math.abs(c.speed)>1){c.speed*=-.35;c.bv-=4;if(drive&&Math.abs(c.speed)>3)floaty('BUM!',c.pos);}
-  if(c.pos.x>600){c.pos.x=clamp(c.pos.x,DW.x-144,DW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.x<-600){c.pos.x=clamp(c.pos.x,UW.x-144,UW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else{c.pos.x=clamp(c.pos.x,-192,192);c.pos.z=clamp(c.pos.z,-192,192);}
+  if(c.pos.x>600){c.pos.x=clamp(c.pos.x,DW.x-144,DW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.x<-600){c.pos.x=clamp(c.pos.x,UW.x-144,UW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.z>600){c.pos.x=clamp(c.pos.x,CLW.x-146,CLW.x+146);c.pos.z=clamp(c.pos.z,CLW.z-146,CLW.z+146);}else{c.pos.x=clamp(c.pos.x,-192,192);c.pos.z=clamp(c.pos.z,-192,192);}
   if(c.type==='quad'){const want=drive&&keys.Space?32:grounded?0:14;c.spin=(c.spin||0)+(want-(c.spin||0))*Math.min(1,dt*(want>(c.spin||0)?2.2:1.2));
     c.spinAng=((c.spinAng||0)+c.spin*dt)%(Math.PI*2);
     if(c.spin>10){c.vy+=(drive&&keys.Space?G+9*(c.spin/32):G*.7)*dt;c.vy=clamp(c.vy,-4.5,9);if(c.pos.y>groundAt(c.pos.x,c.pos.z,c.pos.y,.5)+70)c.vy=Math.min(c.vy,0);
@@ -5953,12 +5969,12 @@ function nearestInteract(){
   if(player.inCar&&inPaintZone())return{label:'dažyti transportą ($'+PAINT_PRICE+')',act:openPaintShop};
   if(player.inCar)return{label:car.type==='moto'?'nulipti nuo motociklo':car.type==='quad'?'nulipti nuo keturačio':car.type==='cow'?'nulipti nuo karvės':car.type==='saucer'?'išlipti iš lėkštės':car.type==='carpet'?'nulipti nuo kilimo':car.type==='armchair'?'atsistoti nuo fotelio':car.type==='bed'?'nulipti nuo lovos':car.type==='rocketcar'?'nulipti nuo raketos':car.type==='tank'?'išlipti iš tanko':car.type==='horsecar'?'nuleisti arklį nuo pečių':car.type==='pengcar'?'nulipti nuo pingvino':car.type==='heli'?'išlipti iš sraigtasparnio':'išlipti iš mašinos',act:exitCar};
   if(sledRide)return{label:'nulipti nuo rogių',act:()=>leaveSled()};
-  if(netRide)return{label:netRide.local?netRide.leaveLabel:'išlipti iš '+netRide.name+' transporto',act:()=>leaveRide()};
+  if(netRide)return netRide.noLeave?{label:netRide.leaveLabel,act:()=>{}}:{label:netRide.local?netRide.leaveLabel:'išlipti iš '+netRide.name+' transporto',act:()=>leaveRide()};
   let best=null,bd=1e9;const p=player.pos;
   if(NET.on)for(const [id,pr] of NET.peers){if(!pr.carMesh)continue;const cp=pr.carMesh.root.position,d=Math.hypot(cp.x-p.x,cp.z-p.z);if(d<((VEH[pr.carType]&&VEH[pr.carType].enterR)||4.6)&&Math.abs(cp.y-p.y)<3.5&&d<bd){bd=d;best={label:'sėsti pas '+pr.name+' (keleivis) 🚗',act:()=>enterRide(id,pr)};}}
   if(sled&&!sled.away&&Math.hypot(sled.pos.x-p.x,sled.pos.z-p.z)<2.6&&Math.abs(sled.pos.y-p.y)<2.5){bd=-1;best={label:'sėsti į roges',act:mountSled};}
   if(!inside&&!inPyr&&!inMus&&!inDis&&!inVil&&!inIgl&&!inOas&&!inVlh&&!inVin)for(const tr of traffic){const d=Math.hypot(tr.pos.x-p.x,tr.pos.z-p.z);if(d<3.4&&Math.abs(tr.pos.y-p.y)<3&&d<bd){bd=d;best={label:'kalbėtis su vairuotoju: '+tr.d.name,act:()=>{tr.speed=0;sfx(tr.d.penguin?'pyp':tr.d.dog?'bark':'honk');say(tr.d.name,pick(tr.d.lines),true);}};}}
-  for(const k of (p.x>600?dkings:p.x<-600?ukings:kings)){const d=kingPos(k).distanceTo(p);if(d<k.talkR&&d<bd){bd=d;best={label:'kalbėtis: '+k.name,act:()=>openKing(k)};}}
+  for(const k of (p.x>600?dkings:p.x<-600?ukings:p.z>600?ckings:kings)){const d=kingPos(k).distanceTo(p);if(d<k.talkR&&d<bd){bd=d;best={label:'kalbėtis: '+k.name,act:()=>openKing(k)};}}
   if(car){const d=Math.hypot(car.pos.x-p.x,car.pos.z-p.z);if(d<(car.P.enterR||4.8)&&Math.abs(car.pos.y-p.y)<3){bd=-1;best={label:car.type==='moto'?'sėsti ant motociklo':car.type==='quad'?'sėsti ant keturačio':car.type==='cow'?'sėsti ant karvės':car.type==='saucer'?'sėsti į ateivių lėkštę':car.type==='carpet'?'sėsti ant kilimo':car.type==='armchair'?'atsisėsti į fotelį':car.type==='bed'?'atsigulti į lovą':car.type==='rocketcar'?'sėsti ant raketos':car.type==='tank'?'įlipti į tanką':car.type==='horsecar'?'leisti arkliui užjoti ant tavęs':car.type==='pengcar'?'joti ant pingvino':car.type==='heli'?'įlipti į sraigtasparnį':'įlipti į mašiną',act:enterCar};}}
   if(car&&car.lid&&!player.inCar){car.root.updateMatrixWorld(true);const rp=car.root.localToWorld(V(0,0,-2.6));if(Math.hypot(rp.x-p.x,rp.z-p.z)<1.7&&Math.abs(car.pos.y-p.y)<3){bd=-1;best={label:car.trunkOpen?'uždaryti bagažinę':'atidaryti bagažinę',act:toggleTrunk};}}
   for(const n of npcs){if(n.kind==='gnome'||n.state==='ride'||n.state==='held')continue;const d=n.onMe?2.4:n.pos.distanceTo(p);if(d<2.6&&d<bd){bd=d;best={label:n.kind==='homepet'?'pasiimti su savimi: '+n.name:n.kind==='dog'&&(atHome()||dHouseAt())?'palikti namie: '+n.name:n.kind==='dog'&&n.petId==='horse'?(n.onMe?'nuleisti arklį: ':'leisti arkliui užjoti ant tavęs: ')+n.name:n.kind==='citizen'&&n.phone&&n.phone.visible?'atimti telefoną: gyventojas':n.lolli?(n.sad&&lolliHeld>0?tr('duoti čiulpinuką: ')+tr(n.name).toLowerCase():tr('kalbėtis: ')+tr(n.name).toLowerCase()):n.kind==='kid'?(n.happy?'pajuokinti dar: ':'pralinksminti: ')+tr(n.name).toLowerCase():n.kind==='dog'&&n.petId==='volpet'?'išsiveržk! – '+n.name:n.kind==='dog'?'paglostyti: '+n.name:'kalbėtis: '+tr(n.name).toLowerCase(),act:()=>{if(n.kind==='homepet'){takePetAlong(n.petId);return;}if(n.kind==='dog'&&(atHome()||dHouseAt())){n.onMe=false;leavePetHome(n.petId);return;}if(n.kind==='dog'&&n.petId==='horse'){toggleHorseRide(n);return;}if(n.kind==='dog'&&n.petId==='volpet'){petErupt(n);return;}if(n.lolli){lolliKid(n);return;}if(n.kind==='kid'){cheerKid(n);return;}if(n.kind==='citizen'&&n.phone&&n.phone.visible){takePhone(n);return;}if(n.kind==='dog'&&n.petId==='tiger'){tigerRoar(n);return;}if(n.kind==='dog'){sfx(n.petId==='penguin'?'pyp':(n.petId==='unicorn'||n.petId==='horse')?'neigh':n.petId==='cat'?'meow':n.petId==='tiger'?'roar':'bark');say(n.name,pick(n.lines),true);n.vel.y=6.5;floaty('♥',n.pos);return;}say(n.name,pick(n.lines),true);n.yaw=Math.atan2(p.x-n.pos.x,p.z-n.pos.z);n.state='idle';n.timer=3;}};}}
@@ -5967,7 +5983,7 @@ function nearestInteract(){
 }
 function kingTaskList(k){const done=kingDone(k),lamp=k.name==='Džinas';return k.tasks.map(([b,t])=>({b,t,chip:done.includes(b)?'Atlikta ✓':k.prog&&k.prog(b)!=null?k.prog(b):lamp&&b==='Lempos paieška'?(save.lamp==='have'?'Turi lempą!':'Ieškok'):lamp&&b==='Oazės gaivinimas'?(save.genieWater||0)+'/'+WATER_NEED:lamp&&b==='Mumijos atgaivinimas'?(save.lamp!=='done'?'Reikia lempos':save.mantas==='follow'?'Mantas čia!':'Piramidėje'):b==='Pingvinukų gelbėjimas'?(save.pengBack||[]).length+'/'+LOST_PENGS.length:b===ICE_TASK?(kingIce?'Neši 🧊':'Muziejuje'):b==='Plyšių užkimšimas'?(save.volPlug||[]).length+'/'+LAVA_HOLES.length:b===SAC_TASK?Math.min(SAC_NEED,save.volSac||0)+'/'+SAC_NEED:b===TOUR_TASK?['Į piramidę','Į muziejų','Į sostą'][save.gnomeTour||0]:b===TL_TASK?(save.tlBack||[]).length+'/'+tLights.length:b===MUSPOP_TASK?Math.min(MUSPOP_NEED,save.musPop||0)+'/'+MUSPOP_NEED:b===PHONE_TASK?Math.min(PHONE_NEED,save.phonesTaken||0)+'/'+PHONE_NEED:b==='Rogučių lenktynės'?(save.owned.sled?'Ant kalno 🛷':'Reikia rogių'):'Netrukus'}));}
 function openKing(k){const done=kingDone(k),lamp=k.name==='Džinas';
-  const text=lamp&&save.mantas==='follow'&&save.lamp==='done'?'O! Mumija Mantas! Su mano lempa galiu jį atgaivinti – tik pasakyk!':lamp&&save.lamp==='have'?'Ar tai... MANO LEMPA?! Greičiau, atiduok ją man!':lamp&&save.lamp==='done'?'Mano lempa vėl su manimi! Bet dykuma vis dar crazy – man reikia dar pagalbos.':k.calmText&&((save.crowns&&save.crowns[k.name])||(save.dinoCrowns&&save.dinoCrowns[k.name])||(save.ugCrowns&&save.ugCrowns[k.name]))?k.calmText:k.text;
+  const text=lamp&&save.mantas==='follow'&&save.lamp==='done'?'O! Mumija Mantas! Su mano lempa galiu jį atgaivinti – tik pasakyk!':lamp&&save.lamp==='have'?'Ar tai... MANO LEMPA?! Greičiau, atiduok ją man!':lamp&&save.lamp==='done'?'Mano lempa vėl su manimi! Bet dykuma vis dar crazy – man reikia dar pagalbos.':k.calmText&&((save.crowns&&save.crowns[k.name])||(save.dinoCrowns&&save.dinoCrowns[k.name])||(save.ugCrowns&&save.ugCrowns[k.name])||(save.cldCrowns&&save.cldCrowns[k.name]))?k.calmText:k.text;
   openDialog({name:k.name,role:k.kingdom+' · užduotys '+done.length+'/'+k.tasks.length,color:k.color,icon:k.icon,text,
     tasks:kingTaskList(k),
     actions:(()=>{const a=[];if(lamp&&save.lamp==='have')a.push({label:'Atiduoti lempą (+$'+LAMP_PAY+')',onClick:giveLamp});
@@ -6129,7 +6145,7 @@ function drawMap(){
   g.beginPath();g.moveTo(0,-11);g.lineTo(8,9);g.lineTo(0,4);g.lineTo(-8,9);g.closePath();g.stroke();g.fill();g.restore();
 }
 function toggleMap(){mapOpen=!mapOpen;$('map').hidden=!mapOpen;
-  if(mapOpen){mouse.L=mouse.R=false;freeCursor();mapAlt=isUnder()?'under':isDino()?'dino':null;const mt=document.querySelector('#map .map-title');if(mt)mt.textContent=tr(mapAlt?altMapCfg(mapAlt).title:'Crazy pasaulio žemėlapis');if(mapAlt)drawAltMap(mapAlt);else drawMap();}
+  if(mapOpen){mouse.L=mouse.R=false;freeCursor();mapAlt=isUnder()?'under':isDino()?'dino':isCloud()?'cloud':null;const mt=document.querySelector('#map .map-title');if(mt)mt.textContent=tr(mapAlt?altMapCfg(mapAlt).title:'Crazy pasaulio žemėlapis');if(mapAlt)drawAltMap(mapAlt);else drawMap();}
   else{canvas.focus();tryLock();}}
 let waypoint=null,wpBeam=null;
 function setWaypoint(x,z,silent){
@@ -6202,7 +6218,7 @@ chatInput.addEventListener('keydown',e=>{e.stopPropagation();
 function openChat(){chatOpen=true;chatInput.hidden=false;chatInput.value='';for(const k in keys)keys[k]=false;mouse.L=mouse.R=false;setTimeout(()=>chatInput.focus(),0);}
 function closeChat(){chatOpen=false;chatInput.hidden=true;chatInput.blur();canvas.focus();}
 function npcReply(){let best=null,bd=8;for(const n of npcs){const d=n.pos.distanceTo(player.pos);if(d<bd){bd=d;best=n;}}
-  for(const k of kings.concat(dkings,ukings)){const d=kingPos(k).distanceTo(player.pos);if(d<bd+2){bd=d;best={name:k.name,lines:[k.text.split('. ')[0]+'.']};}}
+  for(const k of kings.concat(dkings,ukings,ckings)){const d=kingPos(k).distanceTo(player.pos);if(d<bd+2){bd=d;best={name:k.name,lines:[k.text.split('. ')[0]+'.']};}}
   if(best)setTimeout(()=>say(best.name,pick(best.lines),true),900);}
 addEventListener('keydown',e=>{
   if(chatOpen)return;
@@ -6300,7 +6316,7 @@ function updateSky(dt){
   sun.position.set(c.x+Math.cos(sa)*70,c.y+Math.max(.25,Math.abs(Math.sin(sa)))*90,c.z+35);sun.target.position.copy(c);
   stars.material.opacity=1-day;stars.position.copy(camera.position);
   M.lamp.emissiveIntensity=.3+(1-day)*1.8;
-  if(c.x<-600){skyCol.setHex(0x150c22);scene.background=skyCol;scene.fog.color.copy(skyCol);scene.fog.near=25;scene.fog.far=170;sun.intensity=.3;hemi.intensity=.85;hemi.color.setHex(0xc8b8ff);stars.material.opacity=0;M.lamp.emissiveIntensity=2;}else{hemi.color.setHex(0xdcefff);scene.fog.near=90;scene.fog.far=330;}
+  if(c.x<-600){skyCol.setHex(0x150c22);scene.background=skyCol;scene.fog.color.copy(skyCol);scene.fog.near=25;scene.fog.far=170;sun.intensity=.3;hemi.intensity=.85;hemi.color.setHex(0xc8b8ff);stars.material.opacity=0;M.lamp.emissiveIntensity=2;}else if(c.z>600){skyCol.setHex(0x8fd0ff);scene.background=skyCol;scene.fog.color.copy(skyCol);scene.fog.near=70;scene.fog.far=290;sun.intensity=Math.max(sun.intensity,.95);hemi.intensity=Math.max(hemi.intensity,.85);hemi.color.setHex(0xffffff);stars.material.opacity=0;}else{hemi.color.setHex(0xdcefff);scene.fog.near=90;scene.fog.far=330;}
   const hh=Math.floor(hour),mm=Math.floor((hour-hh)*60);
   const ph=hour>=6&&hour<18?'Diena':hour>=18&&hour<20?'Saulėlydis':'Naktis';
   $('clock').textContent=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')+' · '+ph;
@@ -6312,7 +6328,7 @@ function updateSky(dt){
 const ZINFO={oashome:['Slaptas namelis po oaze','Vanduo virš galvos, o čia sausa ir jauku'],volin:['Ugnikalnio vidus','Lava čia teka aukštyn'],volhome:['Mažasis ugnikalnis','Karšta, bet jauku'],igloo:['Iglu','Šalta lauke, šilta viduje'],villa:['Moderni vila','Tavo prabangūs namai'],disco:['Diskoteka','Šviečiančios grindys ir DJ pingvinas'],museum:['Crazy muziejus','Dinozaurai, karaliai ir dingusi kojinė'],pyramid:['Piramidės vidus','Faraono lobių kambarys'],home:['Tavo namai','Jauku ir šilta – net crazy pasaulyje'],hub:['Centrinis miestelis','Kojinės šventovė ir keliai į keturias karalystes'],snow:['Sniego karalystė','Ledynų karalius sėdi savo Ledo rūmuose šiaurėje'],
   volcano:['Ugnikalnio karalystė','Ieškok mažiuko lavos gnomo prie obsidiano sosto'],city:['Miesto karalystė','Prezidentas sako kalbą prie didžiųjų rūmų'],desert:['Dykumos karalystė','Džinas plaukioja vakaruose']};
 let curZone=null,bannerT=0;
-function updateZone(dt){const p=player.inCar&&car?car.pos:player.pos;const z=inOas?'oashome':inVin?'volin':inVlh?'volhome':inIgl?'igloo':inVil?'villa':inDis?'disco':inMus?'museum':inPyr?'pyramid':inside?'home':zoneAt(p.x,p.z);
+function updateZone(dt){const p=player.inCar&&car?car.pos:player.pos;const z=FLT.on?'flight':inOas?'oashome':inVin?'volin':inVlh?'volhome':inIgl?'igloo':inVil?'villa':inDis?'disco':inMus?'museum':inPyr?'pyramid':inside?'home':zoneAt(p.x,p.z);
   if(z!==curZone){curZone=z;$('zoneName').textContent=ZINFO[z][0];if(started){$('bTitle').textContent=ZINFO[z][0];$('bSub').textContent=z==='city'&&cityCalm()?'Miestas nurimo – nebe crazy':z==='volin'&&volCalm()?'Ugnikalnis nurimo – lava teka žemyn':z==='volcano'&&volCalm()?'Ugnikalnis nurimo – karalystė nebe crazy':ZINFO[z][1];$('banner').classList.add('show');bannerT=3.2;}}
   if(bannerT>0){bannerT-=dt;if(bannerT<=0)$('banner').classList.remove('show');}}
 
@@ -6624,7 +6640,7 @@ function rideSeat(mesh,type,idx){const P=VEH[type]||{},ds=P.dogSeat||[.5,.62,-.3
 function rideCarOf(id){if(id===NET.id)return player.inCar&&car&&car.root?{mesh:car,type:car.type}:null;const pr=NET.peers.get(id);return pr&&pr.carMesh?{mesh:pr.carMesh,type:pr.carType}:null;}
 function enterRide(id,pr){if(player.inCar||netRide)return;if(player.rag&&typeof getUp==='function')getUp();let idx=0;for(const [pid,q] of NET.peers)if(pid!==id&&q.rd===id)idx++;
   dropAnchors();netRide={id,idx,name:pr.name};emote=null;sfx('door');floaty('🚗 '+tr('Keleivis!'),player.pos);say(null,tr('Įlipai į')+' '+pr.name+' '+tr('transportą! F – išlipti.'));}
-function leaveRide(msg){if(!netRide)return;const r=netRide.local?{mesh:{root:netRide.obj}}:rideCarOf(netRide.id),p=player;netRide=null;
+function leaveRide(msg){if(!netRide||netRide.noLeave)return;const r=netRide.local?{mesh:{root:netRide.obj}}:rideCarOf(netRide.id),p=player;netRide=null;
   if(r){const R0=r.mesh.root,a=R0.rotation.y+Math.PI/2;p.pos.set(R0.position.x+Math.sin(a)*2.8,0,R0.position.z+Math.cos(a)*2.8);p.pos.y=groundAt(p.pos.x,p.pos.z,R0.position.y+2.5,.3);}
   else p.pos.y=groundAt(p.pos.x,p.pos.z,p.pos.y+1,.3);
   p.vel.set(0,0,0);if(p.prevVel)p.prevVel.set(0,0,0);p.onGround=true;const c=pc;c.tilt.position.y=0;c.tilt.rotation.set(0,0,0);sfx('door');if(msg)say(null,msg);}
@@ -7250,28 +7266,242 @@ i18nRe=null;i18nCache.clear();
 
 /* ---------- v196: maps for the dinosaur world and the underground ---------- */
 let mapAlt=null;const altMapImg={};
-function altMapCfg(kind){return kind==='under'?{cx:UW.x,title:'Požeminio pasaulio žemėlapis',labels:[['KURMIO KARALYSTĖ',0,-70,'#c8b8ff'],['SLIEKO KARALYSTĖ',-70,70,'#ff8fa8'],['SKRUZDŽIŲ KARALYSTĖ',70,70,'#ffb36b']],
+function altMapCfg(kind){return kind==='cloud'?{cx:CLW.x,cz:CLW.z,title:'Debesų salos žemėlapis',labels:[['DIEVO KARALYSTĖ',0,-72,'#ffd23f'],['ERELIO KARALYSTĖ',-70,82,'#c8d8f0'],['DEBESĖLIO KARALYSTĖ',70,82,'#ff9fd5']],
+    marks:[['✈ Lėktuvas',0,-12,'#3ec5ff'],['✨ Batutai',0,18,'#3ec5ff'],['🏛 Šventykla',0,-110,'#ffd23f'],['🪜 Debesų laiptai',40,-75,'#ffffff'],['🔔 Varpai',-28,-82,'#ffd23f'],['⭕ Vėjo žiedai',-60,70,'#3ee6ff'],['🪺 Lizdas',-76,68,'#c89a5a'],['🌈 Vaivorykštė',70,104,'#ff9fd5'],['🐑 Gardas',106,45,'#ffffff']],kings:()=>ckings,crowns:()=>save.cldCrowns||{}}
+  :kind==='under'?{cx:UW.x,title:'Požeminio pasaulio žemėlapis',labels:[['KURMIO KARALYSTĖ',0,-70,'#c8b8ff'],['SLIEKO KARALYSTĖ',-70,70,'#ff8fa8'],['SKRUZDŽIŲ KARALYSTĖ',70,70,'#ffb36b']],
     marks:[['⛏ Grąžto liftas',0,0,'#ffd23f'],['Transportas',-12,-12,'#ffd23f'],['Drabužiai',-17,3,'#ff9f68'],['Gyvūnėliai',-10,14,'#b06bff'],['🚃 Vagonėlis',23,0,'#d0d8e0'],['⛏ Kasykla',45,-25,'#ffd23f'],['🌊 Ežeras',-50,-20,'#3ec5ff'],['🔥 Lava',85,-30,'#ff6a1f'],['🎵 Kristalai',-30,-30,'#c8b8ff'],['🗣 Aido urvas',25,-15,'#9fe0ff'],['✨ Batutai',-20,60,'#9be564'],['🦴 Fosilija',-104,-104,'#e8dcc0'],['🏠 Urvelis',-100,-30,'#3ee6b0'],['🐜 Skruzdėlynas',100,70,'#ffb36b']],kings:()=>ukings,crowns:()=>save.ugCrowns||{}}
   :{cx:DW.x,title:'Dinozaurų pasaulio žemėlapis',labels:[['T-REX',0,-70,'#9be564'],['DRAKONĖ',75,25,'#ff7ac0'],['SPINOZAURAS',-75,25,'#7fe0c0'],['MEGALODONAS',0,105,'#7fc8ff']],
     marks:[['⏳ Laiko mašina',0,0,'#3ee6ff'],['Transportas',-20,-3,'#9be564'],['Drabužiai',-15,13,'#ff7ac0'],['Gyvūnėliai',-4,20,'#ff9f68'],['🦅 Taksi',10,12,'#ffd23f'],['🛖 Ugg kaimelis',-40,-30,'#ffd23f'],['🍄 Grybai',-52,-64,'#ff9ad5'],['🪂 Lynas',36,-44,'#3ee6b0'],['🦴 Kasinėjimai',58,-74,'#e8dcc0'],['🌋 Ugnikalnis',104,-104,'#ff9f68'],['💧 Krioklys',-108,-108,'#9fe0ff'],['🛁 Purvas',-62,14,'#c89a5a'],['⚓ Prieplauka',0,62,'#c89a5a'],['⛏ Grąžtas',40,-15,'#ffd23f'],['🏁 Lenktynės',28,-50,'#ffffff'],
       ['🏠 Urvo namas',-60,-6,'#3ee6b0'],['🏠 Medžio namelis',-20,-44,'#3ee6b0'],['🏠 Fosilijų vila',55,38,'#3ee6b0']],kings:()=>dkings,crowns:()=>save.dinoCrowns||{}};}
 function buildAltMap(kind){const C=altMapCfg(kind),S=200,c=document.createElement('canvas');c.width=c.height=S;const g=c.getContext('2d'),img=g.createImageData(S,S);
-  for(let j=0;j<S;j++)for(let i=0;i<S;i++){const x=C.cx-130+(i+.5)*1.3,z=-130+(j+.5)*1.3,h=terrainH(x,z),k=(j*S+i)*4;let col;
-    if(kind==='under'){const zn=underZone(x,z),Z={uhub:0x5a4a6a,umole:0x6a4a30,uworm:0x8a5a4a,uant:0xc08a4a}[zn];col=C2(Z);const e=Math.max(Math.abs(x-UW.x),Math.abs(z));if(e>118)col.lerp(C2(0x1a1424),clamp((e-118)/6,0,1));}
+  for(let j=0;j<S;j++)for(let i=0;i<S;i++){const x=C.cx-130+(i+.5)*1.3,z=(C.cz||0)-130+(j+.5)*1.3,h=terrainH(x,z),k=(j*S+i)*4;let col;
+    if(kind==='cloud'){const zn=cldZone(x,z);col=C2({chub:0xf4f8ff,cgod:0xffeab8,ceagle:0xd4e0f0,ccloud:0xf0dcff}[zn]);const e=Math.max(Math.abs(x-CLW.x),Math.abs(z-CLW.z));if(e>118)col.lerp(C2(0x8fd0ff),clamp((e-118)/6,0,1));}
+    else if(kind==='under'){const zn=underZone(x,z),Z={uhub:0x5a4a6a,umole:0x6a4a30,uworm:0x8a5a4a,uant:0xc08a4a}[zn];col=C2(Z);const e=Math.max(Math.abs(x-UW.x),Math.abs(z));if(e>118)col.lerp(C2(0x1a1424),clamp((e-118)/6,0,1));}
     else{col=dinoColor(x,z,h);if(h<-.15)col.lerp(C2((x-DW.x)<-50&&z<50?0x4f8a5a:0x2a8fd8),.75);}
     const sh=clamp(1-(terrainH(x+1.3,z)-h)*.08,.65,1.25);img.data[k]=col.r*255*sh;img.data[k+1]=col.g*255*sh;img.data[k+2]=col.b*255*sh;img.data[k+3]=255;}
-  g.putImageData(img,0,0);g.fillStyle='rgba(30,20,40,.5)';for(const b of boxes){if(b.top-b.bot<1.2)continue;const cx=(b.x0+b.x1)/2;if(Math.abs(cx-C.cx)>140)continue;g.fillRect((b.x0-C.cx+130)/1.3,(b.z0+130)/1.3,Math.max(1,(b.x1-b.x0)/1.3),Math.max(1,(b.z1-b.z0)/1.3));}
+  g.putImageData(img,0,0);g.fillStyle='rgba(30,20,40,.5)';for(const b of boxes){if(b.top-b.bot<1.2)continue;const cx=(b.x0+b.x1)/2,cz0=(b.z0+b.z1)/2;if(Math.abs(cx-C.cx)>140||Math.abs(cz0-(C.cz||0))>140)continue;g.fillRect((b.x0-C.cx+130)/1.3,(b.z0-(C.cz||0)+130)/1.3,Math.max(1,(b.x1-b.x0)/1.3),Math.max(1,(b.z1-b.z0)/1.3));}
   altMapImg[kind]=c;}
 const C2=h=>new THREE.Color(h);
 function drawAltMap(kind){if(!altMapImg[kind])buildAltMap(kind);const C=altMapCfg(kind),cv=$('mapCanvas'),g=cv.getContext('2d'),S=cv.width,tx=x=>(x+130)/260*S;
   g.drawImage(altMapImg[kind],0,0,S,S);g.textAlign='center';const label=(t,x,y,col,f)=>{t=tr(t);g.font=f||'800 15px "Baloo 2", system-ui';g.lineWidth=4;g.strokeStyle='#1b1430';g.strokeText(t,x,y);g.fillStyle=col;g.fillText(t,x,y);};
   for(const [t,x,z,c] of C.labels)label(t,tx(x),tx(z),c,'800 17px "Baloo 2", system-ui');
   for(const [t,x,z,c] of C.marks){const X=tx(x),Y=tx(z);g.fillStyle=c;g.strokeStyle='#1b1430';g.lineWidth=2;g.fillRect(X-5,Y-5,10,10);g.strokeRect(X-5,Y-5,10,10);label(t,X,Y-9,c,'800 12px "Baloo 2", system-ui');}
-  const cr=C.crowns();for(const k of C.kings()){const p=kingPos(k),X=tx(p.x-C.cx),Y=tx(p.z);g.fillStyle=cr[k.name]?'#3ee6b0':'#ffd23f';g.strokeStyle='#1b1430';g.lineWidth=2;
+  const cr=C.crowns();for(const k of C.kings()){const p=kingPos(k),X=tx(p.x-C.cx),Y=tx(p.z-(C.cz||0));g.fillStyle=cr[k.name]?'#3ee6b0':'#ffd23f';g.strokeStyle='#1b1430';g.lineWidth=2;
     g.beginPath();g.moveTo(X-9,Y+6);g.lineTo(X-9,Y-4);g.lineTo(X-4,Y);g.lineTo(X,Y-8);g.lineTo(X+4,Y);g.lineTo(X+9,Y-4);g.lineTo(X+9,Y+6);g.closePath();g.fill();g.stroke();label(k.name+(cr[k.name]?' ✓':' '+kingDone(k).length+'/'+k.tasks.length),X,Y+22,'#ffffff');}
-  if(car&&Math.abs(car.pos.x-C.cx)<140){g.fillStyle='#ff5fa2';g.fillRect(tx(car.pos.x-C.cx)-5,tx(car.pos.z)-5,10,10);}
-  const pp=player.inCar&&car?car.pos:player.pos,yaw=player.inCar&&car?car.yaw:player.yaw;g.save();g.translate(tx(pp.x-C.cx),tx(pp.z));g.rotate(-yaw+Math.PI);g.fillStyle='#ffd23f';g.strokeStyle='#1b1430';g.lineWidth=3;g.beginPath();g.moveTo(0,-11);g.lineTo(8,9);g.lineTo(0,4);g.lineTo(-8,9);g.closePath();g.stroke();g.fill();g.restore();
+  if(car&&Math.abs(car.pos.x-C.cx)<140&&Math.abs(car.pos.z-(C.cz||0))<140){g.fillStyle='#ff5fa2';g.fillRect(tx(car.pos.x-C.cx)-5,tx(car.pos.z-(C.cz||0))-5,10,10);}
+  const pp=player.inCar&&car?car.pos:player.pos,yaw=player.inCar&&car?car.yaw:player.yaw;g.save();g.translate(tx(pp.x-C.cx),tx(pp.z-(C.cz||0)));g.rotate(-yaw+Math.PI);g.fillStyle='#ffd23f';g.strokeStyle='#1b1430';g.lineWidth=3;g.beginPath();g.moveTo(0,-11);g.lineTo(8,9);g.lineTo(0,4);g.lineTo(-8,9);g.closePath();g.stroke();g.fill();g.restore();
   label(C.title,S/2,26,'#ffd23f','800 20px "Baloo 2", system-ui');}
+/* ---------- v198: city airport + flights + Cloud Island (3 sky kings x 5 missions) ---------- */
+const CL_PAY=200,CL_CROWN_PAY=600,CL_FINAL_PAY=1500,CLD_PRICE=1000,FLY_PRICE=50;
+const isCloud=()=>player.pos.z>600;
+Object.assign(ZINFO,{chub:['Debesų sala','Lėktuvas – kelias atgal į Crazy pasaulį'],cgod:['Dievo karalystė','Dievas sėdi auksinėje šventykloje šiaurėje'],ceagle:['Erelio karalystė','Erelis karalius saugo lizdą pietvakarių uolose'],ccloud:['Debesėlio karalystė','Debesėlis karalius plūduriuoja pietryčiuose'],flight:['Skrydis lėktuvu ✈','Atsipalaiduok ir žiūrėk žemyn pro debesis']});
+Object.assign(KING_TALK,{'Dievas':['Griaustinis – tai aš čiaudėjau. Atsiprašau.','Mano žaibai vėl pabėgo!','Iš čia viršaus viską matau. Net tavo kojines.','Debesys turi būti minkšti, o ne crazy!'],
+  'Erelis':['Kyyyy! Kas lipa į mano uolas?','Mano plunksnos išsibarstė po visą salą!','Aukščiau už mane skrenda tik lėktuvai. Ir tai tik kartais.','Saugok mano kiaušinius!'],
+  'Debesėlis':['Pūūū! Aš minkštas kaip pagalvė!','Kai verkiu – lyja. Kai juokiuosi – sninga!','Kur mano avytės? Bėėė!','Vaivorykštė mano mėgstamiausia spalva. Visos septynios!']});
+/* ---- models ---- */
+function makePlane(){const g=new THREE.Group(),b=new THREE.Group();g.add(b);const wm=mat(0xf4f6ff,{roughness:.35}),bm=mat(0x3e7bff,{roughness:.4}),ym=mat(0xffd23f),gl=mat(0x9fe0ff,{emissive:0x2a6aa8,emissiveIntensity:.35,roughness:.1});
+  const f=put(GEO.cyl,wm,0,1.6,0,1.1,8,1.1,b);f.rotation.x=Math.PI/2;put(GEO.sph,wm,0,1.6,4,1.1,1.1,1.4,b);put(GEO.box,bm,0,1.45,0,2.26,.32,7.8,b);
+  const tc=put(GEO.cone,wm,0,1.75,-5.1,1.05,2.4,1.05,b);tc.rotation.x=-Math.PI/2;put(GEO.box,bm,0,3.3,-5.4,.2,2.2,1.6,b);put(GEO.box,wm,0,2,-5.4,4.8,.18,1.2,b);
+  put(GEO.box,wm,0,1.15,.4,13,.25,2.4,b);for(const sx of[-1,1]){put(GEO.box,bm,sx*6.4,1.15,.4,.6,.3,2.4,b);put(GEO.box,mat(0xff4466,{emissive:0xff2244,emissiveIntensity:.8}),sx*6.75,1.15,.4,.1,.2,.3,b);}
+  for(let i=0;i<5;i++)for(const sx of[-1,1])put(GEO.sph,gl,sx*1.07,1.95,2.4-i*1.15,.05,.26,.32,b);
+  put(GEO.box,mat(0x2a1f47),0,2.62,.7,1.2,.18,1.5,b);put(GEO.box,mat(0x9fe0ff,{transparent:true,opacity:.45,roughness:.05}),0,3.05,1.65,1.3,.7,.08,b);
+  for(const [x,z] of[[-1.3,1.2],[1.3,1.2],[0,-4.4]]){const w=put(GEO.cyl,M.dark,x,.38,z,.38,.28,.38,b);w.rotation.z=Math.PI/2;put(GEO.box,M.dark,x,.9,z,.1,.9,.1,b);}
+  const pr=new THREE.Group();pr.position.set(0,1.6,5.45);b.add(pr);put(GEO.box,M.dark,0,0,0,.24,3.2,.1,pr);put(GEO.sph,ym,0,0,.12,.3,.3,.3,pr);
+  const nm=signPlane(['CRAZY AIR'],3.2,.55,{bg:'#3e7bff',fg:'#ffffff'});for(const sx of[-1,1]){const s=nm.clone();s.position.set(sx*1.12,1.05,-1.2);s.rotation.y=sx*Math.PI/2;b.add(s);}
+  g.userData={body:b,prop:pr};return g;}
+function makeGodKing(){const v=makeChar({body:0xf8f8ff,head:0xf1c9a5,legs:0xe8e8f4});setHat(v,'none');put(GEO.sph,M.white,0,1.6,.27,.34,.42,.22,v.tilt);put(GEO.sph,M.white,0,1.72,.36,.2,.08,.08,v.tilt);
+  put(GEO.box,M.gold,0,1.12,.44,.95,.12,.06,v.tilt);put(GEO.box,M.gold,0,.62,.3,.96,.1,.62,v.tilt);const cr=makeCrown(.95);cr.position.y=.1;v.hat.add(cr);
+  const bm=mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:1}),bo=new THREE.Group();const a=put(GEO.box,bm,0,0,0,.1,.45,.1,bo);a.rotation.z=.5;const c=put(GEO.box,bm,.08,-.3,0,.1,.45,.1,bo);c.rotation.z=-.5;const d=put(GEO.box,bm,0,-.6,0,.1,.4,.1,bo);d.rotation.z=.5;bo.position.y=.2;v.armR.tip.add(bo);
+  v.root.scale.setScalar(2.3);return v;}
+function makeEagleKing(){const g=new THREE.Group(),br=mat(0x6a4a2a,{roughness:.7}),ye=mat(0xffc23f);
+  put(GEO.sph,br,0,2.2,0,1.1,1.4,1,g);put(GEO.sph,mat(0xe8d8b8),0,2.3,.55,.7,.9,.5,g);
+  const head=new THREE.Group();head.position.set(0,3.75,.35);g.add(head);put(GEO.sph,M.white,0,0,0,.62,.6,.6,head);const bk=put(GEO.cone,ye,0,-.12,.72,.18,.55,.18,head);bk.rotation.x=Math.PI/2;
+  for(const sx of[-1,1]){put(GEO.sph,M.dark,sx*.25,.12,.48,.09,.1,.06,head);const bw=put(GEO.box,M.dark,sx*.25,.28,.5,.24,.05,.05,head);bw.rotation.z=sx*.3;}
+  const cr=makeCrown(.8);cr.position.y=.55;head.add(cr);
+  const wings=[];for(const sx of[-1,1]){const piv=new THREE.Group();piv.position.set(sx*.9,2.7,0);g.add(piv);put(GEO.sph,br,sx*1.3,-.3,0,1.6,.35,.8,piv);put(GEO.sph,mat(0x3a2a1a),sx*2.7,-.45,0,.6,.2,.5,piv);wings.push({piv,sx});}
+  const tl=put(GEO.box,M.white,0,1.3,-1.05,.9,.15,1,g);tl.rotation.x=.5;
+  for(const sx of[-1,1]){put(GEO.cyl,ye,sx*.4,.5,.1,.12,1,.12,g);put(GEO.box,ye,sx*.4,.05,.3,.35,.1,.5,g);}
+  g.scale.setScalar(1.5);return{root:g,head,wings};}
+function makeCloudKing(){const g=new THREE.Group(),inner=new THREE.Group();g.add(inner);const wm=mat(0xffffff,{roughness:.95});
+  [[0,2,0,1.5],[-1.3,1.7,0,1.1],[1.3,1.7,0,1.1],[-.6,2.9,0,1.1],[.7,2.8,0,1],[0,1.6,.4,1.1]].forEach(([x,y,z,s])=>put(GEO.sph,wm,x,y,z,s,s*.9,s,inner));
+  for(const sx of[-1,1]){put(GEO.sph,M.dark,sx*.45,2.25,1.4,.14,.2,.08,inner);put(GEO.sph,M.white,sx*.45+.05,2.32,1.47,.05,.06,.03,inner);put(GEO.sph,mat(0xffa0c0),sx*.85,1.88,1.32,.22,.14,.08,inner);}
+  const m=new THREE.Mesh(new THREE.TorusGeometry(.25,.05,6,12,Math.PI),M.dark);m.position.set(0,1.95,1.5);m.rotation.z=Math.PI;inner.add(m);
+  const cr=makeCrown(1.1);cr.position.set(0,3.85,0);inner.add(cr);return{root:g,inner};}
+/* ---- generic cloud task engine ---- */
+function cPick(key,pos,mesh,bob,move){const x=CLW.x+pos[0],z=CLW.z+pos[1],y=pos[2]!=null?pos[2]:terrainH(x,z)+1;mesh.position.set(x,y,z);scene.add(mesh);const idx=CLD.picks.filter(q=>q.key===key).length;
+  const got=((save.cldPick||{})[key]||[]).includes(idx);mesh.visible=!got;CLD.picks.push({key,idx,mesh,pos:V(x,y,z),base:V(x,y,z),got,bob,move});}
+function cCarry(key,spots,mk,name,target){const done=(save.cldCarry||{})[key]||0;spots.slice(done).forEach(([lx,lz])=>{const b=addBody({x:CLW.x+lx,z:CLW.z+lz,r:.6,bounce:.25,fric:3,mesh:mk(),name,lift:.5});CLD.carry.push({key,b,target,need:spots.length});});}
+function cPress(key,spots,mk,label,onDone,opts={}){const got=()=>(opts.temp?(CLD.tmp[key]||[]):((save.cldPress||{})[key]||[]));spots.forEach(([lx,lz,yo],i)=>{const x=CLW.x+lx,z=CLW.z+lz,y=terrainH(x,z)+(yo||0);const o=mk(i);o.position.set(x,y,z);scene.add(o);
+  const sync=()=>{const d=got().includes(i);if(o.userData.set)o.userData.set(d);};sync();(CLD.press[key]=CLD.press[key]||[]).push(sync);
+  stations.push({pos:V(x,y-(yo||0),z),r:2.6,cond:()=>!got().includes(i)&&!clTaskDone(opts.king,opts.task),label,act:()=>{if(opts.before&&!opts.before())return;if(opts.temp){CLD.tmp[key]=[...(CLD.tmp[key]||[]),i];}else{save.cldPress=Object.assign({},save.cldPress);save.cldPress[key]=[...(save.cldPress[key]||[]),i];saveGame(true);}
+    sfx('ding');CLD.press[key].forEach(f=>f());const n=got().length;floaty('✔ '+n+'/'+spots.length,player.pos);if(n>=spots.length)onDone();}});});}
+function clTaskDone(name,task){return !!name&&kingDone({name}).includes(task);}
+function clTask(name,task){if(clTaskDone(name,task))return;save.kingTasks=Object.assign({},save.kingTasks);save.kingTasks[name]=Array.from(new Set([...(save.kingTasks[name]||[]),task]));money+=CL_PAY;$('money').textContent=money;saveGame(true);sfx('win');floaty('+$'+CL_PAY,player.pos);
+  const n=kingDone({name}).length;say(name,pick(['Nuostabu! Misija įvykdyta!','Ačiū, debesų drauge!','Tu tikras dangaus herojus!'])+' ('+n+'/5)',true);say(null,'Misija „'+task+'“ atlikta! '+name+': '+n+'/5. +$'+CL_PAY);
+  for(const k of ckings){if(save.cldCrowns&&save.cldCrowns[k.name])continue;if(kingDone(k).length<5)continue;save.cldCrowns=Object.assign({},save.cldCrowns,{[k.name]:1});money+=CL_CROWN_PAY;$('money').textContent=money;const c=Object.keys(save.cldCrowns).length;saveGame(true);
+    if(c>=3){const me=save.clothes.me;for(const id of['sback_angel','shat_halo'])if(!me.owned.includes(id))me.owned.push(id);me.wear.back='sback_angel';me.wear.hat='shat_halo';applyOutfit(pc,me.wear);updatePowersHud();money+=CL_FINAL_PAY;$('money').textContent=money;saveGame(true);
+      openDialog({name:'Debesų sala išgelbėta!',role:'Visi 3 dangaus karaliai',color:'#9fe0ff',icon:'☁',text:'Tu išgelbėjai Dievą, Erelį ir Debesėlį! Debesų sala – nebe crazy. Karaliai tau dovanoja $'+(CL_CROWN_PAY+CL_FINAL_PAY)+', slaptus ANGELO SPARNUS (ore laikyk Space – sklandysi) ir šviečiančią AUREOLĘ!',tasks:[],actions:[{label:'Valio!',onClick:()=>{closeDialog();tryLock();}}]});}
+    else openDialog({name:k.name,role:k.kingdom+' išgelbėta!',color:k.color,icon:k.icon,text:k.calmText+' Gavai $'+CL_CROWN_PAY+'. Dangaus karaliai: '+c+'/3.',tasks:[],actions:[{label:'Puiku!',onClick:()=>{closeDialog();tryLock();}}]});}}
+const cCount=k=>((save.cldPick||{})[k]||[]).length,cC=k=>(save.cldCarry||{})[k]||0,cP2=k=>((save.cldPress||{})[k]||[]).length;
+const cTimerTxt=(k,n)=>CLD.timers[k]?Math.ceil(CLD.timers[k].t)+' s':'0/'+n;
+function cTimed(key,secs,K,msg){return()=>{if(!CLD.timers[key]){CLD.timers[key]={t:secs,king:K};say(K,msg,true);}return true;};}
+function cPad(lx,lz,v){const x=CLW.x+lx,z=CLW.z+lz,y=terrainH(x,z),top=y+.6;const p=put(GEO.cyl,mat(0xffffff,{roughness:.9}),x,y+.3,z,1.7,.6,1.7);put(GEO.cyl,mat(0x3ec5ff,{emissive:0x1a6aa8,emissiveIntensity:.6}),x,y+.62,z,1.2,.04,1.2);
+  addCol(x,z,2.6,2.6,top,y-1);CLD.pads.push({x,z,top,v:v||17,m:p});}
+/* ---- build the island ---- */
+function buildCloud(){if(CLD.built)return;CLD.built=true;dseed=777123;const X=lx=>CLW.x+lx,Z=lz=>CLW.z+lz,G=(lx,lz)=>terrainH(X(lx),Z(lz));
+  {const SEG=160,S=320;const g=new THREE.PlaneGeometry(S,S,SEG,SEG);g.rotateX(-Math.PI/2);g.translate(CLW.x,0,CLW.z);const p=g.attributes.position,cols=new Float32Array(p.count*3);
+   for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),h=cldH(x,z);p.setY(i,h);const zn=cldZone(x,z),n=(Math.sin(x*.21)*Math.cos(z*.19)+1)/2;const Zc={chub:[0xffffff,0xeef4ff],cgod:[0xfff6d8,0xffeab0],ceagle:[0xe6eef8,0xcfdcec],ccloud:[0xfbeaff,0xe8dcff]}[zn];
+     const c=C(Zc[0]).lerp(C(Zc[1]),n);cols[i*3]=c.r;cols[i*3+1]=c.g;cols[i*3+2]=c.b;}
+   g.setAttribute('color',new THREE.BufferAttribute(cols,3));g.computeVertexNormals();const t=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));t.receiveShadow=true;scene.add(t);}
+  const puffM=mat(0xffffff,{roughness:1,emissive:0xdfe8f5,emissiveIntensity:.45});
+  for(let i=0;i<70;i++){const a=i/70*Math.PI*2,r=drnd(128,150),s=drnd(9,18);const o=put(GEO.sph,puffM,X(Math.cos(a)*r),drnd(8,26),Z(Math.sin(a)*r),s,s*.6,s);o.castShadow=false;}
+  for(let i=0;i<24;i++){const o=put(GEO.sph,puffM,X(drnd(-110,110)),drnd(34,52),Z(drnd(-110,110)),drnd(5,10),drnd(2,3.5),drnd(4,8));o.castShadow=false;const sp=drnd(.4,1.2),b0=o.position.x;CLD.anims.push(t=>{o.position.x=b0+Math.sin(t*.05*sp+i)*12;});}
+  const ok=(lx,lz)=>{if(Math.hypot(lx,lz)<30)return false;for(const P of CPADS)if(Math.hypot(lx-P.x,lz-P.z)<P.r+6)return false;return Math.max(Math.abs(lx),Math.abs(lz))<112;};
+  for(let i=0;i<46;i++){const lx=drnd(-110,110),lz=drnd(-110,110);if(!ok(lx,lz))continue;const y=G(lx,lz),s=drnd(1.2,2.4);for(let k=0;k<3;k++)put(GEO.sph,puffM,X(lx)+Math.cos(k*2.1)*s*.6,y+s*.6,Z(lz)+Math.sin(k*2.1)*s*.6,s,s*.75,s);addCol(X(lx),Z(lz),s*1.6,s*1.6,y+s*1.1);}
+  for(let i=0;i<30;i++){const lx=drnd(-110,110),lz=drnd(-110,110);if(!ok(lx,lz))continue;const y=G(lx,lz),c=[0xff9fd5,0xffd23f,0x9fe0ff,0xb8f0a0][i%4];put(GEO.cyl,mat(0x9be564),X(lx),y+.3,Z(lz),.05,.6,.05);put(GEO.sph,mat(c,{emissive:c,emissiveIntensity:.3}),X(lx),y+.65,Z(lz),.18);}
+  // hub: plane back home + sign + trampolines
+  {const y=G(0,-12),pl=makePlane();pl.position.set(X(0),y,Z(-12));pl.rotation.y=Math.PI/2;scene.add(pl);addCol(X(0),Z(-12),10,2.4,y+2.7,y);CLD.plane=pl;
+   stations.push({pos:V(X(0),y,Z(-8.6)),r:3,label:'skristi lėktuvu atgal į Crazy pasaulį ✈',act:()=>startFlight('home')});
+   const sg=signPlane(['DEBESŲ SALA','⬆ Dievas · ↙ Erelis · ↘ Debesėlis'],7,1.4,{bg:'#3e7bff',fg:'#ffffff'});sg.position.set(X(0),G(0,12)+3.4,Z(12));scene.add(sg);
+   for(const sx of[-1,1])put(GEO.cyl,M.gold,X(sx*3.4),G(0,12)+1.4,Z(12),.12,2.8,.12);
+   cPad(14,8,15.5);cPad(-14,8,15.5);cPad(0,18,15.5);
+   const t2=tag('DEBESŲ BATUTAI','#3ec5ff',.7);t2.position.set(X(0),G(0,18)+2.6,Z(18));scene.add(t2);}
+  const gold=mat(0xffd23f,{emissive:0xaa7a00,emissiveIntensity:.5,metalness:.4,roughness:.3}),marble=mat(0xfaf6ee,{roughness:.5});
+  // ===== GOD (north) =====
+  {const tx=X(0),tz=Z(-110),top=minH(tx,tz,18,10)-.05+1;block(tx,tz,18,10,1,marble,{y:top-1});
+   for(let i=0;i<6;i++)for(const rz of[-105,-115]){const cx=X(-7.5+i*3),cz=Z(rz);put(GEO.cyl,marble,cx,top+3.5,cz,.5,7,.5);put(GEO.box,gold,cx,top+.2,cz,1.2,.4,1.2);addCol(cx,cz,1,1,top+7,top);}
+   put(GEO.box,marble,tx,top+7.4,tz,19,.8,11);put(GEO.box,gold,tx,top+7.9,tz,19.4,.2,11.4);const ped=put(GEO.cone,marble,tx,top+9,tz,7,2.4,7,scene);ped.rotation.y=Math.PI/4;ped.scale.set(9,2.2,5.5);
+   block(tx,Z(-113),3.2,2,2.4,gold,{y:top});
+   const v=makeGodKing();v.root.position.set(tx,top,Z(-108.5));scene.add(v.root);CLD.kv.god=v;
+   const K='Dievas';ckings.push({name:K,kingdom:'Dievo karalystė',color:'#ffd23f',icon:'⚡',pos:V(tx,top,Z(-103)),talkR:8,tagY:6.5,
+     text:'Sveikas, mažasis keliautojau! Aš – Dievas, debesų ir žaibų valdovas. Bet net ir mano dangus tapo crazy: žaibai išsibarstė, šventyklos kolonos nukrito, žvaigždės užgeso, varpai nutilo, o dangaus vartų raktas nuskrido į pačią viršūnę. Padėk man!',
+     calmText:'Žaibai vietoje, kolonos stovi, žvaigždės šviečia, varpai skamba! Dievo karalystė – nebe crazy.',
+     tasks:[['Žaibų rinkimas','surink 5 auksinius žaibus'],['Šventyklos kolonos','atnešk 3 kolonų dalis prie šventyklos'],['Žvaigždžių žibintai','uždek 5 žvaigždžių žibintus (F)'],['Dangaus varpai','per 30 sekundžių paskambink 5 varpais (F)'],['Dangaus vartų raktas','užlipk debesų laiptais ir paimk auksinį raktą']],
+     prog:b=>b==='Žaibų rinkimas'?cCount('bolt')+'/5':b==='Šventyklos kolonos'?cC('column')+'/3':b==='Žvaigždžių žibintai'?cP2('star')+'/5':b==='Dangaus varpai'?cTimerTxt('bell',5):b==='Dangaus vartų raktas'?cCount('key')+'/1':null});
+   const mkBolt=()=>{const g=new THREE.Group(),bm=mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:1.1});const a=put(GEO.box,bm,0,.3,0,.16,.7,.16,g);a.rotation.z=.5;const c=put(GEO.box,bm,.1,-.15,0,.16,.6,.16,g);c.rotation.z=-.6;const d=put(GEO.box,bm,0,-.55,0,.16,.55,.16,g);d.rotation.z=.5;return g;};
+   [[-40,-60],[45,-68],[-70,-100],[70,-105],[22,-116]].forEach(p=>cPick('bolt',p,mkBolt(),1));
+   const st=V(X(14),G(14,-96),Z(-96));put(GEO.box,marble,st.x,st.y+.3,st.z,3.4,.6,3.4);const stg=tag('KOLONŲ VIETA','#ffd23f',.7);stg.position.set(st.x,st.y+2,st.z);scene.add(stg);
+   cCarry('column',[[-60,-45],[60,-50],[-30,-120]],()=>{const g=new THREE.Group();put(GEO.cyl,marble,0,0,0,.45,1.1,.45,g);put(GEO.cyl,gold,0,.5,0,.5,.12,.5,g);put(GEO.cyl,gold,0,-.5,0,.5,.12,.5,g);return g;},'kolonos dalis',{x:st.x,z:st.z,r:4});
+   cPress('star',[[-20,-45],[20,-50],[-50,-80],[56,-88],[0,-70]],i=>{const g=new THREE.Group();put(GEO.cyl,gold,0,1.3,0,.07,2.6,.07,g);const s=put(GEO.dode,mat(0x777788),0,2.8,0,.4,.4,.4,g);
+     g.userData.set=d=>{s.material=d?mat(0xfff6b0,{emissive:0xffd23f,emissiveIntensity:1.6}):mat(0x777788);};CLD.anims.push(t=>{s.rotation.y=t*1.2;});return g;},'uždegti žvaigždę ⭐',()=>clTask(K,'Žvaigždžių žibintai'),{king:K,task:'Žvaigždžių žibintai'});
+   cPress('bell',[0,1,2,3,4].map(i=>[-28+Math.cos(i/5*Math.PI*2)*6,-82+Math.sin(i/5*Math.PI*2)*6]),i=>{const g=new THREE.Group();for(const sx of[-1,1])put(GEO.cyl,marble,sx*.8,1.3,0,.1,2.6,.1,g);put(GEO.box,marble,0,2.6,0,1.9,.2,.3,g);
+     const bp=new THREE.Group();bp.position.y=2.5;g.add(bp);put(GEO.cone,gold,0,-.5,0,.55,.8,.55,bp);g.userData.set=d=>{bp.rotation.z=d?.5:0;};return g;},'skambinti varpu 🔔',
+     ()=>{CLD.timers.bell=null;CLD.tmp.bell=[];(CLD.press.bell||[]).forEach(f=>f());clTask(K,'Dangaus varpai');},{temp:true,king:K,task:'Dangaus varpai',before:cTimed('bell',30,K,'Varpai! 30 sekundžių – skambink visais penkiais!')});
+   const btag=tag('DANGAUS VARPAI','#ffd23f',.7);btag.position.set(X(-28),G(-28,-82)+3.4,Z(-82));scene.add(btag);
+   // cloud stairs to the sky-gate key
+   {const cx=40,cz=-75,g0=G(cx,cz);let last;for(let i=0;i<12;i++){const a=i*.72,x=cx+Math.cos(a)*7,z=cz+Math.sin(a)*7,top2=g0+1.15*(i+1);block(X(x),Z(z),3.2,3.2,.5,puffM,{y:top2-.5});last=[x,z,top2];}
+     put(GEO.cyl,gold,X(cx),g0+7,Z(cz),.25,14,.25);addCol(X(cx),Z(cz),.6,.6,g0+14);
+     const kg=new THREE.Group(),km=mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:.9,metalness:.5,roughness:.2});const ring=new THREE.Mesh(new THREE.TorusGeometry(.3,.08,8,16),km);ring.position.y=.4;kg.add(ring);put(GEO.box,km,0,-.15,0,.12,.8,.12,kg);put(GEO.box,km,.15,-.45,0,.25,.1,.1,kg);
+     cPick('key',[last[0],last[1],last[2]+1.1],kg,1);const arch=new THREE.Mesh(new THREE.TorusGeometry(1.6,.15,8,24,Math.PI),gold);arch.position.set(X(last[0]),last[2],Z(last[1]));scene.add(arch);
+     const kt=tag('DEBESŲ LAIPTAI','#ffffff',.7);kt.position.set(X(cx+9),G(cx+9,cz)+2.4,Z(cz));scene.add(kt);}}
+  // ===== EAGLE (south-west) =====
+  {const ky=G(-90,60);for(let i=0;i<9;i++)put(GEO.dode,mat(0x9aa4b4),X(-90+Math.cos(i*.7)*12),ky+.2,Z(60+Math.sin(i*.7)*12),drnd(1.2,2.2));
+   const E=makeEagleKing();E.root.position.set(X(-92),ky,Z(63));E.root.rotation.y=Math.atan2(92,-63);scene.add(E.root);CLD.kv.eagle=E;
+   const nx=X(-76),nz=Z(68),ny=G(-76,68);const nest=new THREE.Mesh(new THREE.TorusGeometry(1.8,.55,8,18),mat(0x8a5a2a,{roughness:1}));nest.rotation.x=Math.PI/2;nest.position.set(nx,ny+.4,nz);scene.add(nest);
+   const ntg=tag('LIZDAS','#c89a5a',.7);ntg.position.set(nx,ny+2.4,nz);scene.add(ntg);
+   const K='Erelis';ckings.push({name:K,kingdom:'Erelio karalystė',color:'#c8d8f0',icon:'🦅',pos:V(X(-86),ky,Z(55)),talkR:9,tagY:7,
+     text:'Kyyyy! Aš – Erelis, aukščiausių uolų karalius. Mano karalystė crazy: kiaušiniai išriedėjo, plunksnos išsibarstė, vėjo žiedai pasimetė, lizdas suiro, o vėjas pūčia atgal. Padėk!',
+     calmText:'Kiaušiniai šilti, lizdas tvirtas, plunksnos vietoje! Erelio karalystė – nebe crazy. Kyyyy!',
+     tasks:[['Erelio kiaušiniai','atnešk 3 kiaušinius į lizdą prie manęs'],['Plunksnų rinkimas','surink 6 auksines plunksnas'],['Vėjo žiedai','šokinėk ant debesų batutų ir praskrisk pro 5 žiedus'],['Lizdo statymas','surink 4 šakelių krūveles (F)'],['Vėjo lenktynės','per 45 sekundes palietk 5 vėjo vėliavas (F)']],
+     prog:b=>b==='Erelio kiaušiniai'?cC('egg')+'/3':b==='Plunksnų rinkimas'?cCount('feather')+'/6':b==='Vėjo žiedai'?cCount('ring')+'/5':b==='Lizdo statymas'?cP2('twig')+'/4':b==='Vėjo lenktynės'?cTimerTxt('wind',5):null});
+   cCarry('egg',[[-40,40],[-112,25],[-55,112]],()=>{const g=new THREE.Group();put(GEO.sph,mat(0xf8f0e0),0,0,0,.42,.55,.42,g);for(let k=0;k<5;k++)put(GEO.sph,mat(0xc8a070),Math.cos(k*1.3)*.36,Math.sin(k*2)*.3,Math.sin(k*1.3)*.36,.07);return g;},'erelio kiaušinis',{x:nx,z:nz,r:3.5});
+   const mkFeather=()=>{const g=new THREE.Group();const f=put(GEO.sph,mat(0xffd23f,{emissive:0xaa7a00,emissiveIntensity:.6}),0,0,0,.14,.55,.05,g);f.rotation.z=.4;put(GEO.cyl,M.white,-.08,-.35,0,.02,.4,.02,g).rotation.z=.4;return g;};
+   [[-30,60],[-50,98],[-115,45],[-100,15],[-60,30],[-85,115]].forEach(p=>cPick('feather',p,mkFeather(),1));
+   [[-40,80],[-60,70],[-70,100],[-100,105],[-112,80]].forEach(([lx,lz])=>{cPad(lx,lz,17);const top=G(lx,lz)+.6;const r=new THREE.Mesh(new THREE.TorusGeometry(1.15,.12,8,24),mat(0x3ee6ff,{emissive:0x1aa6c8,emissiveIntensity:1}));
+     cPick('ring',[lx,lz,top+5.8],r,0,(q,t)=>{q.mesh.rotation.y=t*1.2;});});
+   const rtg=tag('VĖJO ŽIEDAI','#3ee6ff',.7);rtg.position.set(X(-60),G(-60,70)+3,Z(66));scene.add(rtg);
+   cPress('twig',[[-55,45],[-72,38],[-104,40],[-110,68]],i=>{const g=new THREE.Group(),sm=mat(0x8a5a2a);const pile=new THREE.Group();g.add(pile);for(let k=0;k<6;k++){const s=put(GEO.cyl,sm,Math.cos(k)*.3,.2+(k%3)*.12,Math.sin(k)*.3,.06,1.4,.06,pile);s.rotation.set(Math.sin(k*2)*1.4,k,Math.PI/2);}
+     g.userData.set=d=>{pile.visible=!d;};return g;},'surinkti šakeles 🪵',()=>clTask(K,'Lizdo statymas'),{king:K,task:'Lizdo statymas'});
+   cPress('wind',[[-25,90],[-40,113],[-72,113],[-105,92],[-118,60]],i=>{const g=new THREE.Group();put(GEO.cyl,M.white,0,1.5,0,.07,3,.07,g);const fl=put(GEO.box,mat(0xff4466),.5,2.6,0,1,.6,.04,g);
+     g.userData.set=d=>{fl.material=d?mat(0x3ee6b0):mat(0xff4466);};CLD.anims.push(t=>{fl.rotation.y=Math.sin(t*4+i)*.4;});return g;},'paliesti vėjo vėliavą 🚩',
+     ()=>{CLD.timers.wind=null;CLD.tmp.wind=[];(CLD.press.wind||[]).forEach(f=>f());clTask(K,'Vėjo lenktynės');},{temp:true,king:K,task:'Vėjo lenktynės',before:cTimed('wind',45,K,'Lenktynės su vėju! 45 sekundės – paliesk visas 5 vėliavas!')});}
+  // ===== LITTLE CLOUD (south-east) =====
+  {const ky=G(90,60);const Q=makeCloudKing();Q.root.position.set(X(92),ky,Z(63));Q.root.rotation.y=Math.atan2(-92,-63);scene.add(Q.root);CLD.kv.cloud=Q;
+   const K='Debesėlis';ckings.push({name:K,kingdom:'Debesėlio karalystė',color:'#ff9fd5',icon:'☁',pos:V(X(86),ky,Z(55)),talkR:9,tagY:6,
+     text:'Pūūū… Labas! Aš – Debesėlis, mažiausias, bet minkščiausias karalius. Mano karalystė crazy: lietaus lašeliai pabėgo, vaivorykštė nubluko, debesų avytės išsilakstė, saulės spinduliai bėgioja, o audros debesys pyksta. Pagelbėk!',
+     calmText:'Lašeliai, vaivorykštė, avytės ir saulė – viskas vietoje, audros nurimo! Debesėlio karalystė – nebe crazy. Pūūū!',
+     tasks:[['Lietaus lašeliai','surink 6 lietaus lašelius'],['Vaivorykštė','nudažyk 7 vaivorykštės kristalus (F)'],['Debesų avytės','suvaryk 3 debesų avytes į gardą'],['Saulės spinduliai','pagauk 5 bėgiojančius saulės spindulius'],['Audros debesys','nuramink 4 audros debesis (F)']],
+     prog:b=>b==='Lietaus lašeliai'?cCount('drop')+'/6':b==='Vaivorykštė'?cP2('rainbow')+'/7':b==='Debesų avytės'?cC('sheep')+'/3':b==='Saulės spinduliai'?cCount('sun')+'/5':b==='Audros debesys'?cP2('storm')+'/4':null});
+   const mkDrop=()=>{const g=new THREE.Group(),dm=mat(0x3ec5ff,{emissive:0x1a6aa8,emissiveIntensity:.8,roughness:.1});put(GEO.sph,dm,0,0,0,.3,.3,.3,g);put(GEO.cone,dm,0,.35,0,.22,.45,.22,g);return g;};
+   [[40,50],[52,85],[110,80],[100,25],[70,35],[112,108]].forEach(p=>cPick('drop',p,mkDrop(),1));
+   const RC=[0xff3b3b,0xff9f2b,0xffe03b,0x4fd65a,0x3ec5ff,0x3e5bff,0xa04bff],rcx=X(70),rcz=Z(104),rcy=G(70,104);const bands=[];
+   RC.forEach((c,i)=>{const b=new THREE.Mesh(new THREE.TorusGeometry(10-i*.55,.28,6,40,Math.PI),mat(c,{emissive:c,emissiveIntensity:.5,transparent:true,opacity:.9}));b.position.set(rcx,rcy,rcz+4);b.castShadow=false;b.visible=false;scene.add(b);bands.push(b);});
+   cPress('rainbow',RC.map((c,i)=>{const a=i/6*Math.PI;return[70+Math.cos(a)*10,104-Math.sin(a)*4];}),i=>{const g=new THREE.Group();const cr=put(new THREE.OctahedronGeometry(.5),mat(0x9a9aa8),0,1,0,1,1.4,1,g);put(GEO.cyl,M.white,0,.3,0,.4,.6,.4,g);
+     g.userData.set=d=>{cr.material=d?mat(RC[i],{emissive:RC[i],emissiveIntensity:1.1}):mat(0x9a9aa8);bands[i].visible=d;};CLD.anims.push(t=>{cr.rotation.y=t+i;});return g;},'nudažyti kristalą 🌈',()=>clTask(K,'Vaivorykštė'),{king:K,task:'Vaivorykštė'});
+   const px=X(106),pz=Z(45),py=G(106,45);for(let i=0;i<14;i++){const a=i/14*Math.PI*2;if(i===10)continue;put(GEO.box,M.wood,px+Math.cos(a)*5,py+.6,pz+Math.sin(a)*5,.25,1.2,.25);}
+   const ptg=tag('AVYČIŲ GARDAS','#ffffff',.7);ptg.position.set(px,py+2.4,pz);scene.add(ptg);
+   cCarry('sheep',[[45,100],[115,32],[30,70]],()=>{const g=new THREE.Group(),wm=mat(0xffffff,{roughness:1});[[0,0,0,.55],[.35,.1,0,.4],[-.35,.1,0,.4],[0,.25,.2,.4],[0,.2,-.25,.4]].forEach(([x,y,z,s])=>put(GEO.sph,wm,x,y,z,s,s,s,g));
+     put(GEO.sph,M.dark,0,.15,.6,.25,.22,.22,g);for(const [x,z] of[[-.25,-.25],[.25,-.25],[-.25,.25],[.25,.25]])put(GEO.cyl,M.dark,x,-.5,z,.07,.4,.07,g);return g;},'debesų avytė',{x:px,z:pz,r:4.5});
+   const mkSun=()=>{const g=new THREE.Group(),sm=mat(0xffe03b,{emissive:0xffb000,emissiveIntensity:1.3});put(GEO.sph,sm,0,0,0,.35,.35,.35,g);for(let k=0;k<8;k++){const r=put(GEO.cone,sm,Math.cos(k/8*Math.PI*2)*.5,Math.sin(k/8*Math.PI*2)*.5,0,.09,.3,.09,g);r.rotation.z=k/8*Math.PI*2-Math.PI/2;}return g;};
+   [[50,30],[85,112],[110,60],[60,70],[35,95]].forEach(p=>cPick('sun',p,mkSun(),0,(q,t)=>{q.mesh.position.set(q.base.x+Math.cos(t*.9+q.idx)*4,q.base.y+.3+Math.sin(t*2+q.idx)*.3,q.base.z+Math.sin(t*.9+q.idx)*4);q.mesh.rotation.z=t*2;q.pos.copy(q.mesh.position);}));
+   cPress('storm',[[45,45],[100,110],[118,88],[30,116]].map(p=>[p[0],p[1],2.6]),i=>{const g=new THREE.Group(),dm=mat(0x55586a,{roughness:1}),wm2=mat(0xffffff,{roughness:1});const parts=[];
+     [[0,0,0,1],[-.8,-.2,0,.7],[.8,-.2,0,.7],[0,.5,0,.7]].forEach(([x,y,z,s])=>parts.push(put(GEO.sph,dm,x,y,z,s,s*.8,s,g)));const bolt=put(GEO.box,mat(0xffe03b,{emissive:0xffb000,emissiveIntensity:1.4}),0,-1.2,0,.1,1,.1,g);
+     g.userData.set=d=>{for(const p of parts)p.material=d?wm2:dm;bolt.visible=!d;g.userData.calm=d;};CLD.anims.push(t=>{if(!g.userData.calm){g.position.x+=Math.sin(t*20+i)*.01;bolt.visible=Math.sin(t*7+i*2)>.4;}});return g;},'nuraminti audros debesį ☁',()=>clTask(K,'Audros debesys'),{king:K,task:'Audros debesys'});}
+  for(const k of ckings){const s=tag(k.name,k.color,1.2);scene.add(s);kingTags.push({k,s});}}
+/* ---- city airport ---- */
+function buildAirport(){CLD.apt=true;const x=APT.x,z=APT.z,y=terrainH(x,z);
+  const rw=put(GEO.box,mat(0x4a4a55,{roughness:.9}),x,y+.03,z,30,.06,7);rw.castShadow=false;for(let i=0;i<6;i++)put(GEO.box,M.white,x-12.5+i*5,y+.07,z,2.4,.02,.35).castShadow=false;
+  const pl=makePlane();pl.position.set(x+4,y,z);pl.rotation.y=-Math.PI/2;scene.add(pl);CLD.aptPlane=pl;addCol(x+4,z,10,2.4,y+2.7,y);
+  block(x-11,z-8,7,4,3.2,mat(0xe8eef8),{});put(GEO.box,mat(0x9fe0ff,{emissive:0x2a6aa8,emissiveIntensity:.3}),x-11,y+1.9,z-5.95,5.6,1.2,.08);
+  block(x-16.5,z-8.5,2.2,2.2,6,mat(0xd0d8e8),{});put(GEO.box,mat(0x9fe0ff,{emissive:0x2a6aa8,emissiveIntensity:.4}),x-16.5,y+6.6,z-8.5,2.8,1.2,2.8);put(GEO.box,mat(0x3e7bff),x-16.5,y+7.3,z-8.5,3,.2,3);
+  const sg=signPlane(['✈ CRAZY ORO UOSTAS','Skrydžiai į salas'],5.6,1.3,{bg:'#3e7bff',fg:'#ffffff'});sg.position.set(x-11,y+4,z-5.9);scene.add(sg);
+  put(GEO.cyl,M.white,x+12,y+2,z-5,.08,4,.08);const ws=put(GEO.cone,mat(0xff7a2a),x+12.6,y+3.8,z-5,.3,1.2,.3);ws.rotation.z=-Math.PI/2;CLD.anims.push(t=>{ws.rotation.y=Math.sin(t*.7)*.5;});
+  const pv=makeChar({body:0x1b3a6a,legs:0x1b3a6a});setHat(pv,'none');put(GEO.cyl,mat(0x1b3a6a),0,.22,0,.42,.16,.42,pv.hat);put(GEO.cyl,M.dark,0,.12,.25,.3,.04,.2,pv.hat);put(GEO.box,M.gold,0,.25,.4,.18,.08,.03,pv.hat);
+  pv.root.position.set(x-7,y,z-4.6);scene.add(pv.root);const pt=tag('Pilotė Rūta','#3ec5ff',.8);pt.position.set(x-7,y+2.7,z-4.6);scene.add(pt);
+  stations.push({pos:V(x-7,y,z-3.6),r:2.6,label:'pirkti lėktuvo bilietą ✈',act:openAirport});
+  stations.push({pos:V(x+4,y,z-2.8),r:2.6,label:'skristi lėktuvu ✈',act:openAirport});}
+function openAirport(){const tm=!!save.tmPass,ug=!!save.ugPass,sk=!!save.cldPaid,sc=sk?FLY_PRICE:CLD_PRICE;
+  openDialog({name:'Pilotė Rūta',role:'Crazy oro uostas',color:'#3ec5ff',icon:'✈',text:'Sveiki atvykę į Crazy oro uostą! Į Dinozaurų salą ir į Požeminį pasaulį skrydis kainuoja $'+FLY_PRICE+', bet skraidinu tik tuos, kas jau praėjo ten vedančius mokymus. Į Debesų salą pirmas bilietas kainuoja $'+CLD_PRICE+' (vėliau – tik $'+FLY_PRICE+'), o skrydis trunka visą minutę – pro langą matysi visą Crazy pasaulį!',tasks:[],
+    actions:[{label:tm?'🦖 Dinozaurų sala – $'+FLY_PRICE:'🦖 Dinozaurų sala (pirma praeik laiko mašinos mokymus)',disabled:!tm||money<FLY_PRICE,onClick:()=>startFlight('dino')},
+      {label:ug?'⛏ Požeminis pasaulis – $'+FLY_PRICE:'⛏ Požeminis pasaulis (pirma praeik grąžto mokymus)',disabled:!ug||money<FLY_PRICE,onClick:()=>startFlight('under')},
+      {label:money>=sc?'☁ Debesų sala – $'+sc:'☁ Debesų sala – trūksta $'+(sc-money),disabled:money<sc,onClick:()=>startFlight('cloud')},
+      {label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]});}
+/* ---- flights ---- */
+function flyFlash(cb){let fl=$('tmFlash');if(!fl){fl=document.createElement('div');fl.id='tmFlash';fl.style.cssText='position:fixed;inset:0;z-index:85;pointer-events:none;opacity:0;transition:opacity .45s';document.body.append(fl);}
+  fl.style.background='radial-gradient(circle,#ffffff 0%,#d8f0ff 50%,#8fd0ff 100%)';requestAnimationFrame(()=>fl.style.opacity='1');setTimeout(()=>{cb();setTimeout(()=>{fl.style.opacity='0';},350);},600);}
+const FLY_NAMES={dino:'Dinozaurų salą',under:'Požeminį pasaulį',cloud:'Debesų salą',home:'Crazy pasaulį'};
+function startFlight(dest){if(FLT.on||FLT.busy)return;if(player.inCar){say(null,'Pirmiausia išlipk iš transporto (F).');return;}if(netRide){say(null,'Pirmiausia išlipk (F).');return;}
+  const cost=dest==='home'?0:dest==='cloud'&&!save.cldPaid?CLD_PRICE:FLY_PRICE;if(money<cost)return;if(dest==='dino'&&!save.tmPass)return;if(dest==='under'&&!save.ugPass)return;
+  closeDialog();tryLock();money-=cost;$('money').textContent=money;if(dest==='cloud')save.cldPaid=1;saveGame(true);if(cost)floaty('✈ -$'+cost,player.pos);sfx('buy');FLT.busy=true;
+  if(!FLT.plane){FLT.plane=makePlane();FLT.plane.scale.setScalar(1.25);scene.add(FLT.plane);}
+  tone(120,260,1.4,'sawtooth',.06);flyFlash(()=>{FLT.on=true;FLT.busy=false;FLT.ending=false;FLT.dest=dest;FLT.t=0;FLT.dur=FLT.testDur||(dest==='cloud'?60:dest==='home'?20:12);FLT.plane.visible=true;placeFly(0,0);
+    if(player.rag&&typeof getUp==='function')getUp();emote=null;dropAnchors();netRide={local:true,obj:FLT.plane,off:[0,2.72,.7],name:'lėktuvas',leaveLabel:'skrendi… ✈',noLeave:true};cam.dist=Math.max(cam.dist,15);cam.yaw=-(.35)-Math.PI;cam.pitch=.3;curZone=null;
+    let h=$('flyHud');if(!h){h=document.createElement('div');h.id='flyHud';h.style.cssText='position:fixed;left:50%;top:74px;transform:translateX(-50%);z-index:40;background:#1b1430dd;color:#fff;padding:8px 18px;border-radius:16px;font:800 18px "Baloo 2",system-ui;border:3px solid #3ec5ff;pointer-events:none';document.body.append(h);}h.hidden=false;
+    say(null,'Lėktuvas pakilo! Skrendame į '+FLY_NAMES[dest]+'.');});}
+function placeFly(t,dt){const P=FLT.plane,a=.35+t*.24,R=125;P.position.set(Math.cos(a)*R,150+Math.sin(t*.6)*2.5,Math.sin(a)*R);P.rotation.y=-a;P.userData.body.rotation.z=-.22;P.userData.prop.rotation.z+=(dt||0)*30;}
+function updateFlight(dt,t){if(!FLT.on)return;FLT.t+=dt;placeFly(FLT.t,dt);cam.yaw-=.24*dt;if(Math.random()<dt*.6)tone(90+Math.random()*20,80,.4,'sawtooth',.02);
+  const left=Math.max(0,Math.ceil(FLT.dur-FLT.t)),h=$('flyHud');if(h)h.textContent='✈ '+tr('Skrydis į')+' '+tr(FLY_NAMES[FLT.dest])+' · '+Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
+  if(FLT.t>=FLT.dur&&!FLT.ending){FLT.ending=true;sfx('ding');flyFlash(()=>{if(netRide&&netRide.obj===FLT.plane)netRide=null;FLT.on=false;FLT.plane.visible=false;const hh=$('flyHud');if(hh)hh.hidden=true;flyArrive(FLT.dest);});}}
+function flyArrive(dest){let d;
+  if(dest==='dino')d=dinoArrival();
+  else if(dest==='under'){if(!DK.built)buildDino();if(!UG.built)buildUnder();const BH=DX3.houses.burrow;if(BH&&save.dinoHouses&&save.dinoHouses.burrow)d=BH.inside.clone();else{d=uP(3,4);d.y=terrainH(d.x,d.z)+.3;}}
+  else if(dest==='cloud'){buildCloud();d=V(CLW.x+4,0,CLW.z+3);d.y=terrainH(d.x,d.z)+.3;}
+  else{d=V(APT.x-3,0,APT.z+5.5);d.y=terrainH(d.x,d.z)+.3;}
+  tpTo(d);player.yaw=Math.PI;let i=0;for(const n of pets.values()){n.pos.set(d.x-1.5+i*1.2,d.y+n.half+.3,d.z+1.5);n.vel.set(0,0,0);n.state='follow';i++;}curZone=null;
+  if(dest==='dino')save.dinoSeen=1;if(dest==='under')save.ugSeen=1;saveGame(true);sfx('land');
+  floaty(dest==='dino'?'🦖 '+tr('Dinozaurų sala!'):dest==='under'?'⛏ '+tr('Požeminis pasaulis!'):dest==='cloud'?'☁ '+tr('Debesų sala!'):'🌍 '+tr('Grįžai į Crazy pasaulį!'),player.pos);
+  if(dest==='cloud'&&!save.cldSeen){save.cldSeen=1;saveGame(true);openDialog({name:'Debesų sala',role:'Aukštai virš Crazy pasaulio',color:'#9fe0ff',icon:'☁',text:'Nusileidai DEBESŲ SALOJE! Čia vaikštai minkštais debesimis, bet ir ši sala tapo crazy. Trys dangaus karaliai laukia pagalbos – kiekvienas turi po 5 misijas. Atgal parskrisi tuo pačiu lėktuvu.',
+    tasks:[{b:'Dievas',t:'auksinė šventykla šiaurėje',chip:'⬆ šiaurė'},{b:'Erelis',t:'uolų lizdas pietvakariuose',chip:'↙ pietvakariai'},{b:'Debesėlis',t:'minkšti debesys pietryčiuose',chip:'↘ pietryčiai'}],actions:[{label:'Pirmyn!',onClick:()=>{closeDialog();tryLock();}}]});}}
+/* ---- per-frame ---- */
+function updateCloud(dt,t){if(!CLD.apt&&worldBuilt)buildAirport();updateFlight(dt,t);for(const f of CLD.anims)f(t,dt);
+  if(CLD.aptPlane)CLD.aptPlane.userData.prop.rotation.z+=dt*2;
+  if(!CLD.built)return;if(CLD.plane)CLD.plane.userData.prop.rotation.z+=dt*2;
+  for(const k in CLD.timers){const T2=CLD.timers[k];if(!T2)continue;T2.t-=dt;if(T2.t<=0){CLD.timers[k]=null;CLD.tmp[k]=[];(CLD.press[k]||[]).forEach(f=>f());sfx('fail');say(T2.king,'Laikas baigėsi! Bandyk dar kartą – spausk F.',true);}}
+  const Gk=CLD.kv.god;if(Gk){Gk.armR.p.rotation.x=-2.4+Math.sin(t*1.5)*.3;}
+  const Ek=CLD.kv.eagle;if(Ek){for(const w of Ek.wings)w.piv.rotation.z=w.sx*(.2+Math.sin(t*3)*.35);Ek.head.rotation.y=Math.sin(t*.7)*.4;}
+  const Ck=CLD.kv.cloud;if(Ck){Ck.inner.position.y=1+Math.sin(t*1.6)*.35;Ck.inner.rotation.z=Math.sin(t*.9)*.08;}
+  if(!isCloud())return;const p=player.pos;
+  if(player.onGround&&!netRide&&!player.inCar)for(const P of CLD.pads){if(Math.hypot(p.x-P.x,p.z-P.z)<1.6&&Math.abs(p.y-P.top)<.4){player.vel.y=P.v;player.onGround=false;sfx('boing');P.m.scale.y=.3;break;}}
+  for(const P of CLD.pads)P.m.scale.y+=(.6-P.m.scale.y)*Math.min(1,dt*6);
+  for(const q of CLD.picks){if(q.got)continue;if(q.move)q.move(q,t);else if(q.bob){q.mesh.position.y=q.pos.y+Math.sin(t*2+q.idx)*.15;q.mesh.rotation.y=t*1.4;}
+    if(Math.hypot(q.pos.x-p.x,q.pos.z-p.z)<1.8&&Math.abs(q.pos.y-(p.y+1))<1.9){q.got=true;q.mesh.visible=false;save.cldPick=Object.assign({},save.cldPick);save.cldPick[q.key]=[...(save.cldPick[q.key]||[]),q.idx];saveGame(true);sfx('coin');
+      const D={bolt:[5,'Dievas','Žaibų rinkimas','⚡'],key:[1,'Dievas','Dangaus vartų raktas','🗝'],feather:[6,'Erelis','Plunksnų rinkimas','🪶'],ring:[5,'Erelis','Vėjo žiedai','⭕'],drop:[6,'Debesėlis','Lietaus lašeliai','💧'],sun:[5,'Debesėlis','Saulės spinduliai','☀']}[q.key];
+      const n=cCount(q.key);floaty(D[3]+' '+n+'/'+D[0],p);if(n>=D[0])clTask(D[1],D[2]);}}
+  for(const c of CLD.carry.slice()){const b=c.b;if(!bodies.includes(b)){CLD.carry.splice(CLD.carry.indexOf(c),1);continue;}const d=Math.hypot(b.pos.x-c.target.x,b.pos.z-c.target.z);
+    if((!b.held&&d<c.target.r)||(b.held&&d<c.target.r-1.5)){for(const s2 of['L','R'])if(hands[s2].obj===b){release(b);hands[s2].obj=null;}bodies.splice(bodies.indexOf(b),1);scene.remove(b.mesh);CLD.carry.splice(CLD.carry.indexOf(c),1);
+      save.cldCarry=Object.assign({},save.cldCarry);const n=(save.cldCarry[c.key]||0)+1;save.cldCarry[c.key]=n;saveGame(true);sfx('ding');floaty('✔ '+n+'/'+c.need,b.pos);
+      const T3={column:['Dievas','Šventyklos kolonos'],egg:['Erelis','Erelio kiaušiniai'],sheep:['Debesėlis','Debesų avytės']}[c.key];if(n>=c.need)clTask(T3[0],T3[1]);}}}
+Object.assign(I18N_EN,{"Debesų sala": "Cloud Island", "Lėktuvas – kelias atgal į Crazy pasaulį": "The plane – your way back to the Crazy World", "Dievo karalystė": "God Kingdom", "Dievas sėdi auksinėje šventykloje šiaurėje": "God sits in the golden temple in the north", "Erelio karalystė": "Eagle Kingdom", "Erelis karalius saugo lizdą pietvakarių uolose": "King Eagle guards his nest on the south-west rocks", "Debesėlio karalystė": "Little Cloud Kingdom", "Debesėlis karalius plūduriuoja pietryčiuose": "King Little Cloud floats in the south-east", "Skrydis lėktuvu ✈": "Plane flight ✈", "Atsipalaiduok ir žiūrėk žemyn pro debesis": "Relax and look down through the clouds", "Dievas": "God", "Erelis": "Eagle", "Debesėlis": "Little Cloud", "Pilotė Rūta": "Pilot Ruth", "Crazy oro uostas": "Crazy Airport", "✈ CRAZY ORO UOSTAS": "✈ CRAZY AIRPORT", "Skrydžiai į salas": "Flights to the islands", "pirkti lėktuvo bilietą ✈": "buy a plane ticket ✈", "skristi lėktuvu ✈": "fly by plane ✈", "skristi lėktuvu atgal į Crazy pasaulį ✈": "fly back to the Crazy World ✈", "skrendi… ✈": "flying… ✈", "Skrydis į": "Flight to", "Dinozaurų salą": "Dinosaur Island", "Požeminį pasaulį": "the Underground World", "Debesų salą": "Cloud Island", "Crazy pasaulį": "the Crazy World", "Debesų sala!": "Cloud Island!", "Ne dabar": "Not now", "Aukštai virš Crazy pasaulio": "High above the Crazy World", "Nusileidai DEBESŲ SALOJE! Čia vaikštai minkštais debesimis, bet ir ši sala tapo crazy. Trys dangaus karaliai laukia pagalbos – kiekvienas turi po 5 misijas. Atgal parskrisi tuo pačiu lėktuvu.": "You landed on CLOUD ISLAND! Here you walk on soft clouds, but this island has gone crazy too. Three sky kings need your help – each has 5 missions. The same plane will fly you back.", "auksinė šventykla šiaurėje": "golden temple in the north", "uolų lizdas pietvakariuose": "rocky nest in the south-west", "minkšti debesys pietryčiuose": "soft clouds in the south-east", "⬆ šiaurė": "⬆ north", "↙ pietvakariai": "↙ south-west", "↘ pietryčiai": "↘ south-east", "Pirmyn!": "Let’s go!", "Sveiki atvykę į Crazy oro uostą! Į Dinozaurų salą ir į Požeminį pasaulį skrydis kainuoja $50, bet skraidinu tik tuos, kas jau praėjo ten vedančius mokymus. Į Debesų salą pirmas bilietas kainuoja $1000 (vėliau – tik $50), o skrydis trunka visą minutę – pro langą matysi visą Crazy pasaulį!": "Welcome to Crazy Airport! A flight to Dinosaur Island or the Underground World costs $50, but I only fly those who already passed the training for those places. The first ticket to Cloud Island costs $1000 (later only $50), and the flight takes a whole minute – you will see the whole Crazy World from above!", "🦖 Dinozaurų sala – $50": "🦖 Dinosaur Island – $50", "🦖 Dinozaurų sala (pirma praeik laiko mašinos mokymus)": "🦖 Dinosaur Island (pass the time machine training first)", "⛏ Požeminis pasaulis – $50": "⛏ Underground World – $50", "⛏ Požeminis pasaulis (pirma praeik grąžto mokymus)": "⛏ Underground World (pass the drill training first)", "☁ Debesų sala – $1000": "☁ Cloud Island – $1000", "☁ Debesų sala – $50": "☁ Cloud Island – $50", "Lėktuvas pakilo! Skrendame į Dinozaurų salą.": "The plane took off! We are flying to Dinosaur Island.", "Lėktuvas pakilo! Skrendame į Požeminį pasaulį.": "The plane took off! We are flying to the Underground World.", "Lėktuvas pakilo! Skrendame į Debesų salą.": "The plane took off! We are flying to Cloud Island.", "Lėktuvas pakilo! Skrendame į Crazy pasaulį.": "The plane took off! We are flying to the Crazy World.", "DEBESŲ SALA": "CLOUD ISLAND", "⬆ Dievas · ↙ Erelis · ↘ Debesėlis": "⬆ God · ↙ Eagle · ↘ Little Cloud", "DEBESŲ BATUTAI": "CLOUD TRAMPOLINES", "KOLONŲ VIETA": "COLUMN SPOT", "DANGAUS VARPAI": "SKY BELLS", "DEBESŲ LAIPTAI": "CLOUD STAIRS", "LIZDAS": "NEST", "VĖJO ŽIEDAI": "WIND RINGS", "AVYČIŲ GARDAS": "SHEEP PEN", "uždegti žvaigždę ⭐": "light the star ⭐", "skambinti varpu 🔔": "ring the bell 🔔", "surinkti šakeles 🪵": "collect twigs 🪵", "paliesti vėjo vėliavą 🚩": "touch the wind flag 🚩", "nudažyti kristalą 🌈": "paint the crystal 🌈", "nuraminti audros debesį ☁": "calm the storm cloud ☁", "kolonos dalis": "column piece", "erelio kiaušinis": "eagle egg", "debesų avytė": "cloud sheep", "Sveikas, mažasis keliautojau! Aš – Dievas, debesų ir žaibų valdovas. Bet net ir mano dangus tapo crazy: žaibai išsibarstė, šventyklos kolonos nukrito, žvaigždės užgeso, varpai nutilo, o dangaus vartų raktas nuskrido į pačią viršūnę. Padėk man!": "Greetings, little traveller! I am God, ruler of clouds and lightning. But even my sky has gone crazy: the lightning bolts are scattered, the temple columns have fallen, the stars went out, the bells are silent and the sky-gate key flew to the very top. Help me!", "Žaibai vietoje, kolonos stovi, žvaigždės šviečia, varpai skamba! Dievo karalystė – nebe crazy.": "The lightning is back, the columns stand, the stars shine and the bells ring! The God Kingdom is no longer crazy.", "Žaibų rinkimas": "Lightning hunt", "surink 5 auksinius žaibus": "collect 5 golden lightning bolts", "Šventyklos kolonos": "Temple columns", "atnešk 3 kolonų dalis prie šventyklos": "bring 3 column pieces to the temple", "Žvaigždžių žibintai": "Star lamps", "uždek 5 žvaigždžių žibintus (F)": "light 5 star lamps (F)", "Dangaus varpai": "Sky bells", "per 30 sekundžių paskambink 5 varpais (F)": "ring 5 bells within 30 seconds (F)", "Dangaus vartų raktas": "Sky-gate key", "užlipk debesų laiptais ir paimk auksinį raktą": "climb the cloud stairs and grab the golden key", "Kyyyy! Aš – Erelis, aukščiausių uolų karalius. Mano karalystė crazy: kiaušiniai išriedėjo, plunksnos išsibarstė, vėjo žiedai pasimetė, lizdas suiro, o vėjas pūčia atgal. Padėk!": "Screeee! I am Eagle, king of the highest rocks. My kingdom is crazy: the eggs rolled away, the feathers are scattered, the wind rings are lost, the nest fell apart and the wind blows backwards. Help!", "Kiaušiniai šilti, lizdas tvirtas, plunksnos vietoje! Erelio karalystė – nebe crazy. Kyyyy!": "The eggs are warm, the nest is strong, the feathers are back! The Eagle Kingdom is no longer crazy. Screeee!", "Erelio kiaušiniai": "Eagle eggs", "atnešk 3 kiaušinius į lizdą prie manęs": "bring 3 eggs to the nest next to me", "Plunksnų rinkimas": "Feather hunt", "surink 6 auksines plunksnas": "collect 6 golden feathers", "Vėjo žiedai": "Wind rings", "šokinėk ant debesų batutų ir praskrisk pro 5 žiedus": "bounce on the cloud trampolines and fly through 5 rings", "Lizdo statymas": "Nest building", "surink 4 šakelių krūveles (F)": "collect 4 twig piles (F)", "Vėjo lenktynės": "Wind race", "per 45 sekundes palietk 5 vėjo vėliavas (F)": "touch 5 wind flags within 45 seconds (F)", "Pūūū… Labas! Aš – Debesėlis, mažiausias, bet minkščiausias karalius. Mano karalystė crazy: lietaus lašeliai pabėgo, vaivorykštė nubluko, debesų avytės išsilakstė, saulės spinduliai bėgioja, o audros debesys pyksta. Pagelbėk!": "Poooof… Hi! I am Little Cloud, the smallest but softest king. My kingdom is crazy: the raindrops ran away, the rainbow faded, the cloud sheep scattered, the sunbeams are running around and the storm clouds are angry. Help me!", "Lašeliai, vaivorykštė, avytės ir saulė – viskas vietoje, audros nurimo! Debesėlio karalystė – nebe crazy. Pūūū!": "Raindrops, rainbow, sheep and sun – all in place, and the storms calmed down! The Little Cloud Kingdom is no longer crazy. Poooof!", "Lietaus lašeliai": "Raindrops", "surink 6 lietaus lašelius": "collect 6 raindrops", "Vaivorykštė": "Rainbow", "nudažyk 7 vaivorykštės kristalus (F)": "paint 7 rainbow crystals (F)", "Debesų avytės": "Cloud sheep", "suvaryk 3 debesų avytes į gardą": "herd 3 cloud sheep into the pen", "Saulės spinduliai": "Sunbeams", "pagauk 5 bėgiojančius saulės spindulius": "catch 5 running sunbeams", "Audros debesys": "Storm clouds", "nuramink 4 audros debesis (F)": "calm 4 storm clouds (F)", "Nuostabu! Misija įvykdyta!": "Amazing! Mission complete!", "Ačiū, debesų drauge!": "Thank you, cloud friend!", "Tu tikras dangaus herojus!": "You are a true sky hero!", "Laikas baigėsi! Bandyk dar kartą – spausk F.": "Time is up! Try again – press F.", "Varpai! 30 sekundžių – skambink visais penkiais!": "Bells! 30 seconds – ring all five!", "Lenktynės su vėju! 45 sekundės – paliesk visas 5 vėliavas!": "Race the wind! 45 seconds – touch all 5 flags!", "Debesų sala išgelbėta!": "Cloud Island saved!", "Visi 3 dangaus karaliai": "All 3 sky kings", "Tu išgelbėjai Dievą, Erelį ir Debesėlį! Debesų sala – nebe crazy. Karaliai tau dovanoja $2100, slaptus ANGELO SPARNUS (ore laikyk Space – sklandysi) ir šviečiančią AUREOLĘ!": "You saved God, Eagle and Little Cloud! Cloud Island is no longer crazy. The kings give you $2100, secret ANGEL WINGS (hold Space in the air to glide) and a glowing HALO!", "Valio!": "Hooray!", "Puiku!": "Great!", "🔒 Angelo aureolė": "🔒 Angel halo", "🔒 Angelo sparnai": "🔒 Angel wings", "Debesų salos žemėlapis": "Cloud Island map", "DIEVO KARALYSTĖ": "GOD KINGDOM", "ERELIO KARALYSTĖ": "EAGLE KINGDOM", "DEBESĖLIO KARALYSTĖ": "LITTLE CLOUD KINGDOM", "✈ Lėktuvas": "✈ Plane", "🏛 Šventykla": "🏛 Temple", "🪜 Debesų laiptai": "🪜 Cloud stairs", "🔔 Varpai": "🔔 Bells", "⭕ Vėjo žiedai": "⭕ Wind rings", "🪺 Lizdas": "🪺 Nest", "🌈 Vaivorykštė": "🌈 Rainbow", "🐑 Gardas": "🐑 Pen", "Griaustinis – tai aš čiaudėjau. Atsiprašau.": "Thunder? That was me sneezing. Sorry.", "Mano žaibai vėl pabėgo!": "My lightning ran away again!", "Iš čia viršaus viską matau. Net tavo kojines.": "I can see everything from up here. Even your socks.", "Debesys turi būti minkšti, o ne crazy!": "Clouds should be soft, not crazy!", "Kyyyy! Kas lipa į mano uolas?": "Screeee! Who is climbing my rocks?", "Mano plunksnos išsibarstė po visą salą!": "My feathers are scattered all over the island!", "Aukščiau už mane skrenda tik lėktuvai. Ir tai tik kartais.": "Only planes fly higher than me. And only sometimes.", "Saugok mano kiaušinius!": "Protect my eggs!", "Pūūū! Aš minkštas kaip pagalvė!": "Poooof! I am soft as a pillow!", "Kai verkiu – lyja. Kai juokiuosi – sninga!": "When I cry it rains. When I laugh it snows!", "Kur mano avytės? Bėėė!": "Where are my sheep? Baaa!", "Vaivorykštė mano mėgstamiausia spalva. Visos septynios!": "The rainbow is my favourite colour. All seven of them!"});i18nRe=null;i18nCache.clear();
 Object.assign(I18N_EN,{'Požeminio pasaulio žemėlapis':'Underground World map','Dinozaurų pasaulio žemėlapis':'Dinosaur World map','KURMIO KARALYSTĖ':'MOLE KINGDOM','SLIEKO KARALYSTĖ':'WORM KINGDOM','SKRUZDŽIŲ KARALYSTĖ':'ANT KINGDOM','DRAKONĖ':'DRAGON QUEEN','SPINOZAURAS':'SPINOSAURUS','MEGALODONAS':'MEGALODON','⛏ Grąžto liftas':'⛏ Drill lift','Transportas':'Rides','Drabužiai':'Clothes','Gyvūnėliai':'Pets','🚃 Vagonėlis':'🚃 Mine cart','⛏ Kasykla':'⛏ Mine','🌊 Ežeras':'🌊 Lake','🔥 Lava':'🔥 Lava','🎵 Kristalai':'🎵 Crystals','🗣 Aido urvas':'🗣 Echo cave','✨ Batutai':'✨ Trampolines','🦴 Fosilija':'🦴 Fossil','🏠 Urvelis':'🏠 Burrow','🐜 Skruzdėlynas':'🐜 Anthill','⏳ Laiko mašina':'⏳ Time machine','🦅 Taksi':'🦅 Taxi','🛖 Ugg kaimelis':'🛖 Ugg village','🍄 Grybai':'🍄 Mushrooms','🪂 Lynas':'🪂 Zipline','🦴 Kasinėjimai':'🦴 Dig site','🌋 Ugnikalnis':'🌋 Volcano','💧 Krioklys':'💧 Waterfall','🛁 Purvas':'🛁 Mud','⚓ Prieplauka':'⚓ Pier','⛏ Grąžtas':'⛏ Drill','🏁 Lenktynės':'🏁 Race','🏠 Urvo namas':'🏠 Cave house','🏠 Medžio namelis':'🏠 Treehouse','🏠 Fosilijų vila':'🏠 Fossil villa',
   'Šikšnosparnis':'Bat flight','Laikyk Space arba pirštą – kilti, paleisk – leistis':'Hold Space or your finger to rise, let go to sink','Kasėjas Kastytis':'Digger Dave'});
 i18nRe=null;i18nCache.clear();
@@ -7290,7 +7520,7 @@ function buildWorld(){migHeads();
   if(save.migCrownCar!=='v91'){save.migCrownCar='v91';}
   
   syncPets();$("money").textContent=money;
-  const snap=now=>{if(!started)return;const tp=(isDino()||isUnder())?V(LAB.x,labY,LAB.z+8):inOas?V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z),OAS_SHORE.z):inVin?V(VIN_ENT.x-2.4,VIN_EY,VIN_ENT.z):inVlh?V(VLH_DOOR.x,VLH_Y,VLH_DOOR.z):inIgl?V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z),IGL_DOOR.z):inVil?V(VIL_DOOR.x,VIL_Y,VIL_DOOR.z-2):inDis?V(DIS_DOOR.x,DIS_Y,DIS_DOOR.z):inMus?V(MUS_EXIT.x,MUS_Y,MUS_EXIT.z):inPyr?V(-98.5,PYR_Y,-40):inside?myHouse().step:player.inCar&&car?car.pos:player.pos;save.pos=[+tp.x.toFixed(2),+tp.y.toFixed(2),+tp.z.toFixed(2)];save.yaw=+player.yaw.toFixed(3);save.hour=+hour.toFixed(3);saveGame(now);};
+  const snap=now=>{if(!started)return;const tp=(FLT.on||isCloud())?V(APT.x-3,terrainH(APT.x-3,APT.z+5.5),APT.z+5.5):(isDino()||isUnder())?V(LAB.x,labY,LAB.z+8):inOas?V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z),OAS_SHORE.z):inVin?V(VIN_ENT.x-2.4,VIN_EY,VIN_ENT.z):inVlh?V(VLH_DOOR.x,VLH_Y,VLH_DOOR.z):inIgl?V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z),IGL_DOOR.z):inVil?V(VIL_DOOR.x,VIL_Y,VIL_DOOR.z-2):inDis?V(DIS_DOOR.x,DIS_Y,DIS_DOOR.z):inMus?V(MUS_EXIT.x,MUS_Y,MUS_EXIT.z):inPyr?V(-98.5,PYR_Y,-40):inside?myHouse().step:player.inCar&&car?car.pos:player.pos;save.pos=[+tp.x.toFixed(2),+tp.y.toFixed(2),+tp.z.toFixed(2)];save.yaw=+player.yaw.toFixed(3);save.hour=+hour.toFixed(3);saveGame(now);};
   setInterval(()=>snap(false),10000);
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')snap(true);});
   addEventListener('pagehide',()=>snap(true));
@@ -7302,7 +7532,7 @@ const clock=new THREE.Clock();let T=0;
 function frame(){
   const dt=Math.min(clock.getDelta(),.05);T+=dt;
   if(keys.KeyQ&&!uiBlocking())cam.yaw+=dt*2;if(keys.KeyE&&!uiBlocking()&&!(player.inCar&&car&&(car.crater||car.lid||car.rocket||car.tank||car.police||car.flipCar||car.clown))&&!(!player.inCar&&hasPow('volcanohat')))cam.yaw-=dt*2;
-  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateDino3(dt,T);updateUnder(dt,T);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
+  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateDino3(dt,T);updateUnder(dt,T);updateCloud(dt,T);updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
   for(const a of anims)a(T,dt);
   lavaTimer-=dt;if(lavaTimer<=0){if(!volCalm())spawnLavaBall();lavaTimer=rand(1.8,3.6);}
   for(const c of coins){if(!c.on){c.t-=dt;if(c.t<=0){c.on=true;c.m.visible=true;}continue;}
@@ -7487,7 +7717,7 @@ const speakers=[],bubbles=[];let ambT=4;const _sv=V();
 function npcSpk(n){return{key:n,pos:()=>n.pos,top:n.half+.8};}
 function kingSpk(k){return{key:k,pos:()=>{const p=kingPos(k);return _sv.set(p.x,k.npc?p.y-k.npc.half:p.y,p.z);},top:k.tagY+.75};}
 function findSpeaker(who){if(!who||who==='Tu')return null;
-  for(const k of kings.concat(dkings,ukings))if(k.name===who)return kingSpk(k);
+  for(const k of kings.concat(dkings,ukings,ckings))if(k.name===who)return kingSpk(k);
   let best=null,bd=45;for(const n of npcs){if(n.name!==who||!n.vis)continue;const d=n.pos.distanceTo(player.pos);if(d<bd){bd=d;best=n;}}
   if(best)return npcSpk(best);
   {let tb=null,td=40;for(const t of traffic){if(!t.d||t.d.name!==who)continue;const d=t.pos.distanceTo(player.pos);if(d<td){td=d;tb=t;}}
@@ -7517,7 +7747,7 @@ function updateSpeech(dt){
   const pool=[];const pp=player.pos;
   for(const n of npcs){if(!n.vis||!n.lines||!n.lines.length||n.kind==='gnome'||n.state==='held'||n.state==='fly'||n.state==='ride')continue;
     if(!n.vis.root||!n.vis.root.visible||!n.vis.root.parent)continue;const d=n.pos.distanceTo(pp);if(d<24&&d>1.2&&!bubbles.some(b=>b.spk.key===n))pool.push(()=>speakAt(npcSpk(n),pick(n.lines),4.5));}
-  for(const k of kings.concat(dkings,ukings)){const L=KING_TALK[k.name];if(!L)continue;const d=kingPos(k).distanceTo(pp);if(d<26&&!bubbles.some(b=>b.spk.key===k))pool.push(()=>speakAt(kingSpk(k),pick(L),5));}
+  for(const k of kings.concat(dkings,ukings,ckings)){const L=KING_TALK[k.name];if(!L)continue;const d=kingPos(k).distanceTo(pp);if(d<26&&!bubbles.some(b=>b.spk.key===k))pool.push(()=>speakAt(kingSpk(k),pick(L),5));}
   for(const s of speakers){const d=s.obj.getWorldPosition(_sv).distanceTo(pp);if(d<18&&!bubbles.some(b=>b.spk.key===s)&&s.lines)pool.push(()=>speakAt({key:s,pos:()=>s.obj.getWorldPosition(_sv),top:s.top},pick(s.lines),4.5));}
   if(pool.length)pick(pool)();
   if(pool.length>4&&Math.random()<.5)pick(pool)();}
@@ -9007,7 +9237,7 @@ function updateAch(dt){if(!started)return;save.playT=(save.playT||0)+dt;if(!save
   const el=$('achToast');if(achShowT>0){achShowT-=dt;if(achShowT<=0)el.classList.remove('show');}
   else if(achQ.length){const a=achQ.shift();el.textContent='🏆 '+tr('Pasiekimas')+': '+a.ic+' '+tr(a.n);el.classList.add('show');achShowT=3.5;sfx('win');}}
 
-function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.concat(dkings,ukings).find(q=>q.name===save.pinKing);if(!k||!started){el.hidden=true;return;}el.hidden=false;
+function renderPin(){const el=$('pinHud');const k=save.pinKing&&kings.concat(dkings,ukings,ckings).find(q=>q.name===save.pinKing);if(!k||!started){el.hidden=true;return;}el.hidden=false;
   const list=kingTaskList(k),done=kingDone(k),crowned=save.crowns&&save.crowns[k.name];
   let h='<h4><span>'+(k.icon||'👑')+'</span><span></span></h4><div class="pk"></div><ul>';list.forEach(()=>h+='<li><span></span><span></span><span class="c"></span></li>');h+='</ul>';el.innerHTML=h;
   el.querySelector('h4 span:nth-child(2)').textContent=tr(k.name);el.querySelector('.pk').textContent=tr('📌 Prisegtos misijos')+' · '+done.length+'/'+k.tasks.length+(crowned?' · 👑':'');
