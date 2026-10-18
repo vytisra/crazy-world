@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-18 10:41 — v197 Gyvūnėliai dinozaurų ir požemio namuose
+- Nupirktuose dinozaurų pasaulio namuose (Urvo namas, Medžio namelis, Fosilijų vila) ir požemio „Požeminiame urvelyje“ dabar galima palikti gyvūnėlius: namo viduje prie gyvūnėlio spausk F – „palikti namie“.
+- Kiekvienas gyvūnėlis prisimena, kuriuose namuose jį palikai, ir lauks tavęs būtent ten (nepasirodys kituose namuose).
+- Grįžęs prie gyvūnėlio namuose spausk F – „pasiimti su savimi“.
+
 ## 2026-10-18 10:30 — v196 Žemėlapiai, skambučiai iš požemio ir Šikšnosparnio žaidimas
 - Tab dabar atidaro žemėlapį ir požeminiame, ir dinozaurų pasaulyje: karalystės, karaliai su misijų progresu, stendai, kasykla, ežeras, paslaptys ir tavo vieta.
 - Telefone nauji požemio kontaktai: Kurmis, Sliekas, Skruzdė, Kasėjas Kastytis ir Kurmiukas. Požemyje jie skambina tau dažniausiai (ir dažniau nei paviršiuje).
