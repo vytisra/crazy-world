@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-18 20:44 — v200 Pasaulinė lyderių lentelė
+- Lyderių lentelė telefone dabar rodo ne tik šio kompiuterio paskyras, bet ir VISUS žaidėjus internete (pažymėti 🌍).
+- Rezultatai (pinigai, greičiausias žaidimo perėjimas ir visi telefono žaidimai) automatiškai siunčiami kas ~20 s ir po kiekvieno telefono žaidimo.
+- Veikia per nemokamus viešus MQTT serverius (EMQX ir Mosquitto) – nereikia jokios registracijos. Rodomi tik paskyros vardas ir rezultatai.
+- Rodoma iki 20 geriausių; apačioje matyti, kiek žaidėjų yra pasaulinėje lentelėje.
+
 ## 2026-10-18 20:18 — v199 Debesėlio žaidimas, skambučiai iš Debesų salos ir daug naujų dalykų
 - Naujas telefono žaidimas „☁️ Debesėlis“: valdyk pele, pirštu arba ←/→ ir šokinėk debesimis vis aukščiau. Yra judantys debesys, audros debesys (sugriūva), vaivorykštės spyruoklės ir lašeliai (+2). Žaidimas yra lyderių lentelėje.
 - Telefone nauji Debesų salos kontaktai: Dievas, Erelis, Debesėlis, pilotė Rūta, Ereliukas, avytė Bėbė ir banginis Bangius. Debesų saloje jie skambina dažniausiai.
