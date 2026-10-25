@@ -3,6 +3,16 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-25 20:34 — v202 Drakonės kibirai ir lenktynių atskaita
+- Nauja Drakonės misija „Vanduo Megalodonui“ (vietoj kiaušinių): prie Drakonės stovi 5 kibirai, Drakonės karalystėje yra 5 balos. Paimk kibirą, pasemk vandens iš balos ir išpilk Megalodonui prieplaukos gale. Taip 5 kartus. Kibirą matai savo rankoje, pilną – su vandeniu.
+- Kas jau buvo atlikęs senąją kiaušinių misiją – jam ji įskaityta.
+- Dinozaurų (ir požemio sliekiuko) lenktynėse nebegali pajudėti, kol nesuskaičiuoja 3, 2, 1 – skaičiai rodomi dideli ekrano viduryje.
+- Pataisyta klaida: Ugnikalnio darbo „Lavos lenktynės“ mygtukas netyčia paleisdavo dinozaurų lenktynes.
+
+## 2026-10-25 20:09 — v201 Vidinis pakeitimas (testavimui)
+- Žaidime niekas nepasikeitė: laiko mašina į dinozaurų pasaulį vis dar reikalauja visų 4 karūnų, $1000 ir mokymų.
+- Tik autoriaus testavimo pasaulyje (claude.ai) dinozaurų pasaulis atrakintas iš karto.
+
 ## 2026-10-18 20:44 — v200 Pasaulinė lyderių lentelė
 - Lyderių lentelė telefone dabar rodo ne tik šio kompiuterio paskyras, bet ir VISUS žaidėjus internete (pažymėti 🌍).
 - Rezultatai (pinigai, greičiausias žaidimo perėjimas ir visi telefono žaidimai) automatiškai siunčiami kas ~20 s ir po kiekvieno telefono žaidimo.
