@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-25 21:04 — v204 Vandenyje transporto išsitraukti negalima
+- Stovint vandenyje (jūroje, upėje, pelkėje, tvenkinyje, požemio ežere ar oazėje) transporto iškviesti (I) nebegalima – pasirodo užrašas „Vandenyje transporto išsitraukti negalima – išlipk į krantą!“.
+- Stovint ant kranto transportas niekada neatsiranda vandenyje – išsirenkama sausa vieta šalia.
+- Ant prieplaukos transportą išsitraukti galima.
+
 ## 2026-10-25 20:44 — v203 Mašinos nebevažiuoja per vandenį
 - Mašinomis ir kitu antžeminiu transportu nebegalima įvažiuoti į vandenį: dinozaurų jūrą, upę ir pelkę, krioklio tvenkinį, požemio ežerą ir oazę dykumoje. Mašina atsitrenkia į krantą ir pasirodo užrašas „Mašina negali važiuoti per vandenį!“.
 - Skraidantis transportas (sraigtasparnis, kilimas, debesų mašina, pterodaktilis ir kt.) virš vandens skristi vis dar gali.

@@ -5702,11 +5702,12 @@ function petDance(n,v,t,dt){n.danced=true;
 /* ---------- car ---------- */
 function spawnCar(){
   if(player.inCar)return;if(save.jail){floaty('Kalėjime transporto nėra!',player.pos);sfx('fail');return;}
+  const wet=(x,z)=>waterAt(x,z)&&player.pos.y-terrainH(x,z)<1.4;if(wet(player.pos.x,player.pos.z)){floaty('🌊 '+tr('Vandenyje transporto išsitraukti negalima – išlipk į krantą!'),player.pos);sfx('fail');return;}
   const blocked=(x,z)=>boxes.some(b=>b.top>player.pos.y+1.2&&b.bot<player.pos.y+2.5&&x>b.x0-1.8&&x<b.x1+1.8&&z>b.z0-1.8&&z<b.z1+1.8);
   let x=player.pos.x,z=player.pos.z;
   const type=save.owned[save.ride]?save.ride:'car',SD=(VEH[type]&&VEH[type].spawnD)||4.5;
   for(const da of[0,Math.PI/2,-Math.PI/2,Math.PI,Math.PI/4,-Math.PI/4]){const a=player.yaw+da,dw=player.pos.x>600,uw=player.pos.x<-600,cw=player.pos.z>600,cx=cw?clamp(player.pos.x+Math.sin(a)*SD,CLW.x-140,CLW.x+140):dw?clamp(player.pos.x+Math.sin(a)*SD,DW.x-140,DW.x+140):uw?clamp(player.pos.x+Math.sin(a)*SD,UW.x-140,UW.x+140):clamp(player.pos.x+Math.sin(a)*SD,-185,185),cz=cw?clamp(player.pos.z+Math.cos(a)*SD,CLW.z-140,CLW.z+140):clamp(player.pos.z+Math.cos(a)*SD,dw||uw?-140:-185,dw||uw?140:185);
-    if(SD>10||!blocked(cx,cz)){x=cx;z=cz;break;}}
+    if(SD>10||(!blocked(cx,cz)&&!wet(cx,cz))){x=cx;z=cz;break;}}
   if(car&&car.type!==type){scene.remove(car.root);car=null;}
   if(!car){const c=type==='moto'?makeMoto(0x3ec5ff):type==='heli'?makeHeli(0xffd23f):type==='quad'?makeQuad(0x9be564):type==='cow'?makeCowRide():type==='volcar'?makeVolcanoCar():type==='trunkcar'?makeTrunkCar():type==='flipcar'?makeFlipCar():type==='mummycar'?makeMummyCar():type==='lavamummycar'?makeMummyCar(true):type==='bananacar'?makeBananaCar():type==='lavaf1'?makeLavaF1():type==='wingcar'?makeWingCar():type==='limo'?makeLimo():type==='bigmoto'?makeBigMoto():type==='lampcar'?makeLampCar():type==='clowncar'?makeClownCar():type==='rocketcar'?makeRocketCar():type==='saucer'?makeSaucer():type==='carpet'?makeCarpet():type==='armchair'?makeArmchair():type==='bed'?makeBed():type==='tank'?makeTank():type==='police'?makePoliceCar():type==='golfcart'?makeGolfCart():type==='horsecar'?makeHorseCar():type==='snowcar'?makeSnowCar():type==='pengcar'?makePengCar():type==='sledcar'?makeSledCar():type==='bigcar'?makeBigCar():type==='crowncar'?makeCrownCar():isDinoVeh(type)?makeDinoVeh(type):makeCar(0xff5fa2);scene.add(c.root);car=Object.assign(c,{type,P:VEH[type],pos:V(),yaw:0,speed:0,vy:0,steer:0,bounce:0,bv:0,pitch:0});}
   if(save.paint&&save.paint[type])applyPaint(car,save.paint[type]);
@@ -8386,7 +8387,7 @@ function waterAt(x,z){if(x>600){if(terrainH(x,z)<-.45)return true;return Math.hy
 let carWaterMsgT=0;
 function carWaterBlock(c,ox,oz){if(c.pos.y-terrainH(c.pos.x,c.pos.z)>1.6)return false;if(!waterAt(c.pos.x,c.pos.z)||waterAt(ox,oz))return false;
   c.pos.x=ox;c.pos.z=oz;const now=performance.now();if(now-carWaterMsgT>4000){carWaterMsgT=now;floaty('🌊 '+tr('Mašina negali važiuoti per vandenį!'),c.pos.clone().add(V(0,2,0)));sfx('splash');}return true;}
-Object.assign(I18N_EN,{'Mašina negali važiuoti per vandenį!':'Cars can’t drive through water!'});i18nRe=null;i18nCache.clear();
+Object.assign(I18N_EN,{'Mašina negali važiuoti per vandenį!':'Cars can’t drive through water!','Vandenyje transporto išsitraukti negalima – išlipk į krantą!':'You can’t take out a vehicle in the water – get out onto the shore!'});i18nRe=null;i18nCache.clear();
 function updateOasisDive(dt){oasDiveCool-=dt;if(inOas||!started||player.inCar||oasDiveCool>0||!oasisPond)return;const p=player.pos,d=Math.hypot(p.x-OAS_C.x,p.z-OAS_C.z);
   const k=Math.min(WATER_NEED,save.genieWater||0)/WATER_NEED,r=8*(.35+.65*k)*.85;
   if(d<r&&p.y<oasisPondY+1.2&&p.y>oasisPondY-2&&player.vel.y<-3){
