@@ -5732,6 +5732,7 @@ function updateCar(dt){
   c.pos.x+=fx*c.speed*dt;c.pos.z+=fz*c.speed*dt;
   const hit=P.ghost?null:pushOut(c.pos,c.pos.y,2,P.rad);if(hit&&Math.abs(c.speed)>1){c.speed*=-.35;c.bv-=4;if(drive&&Math.abs(c.speed)>3)floaty('BUM!',c.pos);}
   if(c.pos.x>600){c.pos.x=clamp(c.pos.x,DW.x-144,DW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.x<-600){c.pos.x=clamp(c.pos.x,UW.x-144,UW.x+144);c.pos.z=clamp(c.pos.z,-144,144);}else if(c.pos.z>600){c.pos.x=clamp(c.pos.x,CLW.x-146,CLW.x+146);c.pos.z=clamp(c.pos.z,CLW.z-146,CLW.z+146);}else{c.pos.x=clamp(c.pos.x,-192,192);c.pos.z=clamp(c.pos.z,-192,192);}
+  if(carWaterBlock(c,c.pos.x-fx*c.speed*dt,c.pos.z-fz*c.speed*dt))c.speed*=-.25;
   if(c.type==='quad'){const want=drive&&keys.Space?32:grounded?0:14;c.spin=(c.spin||0)+(want-(c.spin||0))*Math.min(1,dt*(want>(c.spin||0)?2.2:1.2));
     c.spinAng=((c.spinAng||0)+c.spin*dt)%(Math.PI*2);
     if(c.spin>10){c.vy+=(drive&&keys.Space?G+9*(c.spin/32):G*.7)*dt;c.vy=clamp(c.vy,-4.5,9);if(c.pos.y>groundAt(c.pos.x,c.pos.z,c.pos.y,.5)+70)c.vy=Math.min(c.vy,0);
@@ -8379,6 +8380,13 @@ function enterOas(first){if(!oasBuilt)buildOasRoom();inOas=true;sfx('splash');
   else say(null,homeKind()==='oashome'?'Sveikas namie – slaptame namelyje po oaze! Hamakas – miegoti, kriauklė – drabužiai.':'Tavo slaptas namelis po oaze.');}
 function exitOas(){inOas=false;syncHomePets();sfx('splash');const y=terrainH(OAS_SHORE.x,OAS_SHORE.z);player.pos.set(OAS_SHORE.x,y+.1,OAS_SHORE.z);player.vel.set(0,6,0);player.yaw=Math.PI/2;cam.yaw=-Math.PI/2;camTarget.copy(player.pos);oasDiveCool=3;
   let i=0;for(const n of pets.values()){n.pos.set(OAS_SHORE.x+1.5,y+n.half+.4,OAS_SHORE.z-1.2+i*1.2);n.vel.set(0,0,0);i++;}floaty('Pliumpt!',player.pos);}
+function waterAt(x,z){if(x>600){if(terrainH(x,z)<-.45)return true;return Math.hypot(x-(DW.x-106),z+106)<7;}
+  if(x<-600)return Math.hypot(x-(UW.x-50),z+20)<9;if(z>600)return false;
+  if(oasisPond&&(save.genieWater||0)>0){const k=Math.min(WATER_NEED,save.genieWater)/WATER_NEED,r=8*(.35+.65*k)*.85;if(Math.hypot(x-OAS_C.x,z-OAS_C.z)<r)return true;}return false;}
+let carWaterMsgT=0;
+function carWaterBlock(c,ox,oz){if(c.pos.y-terrainH(c.pos.x,c.pos.z)>1.6)return false;if(!waterAt(c.pos.x,c.pos.z)||waterAt(ox,oz))return false;
+  c.pos.x=ox;c.pos.z=oz;const now=performance.now();if(now-carWaterMsgT>4000){carWaterMsgT=now;floaty('🌊 '+tr('Mašina negali važiuoti per vandenį!'),c.pos.clone().add(V(0,2,0)));sfx('splash');}return true;}
+Object.assign(I18N_EN,{'Mašina negali važiuoti per vandenį!':'Cars can’t drive through water!'});i18nRe=null;i18nCache.clear();
 function updateOasisDive(dt){oasDiveCool-=dt;if(inOas||!started||player.inCar||oasDiveCool>0||!oasisPond)return;const p=player.pos,d=Math.hypot(p.x-OAS_C.x,p.z-OAS_C.z);
   const k=Math.min(WATER_NEED,save.genieWater||0)/WATER_NEED,r=8*(.35+.65*k)*.85;
   if(d<r&&p.y<oasisPondY+1.2&&p.y>oasisPondY-2&&player.vel.y<-3){

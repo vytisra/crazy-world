@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-25 20:44 — v203 Mašinos nebevažiuoja per vandenį
+- Mašinomis ir kitu antžeminiu transportu nebegalima įvažiuoti į vandenį: dinozaurų jūrą, upę ir pelkę, krioklio tvenkinį, požemio ežerą ir oazę dykumoje. Mašina atsitrenkia į krantą ir pasirodo užrašas „Mašina negali važiuoti per vandenį!“.
+- Skraidantis transportas (sraigtasparnis, kilimas, debesų mašina, pterodaktilis ir kt.) virš vandens skristi vis dar gali.
+- Prieplauka važiuoti galima.
+
 ## 2026-10-25 20:34 — v202 Drakonės kibirai ir lenktynių atskaita
 - Nauja Drakonės misija „Vanduo Megalodonui“ (vietoj kiaušinių): prie Drakonės stovi 5 kibirai, Drakonės karalystėje yra 5 balos. Paimk kibirą, pasemk vandens iš balos ir išpilk Megalodonui prieplaukos gale. Taip 5 kartus. Kibirą matai savo rankoje, pilną – su vandeniu.
 - Kas jau buvo atlikęs senąją kiaušinių misiją – jam ji įskaityta.
