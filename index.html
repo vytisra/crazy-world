@@ -7525,7 +7525,7 @@ function startFlight(dest){if(FLT.on||FLT.busy)return;if(player.inCar){say(null,
   const cost=dest==='home'?0:dest==='cloud'&&!save.cldPaid?CLD_PRICE:FLY_PRICE;if(money<cost)return;if(dest==='dino'&&!save.tmPass)return;if(dest==='under'&&!save.ugPass)return;
   closeDialog();tryLock();money-=cost;$('money').textContent=money;if(dest==='cloud')save.cldPaid=1;saveGame(true);if(cost)floaty('✈ -$'+cost,player.pos);sfx('buy');FLT.busy=true;
   if(!FLT.plane){FLT.plane=makePlane();FLT.plane.scale.setScalar(1.25);scene.add(FLT.plane);}
-  tone(120,260,1.4,'sawtooth',.06);flyFlash(()=>{FLT.on=true;FLT.busy=false;FLT.ending=false;FLT.dest=dest;FLT.t=0;FLT.dur=FLT.testDur||(dest==='cloud'?60:dest==='home'?20:12);FLT.plane.visible=true;placeFly(0,0);
+  tone(120,260,1.4,'sawtooth',.06);flyFlash(()=>{FLT.on=true;FLT.busy=false;FLT.ending=false;FLT.dest=dest;FLT.t=0;FLT.dur=FLT.testDur||(dest==='cloud'?60:dest==='home'?20:5);FLT.plane.visible=true;placeFly(0,0);
     if(player.rag&&typeof getUp==='function')getUp();emote=null;dropAnchors();netRide={local:true,obj:FLT.plane,off:[0,2.72,.7],name:'lėktuvas',leaveLabel:'skrendi… ✈',noLeave:true};cam.dist=Math.max(cam.dist,15);cam.yaw=-(.35)-Math.PI;cam.pitch=.3;curZone=null;
     let h=$('flyHud');if(!h){h=document.createElement('div');h.id='flyHud';h.style.cssText='position:fixed;left:50%;top:74px;transform:translateX(-50%);z-index:40;background:#1b1430dd;color:#fff;padding:8px 18px;border-radius:16px;font:800 18px "Baloo 2",system-ui;border:3px solid #3ec5ff;pointer-events:none';document.body.append(h);}h.hidden=false;
     say(null,'Lėktuvas pakilo! Skrendame į '+FLY_NAMES[dest]+'.');});}

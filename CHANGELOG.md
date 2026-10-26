@@ -3,6 +3,9 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-26 14:56 — v207 Greitesni skrydžiai
+- Skrydis lėktuvu į Dinozaurų salą ir į Požeminį pasaulį dabar trunka tik 5 sekundes (buvo 12). Į Debesų salą – vis dar 1 minutė.
+
 ## 2026-10-26 14:46 — v206 Naujos ir greitesnės misijos
 - Kurmis, „Kasimo varžybos“: 6 kauburėlius reikia iškasti per 10 sekundžių (buvo 40).
 - Kurmis, nauja misija „Karūnos deimantai“ (vietoj deimantų ant stulpų): iš Kurmio karūnos iškrito 10 spalvotų deimantų, jie mėtosi ant žemės – surink visus.
