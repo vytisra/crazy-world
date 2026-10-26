@@ -3,6 +3,14 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-26 14:46 — v206 Naujos ir greitesnės misijos
+- Kurmis, „Kasimo varžybos“: 6 kauburėlius reikia iškasti per 10 sekundžių (buvo 40).
+- Kurmis, nauja misija „Karūnos deimantai“ (vietoj deimantų ant stulpų): iš Kurmio karūnos iškrito 10 spalvotų deimantų, jie mėtosi ant žemės – surink visus.
+- Sliekas, nauja misija „Sliekų jojimas“ (vietoj purvo lenktynių): sėsk ant didelio slieko su balnu, W – pirmyn, A/D – sukti, ir per 40 sekundžių prajok pro visus 6 vartus Slieko karalystėje. Viršuje rodomas laikmatis ir vartų skaičius.
+- Dievas, „Dangaus varpai“: 5 varpais reikia paskambinti per 10 sekundžių (buvo 30).
+- Erelis, „Vėjo lenktynės“: vėliavos perkeltos į atvirą vietą (nebe debesyse), laiko – 30 sekundžių (buvo 45).
+- Kas jau buvo atlikęs senąsias misijas („Deimantų gysla“, „Purvo lenktynės“) – jos įskaitytos.
+
 ## 2026-10-26 14:28 — v205 Grąžtas, požemis ir gyvūnėliai – angliškai
 - Pasirinkus anglų kalbą dabar viskas nuo Didžiojo grąžto yra angliškai: kasėjo Kastyčio pokalbiai, grąžto mokymai, GRĄŽTO PASAS, požeminis pasaulis, visi 3 požemio karaliai ir jų 15 misijų, požemio turgus, paslaptys, skambučiai ir pasiekimai.
 - Visi gyvūnėliai (dinozaurų, požemio ir debesų) dabar kalba angliškai.
