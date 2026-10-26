@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-26 14:28 — v205 Grąžtas, požemis ir gyvūnėliai – angliškai
+- Pasirinkus anglų kalbą dabar viskas nuo Didžiojo grąžto yra angliškai: kasėjo Kastyčio pokalbiai, grąžto mokymai, GRĄŽTO PASAS, požeminis pasaulis, visi 3 požemio karaliai ir jų 15 misijų, požemio turgus, paslaptys, skambučiai ir pasiekimai.
+- Visi gyvūnėliai (dinozaurų, požemio ir debesų) dabar kalba angliškai.
+- Išversti ir likę oro uosto, Debesų salos, namų bei telefono tekstai – iš viso 194 nauji vertimai.
+
 ## 2026-10-25 21:04 — v204 Vandenyje transporto išsitraukti negalima
 - Stovint vandenyje (jūroje, upėje, pelkėje, tvenkinyje, požemio ežere ar oazėje) transporto iškviesti (I) nebegalima – pasirodo užrašas „Vandenyje transporto išsitraukti negalima – išlipk į krantą!“.
 - Stovint ant kranto transportas niekada neatsiranda vandenyje – išsirenkama sausa vieta šalia.
