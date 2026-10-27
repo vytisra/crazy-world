@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-27 19:59 — v208 PWA: žaidimas kaip programėlė telefone
+- Žaidimą dabar galima įsidiegti telefone kaip programėlę (PWA): ikona pradžios ekrane, atsidaro per visą ekraną be naršyklės juostų (taip pat ir iPhone).
+- Android (Chrome): meniu ⋮ → „Įdiegti programą“ / „Pridėti prie pradžios ekrano“. iPhone (Safari): mygtukas „Bendrinti“ → „Į pradžios ekraną“.
+- Veikia ir be interneto (išskyrus online žaidimą ir pasaulinę lyderių lentelę). Prisijungus prie interneto visada atsisiunčiama naujausia versija.
+- Nauji failai: `manifest.webmanifest`, `service-worker.js`, aplankas `icons/` (ikonos padarytos iš `cover.png` paveikslėlio). Pačiame žaidime niekas nepasikeitė.
+
 ## 2026-10-26 14:56 — v207 Greitesni skrydžiai
 - Skrydis lėktuvu į Dinozaurų salą ir į Požeminį pasaulį dabar trunka tik 5 sekundes (buvo 12). Į Debesų salą – vis dar 1 minutė.
 

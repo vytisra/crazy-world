@@ -1,0 +1,19 @@
+{
+  "name": "Crazy World",
+  "short_name": "Crazy World",
+  "description": "Crazy World – išgelbėk 4 karalius ir surask vienintelį ne crazy daiktą pasaulyje!",
+  "lang": "lt",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#1b1430",
+  "theme_color": "#2a1f47",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
