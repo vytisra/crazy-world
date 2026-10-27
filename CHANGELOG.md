@@ -3,6 +3,13 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-27 20:48 — v209 🎃 Helovino renginys (iki lapkričio 20 d.)
+- Nuo šiandien iki lapkričio 20 d. (imtinai) Crazy pasaulyje vyksta HELOVINAS. Pasibaigus renginiui dekoracijos ir parduotuvė dingsta, bet nupirkti daiktai lieka visam laikui.
+- Dekoracijos: šviečiantys moliūgai aplink centrą ir palei kelius į visas karalystes, šikšnosparniai virš centro, 9 vaiduokliai, kurie išgąsdina (BŪ!) ir kartais palieka saldainį.
+- Saldainiai 🍬: kasdien po visą Crazy pasaulį išmėtoma 25 nauji saldainiai. Kairėje viršuje rodoma, kiek jų turi ir kiek šiandien dar liko surinkti.
+- Raganos Raganės parduotuvė centre (už saldainius): 🧙 Raganos kepurė (10), 🎃 Moliūgo galva (15), 👻 Vaiduokliukas gyvūnėlis (20), 👻 Vaiduoklio kostiumas (25), 🧹 skraidanti Raganos šluota (40).
+- Pirmą kartą įėjus – Helovino pranešimas su taisyklėmis. Viskas išversta į anglų kalbą.
+
 ## 2026-10-27 19:59 — v208 PWA: žaidimas kaip programėlė telefone
 - Žaidimą dabar galima įsidiegti telefone kaip programėlę (PWA): ikona pradžios ekrane, atsidaro per visą ekraną be naršyklės juostų (taip pat ir iPhone).
 - Android (Chrome): meniu ⋮ → „Įdiegti programą“ / „Pridėti prie pradžios ekrano“. iPhone (Safari): mygtukas „Bendrinti“ → „Į pradžios ekraną“.
