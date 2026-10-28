@@ -3,6 +3,14 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 15:34 — v210 🎃 Helovinas visuose pasauliuose
+- Helovinas dabar ne tik Crazy pasaulyje, bet ir dinozaurų saloje, požemyje bei Debesų saloje: moliūgai, vaiduokliai ir šikšnosparniai kiekviename pasaulyje.
+- Saldainiai 🍬 kasdien: 25 Crazy pasaulyje ir po 15 kiekviename kitame pasaulyje (iš viso 70 per dieną). Kairėje viršuje rodoma, kiek saldainių dar liko tame pasaulyje, kuriame esi.
+- Specialūs dalykai: dinozaurų saloje vaikšto 💀 Skeletas T-Rex (prie jo priėjus – RAAAR! ir +3 saldainiai), požemyje šviečia moliūgų grybai, Debesų saloje skraido raganos ant šluotų.
+- Nauja užduotis 🧪 Raganos eliksyras: kiekviename pasaulyje surask po vieną ingredientą (🕸 voratinklis, 🐉 drakono žvynas, 🍄 švytintis grybas, ⚡ žaibo kibirkštis) ir atnešk raganai Raganei. Atlygis: +30 saldainių ir slapta 🔒 Moliūgų karaliaus karūna.
+- Nauji daiktai raganos parduotuvėje: 🐈‍⬛ Raganos katinas (25), 🦇 Šikšnosparnio sparnai su sklandymu (30), 💀 Skeleto kostiumas (35), 🎃 Moliūgo karieta (50).
+- Viskas išversta į anglų kalbą.
+
 ## 2026-10-27 20:48 — v209 🎃 Helovino renginys (iki lapkričio 20 d.)
 - Nuo šiandien iki lapkričio 20 d. (imtinai) Crazy pasaulyje vyksta HELOVINAS. Pasibaigus renginiui dekoracijos ir parduotuvė dingsta, bet nupirkti daiktai lieka visam laikui.
 - Dekoracijos: šviečiantys moliūgai aplink centrą ir palei kelius į visas karalystes, šikšnosparniai virš centro, 9 vaiduokliai, kurie išgąsdina (BŪ!) ir kartais palieka saldainį.
