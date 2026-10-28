@@ -3,6 +3,15 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 16:21 — v212 🏠 Nauji namai Debesų saloje
+- Debesų saloje galima nusipirkti 4 naujus namus (be Debesų pilies):
+  - 🏠 Debesėlio namelis – $1500 (Erelio karalystėje, su debesų stogu);
+  - 🏠 Erelio lizdas – $2000 (Erelio karalystėje, ant stogo – lizdas su kiaušiniais);
+  - 🏠 Vaivorykštės vila – $2500 (Debesėlio karalystėje, po vaivorykšte);
+  - 🏠 Žvaigždžių bokštas – $5000 (Debesėlio karalystėje, su teleskopu ir besisukančia žvaigžde).
+- Nupirktame name gali miegoti, palikti gyvūnėlius, o lėktuvas atskraidina į tą Debesų salos namą, kurį nupirkai ar kuriame miegojai paskutinį kartą.
+- Visi namai pažymėti Debesų salos žemėlapyje. Per Heloviną debesėlių stogai irgi papilkėja.
+
 ## 2026-10-28 16:00 — v211 🌧 Lietus Debesų saloje per Heloviną
 - Per Helovino renginį visi debesys Debesų saloje (ir pati sala) tampa pilki, dangus apsiniaukęs, o iš debesų nuolat lyja.
 - Pasibaigus renginiui (po lapkričio 20 d.) debesys vėl balti, o lietus liaujasi.
