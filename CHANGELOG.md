@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 17:01 — v215 🌙 Per Heloviną visada naktis
+- Kol vyksta Helovino renginys (iki lapkričio 20 d.), Crazy pasaulyje ir dinozaurų saloje visada naktis: tamsus dangus, žvaigždės ir šviečiantys žibintai. Laikrodyje rodoma „Helovino naktis“.
+- Laikas toliau eina kaip anksčiau, todėl dienos, paskolos ir kalėjimo laikas skaičiuojami įprastai.
+- Debesų saloje lieka pilkas lietingas dangus, požemyje – kaip buvo. Pasibaigus renginiui vėl keičiasi diena ir naktis.
+
 ## 2026-10-28 16:54 — v214 🙌 Už žmonių mėtymą – nebe kalėjimas
 - Pagriebus ir numetus žmogų policija nebeiškviečiama ir į kalėjimą nebesiunčiama.
 - Jei policija tavęs ieškojo tik dėl žmonių mėtymo, paieška nutraukiama automatiškai.
