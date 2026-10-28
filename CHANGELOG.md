@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 16:00 — v211 🌧 Lietus Debesų saloje per Heloviną
+- Per Helovino renginį visi debesys Debesų saloje (ir pati sala) tampa pilki, dangus apsiniaukęs, o iš debesų nuolat lyja.
+- Pasibaigus renginiui (po lapkričio 20 d.) debesys vėl balti, o lietus liaujasi.
+
 ## 2026-10-28 15:34 — v210 🎃 Helovinas visuose pasauliuose
 - Helovinas dabar ne tik Crazy pasaulyje, bet ir dinozaurų saloje, požemyje bei Debesų saloje: moliūgai, vaiduokliai ir šikšnosparniai kiekviename pasaulyje.
 - Saldainiai 🍬 kasdien: 25 Crazy pasaulyje ir po 15 kiekviename kitame pasaulyje (iš viso 70 per dieną). Kairėje viršuje rodoma, kiek saldainių dar liko tame pasaulyje, kuriame esi.
