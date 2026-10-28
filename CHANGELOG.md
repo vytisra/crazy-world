@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 16:54 — v214 🙌 Už žmonių mėtymą – nebe kalėjimas
+- Pagriebus ir numetus žmogų policija nebeiškviečiama ir į kalėjimą nebesiunčiama.
+- Jei policija tavęs ieškojo tik dėl žmonių mėtymo, paieška nutraukiama automatiškai.
+- Kiti nusikaltimai (deimanto vagystė, žmogaus partrenkimas mašina, sprogdinimas šalia žmonių, negrąžinta paskola) veikia kaip anksčiau.
+
 ## 2026-10-28 16:50 — v213 🎁 Dovanos žaidėjams
 - Žaidimo kūrėjas dabar gali padovanoti dovanas konkretiems žaidėjams pagal paskyros vardą. Dovana atiduodama vieną kartą, kai žaidėjas prisijungia, ir parodomas pranešimas „🎁 Gavai dovaną!“.
 - Pirmoji dovana: žaidėjas vytisra1 gauna 10000 Helovino saldainių 🍬.

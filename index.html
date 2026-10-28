@@ -2438,7 +2438,7 @@ const KING_TALK={"Ledynų karalius": ["Brrr… mano ledo sostas per šiltas!", "
 function addNPC(o){if((o.kind==='dog'||o.kind==='homepet')&&PET_MORE[o.petId])o.lines=(o.lines||[]).concat(PET_MORE[o.petId]);
   const n=Object.assign({vel:V(),state:'idle',timer:rand(0,3),yaw:rand(0,6.28),phase:rand(0,6),r:.5,half:.95,held:0,range:12,speed:1.6,grabbable:true},o);
   n.pos=V(o.x,terrainH(o.x,o.z)+n.half,o.z);n.home=V(o.x,0,o.z);
-  n.onGrab=()=>{n.state='held';};n.onRelease=()=>{n.state='fly';if(hasPow('strongsuit')&&n.kind!=='dog'&&n.kind!=='homepet'){const sp=n.vel.length();n.vel.multiplyScalar(3.2);n.vel.y=Math.max(n.vel.y,sp>2?9:4);if(sp>2){floaty('💪 '+tr('ŠVYST!'),n.pos);sfx('throw');}}if(n.kind==='citizen'&&n.name!=='Kalinys'&&n.vel.length()>11&&zoneAt(n.pos.x,n.pos.z)!=='volcano')setTimeout(()=>crime('throw',n),50);};
+  n.onGrab=()=>{n.state='held';};n.onRelease=()=>{n.state='fly';if(hasPow('strongsuit')&&n.kind!=='dog'&&n.kind!=='homepet'){const sp=n.vel.length();n.vel.multiplyScalar(3.2);n.vel.y=Math.max(n.vel.y,sp>2?9:4);if(sp>2){floaty('💪 '+tr('ŠVYST!'),n.pos);sfx('throw');}}};
   scene.add(n.vis.root);npcs.push(n);return n;
 }
 
@@ -8171,7 +8171,7 @@ function lawHud(){const el=$('lawHud');let t='',bad=false;
   else if(save.loan){t=tr('🏦 Paskola')+' $'+save.loan.amt+' · '+tr('liko')+' '+fmtLeft(save.loan.due-gameT());}
   el.hidden=!t;el.textContent=t;el.classList.toggle('bad',bad);}
 let lawT=0;
-function updateLaw(dt){if(!started)return;lawT-=dt;if(lawT<=0){lawT=.5;lawHud();if((save.strength||0)>=STR_MAX&&!save.clothes.me.owned.includes('strongsuit')&&!dialogOpen&&!gymUse)grantStrongSkin();if(save.wanted&&!save.jail&&gameT()>=save.wanted.until){save.wanted=null;saveGame(true);say(null,'Policija nustojo tavęs ieškoti. Pasisekė!');lawHud();}if(save.wanted&&!save.jail&&hasPow('policesuit')){save.wanted=null;saveGame(true);sfx('ding');say(null,'Persirengei policininku – paieška nutraukta!');lawHud();}}
+function updateLaw(dt){if(!started)return;if(save.wanted&&(save.wanted.list||[]).length&&save.wanted.list.every(n=>n==='Mėtei žmones')){save.wanted=null;saveGame(true);}lawT-=dt;if(lawT<=0){lawT=.5;lawHud();if((save.strength||0)>=STR_MAX&&!save.clothes.me.owned.includes('strongsuit')&&!dialogOpen&&!gymUse)grantStrongSkin();if(save.wanted&&!save.jail&&gameT()>=save.wanted.until){save.wanted=null;saveGame(true);say(null,'Policija nustojo tavęs ieškoti. Pasisekė!');lawHud();}if(save.wanted&&!save.jail&&hasPow('policesuit')){save.wanted=null;saveGame(true);sfx('ding');say(null,'Persirengei policininku – paieška nutraukta!');lawHud();}}
   if(wanted()){if(!wantedSaid){wantedSaid=true;if(loanLate()){say(null,'Paskolos laikas baigėsi! Policija pradėjo tavęs ieškoti!');sfx('fail');}}
     if(!cop)spawnPolice();const pp=player.inCar&&car?car.pos:player.pos;const dx=pp.x-cop.pos.x,dz=pp.z-cop.pos.z,d=Math.hypot(dx,dz);
     if(d>140){removePolice();return;}
