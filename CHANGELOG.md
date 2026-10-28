@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-28 16:50 — v213 🎁 Dovanos žaidėjams
+- Žaidimo kūrėjas dabar gali padovanoti dovanas konkretiems žaidėjams pagal paskyros vardą. Dovana atiduodama vieną kartą, kai žaidėjas prisijungia, ir parodomas pranešimas „🎁 Gavai dovaną!“.
+- Pirmoji dovana: žaidėjas vytisra1 gauna 10000 Helovino saldainių 🍬.
+
 ## 2026-10-28 16:21 — v212 🏠 Nauji namai Debesų saloje
 - Debesų saloje galima nusipirkti 4 naujus namus (be Debesų pilies):
   - 🏠 Debesėlio namelis – $1500 (Erelio karalystėje, su debesų stogu);
