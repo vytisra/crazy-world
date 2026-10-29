@@ -3,6 +3,9 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-10-29 20:52 — v216 🎁 Dovana žaidėjui labas
+- Žaidėjas labas gauna dovaną – $10000 (vieną kartą, prisijungus).
+
 ## 2026-10-28 17:01 — v215 🌙 Per Heloviną visada naktis
 - Kol vyksta Helovino renginys (iki lapkričio 20 d.), Crazy pasaulyje ir dinozaurų saloje visada naktis: tamsus dangus, žvaigždės ir šviečiantys žibintai. Laikrodyje rodoma „Helovino naktis“.
 - Laikas toliau eina kaip anksčiau, todėl dienos, paskolos ir kalėjimo laikas skaičiuojami įprastai.
