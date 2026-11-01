@@ -3,6 +3,13 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-01 21:20 — v219 😱 Siaubų pasaulis dar baisesnis + jumpscare'ai
+- Siaubų pasaulis daug tamsesnis: tirštas rūkas, beveik juodas dangus, o aplink tave šviečia tik mirgantis žibintas.
+- Tamsoje tarp medžių žiūri raudonos akys – jos mirksi ir dingsta, kai prieini.
+- Toli priekyje kartais pasirodo juodi šešėliai raudonomis akimis. Prieini arčiau – ir jie dingsta…
+- Baisūs garsai: ūžimas, šnabždesiai, girgždėjimas, žingsniai. Kai šalia zombis, girdisi širdies plakimas.
+- 😱 JUMPSCARE'AI: atsitiktiniu metu (maždaug kas 1–2,5 min.) Siaubų pasaulyje per visą ekraną iššoka baisus veidas (kaukolė, zombis, vaiduoklis arba piktas moliūgas) su riksmu ir ekrano drebėjimu. Dialogų, žemėlapio ir traukinio metu jų nebūna.
+
 ## 2026-11-01 21:04 — v217 💀 Siaubų pasaulis
 - Naujas pasaulis – SIAUBŲ PASAULIS: amžina naktis, rūkas, raudonas mėnulis, žaibai, nudžiūvę medžiai, antkapiai ir zombiai, kurie gali tave parversti.
 - Kaip patekti: mieste, šalia oro uosto, stovi 👻 VAIDUOKLIŲ TRAUKINYS. Kaulinis konduktorius parduoda bilietą: pirmas kainuoja $500, vėliau – $50. Atgal važiuoti nemokama.
