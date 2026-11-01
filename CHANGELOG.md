@@ -3,6 +3,17 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-01 21:04 — v217 💀 Siaubų pasaulis
+- Naujas pasaulis – SIAUBŲ PASAULIS: amžina naktis, rūkas, raudonas mėnulis, žaibai, nudžiūvę medžiai, antkapiai ir zombiai, kurie gali tave parversti.
+- Kaip patekti: mieste, šalia oro uosto, stovi 👻 VAIDUOKLIŲ TRAUKINYS. Kaulinis konduktorius parduoda bilietą: pirmas kainuoja $500, vėliau – $50. Atgal važiuoti nemokama.
+- 4 siaubo karaliai, kiekvienas su 3 misijomis:
+  - 🧛 Vampyras (juodoji pilis šiaurėje): sugauk 6 šikšnosparnius; uždek 5 žvakides; išnešk 3 česnakų pintines į česnakų duobę.
+  - 🧟 Zombis (kapinės vakaruose): surink 8 kaulus; nuramink 6 kapus; per 40 s uždek 5 kapinių žibintus.
+  - 👻 Vaiduoklis (apleistas dvaras rytuose): ištiesink 4 kreivus paveikslus; atnešk 3 muzikinės dėžutės dalis; surask 5 pasislėpusius vaiduokliukus.
+  - 🎃 Moliūgagalvis (moliūgų laukas pietuose): uždek 6 moliūgų žibintus; sugrąžink 3 pabėgusius moliūgus; per 30 s paliesk 5 baidykles.
+- Atlygis: $250 už kiekvieną misiją, $700 už kiekvieną karalių, o išgelbėjus visus 4 – dar $2500, slaptas 🔒 Vampyro apsiaustas (sklandymas) ir 🔒 Kaukolės kaukė.
+- Siaubų pasaulio žemėlapis (Tab), 2 nauji pasiekimai, Helovino saldainiai ir ten. Viskas išversta į anglų kalbą.
+
 ## 2026-10-29 20:52 — v216 🎁 Dovana žaidėjui labas
 - Žaidėjas labas gauna dovaną – $10000 (vieną kartą, prisijungus).
 
