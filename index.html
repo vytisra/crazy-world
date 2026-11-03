@@ -8427,7 +8427,7 @@ function crime(type,victim,pos){if(save.jail||!started)return;const C=CRIMES[typ
   speakAt(npcSpk(w),pick(['📞 Alio, policija?! Čia kažkas blogo vyksta!','📞 Policija! Greičiau atvažiuokit!','📞 Aš viską mačiau! Skambinu policijai!']),4);sfx('ui');
   setTimeout(()=>{if(save.jail)return;const W=save.wanted&&gameT()<save.wanted.until?save.wanted:{days:0,list:[]};W.days=Math.min(7,W.days+C.d);W.until=gameT()+24;W.last=C.n;W.list=(W.list||[]).concat(C.n).slice(-5);save.wanted=W;saveGame(true);
     say(null,tr('Gyventojas paskambino policijai:')+' '+tr(C.n)+'! '+tr('Policija tavęs ieško')+' ('+tr('kalėjimo')+' '+crimeDays()+' '+tr('d.')+')');sfx('fail');lawHud();},2200);}
-function wanted(){return !save.jail&&!(save.copRest&&gameT()<save.copRest)&&(loanLate()||crimeWanted());}
+function wanted(){return !save.jail&&((loanLate()&&!(save.copRest&&gameT()<save.copRest))||crimeWanted());}
 function spawnPolice(){const c=makePoliceCar();scene.add(c.root);const a=rand(0,6.28),pp=player.inCar&&car?car.pos:player.pos;
   const pos=V(clamp(pp.x+Math.sin(a)*60,-185,185),0,clamp(pp.z+Math.cos(a)*60,-185,185));pos.y=terrainH(pos.x,pos.z);
   const off=makeChar({body:0x1d2f6b,head:0xf2c9a0,legs:0x1b1430});off.root.scale.setScalar(.85);off.legL.p.rotation.x=off.legR.p.rotation.x=-1.5;off.root.position.set(0,.2,-.3);c.body.add(off.root);
@@ -8675,7 +8675,7 @@ function digTunnel(){if(!holdingSpoon()){sfx('fail');return;}const nw=performanc
   if(jail.dig>=DIG_NEED){say(null,'Tunelis iškastas! Lendi lauk…');for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}
     const h=put(GEO.cyl,M.dark,JAIL.x,JAIL.y+.02,JAIL.z1+2.2,.8,.04,.8);player.pos.set(JAIL.x,JAIL.y+.2,JAIL.z1+2.6);player.vel.set(0,3,2);}}
 function inJailArea(p){return p.x>JAIL.x0-.6&&p.x<JAIL.x1+.6&&p.z>JAIL.z0-.6&&p.z<JAIL.z1+.6;}
-function jailEscaped(){save.jail=null;jail.ready=false;sfx('win');{const W=crimeWanted()?save.wanted:{days:0,list:[]};W.days=Math.min(10,Math.max(W.days||0,3));W.until=gameT()+24;W.last='Pabėgai iš kalėjimo';W.list=(W.list||[]).concat('Pabėgai iš kalėjimo').slice(-5);save.wanted=W;}lawHud();setTimeout(()=>{say(null,'🚨 Sirenos! Policija jau ieško pabėgusio kalinio – slėpkis!');sfx('fail');},2500);const me=save.clothes.me;
+function jailEscaped(){save.jail=null;jail.ready=false;sfx('win');save.wanted=null;save.copRest=gameT()+24;removePolice();lawHud();const me=save.clothes.me;
   if(!me.owned.includes('prisonsuit')){me.owned.push('prisonsuit');saveGame(true);
     openDialog({name:'PABĖGAI IŠ KALĖJIMO!',role:'Kalėjimo paslaptis',color:'#ff7a1a',icon:'⛓',text:'Tu pabėgai iš crazy kalėjimo! Kaliniai tau paslapčia numetė savo dryžuotą kostiumą. Gavai slaptą KALINIO SKINĄ!',tasks:[{b:'GAVAI',t:'Slaptas kalinio kostiumas (drabužių parduotuvėje)',chip:'⛓'}]});}
   else{saveGame(true);say(null,'Vėl pabėgai! Tu – tikras pabėgimų meistras.');}floaty('PABĖGAI IŠ KALĖJIMO!',player.pos);}

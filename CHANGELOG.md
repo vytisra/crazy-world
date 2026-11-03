@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-03 20:13 — v223 🏃 Pabėgus iš kalėjimo policija nebegaudo
+- Kai pabėgi iš kalėjimo, policija tavęs nebegaudo – sena paieška panaikinama.
+- Jei buvai skolingas bankui, policija dėl paskolos kitą dieną neieško. Bet jei vėl prisidirbsi (partrenksi žmogų, sprogdinsi ar apiplėši banką), policija vėl gaudys.
+
 ## 2026-11-03 12:31 — v222 🏠 Respawn mygtukas kampe + policija pasiduoda po 1 min
 - Apatiniame dešiniajame ekrano kampe dabar visada matomas mygtukas „🏠 Respawn H“. Paspausti jį galima, kai pelės žymeklis laisvas (pvz. atidarius nustatymus Esc), o žaidžiant užtenka spausti H.
 - POLICIJA: jei policija tave gaudo 1 minutę ir nepagauna – nustoja gaudyti. Viršuje rodoma, kiek sekundžių dar liko (⏱). Dėl negrąžintos paskolos policija pasiduoda tik iki kitos dienos – tada vėl ieškos.
