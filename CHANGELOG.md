@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-03 20:57 — v225 🌐 Online: visi mato tą patį pasaulį
+- Online lobby dabar turi vieną bendrą pasaulį, kurį „valdo“ lobby kūrėjas: visi žaidėjai mato žmones (NPC) tose pačiose vietose ir judančius taip pat, tuos pačius daiktus (kibirus, kamuolius, ledo luitus ir kt.) tose pačiose vietose bei tą patį paros metą.
+- Kai kuris nors žaidėjas paima, neša ar meta žmogų ar daiktą, kiti mato, kaip jis juda – ir daiktas lieka ten, kur jį padėjo.
+
 ## 2026-11-03 20:38 — v224 🌐 Online: matai draugų daiktus, gyvūnėlius ir bendros misijos
 - Online lobby: kai draugas laiko daiktą rankose (kibirą, ledo luitą, žmogų, gyvūnėlį…), visi kiti tai mato jo rankose.
 - Draugų gyvūnėliai dabar matomi visiems – jie vaikšto paskui savo šeimininką, su drabužiais ir užrašu „Vardas · gyvūnėlis“.

@@ -8126,7 +8126,7 @@ const clock=new THREE.Clock();let T=0;
 function frame(){
   const dt=Math.min(clock.getDelta(),.05);T+=dt;
   if(keys.KeyQ&&!uiBlocking())cam.yaw+=dt*2;if(keys.KeyE&&!uiBlocking()&&!(player.inCar&&car&&(car.crater||car.lid||car.rocket||car.tank||car.police||car.flipCar||car.clown))&&!(!player.inCar&&hasPow('volcanohat')))cam.yaw-=dt*2;
-  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateDino3(dt,T);updateUnder(dt,T);updateCloud(dt,T);updateHorror(dt,T);hScary(dt,T);updateHalloween(dt,T);giftTick();updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
+  updateTornados(dt,T);updatePlayer(dt,T);updateCar(dt);animPlayer(dt,T);updateHands(dt);updateBodies(dt,T);updateNPCs(dt,T);netWorldApply(dt);updateHorseRide(dt,T);updatePhones(dt,T);updateMama(dt);updateLostPengs();updateKingIce(dt);updateNet(dt);updateDesertFun(dt);updateLolli(dt);updateTen(dt);updateCourt(dt);updateAch(dt);updateEmote(dt);updateTouch();updateDino(dt);updateDino3(dt,T);updateUnder(dt,T);updateCloud(dt,T);updateHorror(dt,T);hScary(dt,T);updateHalloween(dt,T);giftTick();updateVolcanoFun(dt);updateSnowFun(dt);updateOasisDive(dt);updatePhone(dt);updateRec(dt);updateStrongBump();updateLaw(dt);updateMusPop(dt);updateCafeKnife(dt);updateTLights(dt,T);updateClownKids(dt,T);updateShells(dt);updateLavaHoles(dt);updateSacrifice(dt);updateGnomeTour(dt);updatePengShop(dt);updateSled(dt,T);updateToys(dt);updateBackCars(dt,T);updateTraffic(dt,T);updateCows(dt,T);
   for(const a of anims)a(T,dt);
   lavaTimer-=dt;if(lavaTimer<=0){if(!volCalm())spawnLavaBall();lavaTimer=rand(1.8,3.6);}
   for(const c of coins){if(!c.on){c.t-=dt;if(c.t<=0){c.on=true;c.m.visible=true;}continue;}
@@ -8225,6 +8225,7 @@ function netRecv(m){if(!m||m.from===NET.id)return;
   if(m.t==='pacc'&&m.to===NET.id){if(phCall&&phCall.friend&&phCall.id===m.from){phCall.live=true;phCall.msgs.push({sys:1,t:tr('Atsiliepė!')});renderPhone();}return;}
   if(m.t==='pmsg'&&m.to===NET.id){if(phCall&&phCall.friend&&phCall.id===m.from){phCall.msgs.push({t:m.text});renderPhone();sfx('pop');}return;}
   if(m.t==='pend'&&m.to===NET.id){if(phCall&&phCall.friend&&phCall.id===m.from){phCall.msgs.push({sys:1,t:tr('Pokalbis baigtas.')});phCall.ended=true;renderPhone();}if(phRingInfo&&phRingInfo.id===m.from)hideRing();return;}
+  if(m.t==='ws'||m.t==='wo'){netWorldRecv(m);return;}
   if(m.t==='ktask'||m.t==='kall'){netKingRecv(m);return;}
   if(m.t==='chat'){say(m.name,m.text);const pr=NET.peers.get(m.from);if(pr)netBubble(pr,m.text);return;}
   if(m.t==='bye'){netDrop(m.from,true);if(NET.host){NET.members=NET.members.filter(x=>x.id!==m.from);netSend({t:'roster',members:NET.members});}netHud();return;}
@@ -8267,6 +8268,30 @@ function netKingTick(dt){if(!NET.on||!started)return;NKT.T+=dt;if(NKT.T<1)return
 function netKingRecv(m){const L=m.t==='kall'?m.list:m.add;if(!Array.isArray(L))return;let n=0;const many=L.length>3;
   for(const q of L){if(!Array.isArray(q)||typeof q[0]!=='string'||typeof q[1]!=='string')continue;if(netApplyTask(q[0].slice(0,40),q[1].slice(0,60),m.name,many))n++;}
   if(many&&n){sfx('win');say(null,'🌐 '+(m.name||tr('Draugas'))+': '+n+' '+tr('misijų įskaityta ir tau!'));}}
+/* ---------- v225: online – everyone sees the same world (host-authoritative NPCs, objects and time of day) ---------- */
+const NWS={T:0,full:0,last:new Map(),own:new Map(),tgtN:new Map(),tgtB:new Map()};
+function nwSyncN(n){return !!(n&&n.vis&&n.kind!=='dog'&&n.kind!=='homepet');}
+function nwMarkOwn(){const now=performance.now();for(const s2 of['L','R']){const o=hands[s2].obj;if(!o)continue;if(o.mesh){const i=bodies.indexOf(o);if(i>=0)NWS.own.set('b'+i,now+2500);}else if(o.vis&&nwSyncN(o)){const i=npcs.indexOf(o);if(i>=0)NWS.own.set('n'+i,now+2500);}}}
+function nwOwned(k){const u=NWS.own.get(k);return !!u&&u>performance.now();}
+const nwPackN=(i,n)=>[i,r2(n.pos.x),r2(n.pos.y),r2(n.pos.z),r2(n.yaw||0),n.kind?n.kind.charCodeAt(0):0];
+const nwPackB=(i,b)=>[i,r2(b.pos.x),r2(b.pos.y),r2(b.pos.z),(b.name||'').length];
+function netWorldTick(dt){if(!NET.on||!started)return;nwMarkOwn();NWS.T+=dt;
+  if(NET.host){if(NWS.T<.2)return;NWS.full-=NWS.T;NWS.T=0;const full=NWS.full<=0;if(full)NWS.full=4;const N=[],B=[];
+    npcs.forEach((n,i)=>{if(!nwSyncN(n))return;const k='n'+i,p=NWS.last.get(k);if(full||!p||Math.abs(p[0]-n.pos.x)+Math.abs(p[1]-n.pos.y)+Math.abs(p[2]-n.pos.z)>.08){N.push(nwPackN(i,n));NWS.last.set(k,[n.pos.x,n.pos.y,n.pos.z]);}});
+    bodies.forEach((b,i)=>{if(b.hot)return;const k='b'+i,p=NWS.last.get(k);if(full||!p||Math.abs(p[0]-b.pos.x)+Math.abs(p[1]-b.pos.y)+Math.abs(p[2]-b.pos.z)>.05){B.push(nwPackB(i,b));NWS.last.set(k,[b.pos.x,b.pos.y,b.pos.z]);}});
+    netSend({t:'ws',h:r2(hour),n:N,b:B});}
+  else{if(NWS.T<.1)return;NWS.T=0;const N=[],B=[],now=performance.now();for(const [k,u] of NWS.own){if(u<now){NWS.own.delete(k);continue;}const i=+k.slice(1);if(k[0]==='n'&&npcs[i])N.push(nwPackN(i,npcs[i]));if(k[0]==='b'&&bodies[i])B.push(nwPackB(i,bodies[i]));}
+    if(N.length||B.length)netSend({t:'wo',n:N,b:B});}}
+function netWorldRecv(m){const ro=m.t==='wo',now=performance.now();
+  if(m.t==='ws'){if(NET.host)return;if(typeof m.h==='number'&&Math.abs(m.h-hour)>.05)hour=m.h;}
+  for(const q of(Array.isArray(m.n)?m.n:[])){const n=npcs[q[0]];if(!nwSyncN(n)||(n.kind&&n.kind.charCodeAt(0)!==q[5]))continue;if(!ro&&(nwOwned('n'+q[0])||n.state==='held'))continue;NWS.tgtN.set(q[0],{x:q[1],y:q[2],z:q[3],yaw:q[4],t:now,ro});}
+  for(const q of(Array.isArray(m.b)?m.b:[])){const b=bodies[q[0]];if(!b||b.hot||(b.name||'').length!==q[4])continue;if(!ro&&(nwOwned('b'+q[0])||b.held))continue;NWS.tgtB.set(q[0],{x:q[1],y:q[2],z:q[3],t:now,ro});}}
+function netWorldApply(dt){if(!NET.on)return;const now=performance.now(),k=Math.min(1,dt*10);
+  for(const [i,T2] of NWS.tgtN){const n=npcs[i];if(!n||now-T2.t>1500||(n.state==='held'&&!T2.ro)){NWS.tgtN.delete(i);continue;}
+    const dx=T2.x-n.pos.x,dy=T2.y-n.pos.y,dz=T2.z-n.pos.z;if(Math.abs(dx)+Math.abs(dz)>8)n.pos.set(T2.x,T2.y,T2.z);else{n.pos.x+=dx*k;n.pos.y+=dy*k;n.pos.z+=dz*k;}
+    n.vel.x=dx*2;n.vel.z=dz*2;n.vel.y=0;n.yaw=T2.yaw;if(n.state==='walk'||n.state==='idle'||n.state==='fly'){n.state='idle';n.timer=5;}}
+  for(const [i,T2] of NWS.tgtB){const b=bodies[i];if(!b||now-T2.t>1500){NWS.tgtB.delete(i);continue;}const dx=T2.x-b.pos.x,dy=T2.y-b.pos.y,dz=T2.z-b.pos.z;
+    if(Math.abs(dx)+Math.abs(dy)+Math.abs(dz)>8)b.pos.set(T2.x,T2.y,T2.z);else{b.pos.x+=dx*k;b.pos.y+=dy*k;b.pos.z+=dz*k;}b.vel.set(0,0,0);b.mesh.position.copy(b.pos);b.mesh.position.y+=b.yOff||0;}}
 const LIMBS=['armL','armR','legL','legR'];
 function netPose(m){let pr=NET.peers.get(m.from);
   if(!pr){const v=makeChar({body:m.body||0xff8a3d});const root=new THREE.Group();root.add(v.root);scene.add(root);const nt=tag(m.name,'#7ee8ff',.6);nt.position.y=2.9;root.add(nt);
@@ -8298,7 +8323,7 @@ function updateNet(dt){if(!NET.on)return;
     if(pr.bub){pr.bub.position.set(pr.nt.position.x,pr.nt.position.y+.7,pr.nt.position.z);pr.bubT-=dt;if(pr.bubT<=0){pr.root.remove(pr.bub);pr.bub=null;}}
     if(pr.carMesh){const c=pr.carMesh.root;if(pr.tcp.distanceTo(c.position)>12)c.position.copy(pr.tcp);else c.position.lerp(pr.tcp,k);c.rotation.y=angLerp(c.rotation.y,pr.tcy,k);}
     try{netSyncPeerExtras(pr,dt,k);}catch(e){}}
-  netKingTick(dt);
+  netKingTick(dt);netWorldTick(dt);
 }
 function netLeave(){if(NET.on)netSend({t:NET.host?'close':'bye'});setTimeout(()=>{try{PJ.peer&&PJ.peer.destroy();}catch(e){}},50);try{if(RMN.named)RMN.named.leave();if(RMN.room&&NET.host)RMN.room.presence({lob:null,lobN:null,ph:null}).catch(()=>{});}catch(e){}}
 addEventListener('pagehide',netLeave);
