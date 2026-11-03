@@ -3,6 +3,16 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-03 11:47 — v220 🏠 Respawn mygtukas + sunkesnis pabėgimas iš kalėjimo
+- RESPAWN: paspaudus H (arba „🏠 Respawn“ nustatymuose, telefone – 🏠 mygtukas meniu „⋯“) atsiteleportuoji į savo namus. Jei namų neturi – prie kojinės centre. Veikia iš bet kurio pasaulio, gyvūnėliai keliauja kartu (jei sėdi mašinoje – iš jos išlipi).
+- Respawn neveikia kalėjime, kelionės metu ir pastatų viduje (pirma išeik pro duris).
+- KALĖJIMAS SUNKESNIS:
+  - po kalėjimą vaikšto Budrus sargybinis su žibintuvėliu – jei jis pamato, kaip kasi tunelį, ar pastebi tave su raktu, grąžina į kamerą ir prideda +1 dieną bausmės;
+  - tunelį reikia kasti 12 kartų (anksčiau 5), o kasti galima tik pamažu;
+  - miegantis sargybinis kartais pabunda – jei bandysi vogti raktą, kai jis nemiega, būsi pagautas;
+  - kad siena sugriūtų, Bulius turi tave į ją mesti 3 kartus;
+  - pabėgus iš kalėjimo policija iš karto vėl tavęs ieško.
+
 ## 2026-11-01 21:20 — v219 😱 Siaubų pasaulis dar baisesnis + jumpscare'ai
 - Siaubų pasaulis daug tamsesnis: tirštas rūkas, beveik juodas dangus, o aplink tave šviečia tik mirgantis žibintas.
 - Tamsoje tarp medžių žiūri raudonos akys – jos mirksi ir dingsta, kai prieini.
