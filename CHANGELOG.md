@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-03 20:38 — v224 🌐 Online: matai draugų daiktus, gyvūnėlius ir bendros misijos
+- Online lobby: kai draugas laiko daiktą rankose (kibirą, ledo luitą, žmogų, gyvūnėlį…), visi kiti tai mato jo rankose.
+- Draugų gyvūnėliai dabar matomi visiems – jie vaikšto paskui savo šeimininką, su drabužiais ir užrašu „Vardas · gyvūnėlis“.
+- BENDROS MISIJOS: kai kuris nors lobby žaidėjas įvykdo karaliaus misiją (bet kuriame pasaulyje), ji įskaitoma visiems – gauna pinigus ir progresą, o surinkus visas misijas – ir karūną. Prisijungus prie lobby misijos susilygina su kitais žaidėjais.
+
 ## 2026-11-03 20:13 — v223 🏃 Pabėgus iš kalėjimo policija nebegaudo
 - Kai pabėgi iš kalėjimo, policija tavęs nebegaudo – sena paieška panaikinama.
 - Jei buvai skolingas bankui, policija dėl paskolos kitą dieną neieško. Bet jei vėl prisidirbsi (partrenksi žmogų, sprogdinsi ar apiplėši banką), policija vėl gaudys.
