@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 12:05 — v229 🚨 Policija gaudo visuose pasauliuose + pataisyti namai kitame pasaulyje
+- Dinozaurų saloje, požemyje, Debesų saloje ir Siaubų pasaulyje dabar gyvena gyventojai (urviniai žmonės, kalnakasiai, debesų gyventojai, siaubų gyventojai). Jei jie pamato, kaip darai blogą darbą (partrenki žmogų mašina ar sprogdini šalia žmonių), paskambina policijai – atvažiuoja to pasaulio policija ir gali uždaryti į to pasaulio kalėjimą.
+- PATAISYTA: jei namą kitame pasaulyje nusipirkai dar prieš v228, žaidimas dabar tai supranta ir pradėjus žaisti atsirandi tame name (nereikia pirma pamiegoti).
+
 ## 2026-11-04 11:02 — v228 🏠 Pradedi kitame pasaulyje savo namuose + kiekviename pasaulyje savas kalėjimas ir policija
 - Jei nusipirkai namą kitame pasaulyje (dinozaurų saloje, požemyje ar Debesų saloje), pradėjęs žaisti atsirandi tame name. Galioja paskutinis namas, kurį nusipirkai arba kuriame miegojai. Nusipirkus ar pasirinkus namus Crazy pasaulyje – vėl pradedi ten. Respawn (H) taip pat nukelia į tuos namus.
 - Kiekvienas pasaulis turi savo policiją ir kalėjimą:
