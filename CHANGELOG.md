@@ -3,6 +3,9 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 12:12 — v230 💬 Discord serveris meniu
+- Pradžios meniu ir nustatymuose (Esc) atsirado mygtukas „💬 Prisijunk prie mano Discord serverio!“ – jis atidaro https://discord.gg/SCqpkzet4 naujame lange.
+
 ## 2026-11-04 12:05 — v229 🚨 Policija gaudo visuose pasauliuose + pataisyti namai kitame pasaulyje
 - Dinozaurų saloje, požemyje, Debesų saloje ir Siaubų pasaulyje dabar gyvena gyventojai (urviniai žmonės, kalnakasiai, debesų gyventojai, siaubų gyventojai). Jei jie pamato, kaip darai blogą darbą (partrenki žmogų mašina ar sprogdini šalia žmonių), paskambina policijai – atvažiuoja to pasaulio policija ir gali uždaryti į to pasaulio kalėjimą.
 - PATAISYTA: jei namą kitame pasaulyje nusipirkai dar prieš v228, žaidimas dabar tai supranta ir pradėjus žaisti atsirandi tame name (nereikia pirma pamiegoti).
