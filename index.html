@@ -93,6 +93,7 @@ body{background:var(--ink);color:var(--paper);font-family:var(--body);font-size:
 #respawnCorner{position:fixed;right:14px;bottom:14px;z-index:66;pointer-events:auto;font:inherit;font-weight:800;font-size:15px;padding:6px 12px;border-radius:14px;border:3px solid var(--ink);background:var(--mint);color:var(--ink);box-shadow:3px 3px 0 var(--ink);cursor:pointer;display:flex;align-items:center;gap:6px}
 #respawnCorner:hover{background:var(--sun)}#respawnCorner .kbd{font-size:.7em}
 body.touch #respawnCorner{display:none}
+#lobList{margin-top:12px;display:flex;flex-direction:column;gap:6px;max-height:230px;overflow:auto;text-align:left}#lobList h4{margin:0;font-size:15px;color:var(--sun)}.lobRow{font:inherit;font-weight:800;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 12px;border-radius:12px;border:3px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--ink)}.lobRow:hover{background:var(--sun)}.lobRow.full{opacity:.5;cursor:not-allowed}.lobRow small{font-size:13px;opacity:.75}
 .dcLink{display:inline-block;font-weight:800;font-size:16px;padding:8px 16px;border-radius:14px;border:3px solid var(--ink);background:#5865f2;color:#fff;text-decoration:none;box-shadow:3px 3px 0 var(--ink)}.dcLink:hover{background:#4752c4}
 #toolbar{position:absolute;bottom:64px;right:14px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:46%}
 #toolbar[hidden]{display:none}
@@ -421,9 +422,11 @@ body.touch #tClose:not([hidden]){display:block}
     <form id="lobForm" hidden autocomplete="off">
       <h2 id="lobTitle" style="margin:0 0 10px">Create lobby</h2>
       <label for="lobName">Lobby vardas</label><input id="lobName" maxlength="20" placeholder="pvz. vilius lobby">
-      <div id="lobPassWrap"><label for="lobPass" style="margin-top:10px">Lobby slaptažodis</label><input id="lobPass" type="password" maxlength="40" placeholder="slaptažodis"></div>
+      <div id="lobPassWrap"><label id="lobPassLbl" for="lobPass" style="margin-top:10px">Lobby slaptažodis</label><input id="lobPass" type="password" maxlength="40" placeholder="slaptažodis"></div>
       <div id="lobErr" class="acc-err"></div>
       <div style="display:flex;gap:10px;justify-content:center"><button id="lobBack" class="chipbtn" type="button">← Atgal</button><button id="lobGo" class="btn" type="submit">Create</button></div>
+      <div id="lobHint" class="small" style="margin-top:8px" hidden>Be slaptažodžio – atviras serveris: jį matys visi „Join lobby“ sąraše.</div>
+      <div id="lobList" hidden></div>
     </form>
   </div>
 </div>
@@ -538,6 +541,7 @@ Object.assign(I18N_EN,{"Skraidanti karvė": "Flying cow", "Gyvatėlė": "Snake",
 Object.assign(I18N_EN,{"1–0 arba spustelk · C arba Esc – uždaryti · judėk – sustabdyti": "1–0 or click · C or Esc – close · move – stop", "Emotes (šokiai, mojavimas…)": "Emotes (dances, waving…)", "Mojuoti": "Wave", "Šokti": "Dance", "Valio!": "Hooray!", "Juoktis": "Laugh", "Verkti": "Cry", "Sėdėti": "Sit", "Suktis": "Spin", "Kazačiokas": "Russian kick dance", "Dinozauro šokis": "Dinosaur dance", "Slaptas": "Secret", "Dinozauras šoka?!": "The dinosaur is dancing?!", "Slaptas emote atrakintas!": "Secret emote unlocked!", "Tu pamatei, kaip muziejaus dinozauras ŠOKA – o juk jis niekada nejuda, kai į jį žiūri! Mokslininkai netiki, bet tu matei. Gavai slaptą emote DINOZAURO ŠOKIS. Spausk C ir šok kaip tikras Crazyzauras!": "You saw the museum dinosaur DANCE – and it never moves when someone is looking! Scientists won't believe it, but you saw it. You got the secret emote DINOSAUR DANCE. Press C and dance like a real Crazysaurus!", "Cha!": "Ha!", "Cha cha!": "Ha ha!", "Hihi!": "Hee hee!"});
 Object.assign(I18N_EN,{"Lyderiai": "Leaderboard", "Greičiausiai perėjo žaidimą": "Fastest to beat the game", "Daugiausia pinigų": "Most money", "Dar niekas neperėjo žaidimo – surink 4 karūnas!": "Nobody has beaten the game yet – collect 4 crowns!", "Dar nėra rezultatų.": "No results yet.", "tu": "you", "Rodomi šio kompiuterio žaidėjai ir draugai tavo online lobby 🌐": "Shows players on this computer and friends in your online lobby 🌐"});
 Object.assign(I18N_EN,{"💬 Prisijunk prie mano Discord serverio!": "💬 Join my Discord server!","Prisijunk prie mano serverio!": "Join my server!","atidaryti Discord serverį 💬": "open the Discord server 💬","Discord atsidarė naujame lange!": "Discord opened in a new window!","Naršyklė užblokavo langą – Discord: discord.gg/SCqpkzet4": "The browser blocked the window – Discord: discord.gg/SCqpkzet4"});
+Object.assign(I18N_EN,{"Lobby slaptažodis (nebūtina)":"Lobby password (optional)","Be slaptažodžio – atviras serveris: jį matys visi „Join lobby“ sąraše.":"No password = open server: everyone will see it in the „Join lobby“ list.","🌍 Atviri serveriai (be slaptažodžio)":"🌍 Open servers (no password)","Ieškoma serverių…":"Looking for servers…","Kol kas atvirų serverių nėra – sukurk savo!":"No open servers yet – create your own!","Spausk ant serverio, kad prisijungtum, arba įrašyk vardą viršuje.":"Click a server to join, or type a name above.","⛔ Kalėjimas turi stogą!":"⛔ The jail has a roof!","atviras":"open","nebūtina":"optional","Lobby slaptažodis":"Lobby password","slaptažodis":"password"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -8174,6 +8178,7 @@ function frame(){
   if(inVin){want.y=clamp(want.y,VIN.y+.6,VIN.y+VIN.h-2);const dx=want.x-VIN.x,dz=want.z-VIN.z,dd=Math.hypot(dx,dz),m=(VIN.r+.4-((want.y-VIN.y)/VIN.h)*(VIN.r+.4-10))-1.3;if(dd>m){want.x=VIN.x+dx/dd*m;want.z=VIN.z+dz/dd*m;}}
   if(inVlh){want.x=clamp(want.x,VLH.x-VLH.w/2+.8,VLH.x+VLH.w/2-.8);want.z=clamp(want.z,VLH.z-VLH.d/2+.8,VLH.z+VLH.d/2-.8);want.y=clamp(want.y,VLH.y+.6,VLH.y+VLH.h-1);}
   if(inOas){want.y=clamp(want.y,OAS.y+.6,OAS.y+OAS.h-1.2);const dx=want.x-OAS.x,dz=want.z-OAS.z,dd=Math.hypot(dx,dz),m=OAS.r-.9;if(dd>m){want.x=OAS.x+dx/dd*m;want.z=OAS.z+dz/dd*m;}}
+  try{jailCamClamp(want);}catch(e){}
   if(inIgl){want.y=clamp(want.y,IGL.y+.6,IGL.y+IGL.h-1.2);const hh=(want.y-IGL.y)/IGL.h,dx=want.x-IGL.x,dz=want.z-IGL.z,dd=Math.hypot(dx,dz),m=IGL.r*Math.sqrt(Math.max(0,1-hh*hh))-.7;if(dd>m){want.x=IGL.x+dx/dd*m;want.z=IGL.z+dz/dd*m;}}
   if(inVil){want.x=clamp(want.x,VIL.x-VIL.w/2+.4,VIL.x+VIL.w/2-.4);want.z=clamp(want.z,VIL.z-VIL.d/2+.4,VIL.z+VIL.d/2-.4);want.y=clamp(want.y,VIL.y+.6,VIL.y+VIL.h-.3);}
   if(inDis){want.x=clamp(want.x,DIS.x-DIS.w/2+.4,DIS.x+DIS.w/2-.4);want.z=clamp(want.z,DIS.z-DIS.d/2+.4,DIS.z+DIS.d/2-.4);want.y=clamp(want.y,DIS.y+.6,DIS.y+DIS.h-.3);}
@@ -8232,7 +8237,9 @@ function netHud(){const h=$('netHud');if(!NET.on){h.hidden=true;$('netRow').hidd
 function netAsk(m,ok,ms){netChan();const key=m.t;NET.wait={key,ok};netSend(m);setTimeout(()=>{if(NET.wait&&NET.wait.key===key){NET.wait=null;ok(null);}},ms||1800);}
 function netRecv(m){if(!m||m.from===NET.id)return;
   if(NET.wait&&m.to===NET.id&&(m.t==='pong'||m.t==='ok'||m.t==='deny')){const w=NET.wait;NET.wait=null;w.ok(m);return;}
-  if(m.t==='ping'&&NET.on&&NET.host&&m.lobby===NET.lobby){netSend({t:'pong',to:m.from});return;}
+  if(m.t==='ping'&&NET.on&&NET.host&&m.lobby===NET.lobby){netSend({t:'pong',to:m.from,open:!NET.pw,n:NET.lobbyName});return;}
+  if(m.t==='lobq'){if(NET.on&&NET.host&&!NET.pw&&NET.ch)try{NET.ch.postMessage({t:'lobi',to:m.from,from:NET.id,n:NET.lobbyName,p:lobCount()});}catch(e){}return;}
+  if(m.t==='lobi'){if(m.to===NET.id&&LOBL.on&&m.n){LOBL.rows.set(String(m.n).toLowerCase(),{n:String(m.n).slice(0,20),p:+m.p||1,t:Date.now(),src:'bc'});lobRender();}return;}
   if(!NET.on||m.lobby!==NET.lobby)return;
   if(m.t==='join'&&NET.host){if(m.pw!==NET.pw){netSend({t:'deny',to:m.from,why:'pw'});return;}
     if(!NET.members.some(x=>x.id===m.from)){if(NET.members.length>=4){netSend({t:'deny',to:m.from,why:'full'});return;}NET.members.push({id:m.from,name:m.name});m.isNew=1;}
@@ -8345,15 +8352,59 @@ function updateNet(dt){if(!NET.on)return;
     try{netSyncPeerExtras(pr,dt,k);}catch(e){}}
   netKingTick(dt);netWorldTick(dt);
 }
-function netLeave(){if(NET.on)netSend({t:NET.host?'close':'bye'});setTimeout(()=>{try{PJ.peer&&PJ.peer.destroy();}catch(e){}},50);try{if(RMN.named)RMN.named.leave();if(RMN.room&&NET.host)RMN.room.presence({lob:null,lobN:null,ph:null}).catch(()=>{});}catch(e){}}
+function netLeave(){try{lobmHostStop();}catch(e){}if(NET.on)netSend({t:NET.host?'close':'bye'});setTimeout(()=>{try{PJ.peer&&PJ.peer.destroy();}catch(e){}},50);try{if(RMN.named)RMN.named.leave();if(RMN.room&&NET.host)RMN.room.presence({lob:null,lobN:null,ph:null}).catch(()=>{});}catch(e){}}
 addEventListener('pagehide',netLeave);
 setInterval(()=>{if(!NET.on)return;if(started)try{netSend(netState());}catch(e){}NET.beatT+=.1;if(NET.beatT>2&&NET.host){NET.beatT=0;netSend({t:'roster',members:NET.members});}},100);
 function netStart(host,name,pw){NET.on=true;NET.host=host;NET.lobby=name.toLowerCase();NET.lobbyName=name;NET.pw=pw;
-  if(host){NET.members=[{id:NET.id,name:NET.name}];pjHost(NET.lobby);}$('modeSel').hidden=true;netHud();roomJoin();
+  if(host){NET.members=[{id:NET.id,name:NET.name}];pjHost(NET.lobby);if(!pw)setTimeout(lobmHostStart,800);}$('modeSel').hidden=true;netHud();roomJoin();
   if(ONLINE_RESTORED){const iv=setInterval(()=>{if(!started)return;clearInterval(iv);setTimeout(()=>{say(null,tr('💾 Tavo progresas šiame online pasaulyje atkurtas!'));sfx('ding');},1500);},500);}
   setTimeout(()=>say(null,host?tr('Lobby sukurtas! Draugai gali prisijungti su vardu')+' „'+name+'“':tr('Prisijungei prie lobby')+' „'+name+'“'),600);}
 function goOnline(host,name,pw){try{sessionStorage.setItem('cw-online',JSON.stringify({host,name,pw,fresh:true}));}catch(e){}location.reload();}
 function netOffline(msg){try{sessionStorage.removeItem('cw-online');if(msg)sessionStorage.setItem('cw-neterr',msg);}catch(e){}location.reload();}
+/* ---------- v232: open (no password) lobbies + server list (same browser, claude.ai room, and worldwide over public MQTT) ---------- */
+const LOBM_BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://test.mosquitto.org:8081/mqtt'],LOBM_ROOT='crazyworld-lt/lobby1/';
+const LOBL={rows:new Map(),on:false,iv:0,t0:0,sig:'',sub:[],host:[],hostIv:0};
+function lobCount(){return Math.max(1+NET.peers.size,NET.members.length||1);}
+function lobKeyT(){return LOBM_ROOT+String(NET.lobby).replace(/[^a-z0-9ąčęėįšųūž_-]/g,'_').slice(0,40);}
+function lobmConn(url,host){let ws;try{ws=new WebSocket(url,'mqtt');}catch(e){return null;}ws.binaryType='arraybuffer';const C={ws,ok:false,host,url,dead:false};let buf=new Uint8Array(0),ping=null;
+  ws.onopen=()=>{const cid=[...mqStr('cwl'+Math.random().toString(36).slice(2,10))];
+    try{ws.send(host?mqPkt(0x10,[...mqStr('MQTT'),4,0x26,0,60,...cid,...mqStr(lobKeyT()),0,0]):mqPkt(0x10,[...mqStr('MQTT'),4,2,0,60,...cid]));}catch(e){}};
+  ws.onmessage=ev=>{const nb=new Uint8Array(ev.data),t=new Uint8Array(buf.length+nb.length);t.set(buf);t.set(nb,buf.length);buf=t;
+    for(;;){if(buf.length<2)break;let mul=1,len=0,k=1,d,bad=false;do{if(k>=buf.length){bad=true;break;}d=buf[k++];len+=(d&127)*mul;mul*=128;}while(d&128);if(bad||buf.length<k+len)break;
+      const type=buf[0]>>4,qos=(buf[0]>>1)&3,body=buf.slice(k,k+len);buf=buf.slice(k+len);
+      if(type===2){C.ok=true;ping=setInterval(()=>{try{ws.send(new Uint8Array([0xc0,0]));}catch(e){}},40000);
+        if(host)lobmPub(C);else try{ws.send(mqPkt(0x82,[0,1,...mqStr(LOBM_ROOT+'+'),0]));}catch(e){}}
+      else if(type===3&&!host){const tl=(body[0]<<8)|body[1],topic=new TextDecoder().decode(body.slice(2,2+tl)),pl=new TextDecoder().decode(body.slice(2+tl+(qos?2:0)));const key=topic.slice(LOBM_ROOT.length);if(!key)continue;
+        if(!pl){LOBL.rows.delete('mq:'+key);lobRender();continue;}
+        let o=null;try{o=JSON.parse(pl);}catch(e){}if(!o||!o.n||Math.abs(Date.now()-(+o.t||0))>3600000)continue;
+        LOBL.rows.set('mq:'+key,{n:String(o.n).replace(/[\u0000-\u001f]/g,'').slice(0,20),p:Math.max(1,Math.min(4,+o.p||1)),t:Date.now(),src:'mq'});lobRender();}}};
+  ws.onclose=ws.onerror=()=>{clearInterval(ping);C.ok=false;if(C.dead)return;C.dead=true;
+    if(host&&NET.on&&NET.host&&!NET.pw&&LOBL.host.includes(C))setTimeout(()=>{const i=LOBL.host.indexOf(C);if(i>=0&&NET.on){const n=lobmConn(url,true);if(n)LOBL.host[i]=n;}},8000);};
+  return C;}
+function lobmPub(C){if(!C||!C.ok)return;try{C.ws.send(mqPkt(0x31,[...mqStr(lobKeyT()),...new TextEncoder().encode(JSON.stringify({n:NET.lobbyName,p:lobCount(),t:Date.now()}))]));}catch(e){}}
+function lobmHostStart(){if(!NET.on||!NET.host||NET.pw||LOBL.host.length)return;
+  if(typeof WebSocket!=='undefined'&&typeof TextEncoder!=='undefined')for(const u of LOBM_BROKERS){const c=lobmConn(u,true);if(c)LOBL.host.push(c);}
+  clearInterval(LOBL.hostIv);LOBL.hostIv=setInterval(()=>{if(!NET.on){lobmHostStop();return;}for(const c of LOBL.host)lobmPub(c);
+    try{if(RMN.room)RMN.room.presence({lob:NET.lobby,lobN:NET.lobbyName,ph:'',lobP:lobCount()}).catch(()=>{});}catch(e){}},20000);}
+function lobmHostStop(){clearInterval(LOBL.hostIv);const hs=LOBL.host;LOBL.host=[];
+  for(const c of hs){c.dead=true;try{if(c.ok){c.ws.send(mqPkt(0x31,[...mqStr(lobKeyT())]));c.ws.send(new Uint8Array([0xe0,0]));}c.ws.close();}catch(e){}}}
+function lobQuery(){try{netChan();NET.ch&&NET.ch.postMessage({t:'lobq',from:NET.id});}catch(e){}
+  try{if(RMN.room)for(const p of RMN.room.peers()){const s=p.presence;if(!p.sameTab&&s&&s.lob&&s.ph===''&&s.lobN)LOBL.rows.set(String(s.lob),{n:String(s.lobN).slice(0,20),p:+s.lobP||1,t:Date.now(),src:'room'});}}catch(e){}}
+function lobListStart(){if(LOBL.on)return;LOBL.on=true;LOBL.t0=Date.now();LOBL.sig='';LOBL.rows.clear();
+  if(typeof WebSocket!=='undefined'&&typeof TextEncoder!=='undefined')for(const u of LOBM_BROKERS){const c=lobmConn(u,false);if(c)LOBL.sub.push(c);}
+  lobQuery();clearInterval(LOBL.iv);LOBL.iv=setInterval(()=>{lobQuery();lobRender();},1500);lobRender(true);}
+function lobListStop(){LOBL.on=false;clearInterval(LOBL.iv);for(const c of LOBL.sub){c.dead=true;try{c.ws.close();}catch(e){}}LOBL.sub=[];}
+function lobOpenList(){const now=Date.now(),seen=new Map();
+  for(const [k,r] of LOBL.rows){if(r.src!=='mq'&&now-r.t>6000){LOBL.rows.delete(k);continue;}const key=r.n.toLowerCase(),o=seen.get(key);if(!o||r.p>o.p)seen.set(key,r);}
+  return [...seen.values()].sort((a,b)=>a.n.localeCompare(b.n));}
+function lobRender(force){const box=$('lobList');if(!box||box.hidden||!LOBL.on)return;const list=lobOpenList(),wait=Date.now()-LOBL.t0<5000;
+  const sig=list.map(r=>r.n+r.p).join('|')+(list.length?'':wait?'w':'n');if(!force&&sig===LOBL.sig)return;LOBL.sig=sig;box.innerHTML='';
+  const h=document.createElement('h4');h.textContent=tr('🌍 Atviri serveriai (be slaptažodžio)');box.append(h);
+  if(!list.length){const d=document.createElement('div');d.className='small';d.textContent=tr(wait?'Ieškoma serverių…':'Kol kas atvirų serverių nėra – sukurk savo!');box.append(d);return;}
+  for(const r of list){const b=document.createElement('button');b.type='button';b.className='lobRow'+(r.p>=4?' full':'');const nm=document.createElement('span');nm.textContent='🔓 '+r.n;
+    const c=document.createElement('small');c.textContent='👥 '+r.p+'/4';b.append(nm,c);b.onclick=()=>{if(r.p>=4){$('lobErr').textContent=tr('Lobby pilnas (4/4)');sfx&&sfx('fail');return;}lobListStop();goOnline(false,r.n,'');};box.append(b);}
+  const d=document.createElement('div');d.className='small';d.textContent=tr('Spausk ant serverio, kad prisijungtum, arba įrašyk vardą viršuje.');box.append(d);}
+function lobKnownOpen(key){for(const r of lobOpenList())if(r.n.toLowerCase()===key)return r;return null;}
 function setupModeSel(){const ov=$('modeSel');if(!CW_USER){ov.hidden=true;return;}
   $('netLeave').onclick=()=>{netLeave();netOffline();};
   if(CW_ONLINE){ov.hidden=true;netChan();const o=CW_ONLINE;
@@ -8367,8 +8418,8 @@ function setupModeSel(){const ov=$('modeSel');if(!CW_USER){ov.hidden=true;return
     tryJoin();return;}
   ov.hidden=false;let mode='create',step=1;
   try{const e=sessionStorage.getItem('cw-neterr');if(e){sessionStorage.removeItem('cw-neterr');setTimeout(()=>{$('modeMenu').querySelector('.small').textContent=tr(e);},50);}}catch(e){}
-  const view=w=>{$('modeMenu').hidden=w!=='mode';$('onMenu').hidden=w!=='on';$('lobForm').hidden=w!=='form';$('lobErr').textContent='';};
-  const form=m=>{mode=m;step=1;view('form');$('lobTitle').textContent=m==='create'?'Create lobby':'Join lobby';$('lobGo').textContent=m==='create'?'Create':tr('Kitas');$('lobPassWrap').hidden=m!=='create';$('lobName').disabled=false;$('lobPass').value='';setTimeout(()=>$('lobName').focus(),0);};
+  const view=w=>{$('modeMenu').hidden=w!=='mode';$('onMenu').hidden=w!=='on';$('lobForm').hidden=w!=='form';$('lobErr').textContent='';if(w!=='form')lobListStop();};
+  const form=m=>{mode=m;step=1;view('form');$('lobTitle').textContent=m==='create'?'Create lobby':'Join lobby';$('lobGo').textContent=m==='create'?'Create':tr('Kitas');$('lobPassWrap').hidden=m!=='create';$('lobPassLbl').textContent=tr(m==='create'?'Lobby slaptažodis (nebūtina)':'Lobby slaptažodis');$('lobPass').placeholder=m==='create'?tr('nebūtina'):tr('slaptažodis');$('lobHint').hidden=m!=='create';$('lobList').hidden=m!=='join';if(m==='join')lobListStart();else lobListStop();$('lobName').disabled=false;$('lobPass').value='';setTimeout(()=>$('lobName').focus(),0);};
   $('modeOff').onclick=()=>{ov.hidden=true;};
   $('modeOn').onclick=()=>{if(!netChan()&&!RMN.room&&!hasPJ()){$('modeMenu').querySelector('.small').textContent=tr('Online čia neveikia');return;}view('on');};
   $('onBack').onclick=()=>view('mode');$('lobCreate').onclick=()=>form('create');$('lobJoin').onclick=()=>form('join');
@@ -8377,11 +8428,11 @@ function setupModeSel(){const ov=$('modeSel');if(!CW_USER){ov.hidden=true;return
   const err=t=>{$('lobErr').textContent=tr(t);sfx&&sfx('fail');};let busy=false;
   $('lobForm').onsubmit=e=>{e.preventDefault();if(busy)return;const name=$('lobName').value.trim(),pw=$('lobPass').value,key=name.toLowerCase();
     if(!name){err('Įvesk lobby vardą');return;}
-    if(mode==='create'){if(!pw){err('Įvesk lobby slaptažodį');return;}busy=true;$('lobErr').textContent=tr('Ieškoma…');
-      netAsk({t:'ping',lobby:key},r=>{busy=false;if(r||roomFindLobby(key)){err('Toks lobby jau yra – sugalvok kitą vardą');return;}goOnline(true,name,accHash(pw));},1500);return;}
-    if(step===1){busy=true;$('lobErr').textContent=tr('Ieškoma…');
-      const step2=()=>{step=2;$('lobErr').textContent='';$('lobName').disabled=true;$('lobPassWrap').hidden=false;$('lobTitle').textContent=tr('Įvesk slaptažodį lobby')+' „'+name+'“';$('lobGo').textContent=tr('Prisijungti prie lobby');setTimeout(()=>$('lobPass').focus(),0);};
-      netAsk({t:'ping',lobby:key},r=>{if(!r){roomLobbyWait(key,RMN.room?3000:0).then(f=>{if(f){busy=false;step2();return;}pjProbe(key,ok=>{busy=false;if(!ok){err('Lobby nerastas');return;}step2();});});return;}busy=false;step=2;$('lobErr').textContent='';$('lobName').disabled=true;$('lobPassWrap').hidden=false;
+    if(mode==='create'){busy=true;$('lobErr').textContent=tr('Ieškoma…');
+      netAsk({t:'ping',lobby:key},r=>{busy=false;if(r||roomFindLobby(key)){err('Toks lobby jau yra – sugalvok kitą vardą');return;}if(lobKnownOpen(key)){err('Toks lobby jau yra – sugalvok kitą vardą');return;}goOnline(true,name,pw?accHash(pw):'');},1500);return;}
+    if(step===1){{const ko=lobKnownOpen(key);if(ko){if(ko.p>=4){err('Lobby pilnas (4/4)');return;}lobListStop();goOnline(false,ko.n,'');return;}}busy=true;$('lobErr').textContent=tr('Ieškoma…');
+      const step2=()=>{$('lobList').hidden=true;lobListStop();step=2;$('lobErr').textContent='';$('lobName').disabled=true;$('lobPassWrap').hidden=false;$('lobTitle').textContent=tr('Įvesk slaptažodį lobby')+' „'+name+'“';$('lobGo').textContent=tr('Prisijungti prie lobby');setTimeout(()=>$('lobPass').focus(),0);};
+      netAsk({t:'ping',lobby:key},r=>{if(r&&r.open){busy=false;lobListStop();goOnline(false,r.n||name,'');return;}if(!r){roomLobbyWait(key,RMN.room?3000:0).then(f=>{if(f){busy=false;if(f.presence.ph===''){lobListStop();goOnline(false,String(f.presence.lobN||name),'');return;}step2();return;}pjProbe(key,ok=>{busy=false;if(!ok){err('Lobby nerastas');return;}step2();});});return;}busy=false;$('lobList').hidden=true;lobListStop();step=2;$('lobErr').textContent='';$('lobName').disabled=true;$('lobPassWrap').hidden=false;
         $('lobTitle').textContent=tr('Įvesk slaptažodį lobby')+' „'+name+'“';$('lobGo').textContent=tr('Prisijungti prie lobby');setTimeout(()=>$('lobPass').focus(),0);});return;}
     if(!pw){err('Įvesk lobby slaptažodį');return;}busy=true;$('lobErr').textContent=tr('Ieškoma…');
     netAsk({t:'join',lobby:key,pw:accHash(pw),name:NET.name},r=>{busy=false;if(!r){const f=roomFindLobby(key);if(f){if(f.presence.ph!==accHash(pw)){err('Neteisingas lobby slaptažodis');return;}goOnline(false,String(f.presence.lobN||name),accHash(pw));return;}if(hasPJ()){goOnline(false,name,accHash(pw));return;}err('Lobby nerastas');return;}
@@ -8584,6 +8635,8 @@ function buildJail(){const J=JAIL,y=minH(J.x,J.z,58,44)-.05;J.y=y;const wm=mat(0
   for(const x of[J.x0,J.x1])for(const z of[J.z0,J.z1]){put(GEO.box,dk,x,y+8.4,z,2.4,2.8,2.4);put(GEO.box,mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:.6}),x,y+10,z,.5,.5,.5);}
   for(const z of[J.z0,J.z1])for(let x=J.x0;x<=J.x1;x+=2)put(GEO.cone,mat(0x5b6270),x,y+7.3,z,.12,.6,.12);
   for(const x of[J.x0,J.x1])for(let z=J.z0;z<=J.z1;z+=2)put(GEO.cone,mat(0x5b6270),x,y+7.3,z,.12,.6,.12);
+  { /* v232: roof over the whole jail */ const rf=put(GEO.box,mat(0x4a4d58,{roughness:.95}),J.x,y+7.3,J.z,W+1.6,.4,D+1.6);rf.castShadow=false;addCol(J.x,J.z,W+1.6,D+1.6,y+7.5,y+7.2);
+    const lm=mat(0xfff3c4,{emissive:0xffe9a0,emissiveIntensity:1});for(let lx=J.x0+8;lx<J.x1-4;lx+=12)for(let lz=J.z0+7;lz<J.z1-4;lz+=11)put(GEO.box,lm,lx,y+7.07,lz,2.2,.06,.7).castShadow=false;}
   const sg=signPlane('⛓ KALĖJIMAS',8,1.3,{bg:'#2a2f3d',fg:'#ff7a1a',size:130,radius:14});sg.position.set(J.x,y+8.5,J.z0-.6);sg.rotation.y=Math.PI;scene.add(sg);
   jail.gate=bars(gx-2,gx+2,J.z0,y,6.4);jail.gateCol=colBox(gx,J.z0,4,1,y+6.4,y);
   // cell block: 7 cells along the south wall, player in the middle one
@@ -8798,6 +8851,8 @@ function wjBuild(w){const T=WJ[w];if(T.built)return;T.built=true;try{wjCitizens(
   // the player's cell (south side): walls, bars, roof
   block(c.x-4,c.z+5.5,.5,5,4.5,wm,{y});block(c.x+4,c.z+5.5,.5,5,4.5,wm,{y});for(let x=-3.8;x<=3.8;x+=.45)put(GEO.cyl,bm,c.x+x,y+2.25,c.z+3,.06,4.5,.06);addCol(c.x,c.z+3,8.4,.4,y+4.5,y);
   block(c.x,c.z+5.5,8.6,5.4,.3,rm,{y:y+4.5});put(GEO.box,mat(0x6b4a2a),c.x+2.6,y+.35,c.z+6.4,1.4,.3,2.2);put(GEO.box,M.white,c.x+2.6,y+.55,c.z+6.4,1.3,.12,2);
+  { /* v232: roof over the whole jail */ const rf=put(GEO.box,rm,c.x,y+6.15,c.z,21.6,.3,17.6);rf.castShadow=false;addCol(c.x,c.z,21.6,17.6,y+6.3,y+6.1);
+    const lm=mat(0xfff3c4,{emissive:0xffe9a0,emissiveIntensity:1});for(const lx of[-5,5])put(GEO.box,lm,c.x+lx,y+5.98,c.z-3,2,.05,.6).castShadow=false;}
   const crack=put(GEO.box,M.dark,c.x-1.5,y+1,c.z+7.55,1.4,1.6,.05);
   const sg=signPlane([T.name],7,1.1,{bg:'#2a1f47',fg:T.col});sg.position.set(c.x,y+6.9,c.z-8.5);sg.rotation.y=Math.PI;scene.add(sg);
   for(const sx of[-1,1])for(const sz of[-1,1]){put(GEO.box,wm,c.x+sx*10,y+7,c.z+sz*8,1.6,2,1.6);put(GEO.sph,mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:1}),c.x+sx*10,y+8.2,c.z+sz*8,.3);}
@@ -8913,7 +8968,19 @@ function updateBullFly(dt){const F=jail.bullFly,B=jail.bull;if(!F)return false;F
   else if(F.t<4.5){B.pos.copy(F.to);v.root.position.copy(B.pos);v.tilt.rotation.set(-Math.PI/2,0,0);v.root.position.y=JAIL.y+.5;}
   else{v.tilt.rotation.set(0,0,0);B.pos.set(JAIL.bx,JAIL.y,JAIL.weakZ);jail.bullFly=null;jail.cool=3;say('Bulius','Oi… galva sukasi… Gerai, tu stipresnis.',true);}
   return true;}
-function updateJail(dt){try{wjTick(dt);}catch(e){}updateVault(dt);const B=jail.bull;if(!B)return;jailTough(dt);const p=player;updateCook(dt);updateGym(dt);
+function jailRoofTick(){const p=player.pos,v=player.vel;if(player.inCar||netRide)return;const J=JAIL,jw=save.jail&&save.jail.w&&save.jail.w!=='main'?save.jail.w:save.jail?'main':null;
+  const back=q=>{p.copy(q);v.set(0,0,0);dropAnchors();for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}floaty('⛔ '+tr('Kalėjimas turi stogą!'),p);};
+  if(jail.weak){if(jw==='main'&&!jail.grab&&!jail.bullFly&&p.x>J.x0-1.4&&p.x<J.x1+1.4&&p.z>J.z0-1.4&&p.z<J.z1+1.4&&p.y>J.y+5.6){back(V(clamp(p.x,J.x0+2,J.x1-2),J.y+.3,clamp(p.z,J.z0+2,J.z1-2)));return;}
+    if(p.x>J.x0+.5&&p.x<J.x1-.5&&p.z>J.z0+.5&&p.z<J.z1-.5&&p.y>J.y+5&&p.y<J.y+6.7){p.y=J.y+5;if(v.y>0)v.y=0;}}
+  for(const w in WJ){const T=WJ[w];if(!T.built)continue;const c=wjCenter(w),dx=p.x-c.x,dz=p.z-c.z;
+    if(jw===w&&Math.abs(dx)<11.4&&Math.abs(dz)<9.4&&p.y>T.y+4.6){back(wjCell(w));return;}
+    if(Math.abs(dx)<9.5&&Math.abs(dz)<7.5&&p.y>T.y+4&&p.y<T.y+5.8){p.y=T.y+4;if(v.y>0)v.y=0;}}}
+function jailCamClamp(want){const p=player.pos,J=JAIL;
+  if(jail.weak&&p.x>J.x0+.5&&p.x<J.x1-.5&&p.z>J.z0+.5&&p.z<J.z1-.5&&p.y>J.y-1&&p.y<J.y+6.7){want.y=Math.min(want.y,J.y+6.6);want.x=clamp(want.x,J.x0+.9,J.x1-.9);want.z=clamp(want.z,J.z0+.9,J.z1-.9);return;}
+  for(const w in WJ){const T=WJ[w];if(!T.built)continue;const c=wjCenter(w),dx=p.x-c.x,dz=p.z-c.z;if(Math.abs(dx)>9.6||Math.abs(dz)>7.6||p.y<T.y-1||p.y>T.y+5.8)continue;
+    if(Math.abs(dx)<3.8&&dz>3.2){want.y=Math.min(want.y,T.y+4.2);want.x=clamp(want.x,c.x-3.5,c.x+3.5);want.z=clamp(want.z,c.z+3.4,c.z+7.6);}
+    else{want.y=Math.min(want.y,T.y+5.7);want.x=clamp(want.x,c.x-9.3,c.x+9.3);want.z=clamp(want.z,c.z-7.3,c.z+7.3);}return;}}
+function updateJail(dt){try{wjTick(dt);}catch(e){}try{jailRoofTick();}catch(e){}updateVault(dt);const B=jail.bull;if(!B)return;jailTough(dt);const p=player;updateCook(dt);updateGym(dt);
   if(updateBullFly(dt)){}else{
   // muscle man patrols near the cracked wall
   if(!jail.grab){B.ph+=dt;B.pos.z+=B.dir*1.4*dt;if(B.pos.z>JAIL.bz1)B.dir=-1;if(B.pos.z<JAIL.bz0)B.dir=1;

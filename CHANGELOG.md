@@ -3,6 +3,13 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 18:37 — v232 Atviri serveriai be slaptažodžio, serverių sąrašas ir kalėjimų stogai
+
+- Online „Create lobby“: slaptažodis nebūtinas – be jo serveris atviras.
+- „Join lobby“: gali įrašyti serverio vardą arba pasirinkti iš sąrašo visų atvirų (be slaptažodžio) serverių su žaidėjų skaičiumi (👥 x/4). Įrašius atviro serverio vardą prisijungi iškart.
+- Sąrašas veikia visame pasaulyje (per tą pačią nemokamą sistemą kaip pasaulinė lyderių lentelė); serveris dingsta iš sąrašo, kai savininkas išeina.
+- Visi kalėjimai (miesto ir 4 pasaulių) turi stogą: per sienas nebeišlipsi, kamera lieka viduje, ant stogo – lempos.
+
 ## 2026-11-04 12:47 — v231 Discord lentelė prie kojinės ir anglų kalbos pataisa
 
 - Discord mygtukas meniu ir nustatymuose dabar būna angliškai, kai kalba – English (vertimas įkeliamas prieš puslapio vertimą).
