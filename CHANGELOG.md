@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 10:42 — v227 🤸 Ragdoll: atsikelti su Space, R tik po 1 s
+- Kai esi ragdoll (R), gali atsistoti paspaudęs Space (kai guli ant žemės). R vis dar irgi pakelia.
+- Atsistojus vėl įsijungti ragdoll su R galima tik po 1 sekundės – kitaip parašoma „⏳ Palauk sekundę“.
+
 ## 2026-11-04 10:20 — v226 💾 Online pasaulis išsisaugo
 - Jei grįžti į tą patį online pasaulį (tas pats lobby vardas ir tas pats slaptažodis), visas tavo progresas – pinigai, namai, transportas, gyvūnėliai, drabužiai ir misijos – atkuriamas. Prisijungus parašoma „💾 Tavo progresas šiame online pasaulyje atkurtas!“.
 - Kitas lobby vardas arba kitas slaptažodis – naujas, švarus online pasaulis.

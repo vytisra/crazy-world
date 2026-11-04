@@ -366,7 +366,7 @@ body.touch #tClose:not([hidden]){display:block}
       <dt><span class="kbd">G</span></dt><dd>Pasiekimai</dd>
       <dt><span class="kbd">H</span></dt><dd>Respawn – grįžti namo (jei namų neturi – prie kojinės)</dd>
       <dt><span class="kbd">C</span></dt><dd>Emotes (šokiai, mojavimas…)</dd>
-      <dt><span class="kbd">R</span></dt><dd>Ragdoll (įjungti / atsikelti)</dd>
+      <dt><span class="kbd">R</span></dt><dd>Ragdoll (įjungti / atsikelti; atsikelti galima ir su Space). Vėl įjungti – tik po 1 s</dd>
       <dt><span class="kbd">Shift</span></dt><dd>Bėgti</dd>
       <dt><span class="kbd">F</span></dt><dd>Kalbėtis, įlipti ar išlipti iš mašinos</dd>
       <dt><span class="kbd">T</span></dt><dd>Chat</dd>
@@ -2908,7 +2908,7 @@ function ragdoll(auto,imp){
   for(const s of['L','R'])if(hands[s].obj){release(hands[s].obj);hands[s].obj=null;}
   dropAnchors();
 }
-function getUp(){player.rag=false;player.vel.y=Math.max(player.vel.y,3);}
+let lastUpT=-9999;function getUp(){player.rag=false;player.vel.y=Math.max(player.vel.y,3);lastUpT=performance.now();}
 const inRink=p=>rink&&Math.hypot(p.x-rink.x,p.z-rink.z)<rink.r;
 
 const stamina={v:1,tired:false};
@@ -6288,7 +6288,7 @@ addEventListener('keydown',e=>{
   if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault();
   if(e.repeat){keys[e.code]=true;return;}
   keys[e.code]=true;
-  if(e.code==='Space')jumpPressed=true;
+  if(e.code==='Space'){if(player.rag&&!player.inCar&&player.onGround&&player.ragT>.25&&!uiBlocking()){getUp();jumpPressed=false;}else jumpPressed=true;}
   if(e.code==='KeyF'){if(dialogOpen){closeDialog();tryLock();return;}const it=nearestInteract();if(it)it.act();}
   if(dialogOpen&&repeatOpen){const m=e.code.match(/^(?:Digit|Numpad)([12])$/);if(m){const r=repeatOpen;closeDialog();if(m[1]==='1')r[1]();tryLock();return;}}
   if(dialogOpen&&vehMenuOpen){const m=e.code.match(/^(?:Digit|Numpad)(\d)$/);if(m){const it=ownedVehicles()[+m[1]-1];if(it)pickVehicle(it.id);return;}if(e.code==='KeyI'){closeDialog();tryLock();return;}}
@@ -6297,7 +6297,7 @@ addEventListener('keydown',e=>{
   if(e.code==='KeyE'&&!player.inCar&&hasPow('volcanohat')&&!uiBlocking()){eruptHat();return;}
   if(e.code==='KeyE'&&!player.inCar&&hasPow('trexhat')&&!uiBlocking()){trexRoar();return;}
   if(e.code==='KeyE'&&player.inCar&&car){if(car.saucerLights&&car.caps){toggleSaucerBeam();return;}if(car.crater){eruptCar();return;}if(car.rocket){launchRocket();return;}if(car.clown){clownHonk();return;}if(car.tank){fireTank();return;}if(car.police){togglePolice();return;}if(car.flipCar){flipTrick();return;}if(car.lid){toggleTrunk();return;}}
-  if(e.code==='KeyR'){if(netRide){leaveRide();return;}if(player.rag)getUp();else ragdoll(0,V(rand(-1,1),4,rand(-1,1)));}
+  if(e.code==='KeyR'){if(netRide){leaveRide();return;}if(player.rag)getUp();else if(performance.now()-lastUpT<1000){floaty('⏳ '+tr('Palauk sekundę'),player.pos);}else ragdoll(0,V(rand(-1,1),4,rand(-1,1)));}
   if(e.code==='KeyT'){e.preventDefault();openChat();}
   if(e.code==='KeyH'&&started&&!settingsOpen){e.preventDefault();doRespawn();return;}
   if(e.code==='KeyG'&&started&&!dialogOpen&&!settingsOpen){e.preventDefault();toggleAch();return;}
@@ -7707,6 +7707,8 @@ Object.assign(I18N_EN,{'Pasaulinė lentelė – žaidėjų internete:':'Worldwid
 Object.assign(I18N_EN,{"Debesėlio namelis": "Little Cloud Cottage", "Erelio lizdas": "Eagle's Nest House", "Vaivorykštės vila": "Rainbow Villa", "Žvaigždžių bokštas": "Star Tower", "🏠 Debesėlio namelis": "🏠 Little Cloud Cottage", "🏠 Erelio lizdas": "🏠 Eagle's Nest House", "🏠 Vaivorykštės vila": "🏠 Rainbow Villa", "🏠 Žvaigždžių bokštas": "🏠 Star Tower", "Mažas minkštas namelis su debesų stogu – kaip miegoti ant pagalvės! Nusipirkęs gali čia miegoti (lova praleidžia naktį), palikti savo gyvūnėlius (prie gyvūnėlio namuose spausk F), o lėktuvas tave atskraidins tiesiai čia.": "A small soft cottage with a cloud roof – like sleeping on a pillow! Once you buy it you can sleep here (the bed skips the night), leave your pets here (press F next to a pet at home), and the plane will fly you straight here.", "Namas su didžiuliu erelio lizdu ant stogo – ten guli trys kiaušiniai! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A house with a huge eagle's nest on the roof – with three eggs in it! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here.", "Spalvinga vila po tikra vaivorykšte, su vaivorykštės takeliu prie durų! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A colourful villa under a real rainbow, with a rainbow path to the door! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here.", "Paslaptingas žvaigždėtas bokštas su teleskopu ir besisukančia auksine žvaigžde viršuje! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A mysterious starry tower with a telescope and a spinning golden star on top! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here."});
 Object.assign(I18N_EN,{"Helovino saldainių": "Halloween sweets", "iškeisk juos pas raganą Raganę centre": "trade them with Wanda the Witch in the centre", "pinigai": "money", "🎁 Gavai dovaną!": "🎁 You got a gift!", "Dovana nuo žaidimo kūrėjo": "A gift from the game's creator", "Sveikas, ": "Hello, ", "! Žaidimo kūrėjas tau atsiuntė specialią dovaną:": "! The game's creator sent you a special gift:", "Ačiū!": "Thank you!"});
 Object.assign(I18N_EN,{"Helovino naktis":"Halloween night"});
+Object.assign(I18N_EN,{"Ragdoll (įjungti / atsikelti; atsikelti galima ir su Space). Vėl įjungti – tik po 1 s": "Ragdoll (on / get up; you can also get up with Space). Can be used again only after 1 s"});
+Object.assign(I18N_EN,{"Palauk sekundę": "Wait a second"});
 Object.assign(I18N_EN,{"💾 Tavo progresas šiame online pasaulyje atkurtas!": "💾 Your progress in this online world has been restored!"});
 Object.assign(I18N_EN,{"Draugas": "Friend", "įvykdė misiją": "completed the mission", "ji įskaityta ir tau!": "it counts for you too!", "misijų įskaityta ir tau!": "missions count for you too!"});
 Object.assign(I18N_EN,{"Pabėgai nuo policijos!": "You escaped the police!", "Policija tavęs negavo per 1 minutę ir pasidavė… bet rytoj vėl ieškos – grąžink paskolą!": "The police couldn't catch you in 1 minute and gave up… but they'll be back tomorrow – repay your loan!", "Policija tavęs negavo per 1 minutę ir nustojo gaudyti. Pasisekė!": "The police couldn't catch you in 1 minute and stopped chasing. Lucky you!"});
