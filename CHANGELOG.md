@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 12:47 — v231 Discord lentelė prie kojinės ir anglų kalbos pataisa
+
+- Discord mygtukas meniu ir nustatymuose dabar būna angliškai, kai kalba – English (vertimas įkeliamas prieš puslapio vertimą).
+- Šalia kojinės šventovės pastatyta mėlyna DISCORD lentelė: priėjus spausk F – atsidaro Discord serveris naujame lange.
+
 ## 2026-11-04 12:12 — v230 💬 Discord serveris meniu
 - Pradžios meniu ir nustatymuose (Esc) atsirado mygtukas „💬 Prisijunk prie mano Discord serverio!“ – jis atidaro https://discord.gg/SCqpkzet4 naujame lange.
 
