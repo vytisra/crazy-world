@@ -3259,7 +3259,7 @@ const homeIsVilla=()=>homeKind()==='villa';
 const HOME_NAME={house:'senasis namas centriniame miestelyje',villa:'moderni vila mieste',igloo:'iglu sniegynuose',volhome:'mažasis ugnikalnis',oashome:'slaptas namelis po oaze'};
 const atHome=()=>{const k=homeKind();return k==='villa'?inVil:k==='igloo'?inIgl:k==='volhome'?inVlh:k==='oashome'?inOas:k==='house'?inside:false;};
 const homeRoom=()=>{const k=homeKind();return k==='villa'?{x:VIL.x,y:VIL.y,z:VIL.z,hw:6,hd:4,built:vilBuilt}:k==='igloo'?{x:IGL.x,y:IGL.y,z:IGL.z,hw:2.8,hd:2.2,built:iglBuilt}:k==='volhome'?{x:VLH.x,y:VLH.y,z:VLH.z,hw:3,hd:2.5,built:vlhBuilt}:k==='oashome'?{x:OAS.x,y:OAS.y,z:OAS.z,hw:2.5,hd:2,built:oasBuilt}:{x:INT.x,y:INT.y,z:INT.z,hw:4.5,hd:3,built:intBuilt};};
-function setMainHome(h){save.home=h;saveGame(true);syncHomePets();sfx('win');floaty('⌂ Pagrindiniai namai!',player.pos);
+function setMainHome(h){save.home=h;save.startHome=null;saveGame(true);syncHomePets();sfx('win');floaty('⌂ Pagrindiniai namai!',player.pos);
   say(null,{villa:'Moderni vila dabar tavo pagrindiniai namai!',igloo:'Iglu dabar tavo pagrindiniai namai!',volhome:'Mažasis ugnikalnis dabar tavo pagrindiniai namai!',oashome:'Slaptas namelis po oaze dabar tavo pagrindiniai namai!',house:'Senasis namas vėl tavo pagrindiniai namai.'}[h]+' Čia atsirasi pradėjęs žaidimą, o namie palikti gyvūnėliai lauks čia.');}
 function spawnHomePet(id,at,R0){
   const R=R0||homeRoom();if(homePets.has(id)||!R.built)return;
@@ -3422,7 +3422,7 @@ function openHouseShop(){
 }
 function buyHouse(){
   if(money<HOUSE_PRICE||save.owned.house)return;
-  money-=HOUSE_PRICE;sfx('buy');$('money').textContent=money;save.owned.house=true;saveGame(true);
+  money-=HOUSE_PRICE;sfx('buy');$('money').textContent=money;save.owned.house=true;save.startHome=null;saveGame(true);
   closeDialog();setupHouse();floaty('-$'+HOUSE_PRICE,player.pos);
   say(null,'Sveikinu! Nusipirkai namą. Jis pažymėtas žemėlapyje.');const h=myHouse();setWaypoint(h.step.x,h.step.z,true);
 }
@@ -4273,7 +4273,7 @@ function openIglooShop(){
     tasks:[{b:'Kaina',t:'$'+IGLOO_PRICE+' (tu turi $'+money+')',chip:money>=IGLOO_PRICE?'Gali pirkti':'Trūksta $'+(IGLOO_PRICE-money)}],
     actions:[{label:money>=IGLOO_PRICE?'Pirkti už $'+IGLOO_PRICE:'Trūksta $'+(IGLOO_PRICE-money),disabled:money<IGLOO_PRICE,onClick:buyIgloo},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]});
 }
-function buyIgloo(){if(ownsHome('igloo')||money<IGLOO_PRICE)return;money-=IGLOO_PRICE;$('money').textContent=money;save.owned.igloo=true;save.home='igloo';saveGame(true);syncHomePets();
+function buyIgloo(){if(ownsHome('igloo')||money<IGLOO_PRICE)return;money-=IGLOO_PRICE;$('money').textContent=money;save.owned.igloo=true;save.home='igloo';save.startHome=null;saveGame(true);syncHomePets();
   closeDialog();tryLock();sfx('buy');setTimeout(()=>sfx('win'),300);floaty('-$'+IGLOO_PRICE,player.pos);floaty('⌂ Nauji namai!',player.pos.clone().add(V(0,1,0)));
   say(null,'Nusipirkai iglu – tai tavo NAUJI NAMAI! Čia atsirasi pradėjęs žaidimą ir nukritęs nuo pasaulio krašto, o namie palikti gyvūnėliai lauks tavęs iglu. Spausk F prie įėjimo, kad įeitum.');}
 function buildIglooRoom(){
@@ -4451,7 +4451,7 @@ function openVolHomeShop(){
     tasks:[{b:'Kaina',t:'$'+VOLHOME_PRICE+' (tu turi $'+money+')',chip:money>=VOLHOME_PRICE?'Gali pirkti':'Trūksta $'+(VOLHOME_PRICE-money)}],
     actions:[{label:money>=VOLHOME_PRICE?'Pirkti už $'+VOLHOME_PRICE:'Trūksta $'+(VOLHOME_PRICE-money),disabled:money<VOLHOME_PRICE,onClick:buyVolHome},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]});
 }
-function buyVolHome(){if(ownsHome('volhome')||money<VOLHOME_PRICE)return;money-=VOLHOME_PRICE;$('money').textContent=money;save.owned.volhome=true;save.home='volhome';saveGame(true);syncHomePets();
+function buyVolHome(){if(ownsHome('volhome')||money<VOLHOME_PRICE)return;money-=VOLHOME_PRICE;$('money').textContent=money;save.owned.volhome=true;save.home='volhome';save.startHome=null;saveGame(true);syncHomePets();
   closeDialog();tryLock();sfx('buy');setTimeout(()=>sfx('win'),300);floaty('-$'+VOLHOME_PRICE,player.pos);floaty('⌂ Nauji namai!',player.pos.clone().add(V(0,1,0)));
   say(null,'Nusipirkai mažąjį ugnikalnį – tai tavo NAUJI NAMAI! Čia atsirasi pradėjęs žaidimą ir nukritęs nuo pasaulio krašto, o namie palikti gyvūnėliai lauks tavęs čia. Spausk F prie durų, kad įeitum.');}
 function buildVolHomeRoom(){
@@ -4549,7 +4549,7 @@ function openVillaShop(){
     tasks:[{b:'Kaina',t:'$'+VILLA_PRICE+' (tu turi $'+money+')',chip:money>=VILLA_PRICE?'Gali pirkti':'Trūksta $'+(VILLA_PRICE-money)}],
     actions:[{label:money>=VILLA_PRICE?'Pirkti už $'+VILLA_PRICE:'Trūksta $'+(VILLA_PRICE-money),disabled:money<VILLA_PRICE,onClick:buyVilla},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]});
 }
-function buyVilla(){if(save.owned.villa||money<VILLA_PRICE)return;money-=VILLA_PRICE;$('money').textContent=money;save.owned.villa=true;save.home='villa';saveGame(true);
+function buyVilla(){if(save.owned.villa||money<VILLA_PRICE)return;money-=VILLA_PRICE;$('money').textContent=money;save.owned.villa=true;save.home='villa';save.startHome=null;saveGame(true);
   closeDialog();tryLock();sfx('buy');setTimeout(()=>sfx('win'),300);floaty('-$'+VILLA_PRICE,player.pos);floaty('⌂ Nauji namai!',player.pos.clone().add(V(0,1,0)));
   say(null,'Nusipirkai modernų namą – tai tavo NAUJI NAMAI! Čia atsirasi pradėjęs žaidimą ir nukritęs nuo pasaulio krašto, o čia palikti gyvūnėliai lauks tavęs viloje. Spausk F prie durų, kad įeitum.');setWaypoint(VIL_DOOR.x,VIL_DOOR.z,true);}
 function villaDoor(){if(!save.owned.villa){openVillaShop();return;}enterVilla();}
@@ -4798,7 +4798,7 @@ function explode(p){
   if(car&&!player.inCar){const dc=car.pos.distanceTo(p);if(dc<R){car.vy+=(R-dc)*1.4;car.bv+=8;}}
 }
 const onBed=p=>inside&&bedRect&&p.x>bedRect.x0&&p.x<bedRect.x1&&p.z>bedRect.z0&&p.z<bedRect.z1;
-function homeSpawn(){if(save.jail&&typeof JAIL!=='undefined')return V(JAIL.x,JAIL.y+.1,JAIL.cz);if(homeKind()==='oashome')return V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z)+.1,OAS_SHORE.z);if(homeKind()==='volhome')return V(VLH_DOOR.x,VLH_Y+.1,VLH_DOOR.z);if(homeKind()==='igloo')return V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z)+.1,IGL_DOOR.z);if(homeIsVilla())return V(VIL_DOOR.x,VIL_Y+.1,VIL_DOOR.z-2);if(save.owned.house&&houses[0]){const h=houses[0];return V(h.step.x,h.step.y,h.step.z);}return V(0,terrainH(0,13),13);}
+function homeSpawn(){if(save.jail&&save.jail.w&&save.jail.w!=='main'&&WJ[save.jail.w])return wjCell(save.jail.w);if(save.jail&&typeof JAIL!=='undefined')return V(JAIL.x,JAIL.y+.1,JAIL.cz);if(homeKind()==='oashome')return V(OAS_SHORE.x,terrainH(OAS_SHORE.x,OAS_SHORE.z)+.1,OAS_SHORE.z);if(homeKind()==='volhome')return V(VLH_DOOR.x,VLH_Y+.1,VLH_DOOR.z);if(homeKind()==='igloo')return V(IGL_DOOR.x,terrainH(IGL_DOOR.x,IGL_DOOR.z)+.1,IGL_DOOR.z);if(homeIsVilla())return V(VIL_DOOR.x,VIL_Y+.1,VIL_DOOR.z-2);if(save.owned.house&&houses[0]){const h=houses[0];return V(h.step.x,h.step.y,h.step.z);}return V(0,terrainH(0,13),13);}
 function openPetShop(){
   const actions=[],cur=curPet(),has=ownsPet(),act=activePets();
   for(const it of PET_SHOP.concat(save.owned.volpet?[{id:'volpet',name:'Ugnikalniukas',price:0}]:[])){
@@ -6983,8 +6983,8 @@ function dHouse(H){const x=H.ax!=null?H.ax:DW.x+H.lx,z=H.lz,g0=minH(x,z,9,9)-.05
   stations.push({pos:V(x,base,z+5.4),r:2.4,cond:()=>!own(),label:'pirkti namą: '+H.name+' ($'+H.price+')',act:()=>openDialog({name:H.name,role:'Namas pardavimui – $'+H.price,color:'#ffd23f',icon:'🏠',
     text:H.desc?H.desc:H.cloud?'Pilis iš tikrų debesų! Nusipirkęs gali čia miegoti (lova praleidžia naktį), čia palikti savo gyvūnėlius (prie gyvūnėlio namuose spausk F), o lėktuvas tave atskraidins tiesiai į pilį.':'Jaukūs namai dinozaurų pasaulyje! Nusipirkęs gali čia miegoti (lova praleidžia naktį), čia palikti savo gyvūnėlius (prie gyvūnėlio namuose spausk F), o laiko mašina tave atnešis tiesiai į šiuos namus.',tasks:[],
     actions:[{label:money>=H.price?'Pirkti $'+H.price:'Trūksta $'+(H.price-money),disabled:money<H.price,onClick:()=>buyDinoHouse(H)},{label:'Ne dabar',alt:true,onClick:()=>{closeDialog();tryLock();}}]})});
-  stations.push({pos:D.bed.clone(),r:2.2,cond:own,label:'miegoti 💤',act:()=>{hour=7;save.hour=7;if(!H.under&&!H.cloud)save.dinoHome=H.id;if(H.cloud)save.cloudHome=H.id;saveGame(true);sfx('ding');floaty('💤 '+tr('Labas rytas!'),player.pos);say(null,'Išsimiegojai! '+(H.under?'Grąžtas':H.cloud?'Lėktuvas':'Laiko mašina')+' tave atneš čia – į „'+H.name+'“.');}});}
-function buyDinoHouse(H){if(money<H.price)return;money-=H.price;$('money').textContent=money;save.dinoHouses=Object.assign({},save.dinoHouses,{[H.id]:1});if(!H.under&&!H.cloud)save.dinoHome=H.id;if(H.cloud)save.cloudHome=H.id;saveGame(true);closeDialog();tryLock();
+  stations.push({pos:D.bed.clone(),r:2.2,cond:own,label:'miegoti 💤',act:()=>{hour=7;save.hour=7;save.startHome=H.id;if(!H.under&&!H.cloud)save.dinoHome=H.id;if(H.cloud)save.cloudHome=H.id;saveGame(true);sfx('ding');floaty('💤 '+tr('Labas rytas!'),player.pos);say(null,'Išsimiegojai! '+(H.under?'Grąžtas':H.cloud?'Lėktuvas':'Laiko mašina')+' tave atneš čia – į „'+H.name+'“.');}});}
+function buyDinoHouse(H){if(money<H.price)return;money-=H.price;$('money').textContent=money;save.dinoHouses=Object.assign({},save.dinoHouses,{[H.id]:1});save.startHome=H.id;if(!H.under&&!H.cloud)save.dinoHome=H.id;if(H.cloud)save.cloudHome=H.id;saveGame(true);closeDialog();tryLock();
   sfx('buy');setTimeout(()=>sfx('win'),250);floaty('🏠 -$'+H.price,player.pos);DX3.houses[H.id].sync();say(null,'Nusipirkai namą „'+H.name+'“! Durys atsidarė. '+(H.under?'Grąžtas dabar atneš tave čia.':H.cloud?'Lėktuvas dabar atskraidins tave čia.':'Laiko mašina dabar atneš tave čia.'));}
 function dsecDone(){const s=save.dsec||{};return [!!s.cave,!!s.ship,!!save.owned.d_dragon,!!save.owned.goldraptor,!!(save.emotes&&save.emotes.trexroar)].filter(Boolean).length;}
 function dsecMsg(name,text){const n=dsecDone();openDialog({name,role:'Slaptas dalykas! ('+n+'/5)',color:'#ffd23f',icon:'🗝',text:text+(n>=5?' Tu radai VISAS dinozaurų pasaulio paslaptis!':''),tasks:[],actions:[{label:'Valio!',onClick:()=>{closeDialog();tryLock();}}]});}
@@ -7707,6 +7707,7 @@ Object.assign(I18N_EN,{'Pasaulinė lentelė – žaidėjų internete:':'Worldwid
 Object.assign(I18N_EN,{"Debesėlio namelis": "Little Cloud Cottage", "Erelio lizdas": "Eagle's Nest House", "Vaivorykštės vila": "Rainbow Villa", "Žvaigždžių bokštas": "Star Tower", "🏠 Debesėlio namelis": "🏠 Little Cloud Cottage", "🏠 Erelio lizdas": "🏠 Eagle's Nest House", "🏠 Vaivorykštės vila": "🏠 Rainbow Villa", "🏠 Žvaigždžių bokštas": "🏠 Star Tower", "Mažas minkštas namelis su debesų stogu – kaip miegoti ant pagalvės! Nusipirkęs gali čia miegoti (lova praleidžia naktį), palikti savo gyvūnėlius (prie gyvūnėlio namuose spausk F), o lėktuvas tave atskraidins tiesiai čia.": "A small soft cottage with a cloud roof – like sleeping on a pillow! Once you buy it you can sleep here (the bed skips the night), leave your pets here (press F next to a pet at home), and the plane will fly you straight here.", "Namas su didžiuliu erelio lizdu ant stogo – ten guli trys kiaušiniai! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A house with a huge eagle's nest on the roof – with three eggs in it! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here.", "Spalvinga vila po tikra vaivorykšte, su vaivorykštės takeliu prie durų! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A colourful villa under a real rainbow, with a rainbow path to the door! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here.", "Paslaptingas žvaigždėtas bokštas su teleskopu ir besisukančia auksine žvaigžde viršuje! Nusipirkęs gali čia miegoti, palikti gyvūnėlius (spausk F prie gyvūnėlio), o lėktuvas tave atskraidins tiesiai čia.": "A mysterious starry tower with a telescope and a spinning golden star on top! Once you buy it you can sleep here, leave your pets (press F next to a pet), and the plane will fly you straight here."});
 Object.assign(I18N_EN,{"Helovino saldainių": "Halloween sweets", "iškeisk juos pas raganą Raganę centre": "trade them with Wanda the Witch in the centre", "pinigai": "money", "🎁 Gavai dovaną!": "🎁 You got a gift!", "Dovana nuo žaidimo kūrėjo": "A gift from the game's creator", "Sveikas, ": "Hello, ", "! Žaidimo kūrėjas tau atsiuntė specialią dovaną:": "! The game's creator sent you a special gift:", "Ačiū!": "Thank you!"});
 Object.assign(I18N_EN,{"Helovino naktis":"Halloween night"});
+Object.assign(I18N_EN,{"🦖 DINO KALĖJIMAS": "🦖 DINO JAIL", "⛏ POŽEMIO KALĖJIMAS": "⛏ UNDERGROUND JAIL", "☁ DEBESŲ KALĖJIMAS": "☁ CLOUD JAIL", "💀 SIAUBŲ KALĖJIMAS": "💀 HORROR JAIL", "Dino policininkas": "Dino police officer", "Kurmių policininkas": "Mole police officer", "Angelas policininkas": "Angel police officer", "Skeletas policininkas": "Skeleton police officer", "Dino sargybinis": "Dino guard", "Kurmių sargybinis": "Mole guard", "Angelas sargybinis": "Angel guard", "Skeletas sargybinis": "Skeleton guard", "kasti po kaulų siena": "dig under the bone wall", "kasti uolą": "dig through the rock", "prapūsti debesų sieną": "blow through the cloud wall", "išlaužti antkapio plokštę": "break the tombstone slab", "Aha! Bandai pabėgti?! Užkasu viską atgal!": "Aha! Trying to escape?! I'm filling it all back in!", "Pakliuvai į": "You ended up in", "Kask tunelį (F prie įskilimo kameroje), kai sargybinis nežiūri.": "Dig a tunnel (F at the crack in your cell) when the guard isn't looking.", "Pabudai savo namuose": "You woke up in your home"});
 Object.assign(I18N_EN,{"Ragdoll (įjungti / atsikelti; atsikelti galima ir su Space). Vėl įjungti – tik po 1 s": "Ragdoll (on / get up; you can also get up with Space). Can be used again only after 1 s"});
 Object.assign(I18N_EN,{"Palauk sekundę": "Wait a second"});
 Object.assign(I18N_EN,{"💾 Tavo progresas šiame online pasaulyje atkurtas!": "💾 Your progress in this online world has been restored!"});
@@ -8112,6 +8113,7 @@ function buildWorld(){migHeads();
   if(save.mig!=='v54'){save.mig='v54';save.pyrOpen=false;if(save.owned)save.owned.pyrKey=false;save.lamp=null;if(save.kingTasks&&save.kingTasks['Džinas'])save.kingTasks['Džinas']=save.kingTasks['Džinas'].filter(x=>x!=='Lempos paieška');saveGame(true);}
   if(save.migMoney!=='v63'){save.migMoney='v63';}
   worldBuilt=true;syncLamp();syncOasis();syncMantas();syncCrowns();initPaintUI();syncToolVis();if(save.owned.house){setupHouse();player.pos.copy(homeSpawn());const h=myHouse();player.yaw=Math.atan2(h.x-h.step.x,h.z-h.step.z);cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}if(homeIsVilla()||homeKind()==='igloo'||homeKind()==='volhome'||homeKind()==='oashome'){player.pos.copy(homeSpawn());player.yaw=homeIsVilla()?Math.PI:homeKind()==='volhome'?-Math.PI/2:0;cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}updatePowersHud();if(save.waypoint)setWaypoint(save.waypoint[0],save.waypoint[1],true);if(save.pos&&save.pos.length===3&&isFinite(save.pos[0])){const x=clamp(save.pos[0],-190,190),z=clamp(save.pos[2],-190,190);player.pos.set(x,groundAt(x,z,(+save.pos[1]||0)+1.5,.3),z);if(isFinite(save.yaw))player.yaw=save.yaw;cam.yaw=player.yaw+Math.PI;camTarget.copy(player.pos);}
+  try{startInOtherHome();}catch(e){}
   if(save.hour!=null&&isFinite(save.hour))hour=save.hour%24;
   if(save.migHour!=='v68'){save.migHour='v68';hour=19.5;save.hour=19.5;saveGame(true);}
   if(save.migCrownCar!=='v91'){save.migCrownCar='v91';}
@@ -8495,9 +8497,10 @@ function crime(type,victim,pos){if(save.jail||!started)return;const C=CRIMES[typ
   setTimeout(()=>{if(save.jail)return;const W=save.wanted&&gameT()<save.wanted.until?save.wanted:{days:0,list:[]};W.days=Math.min(7,W.days+C.d);W.until=gameT()+24;W.last=C.n;W.list=(W.list||[]).concat(C.n).slice(-5);save.wanted=W;saveGame(true);
     say(null,tr('Gyventojas paskambino policijai:')+' '+tr(C.n)+'! '+tr('Policija tavęs ieško')+' ('+tr('kalėjimo')+' '+crimeDays()+' '+tr('d.')+')');sfx('fail');lawHud();},2200);}
 function wanted(){return !save.jail&&((loanLate()&&!(save.copRest&&gameT()<save.copRest))||crimeWanted());}
-function spawnPolice(){const c=makePoliceCar();scene.add(c.root);const a=rand(0,6.28),pp=player.inCar&&car?car.pos:player.pos;
-  const pos=V(clamp(pp.x+Math.sin(a)*60,-185,185),0,clamp(pp.z+Math.cos(a)*60,-185,185));pos.y=terrainH(pos.x,pos.z);
-  const off=makeChar({body:0x1d2f6b,head:0xf2c9a0,legs:0x1b1430});off.root.scale.setScalar(.85);off.legL.p.rotation.x=off.legR.p.rotation.x=-1.5;off.root.position.set(0,.2,-.3);c.body.add(off.root);
+function spawnPolice(){const pp=player.inCar&&car?car.pos:player.pos,pw=wWorld(pp),c=WJ[pw]?wjCopCar(pw):makePoliceCar();scene.add(c.root);const a=rand(0,6.28);
+  const wc=pw==='dino'?[DW.x,0]:pw==='under'?[UW.x,0]:pw==='cloud'?[CLW.x,CLW.z]:pw==='horror'?[HRW.x,HRW.z]:[0,0],lim=pw==='main'?185:110;
+  const pos=V(clamp(pp.x+Math.sin(a)*60,wc[0]-lim,wc[0]+lim),0,clamp(pp.z+Math.cos(a)*60,wc[1]-lim,wc[1]+lim));pos.y=terrainH(pos.x,pos.z);
+  const off=WJ[pw]?WJ[pw].officer():makeChar({body:0x1d2f6b,head:0xf2c9a0,legs:0x1b1430});off.root.scale.setScalar(.85);off.legL.p.rotation.x=off.legR.p.rotation.x=-1.5;off.root.position.set(0,.2,-.3);c.body.add(off.root);
   cop={c,pos,yaw:0};}
 function removePolice(){if(cop){scene.remove(cop.c.root);cop=null;}}
 function lawHud(){const el=$('lawHud');let t='',bad=false;
@@ -8735,7 +8738,7 @@ function spawnSpoon(){if(jail.spoon&&bodies.includes(jail.spoon))return;const g=
 function resetJail(){jail.key=false;jail.dig=0;jail.ready=false;jail.wallHits=0;if(jail.keyMesh)jail.keyMesh.visible=true;
   if(jail.door){jail.door.visible=true;setCol(jail.doorCol,true);}if(jail.gate){jail.gate.visible=true;setCol(jail.gateCol,true);}
   if(jail.weak){jail.weak.visible=true;setCol(jail.weakCol,true);}spawnSpoon();}
-function sendToJail(days){resetJail();save.jail={until:gameT()+(days||JAIL_DAYS)*24};player.pos.set(JAIL.x,JAIL.y+.2,JAIL.cz);player.vel.set(0,0,0);player.rag=false;jail.ready=true;saveGame(true);lawHud();sfx('door');}
+function sendToJail(days){const jw=wWorld(player.pos);if(jw!=='main'&&WJ[jw]){wjSend(jw,days);return;}resetJail();save.jail={until:gameT()+(days||JAIL_DAYS)*24};player.pos.set(JAIL.x,JAIL.y+.2,JAIL.cz);player.vel.set(0,0,0);player.rag=false;jail.ready=true;saveGame(true);lawHud();sfx('door');}
 function digTunnel(){if(!holdingSpoon()){sfx('fail');return;}const nw=performance.now();if(nw-(jail.digT||0)<1100){floaty(tr('Pavargai… palauk'),player.pos);return;}jail.digT=nw;
   if(jail.pg&&Math.hypot(player.pos.x-jail.pg.pos.x,player.pos.z-jail.pg.pos.z)<13){jailCaught('Aha! Kasi tunelį?! Užkasu jį atgal!');return;}
   jail.dig++;sfx('dig');shake=.12;floaty(tr('Kasi… ')+jail.dig+'/'+DIG_NEED,player.pos);
@@ -8746,6 +8749,66 @@ function jailEscaped(){save.jail=null;jail.ready=false;sfx('win');save.wanted=nu
   if(!me.owned.includes('prisonsuit')){me.owned.push('prisonsuit');saveGame(true);
     openDialog({name:'PABĖGAI IŠ KALĖJIMO!',role:'Kalėjimo paslaptis',color:'#ff7a1a',icon:'⛓',text:'Tu pabėgai iš crazy kalėjimo! Kaliniai tau paslapčia numetė savo dryžuotą kostiumą. Gavai slaptą KALINIO SKINĄ!',tasks:[{b:'GAVAI',t:'Slaptas kalinio kostiumas (drabužių parduotuvėje)',chip:'⛓'}]});}
   else{saveGame(true);say(null,'Vėl pabėgai! Tu – tikras pabėgimų meistras.');}floaty('PABĖGAI IŠ KALĖJIMO!',player.pos);}
+/* ---------- v228: every world has its own jail + police; start in your other-world home ---------- */
+const wWorld=p=>p.x>600?'dino':p.x<-600?'under':p.z>600?'cloud':p.z<-600?'horror':'main';
+const WJ={
+ dino:{lx:90,lz:-74,name:'🦖 DINO KALĖJIMAS',wall:0x8a7a5a,bar:0xf4ecd8,roof:0x3f7a2a,veh:'raptorcar',cop:'Dino policininkas',dig:'kasti po kaulų siena',col:'#9be564',officer:()=>makeChar({body:0x3f7a2a,head:0xf2c9a0,legs:0x2a3a1a})},
+ under:{lx:-88,lz:-80,name:'⛏ POŽEMIO KALĖJIMAS',wall:0x4a4048,bar:0x7fd4ff,roof:0x3a3038,veh:'drillcar',cop:'Kurmių policininkas',dig:'kasti uolą',col:'#7fd4ff',officer:()=>makeChar({body:0x6a4a3a,head:0x8a6a5a,legs:0x3a2a1a})},
+ cloud:{lx:-92,lz:-56,name:'☁ DEBESŲ KALĖJIMAS',wall:0xf0f4ff,bar:0xffd23f,roof:0xdfe8f5,veh:'cloudcar',cop:'Angelas policininkas',dig:'prapūsti debesų sieną',col:'#ffd23f',officer:()=>makeChar({body:0xffffff,head:0xf2c9a0,legs:0xe8eef8})},
+ horror:{lx:-92,lz:64,name:'💀 SIAUBŲ KALĖJIMAS',wall:0x3a3048,bar:0x8a8a92,roof:0x241e30,veh:'pumpkincar',cop:'Skeletas policininkas',dig:'išlaužti antkapio plokštę',col:'#ff4a5a',officer:()=>makeChar({body:0xf4f0e0,head:0xf4f0e0,legs:0xf4f0e0})}};
+const WJ_DIG=12;
+function wjCenter(w){const T=WJ[w],ox=w==='dino'?DW.x:w==='under'?UW.x:w==='cloud'?CLW.x:HRW.x,oz=w==='cloud'?CLW.z:w==='horror'?HRW.z:0;return{x:ox+T.lx,z:oz+T.lz};}
+const wjBuiltWorld=w=>w==='dino'?DK.built:w==='under'?UG.built:w==='cloud'?CLD.built:w==='horror'?HOR.built:false;
+function wjBuildWorld(w){if(w==='dino'&&!DK.built)buildDino();if(w==='under'){if(!DK.built)buildDino();if(!UG.built)buildUnder();}if(w==='cloud'&&!CLD.built)buildCloud();if(w==='horror'&&!HOR.built)buildHorror();}
+function wjCell(w){const c=wjCenter(w);return V(c.x,(WJ[w].y||terrainH(c.x,c.z))+.2,c.z+5.5);}
+function wjInside(w,p){const c=wjCenter(w);return Math.abs(p.x-c.x)<10.6&&Math.abs(p.z-c.z)<8.6;}
+function wjBuild(w){const T=WJ[w];if(T.built)return;T.built=true;const c=wjCenter(w),y=minH(c.x,c.z,20,16)-.05;T.y=y;const wm=mat(T.wall,{roughness:.9}),bm=mat(T.bar,{metalness:.4,roughness:.4,emissive:w==='under'?0x2a8ac8:0x000000,emissiveIntensity:w==='under'?.6:0}),rm=mat(T.roof);
+  put(GEO.box,mat(T.wall),c.x,y+.03,c.z,20,.06,16).castShadow=false;
+  block(c.x,c.z+8,20,.8,6,wm,{y});block(c.x-10,c.z,.8,16,6,wm,{y});block(c.x+10,c.z,.8,16,6,wm,{y});block(c.x-6,c.z-8,8,.8,6,wm,{y});block(c.x+6,c.z-8,8,.8,6,wm,{y});
+  const gate=new THREE.Group();for(let x=-1.8;x<=1.8;x+=.45)put(GEO.cyl,bm,c.x+x,y+2.5,c.z-8,.07,5,.07,gate);put(GEO.box,bm,c.x,y+4.9,c.z-8,4,.15,.15,gate);scene.add(gate);addCol(c.x,c.z-8,4,.8,y+6,y);
+  // the player's cell (south side): walls, bars, roof
+  block(c.x-4,c.z+5.5,.5,5,4.5,wm,{y});block(c.x+4,c.z+5.5,.5,5,4.5,wm,{y});for(let x=-3.8;x<=3.8;x+=.45)put(GEO.cyl,bm,c.x+x,y+2.25,c.z+3,.06,4.5,.06);addCol(c.x,c.z+3,8.4,.4,y+4.5,y);
+  block(c.x,c.z+5.5,8.6,5.4,.3,rm,{y:y+4.5});put(GEO.box,mat(0x6b4a2a),c.x+2.6,y+.35,c.z+6.4,1.4,.3,2.2);put(GEO.box,M.white,c.x+2.6,y+.55,c.z+6.4,1.3,.12,2);
+  const crack=put(GEO.box,M.dark,c.x-1.5,y+1,c.z+7.55,1.4,1.6,.05);
+  const sg=signPlane([T.name],7,1.1,{bg:'#2a1f47',fg:T.col});sg.position.set(c.x,y+6.9,c.z-8.5);sg.rotation.y=Math.PI;scene.add(sg);
+  for(const sx of[-1,1])for(const sz of[-1,1]){put(GEO.box,wm,c.x+sx*10,y+7,c.z+sz*8,1.6,2,1.6);put(GEO.sph,mat(0xffd23f,{emissive:0xffaa00,emissiveIntensity:1}),c.x+sx*10,y+8.2,c.z+sz*8,.3);}
+  // guard
+  let G;if(w==='dino'){const P=makeDino('raptor',0x4a8a3a,.75);scene.add(P.root);G={dino:P,root:P.root};}else{const v=w==='under'?makeChar({body:0x6a4a3a,head:0x8a6a5a,legs:0x3a2a1a}):w==='cloud'?makeChar({body:0xffffff,head:0xf2c9a0,legs:0xe8eef8}):makeChar({body:0xf4f0e0,head:0xf4f0e0,legs:0xf4f0e0});
+    if(w==='cloud'){const h=new THREE.Mesh(new THREE.TorusGeometry(.3,.05,8,20),mat(0xffd23f,{emissive:0xffb000,emissiveIntensity:1.2}));h.rotation.x=Math.PI/2;h.position.y=.6;v.hat.add(h);}
+    if(w==='horror')for(const sx of[-1,1])put(GEO.sph,mat(0x0a0a10),sx*.15,1.92,.37,.08,.1,.04,v.tilt);
+    if(w==='under')put(GEO.cyl,mat(0xffd23f),0,.15,0,.42,.25,.42,v.hat);scene.add(v.root);G={v,root:v.root};}
+  const gt=tag(T.cop.replace('policininkas','sargybinis'),T.col,.7);scene.add(gt);
+  T.guard=Object.assign(G,{tag:gt,pts:[[-7,-5],[7,-5],[7,1.5],[-7,1.5]],i:0,pos:V(c.x-7,y,c.z-5),yaw:0});
+  T.st={dig:0,digT:0,ready:false,cd:0};
+  stations.push({pos:V(c.x-1.5,y,c.z+6.6),r:2.2,cond:()=>!!(save.jail&&save.jail.w===w),get label(){return tr(T.dig)+' ('+T.st.dig+'/'+WJ_DIG+')';},act:()=>wjDig(w)});}
+function wjDig(w){const T=WJ[w],S=T.st,nw=performance.now();if(nw-S.digT<1100){floaty(tr('Pavargai… palauk'),player.pos);return;}S.digT=nw;
+  const G=T.guard;if(G&&Math.hypot(player.pos.x-G.pos.x,player.pos.z-G.pos.z)<9){wjCaught(w);return;}
+  S.dig++;sfx('dig');shake=.12;floaty(tr('Kasi… ')+S.dig+'/'+WJ_DIG,player.pos);
+  if(S.dig>=WJ_DIG){const c=wjCenter(w);say(null,'Tunelis iškastas! Lendi lauk…');for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}
+    player.pos.set(c.x-1.5,terrainH(c.x-1.5,c.z+11)+.3,c.z+11);player.vel.set(0,3,2);}}
+function wjCaught(w){const T=WJ[w],S=T.st;if(S.cd>0)return;S.cd=3;S.dig=0;sfx('fail');shake=.3;say(T.cop.replace('policininkas','sargybinis'),'Aha! Bandai pabėgti?! Užkasu viską atgal!',true);
+  player.pos.copy(wjCell(w));player.vel.set(0,0,0);player.rag=false;save.jail.until+=24;saveGame(true);lawHud();floaty('⛓ +1 '+tr('d.'),player.pos);say(null,'Sargybinis tave pagavo! Grįžai į kamerą, o bausmė pailgėjo 1 diena.');}
+function wjSend(w,days){wjBuildWorld(w);wjBuild(w);const T=WJ[w];T.st.dig=0;T.st.ready=true;save.jail={until:gameT()+(days||JAIL_DAYS)*24,w};const p=wjCell(w);player.pos.copy(p);player.vel.set(0,0,0);player.rag=false;saveGame(true);lawHud();sfx('door');
+  setTimeout(()=>say(null,tr('Pakliuvai į')+' '+tr(T.name)+'! '+tr('Kask tunelį (F prie įskilimo kameroje), kai sargybinis nežiūri.')),1200);}
+function wjTick(dt){for(const w in WJ){const T=WJ[w];if(!T.built&&wjBuiltWorld(w))wjBuild(w);if(!T.built)continue;const G=T.guard,c=wjCenter(w);T.st.cd=Math.max(0,T.st.cd-dt);
+    const tg=G.pts[G.i],tx=c.x+tg[0],tz=c.z+tg[1],dx=tx-G.pos.x,dz=tz-G.pos.z,d=Math.hypot(dx,dz);if(d<.3)G.i=(G.i+1)%G.pts.length;else{G.pos.x+=dx/d*2.2*dt;G.pos.z+=dz/d*2.2*dt;G.yaw=Math.atan2(dx,dz);}
+    G.pos.y=T.y;G.root.position.copy(G.pos);G.root.rotation.y=G.yaw;G.tag.position.set(G.pos.x,T.y+(G.dino?3.2:2.7),G.pos.z);
+    if(G.dino)animDino(G.dino,performance.now()/1000,7,true);else{const ph=performance.now()/1000*6;G.v.legL.p.rotation.x=Math.sin(ph)*.5;G.v.legR.p.rotation.x=-Math.sin(ph)*.5;}}}
+function wjUpdate(dt){const w=save.jail.w,T=WJ[w];if(!T){save.jail.w='main';return;}if(!T.built){wjBuildWorld(w);wjBuild(w);}const p=player.pos;
+  if(!T.st.ready){T.st.ready=true;if(!wjInside(w,p)){p.copy(wjCell(w));player.vel.set(0,0,0);}return;}
+  if(gameT()>=save.jail.until){const c=wjCenter(w);save.jail=null;p.set(c.x,terrainH(c.x,c.z-11)+.3,c.z-11);player.vel.set(0,0,0);sfx('door');say(null,'Atlikai bausmę! Tave paleido iš kalėjimo.');saveGame(true);lawHud();return;}
+  if(!wjInside(w,p))jailEscaped();}
+function wjCopCar(w){const T=WJ[w],c=makeDinoVeh(T.veh),b=c.body;const red=new THREE.MeshStandardMaterial({color:0x661111,emissive:0xff0022,emissiveIntensity:0}),blue=new THREE.MeshStandardMaterial({color:0x111a66,emissive:0x2255ff,emissiveIntensity:0});
+  const top=w==='cloud'?2.4:w==='horror'?3.3:2.6;put(GEO.box,red,-.4,top,0,.7,.18,.3,b);put(GEO.box,blue,.4,top,0,.7,.18,.3,b);const lr=new THREE.PointLight(0xff0022,0,12);lr.position.set(-.5,top+.3,0);b.add(lr);const lb=new THREE.PointLight(0x2255ff,0,12);lb.position.set(.5,top+.3,0);b.add(lb);
+  const sg=signPlane('POLICIJA',1.6,.32,{bg:'#ffffff',fg:'#1d2f6b',size:120,radius:6});sg.position.set(0,top+.45,0);b.add(sg);c.police={red,blue,lr,lb,on:false};return c;}
+// start the game in the other-world home that was bought or slept in most recently
+function otherHomePos(){const id=save.startHome;if(!id||!(save.dinoHouses&&save.dinoHouses[id]))return null;
+  const cloudIds=['cloudcastle'].concat(typeof CHOUSES!=='undefined'?CHOUSES.map(h=>h.id):[]);
+  try{if(cloudIds.includes(id))buildCloud();else if(id==='burrow'){if(!DK.built)buildDino();buildUnder();}else{if(!DK.built)buildDino();}}catch(e){return null;}
+  const H=DX3.houses[id];return H?H.inside.clone():null;}
+function startInOtherHome(){if(save.jail){if(save.jail.w&&save.jail.w!=='main'&&WJ[save.jail.w]){wjBuildWorld(save.jail.w);wjBuild(save.jail.w);player.pos.copy(wjCell(save.jail.w));}return;}
+  const p=otherHomePos();if(!p)return;player.pos.copy(p);player.vel.set(0,0,0);{let i=0;for(const n of pets.values()){n.pos.set(p.x-1.5+i*1.2,p.y+n.half+.3,p.z+1.2);n.vel.set(0,0,0);i++;}}player.yaw=Math.PI;cam.yaw=0;camTarget.copy(player.pos);curZone=null;
+  setTimeout(()=>say(null,tr('Pabudai savo namuose')+' – '+tr(DX3.houses[save.startHome].H.name)+'!'),2500);}
 /* ---------- v220: respawn button (H) + tougher jail ---------- */
 let respawnCd=0;const DIG_NEED=12;
 function doRespawn(){if(!started)return;
@@ -8756,7 +8819,7 @@ function doRespawn(){if(!started)return;
   if(dialogOpen)closeDialog();if(mapOpen)toggleMap();if(settingsOpen)closeSettings();
   if(player.inCar&&car)exitCar();if(player.rag&&typeof getUp==='function')getUp();emote=null;
   for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}dropAnchors();
-  const d=homeSpawn().clone(),hub=Math.abs(d.x)<.01&&Math.abs(d.z-13)<.01;d.y+=.3;tpTo(d);player.yaw=Math.PI;
+  const oh=otherHomePos(),d=(oh||homeSpawn()).clone(),hub=!oh&&Math.abs(d.x)<.01&&Math.abs(d.z-13)<.01;d.y+=.3;tpTo(d);player.yaw=Math.PI;
   let i=0;for(const n of pets.values()){n.pos.set(d.x-1.5+i*1.2,d.y+n.half+.3,d.z+1.2);n.vel.set(0,0,0);n.state='follow';i++;}curZone=null;
   sfx('ding');floaty(hub?'🧦 '+tr('Prie kojinės!'):'🏠 '+tr('Namuose!'),player.pos);saveGame(true);if(!locked)tryLock();}
 function jailCaught(msg){if((jail.caughtCd||0)>0||!save.jail)return;jail.caughtCd=3;sfx('fail');shake=.3;say('Sargybinis',msg,true);
@@ -8821,7 +8884,7 @@ function updateBullFly(dt){const F=jail.bullFly,B=jail.bull;if(!F)return false;F
   else if(F.t<4.5){B.pos.copy(F.to);v.root.position.copy(B.pos);v.tilt.rotation.set(-Math.PI/2,0,0);v.root.position.y=JAIL.y+.5;}
   else{v.tilt.rotation.set(0,0,0);B.pos.set(JAIL.bx,JAIL.y,JAIL.weakZ);jail.bullFly=null;jail.cool=3;say('Bulius','Oi… galva sukasi… Gerai, tu stipresnis.',true);}
   return true;}
-function updateJail(dt){updateVault(dt);const B=jail.bull;if(!B)return;jailTough(dt);const p=player;updateCook(dt);updateGym(dt);
+function updateJail(dt){try{wjTick(dt);}catch(e){}updateVault(dt);const B=jail.bull;if(!B)return;jailTough(dt);const p=player;updateCook(dt);updateGym(dt);
   if(updateBullFly(dt)){}else{
   // muscle man patrols near the cracked wall
   if(!jail.grab){B.ph+=dt;B.pos.z+=B.dir*1.4*dt;if(B.pos.z>JAIL.bz1)B.dir=-1;if(B.pos.z<JAIL.bz0)B.dir=1;
@@ -8837,6 +8900,7 @@ function updateJail(dt){updateVault(dt);const B=jail.bull;if(!B)return;jailTough
   }
   if(jail.throwT>0){jail.throwT-=dt;if(jail.weak.visible&&p.pos.x>JAIL.x1-1.8&&p.pos.z>JAIL.weakZ-3.5&&p.pos.z<JAIL.weakZ+3.5&&p.pos.y<JAIL.y+7){jail.throwT=0;jail.wallHits=(jail.wallHits||0)+1;if(jail.wallHits>=3){breakWeakWall();p.vel.x=Math.max(p.vel.x,13);p.vel.y=Math.max(p.vel.y,4);}else{sfx('boom');shake=.35;floaty(tr('Siena įskilo')+' '+jail.wallHits+'/3',p.pos);p.vel.x=-7;p.vel.y=3;}}}
   if(!save.jail)return;
+  if(save.jail.w&&save.jail.w!=='main'){wjUpdate(dt);return;}
   if(!jail.ready){jail.ready=true;if(!inJailArea(p.pos)){p.pos.set(JAIL.x,JAIL.y+.2,JAIL.cz);p.vel.set(0,0,0);}return;}
   if(gameT()>=save.jail.until){save.jail=null;p.pos.set(JAIL.x,JAIL.y+.2,JAIL.z0-3);p.vel.set(0,0,0);sfx('door');say(null,'Atlikai bausmę! Tave paleido iš kalėjimo.');saveGame(true);lawHud();return;}
   if(!inJailArea(p.pos)&&!jail.grab){if(cook)cookEnd(false,'Palikai virtuvę.');jailEscaped();}}
@@ -8956,7 +9020,7 @@ function updateOasisDive(dt){oasDiveCool-=dt;if(inOas||!started||player.inCar||o
   const k=Math.min(WATER_NEED,save.genieWater||0)/WATER_NEED,r=8*(.35+.65*k)*.85;
   if(d<r&&p.y<oasisPondY+1.2&&p.y>oasisPondY-2&&player.vel.y<-3){
     if(k<=0){oasDiveCool=3;floaty('Oazė išdžiūvusi…',p);say(null,'Oazė išdžiūvusi – nėra kur nerti. Atgaivink ją Džinui atnešdamas vandens!');return;}
-    const first=!ownsHome('oashome');if(first){save.owned.oashome=true;save.home='oashome';saveGame(true);sfx('win');}enterOas(first);}}
+    const first=!ownsHome('oashome');if(first){save.owned.oashome=true;save.home='oashome';save.startHome=null;saveGame(true);sfx('win');}enterOas(first);}}
 /* ---------- crazy phone: buy at the tool shop, P to open ---------- */
 const PHONE_PRICE=120;let phoneOpen=false,phView='home',phStack=[],phCall=null,phRingInfo=null,phRingT=0,phNextCall=rand(150,300),ttIdx=0,ttRaf=0,ttT0=0;
 const PH_CONTACTS=[{n:'Mama',e:'👩',l:['Labas, vaikeli! Ar pavalgei?','Nepamiršk užsidėti kepurės – lauke pasaulis crazy!','Grįžk namo iki tamsos, gerai?','Myliu tave! Paskambink dažniau!']},
