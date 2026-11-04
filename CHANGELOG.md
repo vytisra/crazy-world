@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-04 10:20 — v226 💾 Online pasaulis išsisaugo
+- Jei grįžti į tą patį online pasaulį (tas pats lobby vardas ir tas pats slaptažodis), visas tavo progresas – pinigai, namai, transportas, gyvūnėliai, drabužiai ir misijos – atkuriamas. Prisijungus parašoma „💾 Tavo progresas šiame online pasaulyje atkurtas!“.
+- Kitas lobby vardas arba kitas slaptažodis – naujas, švarus online pasaulis.
+- Progresas saugomas tame kompiuteryje ir naršyklėje, kuriame žaidei.
+
 ## 2026-11-03 20:57 — v225 🌐 Online: visi mato tą patį pasaulį
 - Online lobby dabar turi vieną bendrą pasaulį, kurį „valdo“ lobby kūrėjas: visi žaidėjai mato žmones (NPC) tose pačiose vietose ir judančius taip pat, tuos pačius daiktus (kibirus, kamuolius, ledo luitus ir kt.) tose pačiose vietose bei tą patį paros metą.
 - Kai kuris nors žaidėjas paima, neša ar meta žmogų ar daiktą, kiti mato, kaip jis juda – ir daiktas lieka ten, kur jį padėjo.
