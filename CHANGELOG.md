@@ -3,6 +3,14 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-05 18:06 — v233 Marko namas: mažiukų pasaulis svetainėje
+
+- Miesto karalystėje (vakarinis kraštas) stovi violetinis **Marko namas** su antena ir lėkšte. Viduje – mokslininko Marko laboratorija su mažinimo mašina.
+- Markas prašo surasti 6 jo televizoriaus pulto dalis už $500. Sutikus jis tave sumažina ir patenki į milžinišką svetainę.
+- 6 dalys: voras Lina (užmušk musę kardu ir atnešk), po sofa (saugokis tarakonų), ant stalo (lipk knygomis ir kėde), knygų lentynos viršūnė (parkūras), pelytė Mikė (atnešk sūrio nuo stalo), miegantis katinas Murkis (nebėk šalia jo!).
+- 3 paslaptys: pasiklydęs mokslininkas Jonas batų dėžėje (duoda mokslininko plaukus su akiniais ir chalatą), auksinė moneta vazone (+$300), Marko dienoraštis už televizoriaus (+$150).
+- Surinkęs visas dalis grįžk prie Marko batų – jis tave padidina, duoda $500, o svetainės televizorius vėl rodo.
+
 ## 2026-11-04 18:37 — v232 Atviri serveriai be slaptažodžio, serverių sąrašas ir kalėjimų stogai
 
 - Online „Create lobby“: slaptažodis nebūtinas – be jo serveris atviras.
