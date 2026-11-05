@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-05 20:09 — v236 Marko pasaulis – angliški vardai
+
+- Veikėjų vardai Marko pasaulyje dabar angliški: Scientist Mark, Scientist John, Lily the Spider, Mike the Mouse, Whiskers the Cat; namas – „Mark’s house“.
+
 ## 2026-11-05 20:03 — v235 Marko pasaulis – viskas angliškai
 
 - Visame Marko pasaulyje (namo užrašas, laboratorija, svetainė) visi tekstai dabar angliški nepriklausomai nuo kalbos nustatymo: dialogai, užrašai, mygtukai, veikėjų vardai (Scientist Markas, Lina the Spider, Mike the Mouse, Murkis the Cat, Scientist Jonas), pulto dalys, viršutinė juosta su laikmačiu ir zonos pavadinimas.

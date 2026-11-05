@@ -6409,7 +6409,7 @@ function updateSky(dt){
 }
 
 /* ---------- zone banner ---------- */
-const ZINFO={tiny:['Markas’ living room (you are tiny!)','Find 6 remote parts'],tinylab:['Markas’ house','Scientist’s lab'],oashome:['Slaptas namelis po oaze','Vanduo virš galvos, o čia sausa ir jauku'],volin:['Ugnikalnio vidus','Lava čia teka aukštyn'],volhome:['Mažasis ugnikalnis','Karšta, bet jauku'],igloo:['Iglu','Šalta lauke, šilta viduje'],villa:['Moderni vila','Tavo prabangūs namai'],disco:['Diskoteka','Šviečiančios grindys ir DJ pingvinas'],museum:['Crazy muziejus','Dinozaurai, karaliai ir dingusi kojinė'],pyramid:['Piramidės vidus','Faraono lobių kambarys'],home:['Tavo namai','Jauku ir šilta – net crazy pasaulyje'],hub:['Centrinis miestelis','Kojinės šventovė ir keliai į keturias karalystes'],snow:['Sniego karalystė','Ledynų karalius sėdi savo Ledo rūmuose šiaurėje'],
+const ZINFO={tiny:['Mark’s living room (you are tiny!)','Find 6 remote parts'],tinylab:['Mark’s house','Scientist’s lab'],oashome:['Slaptas namelis po oaze','Vanduo virš galvos, o čia sausa ir jauku'],volin:['Ugnikalnio vidus','Lava čia teka aukštyn'],volhome:['Mažasis ugnikalnis','Karšta, bet jauku'],igloo:['Iglu','Šalta lauke, šilta viduje'],villa:['Moderni vila','Tavo prabangūs namai'],disco:['Diskoteka','Šviečiančios grindys ir DJ pingvinas'],museum:['Crazy muziejus','Dinozaurai, karaliai ir dingusi kojinė'],pyramid:['Piramidės vidus','Faraono lobių kambarys'],home:['Tavo namai','Jauku ir šilta – net crazy pasaulyje'],hub:['Centrinis miestelis','Kojinės šventovė ir keliai į keturias karalystes'],snow:['Sniego karalystė','Ledynų karalius sėdi savo Ledo rūmuose šiaurėje'],
   volcano:['Ugnikalnio karalystė','Ieškok mažiuko lavos gnomo prie obsidiano sosto'],city:['Miesto karalystė','Prezidentas sako kalbą prie didžiųjų rūmų'],desert:['Dykumos karalystė','Džinas plaukioja vakaruose']};
 let curZone=null,bannerT=0;
 function updateZone(dt){const p=player.inCar&&car?car.pos:player.pos;const z=TNY.in?'tiny':TNY.lab?'tinylab':HRT.on?'htrain':FLT.on?'flight':inOas?'oashome':inVin?'volin':inVlh?'volhome':inIgl?'igloo':inVil?'villa':inDis?'disco':inMus?'museum':inPyr?'pyramid':inside?'home':zoneAt(p.x,p.z);
@@ -8396,11 +8396,11 @@ function buildTnyHouse(){const H=TNY.H,y=minH(H.x,H.z,14,12)-.05;TNY.hy=y;
   const dish=put(GEO.sph,mat(0xe8eef8,{metalness:.4}),H.x+2.2,y+11.4,H.z-2,1.1,.35,1.1);dish.rotation.z=.6;
   put(GEO.box,mat(0x6b4a2a),H.x+6.05,y+1.6,H.z,.15,3.2,1.8);put(GEO.sph,M.gold,H.x+6.2,y+1.6,H.z-.6,.12,.12,.12);
   for(const sz of[-1,1]){put(GEO.box,mat(0x9fe8ff,{emissive:0x3ec5ff,emissiveIntensity:.5}),H.x+6.05,y+5.2,H.z+sz*3,.12,1.8,1.8);}
-  const sg=signPlane(['🔬 MARKAS’ HOUSE','Scientist Markas'],7,1.6,{bg:'#2a1f47',fg:'#9be5ff',size:120});sg.position.set(H.x+6.15,y+7.5,H.z);sg.rotation.y=Math.PI/2;scene.add(sg);
+  const sg=signPlane(['🔬 MARK’S HOUSE','Scientist Mark'],7,1.6,{bg:'#2a1f47',fg:'#9be5ff',size:120});sg.position.set(H.x+6.15,y+7.5,H.z);sg.rotation.y=Math.PI/2;scene.add(sg);
   for(let i=0;i<5;i++){const b=put(GEO.sph,mat([0x9be564,0xff5fa2,0x3ec5ff][i%3],{emissive:[0x9be564,0xff5fa2,0x3ec5ff][i%3],emissiveIntensity:.8}),H.x+6.4,y+.4,H.z-3+i*1.5,.25,.25,.25);b.castShadow=false;}
-  stations.push({pos:V(H.x+7.2,y,H.z),r:2.8,label:'enter Markas’ house 🔬',act:tnyEnterLab});}
+  stations.push({pos:V(H.x+7.2,y,H.z),r:2.8,label:'enter Mark’s house 🔬',act:tnyEnterLab});}
 function tnyEnterLab(){tnyEnsure();if(player.inCar&&car)exitCar();tpTo(LV(0,.2,2.2));player.yaw=Math.PI;cam.yaw=0;cam.pitch=.3;curZone=null;sfx('door');
-  if(!tnyS().met){tnyS().met=1;setTimeout(()=>say('Markas','Oh! A guest! Come closer – I really need help!',true),700);}}
+  if(!tnyS().met){tnyS().met=1;setTimeout(()=>say('Mark','Oh! A guest! Come closer – I really need help!',true),700);}}
 function tnyLeaveLab(){const H=TNY.H;tpTo(V(H.x+10.5,TNY.hy+.2,H.z));player.yaw=Math.PI/2;cam.yaw=-Math.PI/2;curZone=null;sfx('door');}
 function tnyEnsure(){if(TNY.built)return;TNY.built=true;buildTnyLab();buildTnyRoom();}
 /* the lab (normal size) */
@@ -8422,35 +8422,35 @@ function buildTnyLab(){const L=TNY.L;
   anims.push(t=>{pad.material.emissiveIntensity=.6+Math.sin(t*4)*.3;gun.rotation.y=t*.8;});
   const st=signPlane(['🔬 SHRINKING MACHINE'],3.6,.7,{bg:'#2a1f47',fg:'#3ee6b0',size:110});st.position.set(L.x+3.5,L.y+4.5,L.z-5.95);scene.add(st);
   // Markas
-  const mk=makeScientist();mk.root.position.copy(LV(0,0,-3.2));scene.add(mk.root);const mt=tag('Scientist Markas','#9be5ff',.7);mt.position.copy(LV(0,2.9,-3.2));scene.add(mt);
+  const mk=makeScientist();mk.root.position.copy(LV(0,0,-3.2));scene.add(mk.root);const mt=tag('Scientist Mark','#9be5ff',.7);mt.position.copy(LV(0,2.9,-3.2));scene.add(mt);
   anims.push(t=>{mk.tilt.rotation.z=Math.sin(t*1.3)*.05;mk.armR.p.rotation.x=-.4+Math.sin(t*2)*.3;});
-  speakers.push({name:'Markas',obj:mk.root,top:2.6,lines:['Where is my remote… I can’t watch science shows without it!','The shrinking machine works 99% of the time!','Jonas… where did you go?']});
-  stations.push({pos:LV(0,0,-1.6),r:2.8,label:'talk: Scientist Markas',act:tnyMarkas});
+  speakers.push({name:'Mark',obj:mk.root,top:2.6,lines:['Where is my remote… I can’t watch science shows without it!','The shrinking machine works 99% of the time!','John… where did you go?']});
+  stations.push({pos:LV(0,0,-1.6),r:2.8,label:'talk: Scientist Mark',act:tnyMarkas});
   // Jonas (appears in the lab once rescued)
-  const jn=makeScientist();jn.root.position.copy(LV(-3.2,0,-3.4));jn.root.rotation.y=.4;scene.add(jn.root);const jt=tag('Scientist Jonas','#9be5ff',.7);jt.position.copy(LV(-3.2,2.9,-3.4));scene.add(jt);
+  const jn=makeScientist();jn.root.position.copy(LV(-3.2,0,-3.4));jn.root.rotation.y=.4;scene.add(jn.root);const jt=tag('Scientist John','#9be5ff',.7);jt.position.copy(LV(-3.2,2.9,-3.4));scene.add(jt);
   TNY.jonasLab={v:jn,tag:jt};
-  stations.push({pos:LV(-3.2,0,-2),r:2.2,label:'talk: Scientist Jonas',cond:()=>!!tnyS().sec.sci,act:()=>openDialog({name:'Scientist Jonas',role:'Rescued scientist',color:'#9be5ff',icon:'🥼',text:'I’m normal size again! Thanks for finding me. Those scientist clothes really suit you!',tasks:[]})});
+  stations.push({pos:LV(-3.2,0,-2),r:2.2,label:'talk: Scientist John',cond:()=>!!tnyS().sec.sci,act:()=>openDialog({name:'Scientist John',role:'Rescued scientist',color:'#9be5ff',icon:'🥼',text:'I’m normal size again! Thanks for finding me. Those scientist clothes really suit you!',tasks:[]})});
   stations.push({pos:LV(0,0,5),r:2.2,label:'go outside 🚪',act:tnyLeaveLab});}
 function tnyMarkas(){const s=tnyS(),n=tnyCount();
   const tasks=TNY_PARTS.map(p=>({b:p.e+' '+p.name,t:s.parts[p.id]?'found':'still missing',chip:s.parts[p.id]?'✔':'?'}));
-  if(s.done){openDialog({name:'Scientist Markas',role:'Remote fixed!',color:'#9be5ff',icon:'🔬',text:'Thank you! The remote works again and the TV shows crazy shows. If you want, I can shrink you again – there may be more secrets in the living room. Secrets: '+tnySecCount()+'/3.',tasks:[],
+  if(s.done){openDialog({name:'Scientist Mark',role:'Remote fixed!',color:'#9be5ff',icon:'🔬',text:'Thank you! The remote works again and the TV shows crazy shows. If you want, I can shrink you again – there may be more secrets in the living room. Secrets: '+tnySecCount()+'/3.',tasks:[],
     actions:[{label:'Shrink me 🔬',onClick:tnyShrink},{label:'Not now',alt:true,onClick:()=>{closeDialog();tryLock();}}]});return;}
-  if(!s.acc){openDialog({name:'Scientist Markas',role:'Scientist',color:'#9be5ff',icon:'🔬',text:'Hi! I’m scientist Markas. My tiny TV remote broke into 6 parts – they got scattered all over my living room! I’m too big to find them. If you help me, I’ll give you $'+TNY_PAY+'. Do you agree? Then my shrinking machine will make you tiny!',tasks:[],
+  if(!s.acc){openDialog({name:'Scientist Mark',role:'Scientist',color:'#9be5ff',icon:'🔬',text:'Hi! I’m scientist Mark. My tiny TV remote broke into 6 parts – they got scattered all over my living room! I’m too big to find them. If you help me, I’ll give you $'+TNY_PAY+'. Do you agree? Then my shrinking machine will make you tiny!',tasks:[],
     actions:[{label:'I agree! 🔬',onClick:()=>{s.acc=1;saveGame(true);tnyShrink();}},{label:'Not now',alt:true,onClick:()=>{closeDialog();tryLock();}}]});return;}
-  openDialog({name:'Scientist Markas',role:'Remote parts: '+n+'/6',color:'#9be5ff',icon:'🔬',text:n>=6?'You have all the parts?! Go back to the living room and come to my shoe – I’ll make you big there!':'Not all parts are found yet. Shrink you again?',tasks,
+  openDialog({name:'Scientist Mark',role:'Remote parts: '+n+'/6',color:'#9be5ff',icon:'🔬',text:n>=6?'You have all the parts?! Go back to the living room and come to my shoe – I’ll make you big there!':'Not all parts are found yet. Shrink you again?',tasks,
     actions:[{label:'Shrink me 🔬',onClick:tnyShrink},{label:'Later',alt:true,onClick:()=>{closeDialog();tryLock();}}]});}
 function tnyDrop(){const s=tnyS();let l=[];if(s.fly){s.fly=0;l.push('the fly');}if(s.cheese){s.cheese=0;l.push('the cheese');}if(l.length){saveGame(true);setTimeout(()=>say(null,'You dropped '+l.join(' and ')+'! You’ll have to go back and get it again.'),400);}}
 const TNY_TIME=7*60;
 function tnyShrink(){closeDialog();tnyEnsure();tnyFlash();TNY.tEnd=performance.now()+TNY_TIME*1000;TNY.warned=0;for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}
   tpTo(RV(5,.2,10));player.yaw=Math.PI;cam.yaw=0;cam.pitch=.25;cam.dist=Math.max(cam.dist,8);curZone=null;tryLock();
-  const s=tnyS();if(!s.intro){s.intro=1;saveGame(true);setTimeout(()=>openDialog({name:'You are tiny now!',role:'Markas’ living room',color:'#3ee6b0',icon:'🔬',text:'Markas: “It worked! Now you’re smaller than a mouse. Find all 6 parts of my remote and come back to my shoe – then I’ll make you big again.”',
-    tasks:[{b:'🕷 Lina the Spider',t:'in the corner by the table – wants a fly',chip:'1'},{b:'🛋 Under the sofa',t:'watch out for cockroaches!',chip:'2'},{b:'🍽 On the table',t:'climb the books and the chair',chip:'3'},{b:'📚 Bookshelf',t:'the very top',chip:'4'},{b:'🐭 Mike the Mouse',t:'by the little hole in the wall',chip:'5'},{b:'🐱 Murkis the Cat',t:'sleeps on the carpet – DON’T RUN, and when he opens an eye – FREEZE!',chip:'6'},{b:'⏱ Time',t:'shrinking lasts 7 minutes',chip:'!'}],
+  const s=tnyS();if(!s.intro){s.intro=1;saveGame(true);setTimeout(()=>openDialog({name:'You are tiny now!',role:'Mark’s living room',color:'#3ee6b0',icon:'🔬',text:'Mark: “It worked! Now you’re smaller than a mouse. Find all 6 parts of my remote and come back to my shoe – then I’ll make you big again.”',
+    tasks:[{b:'🕷 Lily the Spider',t:'in the corner by the table – wants a fly',chip:'1'},{b:'🛋 Under the sofa',t:'watch out for cockroaches!',chip:'2'},{b:'🍽 On the table',t:'climb the books and the chair',chip:'3'},{b:'📚 Bookshelf',t:'the very top',chip:'4'},{b:'🐭 Mike the Mouse',t:'by the little hole in the wall',chip:'5'},{b:'🐱 Whiskers the Cat',t:'sleeps on the carpet – DON’T RUN, and when he opens an eye – FREEZE!',chip:'6'},{b:'⏱ Time',t:'shrinking lasts 7 minutes',chip:'!'}],
     actions:[{label:'Let’s go!',onClick:()=>{closeDialog();tryLock();}}]}),1200);}
-  else say('Markas','Good luck, tiny one! Remote parts: '+tnyCount()+'/6',true);}
-function tnyGrow(timeout){const s=tnyS(),n=tnyCount();tnyFlash();TNY.tEnd=0;if(timeout===true){tnyDrop();setTimeout(()=>openDialog({name:'Scientist Markas',role:'Time’s up!',color:'#ff5f7a',icon:'⏱',text:'The shrinking wore off and you grew back! The parts you found stay with me ('+n+'/6), but you dropped what you were carrying. When you are ready – I’ll shrink you again.',tasks:[],actions:[{label:'OK',onClick:()=>{closeDialog();tryLock();}}]}),700);}tpTo(LV(3.5,.2,-1));player.yaw=Math.PI;cam.yaw=0;curZone=null;
+  else say('Mark','Good luck, tiny one! Remote parts: '+tnyCount()+'/6',true);}
+function tnyGrow(timeout){const s=tnyS(),n=tnyCount();tnyFlash();TNY.tEnd=0;if(timeout===true){tnyDrop();setTimeout(()=>openDialog({name:'Scientist Mark',role:'Time’s up!',color:'#ff5f7a',icon:'⏱',text:'The shrinking wore off and you grew back! The parts you found stay with me ('+n+'/6), but you dropped what you were carrying. When you are ready – I’ll shrink you again.',tasks:[],actions:[{label:'OK',onClick:()=>{closeDialog();tryLock();}}]}),700);}tpTo(LV(3.5,.2,-1));player.yaw=Math.PI;cam.yaw=0;curZone=null;
   if(n>=6&&!s.done){s.done=1;money+=TNY_PAY;$('money').textContent=money;saveGame(true);sfx('win');
-    setTimeout(()=>openDialog({name:'Scientist Markas',role:'All 6 parts!',color:'#9be5ff',icon:'📺',text:'You found ALL 6 remote parts! Click… click… IT WORKS! The TV is on again! Here’s your $'+TNY_PAY+'. If you want to look for secrets in the living room – come back and I’ll shrink you again. Secrets: '+tnySecCount()+'/3.',tasks:[],actions:[{label:'Hooray!',onClick:()=>{closeDialog();tryLock();}}]}),900);}
-  else if(timeout!==true)say('Markas',n>=6?'Thanks again!':'You’re back! Remote parts: '+n+'/6. Whenever you want – I’ll shrink you again.',true);}
+    setTimeout(()=>openDialog({name:'Scientist Mark',role:'All 6 parts!',color:'#9be5ff',icon:'📺',text:'You found ALL 6 remote parts! Click… click… IT WORKS! The TV is on again! Here’s your $'+TNY_PAY+'. If you want to look for secrets in the living room – come back and I’ll shrink you again. Secrets: '+tnySecCount()+'/3.',tasks:[],actions:[{label:'Hooray!',onClick:()=>{closeDialog();tryLock();}}]}),900);}
+  else if(timeout!==true)say('Mark',n>=6?'Thanks again!':'You’re back! Remote parts: '+n+'/6. Whenever you want – I’ll shrink you again.',true);}
 /* tiny-world objects */
 function tnyPartMesh(i){const g=new THREE.Group(),c=[0x3ec5ff,0xffd23f,0xff5fa2,0x3ee6b0,0xc38bff,0xff9b2f][i],m=mat(c,{emissive:c,emissiveIntensity:.7});
   if(i===0){put(GEO.box,mat(0x2a2f3d),0,0,0,.9,.12,.6,g);for(let k=0;k<6;k++)put(GEO.cyl,m,-.3+(k%3)*.3,.1,-.15+Math.floor(k/3)*.3,.09,.08,.09,g);}
@@ -8466,7 +8466,7 @@ function tnyPart(i,lx,ly,lz,cond,label){const P=TNY_PARTS[i],g=tnyPartMesh(i),p0
   stations.push({pos:RV(lx,ly,lz),r:2.2,label:label||('take remote part: '+P.name),cond:()=>!tnyS().parts[P.id]&&(!cond||cond()),act:()=>tnyGot(i)});}
 function tnyGot(i,from){const P=TNY_PARTS[i],s=tnyS();if(s.parts[P.id])return;s.parts[P.id]=1;saveGame(true);sfx('coin');sfx('ding');floaty(P.e+' '+P.name+'!',player.pos);
   const n=tnyCount();say(null,(from?from+' ':'')+'You found a remote part: '+P.name+'! ('+n+'/6)');
-  if(n>=6)setTimeout(()=>say('Markas','You have ALL 6 parts! Come to my shoe – I’ll make you big again!',true),1500);}
+  if(n>=6)setTimeout(()=>say('Mark','You have ALL 6 parts! Come to my shoe – I’ll make you big again!',true),1500);}
 function makeRoach(){const g=new THREE.Group(),b=mat(0x5a2f12,{roughness:.4,metalness:.2});put(GEO.sph,b,0,.45,0,.55,.32,1,g);put(GEO.sph,mat(0x3a1f0c),0,.42,.95,.35,.25,.3,g);
   const legs=[];for(const sx of[-1,1])for(let k=0;k<3;k++){const l=put(GEO.box,mat(0x2a1608),sx*.6,.25,-.5+k*.5,.7,.06,.06,g);l.rotation.z=sx*.4;legs.push(l);}
   for(const sx of[-1,1]){const a=put(GEO.cyl,mat(0x2a1608),sx*.18,.75,1.6,.02,1.4,.02,g);a.rotation.x=1.1;a.rotation.z=sx*.3;}g.traverse(o=>{o.castShadow=false;});return{g,legs};}
@@ -8532,10 +8532,10 @@ function buildTnyRoom(){const R=TNY.R,Y=R.y;
   put(GEO.sph,lm,0,1.8,-.8,1.6,1.3,1.8,lina);put(GEO.sph,lm,0,1.6,1.2,.9,.8,.9,lina);for(const sx of[-1,1]){put(GEO.sph,M.white,sx*.3,1.9,1.95,.22,.22,.12,lina);put(GEO.sph,M.dark,sx*.3,1.9,2.05,.11,.11,.06,lina);}
   put(GEO.sph,mat(0xff5fa2),.6,2.6,1.3,.35,.25,.2,lina);put(GEO.sph,mat(0xff5fa2),-.0,2.6,1.3,.15,.15,.15,lina);put(GEO.sph,mat(0xff5fa2),-.6,2.6,1.3,.35,.25,.2,lina);
   const llegs=[];for(const sx of[-1,1])for(let k=0;k<4;k++){const p=new THREE.Group();p.position.set(sx*.7,1.7,.9-k*.6);lina.add(p);const a=put(GEO.cyl,lm,sx*1.1,.4,0,.1,2.4,.1,p);a.rotation.z=sx*-1.1;const b2=put(GEO.cyl,lm,sx*2.3,-.5,0,.09,2,.09,p);b2.rotation.z=sx*.5;llegs.push(p);}
-  const lt=tag('Lina the Spider','#ff9fda',.8);lt.position.copy(RV(30,4.4,-24));scene.add(lt);
+  const lt=tag('Lily the Spider','#ff9fda',.8);lt.position.copy(RV(30,4.4,-24));scene.add(lt);
   anims.push(t=>{if(!TNY.in)return;lina.rotation.y=Math.sin(t*.5)*.4-.6;llegs.forEach((p,i)=>{p.rotation.y=Math.sin(t*3+i)*.12;});});
-  speakers.push({name:'Lina the Spider',obj:lina,top:4,lines:['Shh… buzz, buzz, buzz…','Who is that tiny one?','My web is the prettiest!']});
-  stations.push({pos:RV(30,0,-21.5),r:4.2,label:'talk: Lina the Spider',act:tnyLina});
+  speakers.push({name:'Lily the Spider',obj:lina,top:4,lines:['Shh… buzz, buzz, buzz…','Who is that tiny one?','My web is the prettiest!']});
+  stations.push({pos:RV(30,0,-21.5),r:4.2,label:'talk: Lily the Spider',act:tnyLina});
   const sw=new THREE.Group();put(GEO.box,mat(0xdfe6ee,{metalness:.8,roughness:.2}),0,0,.9,.14,.05,2.2,sw);put(GEO.box,M.gold,0,0,-.25,.6,.1,.12,sw);put(GEO.box,mat(0x6b4a2a),0,0,-.65,.12,.12,.7,sw);
   sw.position.copy(RV(21,.12,-19));sw.rotation.y=.8;scene.add(sw);TNY.swordFloor=sw;
   stations.push({pos:RV(21,0,-19),r:2.3,label:'take the sword ⚔',cond:()=>!tnyS().sword,act:()=>{tnyS().sword=1;saveGame(true);sfx('grab');floaty('⚔',player.pos);say(null,'You have a sword! Go to the fly and press F – swing!');}});
@@ -8550,12 +8550,12 @@ function buildTnyRoom(){const R=TNY.R,Y=R.y;
   put(GEO.sph,mat(0xff7aa0),0,1.15,1.75,.12,.1,.1,mouse);const mtl=put(GEO.cyl,mat(0xff9fb5),0,.5,-1.6,.06,1.6,.06,mouse);mtl.rotation.x=1.2;
   const mtg=tag('Mike the Mouse','#ffd23f',.75);mtg.position.copy(RV(-26,3.1,26.8));scene.add(mtg);
   anims.push(t=>{if(TNY.in)mouse.position.y=TNY.R.y+Math.abs(Math.sin(t*3))*.15;});
-  speakers.push({name:'Mike the Mouse',obj:mouse,top:2.8,lines:['Squeak squeak!','I smell cheese…','Is Murkis the Cat asleep? Really?']});
+  speakers.push({name:'Mike the Mouse',obj:mouse,top:2.8,lines:['Squeak squeak!','I smell cheese…','Is Whiskers the Cat asleep? Really?']});
   stations.push({pos:RV(-26,0,25.5),r:3.4,label:'talk: Mike the Mouse',act:tnyMouse});
   // CAT MURKIS sleeping on the carpet
   tcol(TNY.R.x-14,TNY.R.z+6,8.4,4.6,Y+3.6,Y);put(GEO.sph,mat(0xe8c890),R.x+12,Y+.25,R.z-18,.6,.3,.5);
   const cat=makeTnyCat();cat.g.position.copy(RV(-14,0,6));scene.add(cat.g);TNY.cat={...cat,wake:0,hint:0,eye:0,eyeT:6};
-  const zz=tag('Zzz…','#c3b8e6',.8);scene.add(zz);TNY.cat.zz=zz;const ctg=tag('Murkis the Cat','#ffd23f',.75);ctg.position.copy(RV(-14,5.6,6));scene.add(ctg);
+  const zz=tag('Zzz…','#c3b8e6',.8);scene.add(zz);TNY.cat.zz=zz;const ctg=tag('Whiskers the Cat','#ffd23f',.75);ctg.position.copy(RV(-14,5.6,6));scene.add(ctg);
   tnyPart(5,-7.6,0,6,()=>TNY.cat.wake<=0);
   // TV stand + TV (south wall, east)
   trb(26,25,16,5,8,0x5a3a1a);trb(26,26.8,15,.6,10.6,0x15151a,{y:8});const tvs=put(GEO.box,new THREE.MeshStandardMaterial({color:0x050508,emissive:0x000000,roughness:.3}),R.x+26,Y+13.3,R.z+26.4,13.6,9,.2);tvs.castShadow=false;TNY.tv=tvs;
@@ -8569,32 +8569,32 @@ function buildTnyRoom(){const R=TNY.R,Y=R.y;
   // DIARY behind the TV stand (secret)
   const di=put(GEO.box,mat(0x7a2a4a),R.x+31,Y+.2,R.z+28.6,1.6,.4,1.2);di.rotation.y=.3;TNY.diaryMesh=di;
   stations.push({pos:RV(31,0,28.6),r:1.8,label:'read the old diary 📔',cond:()=>!tnyS().sec.diary,act:()=>{const s=tnyS();s.sec.diary=1;money+=150;$('money').textContent=money;saveGame(true);sfx('ding');
-    openDialog({name:'Markas’ diary',role:'SECRET '+tnySecCount()+'/3',color:'#c38bff',icon:'📔',text:'“Day 731. Jonas is still missing. After the test with the shrinking machine he just… vanished. Maybe he is somewhere in the living room? I searched everywhere – even under the sofa! But there are only cockroaches…” You found a secret diary: +$150.',tasks:[],actions:[{label:'Interesting…',onClick:()=>{closeDialog();tryLock();}}]});}});
+    openDialog({name:'Mark’s diary',role:'SECRET '+tnySecCount()+'/3',color:'#c38bff',icon:'📔',text:'“Day 731. John is still missing. After the test with the shrinking machine he just… vanished. Maybe he is somewhere in the living room? I searched everywhere – even under the sofa! But there are only cockroaches…” You found a secret diary: +$150.',tasks:[],actions:[{label:'Interesting…',onClick:()=>{closeDialog();tryLock();}}]});}});
   // SHOEBOX with the lost scientist Jonas (secret, north-west corner)
   const sb=0xe8dcc8,sbx=-27,sbz=-24;trb(sbx,sbz-3,9,.4,4.2,sb);trb(sbx-4.3,sbz,.4,6,4.2,sb);trb(sbx+4.3,sbz,.4,6,4.2,sb);
   trb(sbx-2.6,sbz+3,3.8,.4,4.2,sb);trb(sbx+3.2,sbz+3,2.6,.4,4.2,sb);trb(sbx+.6,sbz+3,2.6,.4,1.2,sb,{y:3});
   trb(sbx,sbz,9.6,6.6,.4,0xd8c8b0,{y:4.2});trb(sbx,sbz+3.25,9.6,.1,1.6,0xe63946,{y:2.2,col:false,ns:1});
   const jb=makeScientist();jb.root.position.copy(RV(sbx-2.5,0,sbz-1));jb.root.rotation.y=.6;scene.add(jb.root);TNY.jonasBox=jb;
-  speakers.push({name:'Scientist Jonas',obj:jb.root,top:2.6,lines:['Is anybody here?','Such a huge living room…']});
+  speakers.push({name:'Scientist John',obj:jb.root,top:2.6,lines:['Is anybody here?','Such a huge living room…']});
   stations.push({pos:RV(sbx-2.5,0,sbz-1),r:2.0,label:'talk: lost scientist',cond:()=>!tnyS().sec.sci,act:tnyJonas});
   // Markas' giant shoes by the door – the way back
   for(const sx of[-1,1]){trb(5+sx*3.2,23,4.4,10,3,0x3a2414);trb(5+sx*3.2,26,4,4,35,0x3a3f5a,{y:3,ns:1});trb(5+sx*3.2,19,3.6,2,.6,0xffffff,{y:3,col:false,ns:1});}
-  const mtg2=tag('Markas (just his shoes…)','#9be5ff',.9);mtg2.position.copy(RV(5,7,20));scene.add(mtg2);
-  stations.push({pos:RV(5,0,16.5),r:4,get label(){return tnyCount()>=6&&!tnyS().done?'give Markas all 6 parts ⬆':'go back to Markas (grow big) ⬆';},act:()=>tnyGrow()});
+  const mtg2=tag('Mark (just his shoes…)','#9be5ff',.9);mtg2.position.copy(RV(5,7,20));scene.add(mtg2);
+  stations.push({pos:RV(5,0,16.5),r:4,get label(){return tnyCount()>=6&&!tnyS().done?'give Mark all 6 parts ⬆':'go back to Mark (grow big) ⬆';},act:()=>tnyGrow()});
   // HUD
   const h=document.createElement('div');h.id='tnyHud';h.hidden=true;document.body.append(h);TNY.hud=h;}
 function tnyLina(){const s=tnyS();
-  if(s.parts.p1){openDialog({name:'Lina the Spider',role:'Happy',color:'#ff9fda',icon:'🕷',text:'Thanks again for the fly! It was delicious. Good luck finding the other parts, tiny one!',tasks:[]});return;}
-  if(s.fly){s.fly=0;saveGame(true);openDialog({name:'Lina the Spider',role:'A FLY!',color:'#ff9fda',icon:'🕷',text:'Mmm, a FLY! You are a real hero, tiny one! As I promised – here is the shiny remote part. I found it in my web.',tasks:[],actions:[{label:'Thanks, Lina!',onClick:()=>{closeDialog();tryLock();tnyGot(0,'Lina the Spider gave you a remote part!');}}]});return;}
-  openDialog({name:'Lina the Spider',role:'Spider',color:'#ff9fda',icon:'🕷',text:'Shh… Hello, tiny one. I am Lina the Spider. I have a shiny remote part, but I’ll only give it to you for that annoying FLY that keeps buzzing around. '+(s.sword?'You have a sword – now swat the fly! Sometimes it lands on a crumb on the floor.':'There is a sword lying on the floor over there – take it, swat the fly and bring it to me!'),tasks:[]});}
+  if(s.parts.p1){openDialog({name:'Lily the Spider',role:'Happy',color:'#ff9fda',icon:'🕷',text:'Thanks again for the fly! It was delicious. Good luck finding the other parts, tiny one!',tasks:[]});return;}
+  if(s.fly){s.fly=0;saveGame(true);openDialog({name:'Lily the Spider',role:'A FLY!',color:'#ff9fda',icon:'🕷',text:'Mmm, a FLY! You are a real hero, tiny one! As I promised – here is the shiny remote part. I found it in my web.',tasks:[],actions:[{label:'Thanks, Lily!',onClick:()=>{closeDialog();tryLock();tnyGot(0,'Lily the Spider gave you a remote part!');}}]});return;}
+  openDialog({name:'Lily the Spider',role:'Spider',color:'#ff9fda',icon:'🕷',text:'Shh… Hello, tiny one. I am Lily the Spider. I have a shiny remote part, but I’ll only give it to you for that annoying FLY that keeps buzzing around. '+(s.sword?'You have a sword – now swat the fly! Sometimes it lands on a crumb on the floor.':'There is a sword lying on the floor over there – take it, swat the fly and bring it to me!'),tasks:[]});}
 function tnyHitFly(){const F=TNY.fly,p=player.pos;if(Math.hypot(F.pos.x-p.x,F.pos.z-p.z)>2.6||F.pos.y>p.y+3.4){sfx('throw');floaty('Missed!',p);return;}
-  tnyS().fly=1;saveGame(true);sfx('hit');sfx('coin');floaty('🪰 You got the fly!',p);say(null,'You swatted the fly! Bring it to Lina the Spider.');}
+  tnyS().fly=1;saveGame(true);sfx('hit');sfx('coin');floaty('🪰 You got the fly!',p);say(null,'You swatted the fly! Bring it to Lily the Spider.');}
 function tnyMouse(){const s=tnyS();
   if(s.parts.p5){openDialog({name:'Mike the Mouse',role:'Full mouse',color:'#ffd23f',icon:'🐭',text:'Squeak! The cheese was wonderful! If you ever have cheese again – you know where to find me.',tasks:[]});return;}
   if(s.cheese){s.cheese=0;saveGame(true);openDialog({name:'Mike the Mouse',role:'CHEESE!',color:'#ffd23f',icon:'🐭',text:'Squeak squeak squeak! CHEESE! Mmm… As I promised – here is the strange spring I found under the radiator. It must be from the remote!',tasks:[],actions:[{label:'Thanks, Mike!',onClick:()=>{closeDialog();tryLock();tnyGot(4,'Mike the Mouse gave you a remote part!');}}]});return;}
   openDialog({name:'Mike the Mouse',role:'Mouse',color:'#ffd23f',icon:'🐭',text:'Squeak squeak! I am Mike the Mouse. I found a strange shiny spring… I’ll give it to you for a piece of cheese! The cheese is on the table – but the table is so high! Climb the books onto the chair, and then onto the table.',tasks:[]});}
 function tnyJonas(){const s=tnyS();s.sec.sci=1;const me=save.clothes.me;for(const id of['sci_coat','sci_hair'])if(!me.owned.includes(id))me.owned.push(id);me.wear.back='sci_coat';me.wear.hat='sci_hair';applyOutfit(pc,me.wear);updatePowersHud();saveGame(true);sfx('win');
-  openDialog({name:'Scientist Jonas',role:'SECRET '+tnySecCount()+'/3',color:'#9be5ff',icon:'🥼',text:'Thank you for finding me! Markas has been looking for me for 2 years, and you found me really fast! For that you get scientist clothes! (You are already wearing them – you can take them off at the CLOTHES stand.) I’ll go back to the lab.',tasks:[],actions:[{label:'Awesome! 🥼',onClick:()=>{closeDialog();tryLock();}}]});}
+  openDialog({name:'Scientist John',role:'SECRET '+tnySecCount()+'/3',color:'#9be5ff',icon:'🥼',text:'Thank you for finding me! Mark has been looking for me for 2 years, and you found me really fast! For that you get scientist clothes! (You are already wearing them – you can take them off at the CLOTHES stand.) I’ll go back to the lab.',tasks:[],actions:[{label:'Awesome! 🥼',onClick:()=>{closeDialog();tryLock();}}]});}
 function tnyTick(dt){const p=player.pos,R=TNY.R,L=TNY.L,s=tnyS();
   TNY.in=TNY.built&&p.y>R.y-6&&Math.abs(p.x-R.x)<40&&Math.abs(p.z-R.z)<34;TNY.lab=TNY.built&&p.y>L.y-6&&Math.abs(p.x-L.x)<10&&Math.abs(p.z-L.z)<8;
   if(!TNY.built)return;const t=performance.now()/1000,Y=R.y;
@@ -8607,7 +8607,7 @@ function tnyTick(dt){const p=player.pos,R=TNY.R,L=TNY.L,s=tnyS();
     const c=put(GEO.cone,mat(0xffd23f),0,-.15,.1,.25,.35,.25);pc.armL.tip.add(c);TNY.cheeseHeld=c;}
   TNY.sword.visible=TNY.in&&!!s.sword;TNY.flyHeld.visible=TNY.in&&!!s.fly;TNY.cheeseHeld.visible=TNY.in&&!!s.cheese;
   const hud=TNY.hud;if(hud){hud.hidden=!TNY.in;if(TNY.in){let tl='';if(TNY.tEnd){const left=Math.max(0,(TNY.tEnd-performance.now())/1000);tl=' · ⏱ '+Math.floor(left/60)+':'+String(Math.floor(left%60)).padStart(2,'0');}const txt='🔬 '+'Remote parts'+': '+tnyCount()+'/6'+tl+' · ✨ '+'Secrets'+': '+tnySecCount()+'/3'+(s.sword?' · ⚔':'')+(s.fly?' · 🪰':'')+(s.cheese?' · 🧀':'');if(hud.textContent!==txt)hud.textContent=txt;}}
-  if(TNY.in&&TNY.tEnd){const left=(TNY.tEnd-performance.now())/1000;if(left<60&&!TNY.warned){TNY.warned=1;say('Markas','Hurry! The shrinking wears off in 1 minute!',true);sfx('fail');}if(left<=0){tnyGrow(true);return;}}
+  if(TNY.in&&TNY.tEnd){const left=(TNY.tEnd-performance.now())/1000;if(left<60&&!TNY.warned){TNY.warned=1;say('Mark','Hurry! The shrinking wears off in 1 minute!',true);sfx('fail');}if(left<=0){tnyGrow(true);return;}}
   if(!TNY.in)return;
   // fly
   {const F=TNY.fly;F.g.visible=!s.fly&&!s.parts.p1;F.t+=dt;const cyc=F.t%12;let tx,ty,tz;
@@ -8628,9 +8628,9 @@ function tnyTick(dt){const p=player.pos,R=TNY.R,L=TNY.L,s=tnyS();
     if(C.wake>0){C.wake-=dt;C.head.rotation.z=Math.min(.5,C.head.rotation.z+dt*3);C.tail.rotation.y=Math.sin(t*10)*.6;}else{C.head.rotation.z*=Math.exp(-2*dt);C.tail.rotation.y=Math.sin(t*.8)*.2;C.g.scale.y=1+Math.sin(t*1.6)*.025;}
     C.zz.visible=C.wake<=0&&C.eye<=0;C.zz.position.set(hp.x+.5,hp.y+2.2+Math.sin(t*1.5)*.3,hp.z);
     if(C.wake<=0&&d<13&&!C.hint){C.hint=1;floaty('Shh… walk slowly, DON’T RUN!',p);}
-    C.eyeGrace=(C.eyeGrace||0)-dt;if(C.wake<=0){C.eyeT-=dt;if(C.eye>0){C.eye-=dt;if(C.eye<=0){C.eyeT=rand(3.5,7);}}else if(C.eyeT<=0){C.eye=rand(1.8,2.8);C.eyeGrace=.5;if(d<20){floaty('👁 Murkis opened an eye – FREEZE!',p);tone(300,280,.3,'triangle',.05);}}}else C.eye=0;
+    C.eyeGrace=(C.eyeGrace||0)-dt;if(C.wake<=0){C.eyeT-=dt;if(C.eye>0){C.eye-=dt;if(C.eye<=0){C.eyeT=rand(3.5,7);}}else if(C.eyeT<=0){C.eye=rand(1.8,2.8);C.eyeGrace=.5;if(d<20){floaty('👁 Whiskers opened an eye – FREEZE!',p);tone(300,280,.3,'triangle',.05);}}}else C.eye=0;
     for(const e of C.eyes)e.visible=C.eye>0||C.wake>0;
-    if(C.wake<=0&&!player.rag&&player.onGround&&((d<14&&spd>8.2)||(C.eye>0&&d<15&&spd>1.2&&C.eyeGrace<=0))){C.wake=3;tnyDrop();sfx('fail');tone(700,300,.5,'sawtooth',.08);say('Murkis the Cat','MEOW?! Who is running around?! Let me sleep!',true);
+    if(C.wake<=0&&!player.rag&&player.onGround&&((d<14&&spd>8.2)||(C.eye>0&&d<15&&spd>1.2&&C.eyeGrace<=0))){C.wake=3;tnyDrop();sfx('fail');tone(700,300,.5,'sawtooth',.08);say('Whiskers the Cat','MEOW?! Who is running around?! Let me sleep!',true);
       const ax=p.x-hp.x,az=p.z-hp.z,al=Math.hypot(ax,az)||1;ragdoll(0,V(ax/al*16,8,az/al*16));floaty('🐾',p);}}}
 const _tnyV=V();
 function tnyCam(want){const p=player.pos,R=TNY.R,L=TNY.L;
