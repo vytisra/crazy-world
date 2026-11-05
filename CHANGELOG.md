@@ -3,6 +3,15 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-05 19:51 — v234 Marko svetainė sunkesnė
+
+- ⏱ Mažinimas veikia tik 7 minutes – baigus laikui vėl užaugi laboratorijoje (rastos dalys lieka, nešami daiktai pametami). Likus 1 min. Markas perspėja.
+- Musė skraido greičiau ir aukščiau, nutupia rečiau ir trumpiau; kirsti reikia iš arčiau.
+- Po sofa – 5 tarakonai, jie greitesni ir pastebi iš toliau.
+- Katinas Murkis kartais atmerkia akį 👁 – tada reikia sustoti (bėgti negalima niekada).
+- Jei tave pagauna tarakonas ar nubloškia katinas – pameti nešamą musę ar sūrį.
+- Visi laiptai (prie lentynos, kėdės, stalo, vazono) dabar su tarpais – reikia taiklių šuolių; ant kėdės – siauri laipteliai.
+
 ## 2026-11-05 18:06 — v233 Marko namas: mažiukų pasaulis svetainėje
 
 - Miesto karalystėje (vakarinis kraštas) stovi violetinis **Marko namas** su antena ir lėkšte. Viduje – mokslininko Marko laboratorija su mažinimo mašina.
