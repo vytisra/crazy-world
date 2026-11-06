@@ -3,6 +3,15 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-06 19:37 — v238 Povandeninis pasaulis: laivo vidus, mini bosai, 5000 m
+
+- Kelionė dabar 5000 m (apie 10–15 min.). Pinigai duodami TIK pasiekus 5000 m: $1500 pirmą kartą, vėliau $600. Išnirus anksčiau ar nuskendus – nieko.
+- Visas ekranas – povandeninio laivo vidus (2 aukštai, kopėčios, iliuminatoriai, variklis, gultai). Vaikštai A/D, kopėčiomis W/S.
+- Laive atsiranda skylės – prie jų laikyk E, kol užtaisai. Per skyles semiasi vanduo; jei pasiekia 100% – laivas nuskęsta.
+- Kai artėja monstras, laivas sustoja, mirksi raudonai ir per 20 s reikia nubėgti prie VALDYMO PULTO ir spausti E (nespėjus monstras kanda ir atsiranda naujų skylių).
+- Prie pulto ekranas tampa vandeniu – šaudai jūrų mini bosą (3 ginklai). Kiekvienas pataikymas į laivą – nauja skylė viduje.
+- 6 mini bosai atsitiktine tvarka: Megalodonas, Elektrinis ungurys, Kalmarų karalienė, Gelmių žvejys, Krabų karalius, Medūzų karalienė. Prie pat finišo (4850 m) – KRAKENAS.
+
 ## 2026-11-06 19:11 — v237 Povandeninis pasaulis (2D)
 
 - Miesto karalystės rytiniame krašte – prieplauka su geltonu povandeniniu laivu ir užrašu „🌊 POVANDENINIS PASAULIS“. Paspaudus F prasideda 2D žaidimas.
