@@ -3,6 +3,14 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-06 19:11 — v237 Povandeninis pasaulis (2D)
+
+- Miesto karalystės rytiniame krašte – prieplauka su geltonu povandeniniu laivu ir užrašu „🌊 POVANDENINIS PASAULIS“. Paspaudus F prasideda 2D žaidimas.
+- Plauki povandeniniu laivu 500 m (WASD/rodyklės, D – greičiau), šaudai Space arba pele. Ginklai: 1 🚀 torpeda (stipri, sprogsta), 2 🔫 kulkosvaidis (greitas), 3 📡 sonaro banga (pataiko į visus aplink, numuša rašalą).
+- Monstrai: piranijų būriai, medūzos, dygliažuvės, rykliai (puola įsibėgėję), kalmarai (šaudo rašalu), unguriai, minos, giliau – žvejamašalės tamsoje. Kuo giliau – tuo jų daugiau ir tuo tamsiau.
+- 470 m laukia bosas KRAKENAS – jį reikia nugalėti, kad pasiektum 500 m.
+- Atlygis: $5 už monstrą, $100 už Krakeną, $400 už pirmą kartą pasiektus 500 m (vėliau $150). Kartais iškrenta ❤ (+25 gyvybių). Rekordas išsaugomas.
+
 ## 2026-11-05 20:09 — v236 Marko pasaulis – angliški vardai
 
 - Veikėjų vardai Marko pasaulyje dabar angliški: Scientist Mark, Scientist John, Lily the Spider, Mike the Mouse, Whiskers the Cat; namas – „Mark’s house“.
