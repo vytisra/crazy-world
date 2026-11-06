@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-06 19:54 — v239 Stipresni bosai ir Krakeno čiuptuvai
+
+- Mini bosai turi daug daugiau gyvybių: Megalodonas 120, Elektrinis ungurys 130, Kalmarų karalienė 140, Gelmių žvejys 140, Medūzų karalienė 140, Krabų karalius 160.
+- Krakenas – 450 gyvybių.
+- Krakenas puola čiuptuvais: 2–3 mojuojantys čiuptuvai, GRIEBIMAS (raudona punktyrinė linija perspėja → čiuptuvas pagauna laivą, tempia ir kas 1,3 s pramuša skylę, kol nušausi čiuptuvą) ir TRĖKŠMAS (raudonas stulpelis perspėja → čiuptuvas trenkia iš viršaus arba apačios).
+
 ## 2026-11-06 19:37 — v238 Povandeninis pasaulis: laivo vidus, mini bosai, 5000 m
 
 - Kelionė dabar 5000 m (apie 10–15 min.). Pinigai duodami TIK pasiekus 5000 m: $1500 pirmą kartą, vėliau $600. Išnirus anksčiau ar nuskendus – nieko.
