@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-07 12:48 — v242 Pasiekimų procentai
+
+- Prie kiekvieno pasiekimo (G) parašyta, kiek procentų žaidėjų jį įvykdė (👥 x% žaidėjų tai įvykdė).
+- Skaičiuojama pagal tave, kitus šio kompiuterio žaidėjus ir žaidėjus internete (per pasaulinę lyderių lentelę). Viršuje parodyta, pagal kiek žaidėjų skaičiuojama.
+- Žaidėjai internete į skaičiavimą patenka, kai pažaidžia su šia nauja versija.
+
 ## 2026-11-07 12:42 — v241 Nauji pasiekimai: povandeninis ir mažiukų pasauliai
 
 - 🌊 Povandeninis pasaulis (8): Pirmas nėrimas, Laivo remontininkas (25 skylės), Jūrų medžiotojas, Visų jūrų valdovas (visi 6 mini bosai), Krakeno nugalėtojas, Išsprūdęs (ištrūk iš čiuptuvo), 5000 metrų, Sausas laivas (5000 m, vandens niekada >25%).
