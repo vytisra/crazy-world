@@ -223,7 +223,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--mint);outline-o
 .achList{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .achItem{display:flex;gap:10px;align-items:center;background:#fff;border:3px solid #1b1430;border-radius:12px;padding:8px 10px}
 .achItem.lock{opacity:.45;filter:grayscale(1)}.achItem .ic{font-size:28px}.achItem b{display:block;font-size:15px}.achItem span{font-size:12.5px;font-weight:600}
-#achToast{position:fixed;top:-90px;left:50%;transform:translateX(-50%);z-index:70;background:#ffd23f;color:#1b1430;border:4px solid #1b1430;border-radius:16px;padding:8px 18px;font-weight:800;font-size:18px;transition:top .35s;box-shadow:0 5px 0 #1b1430;white-space:nowrap}
+#achToast{position:fixed;top:-90px;left:50%;transform:translateX(-50%);z-index:90;background:#ffd23f;color:#1b1430;border:4px solid #1b1430;border-radius:16px;padding:8px 18px;font-weight:800;font-size:18px;transition:top .35s;box-shadow:0 5px 0 #1b1430;white-space:nowrap}
 #achToast.show{top:14px}
 @media (max-width:560px){.achList{grid-template-columns:1fr}}
 #pinHud{position:fixed;top:108px;right:14px;z-index:15;width:290px;background:rgba(255,248,231,.94);color:#1b1430;border:3px solid #1b1430;border-radius:14px;padding:8px 10px;font-size:13px;font-weight:700;box-shadow:0 4px 0 #1b1430;pointer-events:none}
@@ -551,6 +551,7 @@ Object.assign(I18N_EN,{"Murkis atmerkė akį – STOK!": "Murkis opened an eye �
 Object.assign(I18N_EN,{"nerti povandeniniu laivu 🚢 (2D)": "dive with the submarine 🚢 (2D)", "🌊 POVANDENINIS PASAULIS": "🌊 UNDERWATER WORLD", "2D kelionė 500 m": "2D journey 500 m", "Torpeda": "Torpedo", "Kulkosvaidis": "Machine gun", "Sonaro banga": "Sonar wave", "Išnirai anksčiau. Už nugalėtus monstrus": "You surfaced early. For defeated monsters", "KRAKENAS! Nugalėk jį, kad pasiektum 500 m!": "KRAKEN! Defeat it to reach 500 m!", "Krakenas nugalėtas! Plauk iki 500 m!": "Kraken defeated! Swim on to 500 m!", "WASD / rodyklės – plaukti · Space arba pelė – šaudyti": "WASD / arrows – swim · Space or mouse – shoot", "1 2 3 – ginklai · Esc – išnirti": "1 2 3 – weapons · Esc – surface", "🏁 Pasiekei 500 m!": "🏁 You reached 500 m!", "💥 Laivas sudaužytas!": "💥 The submarine was wrecked!", "Nuplaukta": "Distance", "Monstrų": "Monsters", "Uždirbai": "You earned", "premija": "bonus", "Dar kartą (Enter)": "Again (Enter)", "Išnirti (Esc)": "Surface (Esc)"});
 Object.assign(I18N_EN,{"2D kelionė 5000 m": "2D journey 5000 m", "Išnirai nepasiekęs 5000 m – pinigų negavai.": "You surfaced before 5000 m – no money this time.", "Pradedam kelionę! Saugok laivą: užtaisyk skyles (E) ir eik prie valdymo pulto, kai artėja monstrai.": "Let's go! Protect the sub: patch the holes (E) and go to the control panel when monsters come.", "💦 Laive atsirado skylė! Bėk ir užtaisyk ją (laikyk E).": "💦 A hole in the hull! Run and patch it (hold E).", "artėja! Eik prie valdymo pulto ir spausk E!": "is coming! Go to the control panel and press E!", "kanda laivui! Greičiau prie pulto!": "is biting the sub! Hurry to the control panel!", "Sonaras: aplink ramu. Plaukiam toliau!": "Sonar: all quiet. Sailing on!", "Šaudyk (Space / pelė), ginklai 1 2 3": "Shoot (Space / mouse), weapons 1 2 3", "skylė": "hole", "🐙 Krakenas nugalėtas! Iki finišo liko visai nedaug!": "🐙 Kraken defeated! The finish is very close!", "Monstras nugalėtas! Plaukiam toliau. Patikrink, ar nėra skylių!": "Monster defeated! Sailing on. Check for holes!", "Megalodonas": "Megalodon", "Elektrinis ungurys": "Electric Eel", "Kalmarų karalienė": "Squid Queen", "Gelmių žvejys": "Deep Angler", "Krabų karalius": "Crab King", "Medūzų karalienė": "Jellyfish Queen", "KRAKENAS": "KRAKEN", "VALDYMO PULTAS": "CONTROL PANEL", "Laikyk E – užtaisyti skylę": "Hold E – patch the hole", "E – į kovą!": "E – to battle!", "E – sonaras": "E – sonar", "A/D eiti · W/S kopėčios · E taisyti / pultas": "A/D walk · W/S ladder · E patch / panel", "prie pulto per": "get to the panel in", "🏁 Pasiekei 5000 m!": "🏁 You reached 5000 m!", "🌊 Laivas nuskendo!": "🌊 The submarine sank!", "Bosų": "Bosses", "Pinigai duodami tik pasiekus 5000 m.": "Money is only given when you reach 5000 m."});
 Object.assign(I18N_EN,{"🐙 Krakenas tiesia čiuptuvą – trauk šalin!": "🐙 The Kraken reaches out a tentacle – get away!", "😱 Krakenas tave pagavo! Šaudyk į čiuptuvą!": "😱 The Kraken grabbed you! Shoot the tentacle!", "💪 Ištrūkai iš čiuptuvo!": "💪 You broke free from the tentacle!"});
+Object.assign(I18N_EN,{"Pirmas nėrimas": "First dive", "Nerk povandeniniu laivu": "Dive with the submarine", "Laivo remontininkas": "Hull fixer", "Užtaisyk 25 skyles povandeniniame laive": "Patch 25 holes in the submarine", "Jūrų medžiotojas": "Sea hunter", "Nugalėk jūrų mini bosą": "Defeat a sea mini boss", "Visų jūrų valdovas": "Ruler of the seas", "Nugalėk visus 6 skirtingus jūrų mini bosus": "Defeat all 6 different sea mini bosses", "Krakeno nugalėtojas": "Kraken slayer", "Nugalėk Krakeną": "Defeat the Kraken", "Išsprūdęs": "Slippery", "Ištrūk iš Krakeno čiuptuvo": "Break free from the Kraken's tentacle", "5000 metrų": "5000 meters", "Nuplauk povandeniniu laivu 5000 m": "Sail 5000 m with the submarine", "Sausas laivas": "Dry ship", "Nuplauk 5000 m, kai vandens laive niekada nebuvo daugiau nei 25%": "Sail 5000 m without the water ever going above 25%", "Mažiukas": "Tiny", "Leisk mokslininkui Markui tave sumažinti": "Let scientist Mark shrink you", "Musių medžiotojas": "Fly hunter", "Atnešk vorui musę": "Bring the spider a fly", "Lentynos viršūnė": "Top of the shelf", "Užlipk ant knygų lentynos viršaus": "Climb to the top of the bookshelf", "Tyliai kaip pelė": "Quiet as a mouse", "Paimk dalį nuo miegančio katino": "Take the part from the sleeping cat", "Pulto meistras": "Remote master", "Surink visas 6 pulto dalis ir sutaisyk pultą": "Collect all 6 remote parts and fix the remote", "Dingęs mokslininkas": "The missing scientist", "Surask pasiklydusį mokslininką": "Find the lost scientist", "Svetainės paslaptys": "Living room secrets", "Rask visas 3 paslaptis mažiukų pasaulyje": "Find all 3 secrets in the tiny world", "Žaibiškas mažiukas": "Lightning-fast tiny one", "Surink visas 6 pulto dalis per vieną sumažinimą": "Collect all 6 remote parts in a single shrink"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -8419,7 +8420,7 @@ function openSub(){if(SUB.on)return;if(player.inCar&&car)exitCar();SUB.on=true;m
       b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();if(k==='w')subSwitch();else if(k==='esc')closeSub();else set(true);});
       b.addEventListener('pointerup',e=>{e.preventDefault();if(k!=='w'&&k!=='esc')set(false);});b.addEventListener('pointerleave',()=>{if(k!=='w'&&k!=='esc')set(false);});}
     addEventListener('resize',()=>{if(SUB.on)subResize();});}
-  ov.hidden=false;subResize();subReset();let last=performance.now();
+  ov.hidden=false;subResize();subReset();{const ss=subS();ss.dives=(ss.dives||0)+1;saveGame(true);}let last=performance.now();
   const loop=now=>{if(!SUB.on)return;const dt=Math.min(.05,(now-last)/1000);last=now;try{subUpdate(dt);subDraw();}catch(e){console.error(e);}SUB.usePress=false;SUB.raf=requestAnimationFrame(loop);};SUB.raf=requestAnimationFrame(loop);}
 function closeSub(){if(!SUB.on)return;const S=SUB.st;if(S&&!S.end&&S.dist>50)say(null,tr('Išnirai nepasiekęs 5000 m – pinigų negavai.'));
   SUB.on=false;cancelAnimationFrame(SUB.raf);$('subGame').hidden=true;SUB.k={};SUB.fireHeld=false;SUB.use=false;canvas.focus();tryLock();}
@@ -8453,7 +8454,7 @@ function subUpdate(dt){const S=SUB.st,W=SUB.W,H=SUB.H,L=S.L;S.t+=dt;S.shake=Math
   if(S.end)return;
   // water from holes (also while fighting outside)
   const leak=S.holes.length;S.water=clamp(S.water+(leak?leak*1.25*(S.mode==='out'?.55:1):-1.2)*dt,0,100);
-  if(S.water>=100){subFinish(false);return;}
+  S.maxW=Math.max(S.maxW||0,S.water);if(S.water>=100){subFinish(false);return;}
   for(const h of S.holes){h.t+=dt;if(Math.random()<dt*30)S.spray.push({x:h.x,y:h.y,vx:(Math.random()-.5)*120,vy:-20-Math.random()*60,life:.8});}
   for(const p of S.spray){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=380*dt;p.life-=dt;}S.spray=S.spray.filter(p=>p.life>0);
   const stopped=!!S.alert||S.mode==='out';
@@ -8474,7 +8475,7 @@ function subUpdateIn(dt){const S=SUB.st,L=S.L,P=S.pl;
     for(let i=0;i<L.lad.length;i++){if(Math.abs(P.x-L.lad[i])<22&&((P.deck==='up'&&SUB.k.down)||(P.deck==='low'&&SUB.k.up))){P.lad=i;P.x=L.lad[i];P.ltop=0;}}}
   // repair
   const near=P.lad<0?S.holes.find(h=>h.deck===P.deck&&Math.abs(h.x-P.x)<36):null;S.nearHole=near;
-  if(near&&SUB.use){near.fix+=dt/1.4;if(Math.random()<dt*8)tone(800+Math.random()*300,600,.05,'square',.02);if(near.fix>=1){S.holes.splice(S.holes.indexOf(near),1);sfx('ding');S.fx.push({x:near.x,y:near.y-20,t:0,life:1,kind:'txt',txt:'✔'});}}
+  if(near&&SUB.use){near.fix+=dt/1.4;if(Math.random()<dt*8)tone(800+Math.random()*300,600,.05,'square',.02);if(near.fix>=1){S.holes.splice(S.holes.indexOf(near),1);sfx('ding');{const ss=subS();ss.fixed=(ss.fixed||0)+1;}S.fx.push({x:near.x,y:near.y-20,t:0,life:1,kind:'txt',txt:'✔'});}}
   S.atCon=P.lad<0&&P.deck==='up'&&Math.abs(P.x-L.con)<50;
   if(S.atCon&&SUB.usePress){if(S.alert)subGoOut();else subMsg(tr('Sonaras: aplink ramu. Plaukiam toliau!'),2.5);}}
 function subGoOut(){const S=SUB.st,W=SUB.W,H=SUB.H,k=S.alert.k,B=SUB_BOSSES[k];S.mode='out';S.grab=null;S.alert=null;S.x=150;S.y=H/2;S.vx=S.vy=0;S.en=[];S.bul=[];S.ink=[];S.rings=[];S.inv=1;sfx('splash');
@@ -8534,7 +8535,7 @@ function subKrakenArms(B,dt,sub,rage){const S=SUB.st,W=SUB.W,H=SUB.H;
     else if(G.t<=0){G.st='back';}}
   else if(G.st==='hold'){const Gb=S.grab;if(!Gb){G.st='back';}else{Gb.t+=dt;Gb.hole-=dt;S.x+=((W*.5)-S.x)*dt*.6;S.vx=S.vy=0;G.x=S.x+72;G.y=S.y;
       if(Gb.hole<=0){Gb.hole=1.3;subAddHole(1);S.shake=.6;sfx('hurt');S.fx.push({x:S.x,y:S.y-40,t:0,life:1,kind:'txt',txt:'💦 +1 '+tr('skylė')});}
-      if(Gb.hp<=0){S.grab=null;G.st='back';S.inv=1.2;sfx('ding');subMsg(tr('💪 Ištrūkai iš čiuptuvo!'),2);B.hp-=10;B.flash=.2;}}}
+      if(Gb.hp<=0){S.grab=null;G.st='back';S.inv=1.2;sfx('ding');subS().escaped=1;subMsg(tr('💪 Ištrūkai iš čiuptuvo!'),2);B.hp-=10;B.flash=.2;}}}
   else if(G.st==='back'){const k=Math.min(1,dt*4);G.x+=(base.x-G.x)*k;G.y+=(base.y-G.y)*k;if(Math.hypot(G.x-base.x,G.y-base.y)<10){G.st='idle';G.t=rage?3.2:5;}}
   // SLAM: a tentacle smashes down from above or up from below
   if(!B.sl)B.sl={st:'idle',t:6};const L=B.sl;L.t-=dt;
@@ -8542,10 +8543,10 @@ function subKrakenArms(B,dt,sub,rage){const S=SUB.st,W=SUB.W,H=SUB.H;
   else if(L.st==='warn'&&L.t<=0){L.st='hit';L.t=.6;S.shake=.7;sfx('boom');}
   else if(L.st==='hit'){if(Math.abs(sub.x-L.x)<46)subHurtOut();if(L.t<=0){L.st='idle';L.t=rage?3.5:5.5;}}}
 function subHit(e,d){e.hp-=d;e.flash=.12;if(e.hp<=0&&!e.dead){e.dead=1;const S=SUB.st;S.kills++;S.fx.push({x:e.x,y:e.y,t:0,life:.5,kind:'boom'});tone(400,120,.18,'square',.04);}}
-function subHitBoss(d){const S=SUB.st,B=S.boss;B.hp-=d;B.flash=.12;if(B.hp<=0&&!B.dead){B.dead=true;S.kills++;sfx('win');S.en=[];S.ink=[];for(let i=0;i<8;i++)S.fx.push({x:B.x+(Math.random()-.5)*B.r*2,y:B.y+(Math.random()-.5)*B.r*2,t:-i*.12,life:.6,kind:'boom'});
+function subHitBoss(d){const S=SUB.st,B=S.boss;B.hp-=d;B.flash=.12;if(B.hp<=0&&!B.dead){B.dead=true;{const ss=subS();if(B.k==='kraken')ss.kraken=1;else{ss.bossKills=(ss.bossKills||0)+1;ss.bk=Object.assign({},ss.bk,{[B.k]:1});}saveGame(true);}S.kills++;sfx('win');S.en=[];S.ink=[];for(let i=0;i<8;i++)S.fx.push({x:B.x+(Math.random()-.5)*B.r*2,y:B.y+(Math.random()-.5)*B.r*2,t:-i*.12,life:.6,kind:'boom'});
   S.fx.push({x:B.x,y:B.y-B.r-20,t:0,life:2,kind:'txt',txt:'✔ '+tr(B.n)});}}
 function subFinish(win){const S=SUB.st,s=subS();if(S.end)return;s.best=Math.max(s.best||0,Math.floor(S.dist));let pay=0;
-  if(win){pay=s.wins?SUB_WIN2:SUB_WIN;s.wins=(s.wins||0)+1;money+=pay;$('money').textContent=money;sfx('win');}else sfx('fail');
+  if(win){pay=s.wins?SUB_WIN2:SUB_WIN;s.wins=(s.wins||0)+1;if((S.maxW||0)<=25)s.dry=1;money+=pay;$('money').textContent=money;sfx('win');}else sfx('fail');
   saveGame(true);S.end={win,pay};}
 function subEndClick(e){const r=SUB.cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*SUB.W,y=(e.clientY-r.top)/r.height*SUB.H;
   if(y>SUB.H/2+70&&y<SUB.H/2+120){if(x<SUB.W/2)subReset();else closeSub();}}
@@ -8743,7 +8744,7 @@ function tnyMarkas(){const s=tnyS(),n=tnyCount();
     actions:[{label:'Shrink me 🔬',onClick:tnyShrink},{label:'Later',alt:true,onClick:()=>{closeDialog();tryLock();}}]});}
 function tnyDrop(){const s=tnyS();let l=[];if(s.fly){s.fly=0;l.push('the fly');}if(s.cheese){s.cheese=0;l.push('the cheese');}if(l.length){saveGame(true);setTimeout(()=>say(null,'You dropped '+l.join(' and ')+'! You’ll have to go back and get it again.'),400);}}
 const TNY_TIME=7*60;
-function tnyShrink(){closeDialog();tnyEnsure();tnyFlash();TNY.tEnd=performance.now()+TNY_TIME*1000;TNY.warned=0;for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}
+function tnyShrink(){closeDialog();tnyEnsure();tnyFlash();TNY.run=0;TNY.tEnd=performance.now()+TNY_TIME*1000;TNY.warned=0;for(const s2 of['L','R'])if(hands[s2].obj){release(hands[s2].obj);hands[s2].obj=null;}
   tpTo(RV(5,.2,10));player.yaw=Math.PI;cam.yaw=0;cam.pitch=.25;cam.dist=Math.max(cam.dist,8);curZone=null;tryLock();
   const s=tnyS();if(!s.intro){s.intro=1;saveGame(true);setTimeout(()=>openDialog({name:'You are tiny now!',role:'Mark’s living room',color:'#3ee6b0',icon:'🔬',text:'Mark: “It worked! Now you’re smaller than a mouse. Find all 6 parts of my remote and come back to my shoe – then I’ll make you big again.”',
     tasks:[{b:'🕷 Lily the Spider',t:'in the corner by the table – wants a fly',chip:'1'},{b:'🛋 Under the sofa',t:'watch out for cockroaches!',chip:'2'},{b:'🍽 On the table',t:'climb the books and the chair',chip:'3'},{b:'📚 Bookshelf',t:'the very top',chip:'4'},{b:'🐭 Mike the Mouse',t:'by the little hole in the wall',chip:'5'},{b:'🐱 Whiskers the Cat',t:'sleeps on the carpet – DON’T RUN, and when he opens an eye – FREEZE!',chip:'6'},{b:'⏱ Time',t:'shrinking lasts 7 minutes',chip:'!'}],
@@ -8766,7 +8767,7 @@ function tnyPartMesh(i){const g=new THREE.Group(),c=[0x3ec5ff,0xffd23f,0xff5fa2,
 function tnyPart(i,lx,ly,lz,cond,label){const P=TNY_PARTS[i],g=tnyPartMesh(i),p0=RV(lx,ly+.7,lz);g.position.copy(p0);scene.add(g);TNY.meshes[P.id]=g;
   anims.push(t=>{g.visible=!tnyS().parts[P.id]&&TNY.in;if(g.visible){g.rotation.y=t*1.5;g.position.y=p0.y+Math.sin(t*2.5+i)*.15;}});
   stations.push({pos:RV(lx,ly,lz),r:2.2,label:label||('take remote part: '+P.name),cond:()=>!tnyS().parts[P.id]&&(!cond||cond()),act:()=>tnyGot(i)});}
-function tnyGot(i,from){const P=TNY_PARTS[i],s=tnyS();if(s.parts[P.id])return;s.parts[P.id]=1;saveGame(true);sfx('coin');sfx('ding');floaty(P.e+' '+P.name+'!',player.pos);
+function tnyGot(i,from){const P=TNY_PARTS[i],s=tnyS();if(s.parts[P.id])return;s.parts[P.id]=1;TNY.run=(TNY.run||0)+1;if(TNY.run>=6)s.fast=1;saveGame(true);sfx('coin');sfx('ding');floaty(P.e+' '+P.name+'!',player.pos);
   const n=tnyCount();say(null,(from?from+' ':'')+'You found a remote part: '+P.name+'! ('+n+'/6)');
   if(n>=6)setTimeout(()=>say('Mark','You have ALL 6 parts! Come to my shoe – I’ll make you big again!',true),1500);}
 function makeRoach(){const g=new THREE.Group(),b=mat(0x5a2f12,{roughness:.4,metalness:.2});put(GEO.sph,b,0,.45,0,.55,.32,1,g);put(GEO.sph,mat(0x3a1f0c),0,.42,.95,.35,.25,.3,g);
@@ -10719,6 +10720,22 @@ const ACH=[
  {id:'cpeg',ic:'🐴',n:'Pegaso draugas',d:'Surask Pegasą ant aukščiausio debesies',f:()=>!!save.owned.c_pegasus},
  {id:'utreasure',ic:'❌',n:'Lobių ieškotojas',d:'Rask lobį po X ženklu požemyje',f:()=>!!(save.usec&&save.usec.x)},
  {id:'dino4',ic:'🦖',n:'Dinozaurų gelbėtojas',d:'Išgelbėk visus 4 dinozaurų pasaulio karalius',f:()=>Object.keys(save.dinoCrowns||{}).length>=4},
+ {id:'sub1',ic:'🚢',n:'Pirmas nėrimas',d:'Nerk povandeniniu laivu',f:()=>(subS().dives||0)>=1},
+ {id:'sub2',ic:'🔧',n:'Laivo remontininkas',d:'Užtaisyk 25 skyles povandeniniame laive',f:()=>(subS().fixed||0)>=25},
+ {id:'sub3',ic:'🦈',n:'Jūrų medžiotojas',d:'Nugalėk jūrų mini bosą',f:()=>(subS().bossKills||0)>=1},
+ {id:'sub4',ic:'🔱',n:'Visų jūrų valdovas',d:'Nugalėk visus 6 skirtingus jūrų mini bosus',f:()=>Object.keys(subS().bk||{}).length>=6},
+ {id:'sub5',ic:'🐙',n:'Krakeno nugalėtojas',d:'Nugalėk Krakeną',f:()=>!!subS().kraken},
+ {id:'sub6',ic:'🦑',n:'Išsprūdęs',d:'Ištrūk iš Krakeno čiuptuvo',f:()=>!!subS().escaped},
+ {id:'sub7',ic:'🏁',n:'5000 metrų',d:'Nuplauk povandeniniu laivu 5000 m',f:()=>(subS().wins||0)>=1},
+ {id:'sub8',ic:'🛟',n:'Sausas laivas',d:'Nuplauk 5000 m, kai vandens laive niekada nebuvo daugiau nei 25%',f:()=>!!subS().dry},
+ {id:'tny1',ic:'🔬',n:'Mažiukas',d:'Leisk mokslininkui Markui tave sumažinti',f:()=>!!tnyS().intro},
+ {id:'tny2',ic:'🕷',n:'Musių medžiotojas',d:'Atnešk vorui musę',f:()=>!!tnyS().parts.p1},
+ {id:'tny3',ic:'📚',n:'Lentynos viršūnė',d:'Užlipk ant knygų lentynos viršaus',f:()=>!!tnyS().parts.p4},
+ {id:'tny4',ic:'🐱',n:'Tyliai kaip pelė',d:'Paimk dalį nuo miegančio katino',f:()=>!!tnyS().parts.p6},
+ {id:'tny5',ic:'📺',n:'Pulto meistras',d:'Surink visas 6 pulto dalis ir sutaisyk pultą',f:()=>!!tnyS().done},
+ {id:'tny6',ic:'🥼',n:'Dingęs mokslininkas',d:'Surask pasiklydusį mokslininką',f:()=>!!tnyS().sec.sci},
+ {id:'tny7',ic:'✨',n:'Svetainės paslaptys',d:'Rask visas 3 paslaptis mažiukų pasaulyje',f:()=>tnySecCount()>=3},
+ {id:'tny8',ic:'⏱',n:'Žaibiškas mažiukas',d:'Surink visas 6 pulto dalis per vieną sumažinimą',f:()=>!!tnyS().fast},
  {id:'secret',ic:'🎭',n:'Paslapčių medžiotojas',d:'Gauk bet kurį slaptą drabužį',f:()=>CLOTHES.some(c=>c.secret&&c.id!=='sockhat'&&c.id!=='socks'&&ownsC(c.id))}];
 function achFlag(k){if(!save.achFlags)save.achFlags={};if(!save.achFlags[k]){save.achFlags[k]=1;saveGame(true);}}
 function checkAch(){if(!save.ach)save.ach={};let ch=false;for(const a of ACH){if(save.ach[a.id])continue;let ok=false;try{ok=a.f();}catch(e){}if(ok){save.ach[a.id]=1;ch=true;achQ.push(a);}}if(ch)saveGame(true);}

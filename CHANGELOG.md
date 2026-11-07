@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-07 12:42 — v241 Nauji pasiekimai: povandeninis ir mažiukų pasauliai
+
+- 🌊 Povandeninis pasaulis (8): Pirmas nėrimas, Laivo remontininkas (25 skylės), Jūrų medžiotojas, Visų jūrų valdovas (visi 6 mini bosai), Krakeno nugalėtojas, Išsprūdęs (ištrūk iš čiuptuvo), 5000 metrų, Sausas laivas (5000 m, vandens niekada >25%).
+- 🔬 Mažiukų pasaulis (8): Mažiukas, Musių medžiotojas, Lentynos viršūnė, Tyliai kaip pelė, Pulto meistras, Dingęs mokslininkas, Svetainės paslaptys (3/3), Žaibiškas mažiukas (visos 6 dalys per vieną sumažinimą).
+- Pasiekimų pranešimas dabar matomas ir 2D povandeniniame žaidime.
+
 ## 2026-11-07 12:04 — v240 Dovana žaidėjui asnesugejus
 
 - Žaidėjas **asnesugejus** prisijungęs gauna 🎁 10000 Helovino saldainių (iškeičiami pas raganą Raganę centre). Dovana gaunama vieną kartą.
