@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-07 12:04 — v240 Dovana žaidėjui asnesugejus
+
+- Žaidėjas **asnesugejus** prisijungęs gauna 🎁 10000 Helovino saldainių (iškeičiami pas raganą Raganę centre). Dovana gaunama vieną kartą.
+
 ## 2026-11-06 19:54 — v239 Stipresni bosai ir Krakeno čiuptuvai
 
 - Mini bosai turi daug daugiau gyvybių: Megalodonas 120, Elektrinis ungurys 130, Kalmarų karalienė 140, Gelmių žvejys 140, Medūzų karalienė 140, Krabų karalius 160.

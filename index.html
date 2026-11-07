@@ -8111,7 +8111,7 @@ function hScary(dt,t){const inH=isHorror()&&HOR.built;if(inH&&!HS.built)hsBuild(
   let near=99;for(const Zb of HOR.zombies)near=Math.min(near,Zb.pos.distanceTo(p));HS.beatT-=dt;if(near<12&&HS.beatT<=0){HS.beatT=near<6?.45:.8;tone(62,40,.12,'sine',.18);tone(58,38,.12,'sine',.14,.16);}
   const busy=dialogOpen||phoneOpen||mapOpen||settingsOpen||HRT.on||HRT.busy||!started;if(!busy)HS.jsT-=dt;if(HS.jsT<=0){HS.jsT=drnd(55,150)*(HS.jsTest||1);jumpscare();}}
 /* ---------- v213: gifts for specific players (by account name, given once) ---------- */
-const PLAYER_GIFTS=[{id:'g213_vytisra1',user:'vytisra1',candy:10000},{id:'g216_labas',user:'labas',money:10000}];
+const PLAYER_GIFTS=[{id:'g213_vytisra1',user:'vytisra1',candy:10000},{id:'g216_labas',user:'labas',money:10000},{id:'g240_asnesugejus',user:'asnesugejus',candy:10000}];
 let giftChecked=false,giftAt=0;
 function giftTick(){if(giftChecked||!started||!worldBuilt||!CW_USER)return;const nw=performance.now();if(!giftAt)giftAt=nw+4500;if(nw<giftAt||dialogOpen)return;giftChecked=true;const me=String(CW_USER).trim().toLowerCase();if(!save.gifts)save.gifts={};
   const got=[];for(const G of PLAYER_GIFTS){if(G.user.toLowerCase()!==me||save.gifts[G.id])continue;save.gifts[G.id]=1;
