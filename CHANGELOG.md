@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-08 18:52 — v243 Lyderių lentelėje – ir nežaidžiantys žaidėjai
+
+- Pasaulinėje lyderių lentelėje dabar rodomi visi žaidėjai, net jei jie šiuo metu nežaidžia.
+- Kiekvienas žaidimas pasilieka lentelės kopiją savo naršyklėje, todėl lentelė iškart rodo visus žinomus žaidėjus.
+- Jei nemokamas interneto serveris kurio nors žaidėjo rezultatą „pamiršta“, kiti žaidėjai jį automatiškai įkelia atgal – taip niekas nedingsta iš lentelės.
+
 ## 2026-11-07 12:48 — v242 Pasiekimų procentai
 
 - Prie kiekvieno pasiekimo (G) parašyta, kiek procentų žaidėjų jį įvykdė (👥 x% žaidėjų tai įvykdė).
