@@ -3,6 +3,10 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-09 20:18 — v244 Dovana žaidėjui vytisra
+
+- Žaidėjas **vytisra** prisijungęs gauna 🎁 $100 000 ir telefono žaidimų rekordus: Skraidanti karvė 47, Gaudyk kojines 159, Gyvatėlė 10, Dino bėgikas 38, Šikšnosparnis 21, Debesėlis 27 (jei rekordas jau didesnis – lieka didesnis). Rekordai iškart nusiunčiami į pasaulinę lyderių lentelę.
+
 ## 2026-11-08 18:52 — v243 Lyderių lentelėje – ir nežaidžiantys žaidėjai
 
 - Pasaulinėje lyderių lentelėje dabar rodomi visi žaidėjai, net jei jie šiuo metu nežaidžia.
