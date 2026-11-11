@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-11 20:23 — v248 Braukimas telefone: Crazy TikTok ir sąrašai
+
+- Telefone žaidimo „📱“ programėlėje Crazy TikTok braukiant pirštu aukštyn – kitas vaizdo įrašas, žemyn – ankstesnis; du kartus bakstelėjus – ❤ patinka. Anksčiau telefono naršyklė braukimą „pasiimdavo“ sau ir įrašai nesikeisdavo.
+- Pasiekimų (G / 🏆), emotes (😀), drabužių parduotuvės, nustatymų, dialogų ir telefono sąrašus galima slinkti pirštu – matosi viskas.
+- Emotes langas nebeišlenda už ekrano viršaus mažuose telefonuose.
+
 ## 2026-11-11 18:29 — v247 Pasiekimų procentai – visi žaidėjai
 
 - Pasiekimų procentai dabar skaičiuojami pagal VISUS žinomus žaidėjus: tave, kitus šio kompiuterio žaidėjus ir visus žaidėjus iš pasaulinės lyderių lentelės – taip pat tuos, kurie šiuo metu nežaidžia.
