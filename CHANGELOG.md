@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-11 18:16 — v246 Įkrovimo ekranas
+
+- Paleidus žaidimą vietoj ilgo aprašymo (karaliai, valdymas) rodomas įkrovimo ekranas: CRAZY WORLD logotipas ir spalvota juosta „Kraunama… %“.
+- Kai pasaulis paruoštas – „Paruošta!“ ir didelis mygtukas ▶ ŽAISTI. Discord nuoroda liko apačioje.
+- Angliškai: „Loading…“, „Ready!“, „▶ Play“.
+
 ## 2026-11-10 21:33 — v245 Telefono valdymas visada veikia
 
 - Jei telefonas neatpažįstamas kaip telefonas, valdymas ekrane (vairasvirtė kairėje, dairymasis braukiant dešinėje, mygtukai) įsijungia automatiškai vos palietus ekraną.
