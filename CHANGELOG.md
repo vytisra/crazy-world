@@ -3,6 +3,11 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-11 18:29 — v247 Pasiekimų procentai – visi žaidėjai
+
+- Pasiekimų procentai dabar skaičiuojami pagal VISUS žinomus žaidėjus: tave, kitus šio kompiuterio žaidėjus ir visus žaidėjus iš pasaulinės lyderių lentelės – taip pat tuos, kurie šiuo metu nežaidžia.
+- Žaidėjams, kurie paskutinį kartą žaidė senesne versija (dar nesiuntė savo pasiekimų), pasiekimai nustatomi pagal jų rezultatus (pinigai → Turtuolis / Milijonierius, perėjo žaidimą → karūnos).
+
 ## 2026-11-11 18:16 — v246 Įkrovimo ekranas
 
 - Paleidus žaidimą vietoj ilgo aprašymo (karaliai, valdymas) rodomas įkrovimo ekranas: CRAZY WORLD logotipas ir spalvota juosta „Kraunama… %“.

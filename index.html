@@ -10753,11 +10753,11 @@ function achFlag(k){if(!save.achFlags)save.achFlags={};if(!save.achFlags[k]){sav
 function checkAch(){if(!save.ach)save.ach={};let ch=false;for(const a of ACH){if(save.ach[a.id])continue;let ok=false;try{ok=a.f();}catch(e){}if(ok){save.ach[a.id]=1;ch=true;achQ.push(a);}}if(ch)saveGame(true);}
 function toggleAch(){achOpen=!achOpen;$('achPanel').hidden=!achOpen;if(achOpen){checkAch();renderAch();if(document.exitPointerLock)document.exitPointerLock();}else tryLock();}
 /* v242: how many % of players have each achievement (this computer's players + worldwide players over the public leaderboard) */
-function achStats(){const sets=[],me=(CW_USER||'').toLowerCase(),acc=accList(),localKeys=new Set();
+function achStats(){try{glbLoadCache();}catch(e){}const sets=[],me=(CW_USER||'').toLowerCase(),acc=accList(),localKeys=new Set();
   sets.push(new Set(Object.keys(save.ach||{}).filter(k=>save.ach[k])));
-  for(const k in acc){let o=null;try{o=JSON.parse(localStorage.getItem('cw-save:'+k)||'null');}catch(e){}if(!o)continue;if(o.glbId)localKeys.add(glbKey(acc[k].name||k)+'_'+o.glbId);if(k===me)continue;if(o.ach)sets.push(new Set(Object.keys(o.ach).filter(x=>o.ach[x])));}
+  for(const k in acc){let o=null;try{o=JSON.parse(localStorage.getItem('cw-save:'+k)||'null');}catch(e){}if(!o)continue;if(o.glbId)localKeys.add(glbKey(acc[k].name||k)+'_'+o.glbId);if(k===me)continue;if(o.ach)sets.push(new Set(Object.keys(o.ach).filter(x=>o.ach[x])));else{const S2=new Set();if((o.money||0)>=1000)S2.add('rich');if((o.money||0)>=10000)S2.add('rich2');if(o.finishT)S2.add('crown4');sets.push(S2);}}
   const mine=save.glbId?glbKey(CW_USER)+'_'+save.glbId:null;let world=0;
-  for(const k in GLB.rows){if(k===mine||localKeys.has(k))continue;const r=GLB.rows[k];if(!r||!r.a)continue;sets.push(new Set(r.a));world++;}
+  for(const k in GLB.rows){if(k===mine||localKeys.has(k))continue;const r=GLB.rows[k];if(!r)continue;let S2;if(r.a)S2=new Set(r.a);else{/* older game versions did not send achievements – work out what we can from their stats */S2=new Set();const st=r.st||{};if(st.money>=1000)S2.add('rich');if(st.money>=10000)S2.add('rich2');if(st.finish>0){S2.add('crown');S2.add('crown4');}}sets.push(S2);world++;}
   const cnt={};for(const a of ACH){let c=0;for(const S of sets)if(S.has(a.id))c++;cnt[a.id]=c;}return{n:sets.length,world,cnt};}
 function renderAch(){const got=ACH.filter(a=>save.ach&&save.ach[a.id]).length,AS=achStats();
   $('achSub').textContent=tr('Atrakinta')+': '+got+' / '+ACH.length+' · 📊 '+tr('procentai pagal')+' '+AS.n+' '+tr(AS.n===1?'žaidėją':'žaidėjų')+(AS.world?' (🌍 '+AS.world+' '+tr('internete')+')':'');const L=$('achList');L.innerHTML='';
