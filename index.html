@@ -355,6 +355,7 @@ body.touch #tClose:not([hidden]){display:block}
     <div class="row"><label for="lang">Kalba · Language</label><select id="lang"><option value="lt">Lietuvių</option><option value="en">English</option></select></div>
     <div class="row"><label for="sens">Pelės jautrumas</label><input type="range" id="sens" min="0.3" max="2.5" step="0.1"></div>
     <div class="row"><label for="invert">Apversti pelės Y ašį</label><input type="checkbox" id="invert"></div>
+    <div class="row"><label for="touchCtl">📱 Telefono valdymas (vairasvirtė ir mygtukai ekrane)</label><input type="checkbox" id="touchCtl"></div>
     <div class="row"><label for="shadows">Šešėliai</label><input type="checkbox" id="shadows"></div>
     <div class="row"><label for="sound">Garso efektai</label><input type="checkbox" id="sound"></div>
     <div class="row"><label for="music">Muzika</label><input type="checkbox" id="music"></div>
@@ -554,6 +555,7 @@ Object.assign(I18N_EN,{"🐙 Krakenas tiesia čiuptuvą – trauk šalin!": "�
 Object.assign(I18N_EN,{"Pirmas nėrimas": "First dive", "Nerk povandeniniu laivu": "Dive with the submarine", "Laivo remontininkas": "Hull fixer", "Užtaisyk 25 skyles povandeniniame laive": "Patch 25 holes in the submarine", "Jūrų medžiotojas": "Sea hunter", "Nugalėk jūrų mini bosą": "Defeat a sea mini boss", "Visų jūrų valdovas": "Ruler of the seas", "Nugalėk visus 6 skirtingus jūrų mini bosus": "Defeat all 6 different sea mini bosses", "Krakeno nugalėtojas": "Kraken slayer", "Nugalėk Krakeną": "Defeat the Kraken", "Išsprūdęs": "Slippery", "Ištrūk iš Krakeno čiuptuvo": "Break free from the Kraken's tentacle", "5000 metrų": "5000 meters", "Nuplauk povandeniniu laivu 5000 m": "Sail 5000 m with the submarine", "Sausas laivas": "Dry ship", "Nuplauk 5000 m, kai vandens laive niekada nebuvo daugiau nei 25%": "Sail 5000 m without the water ever going above 25%", "Mažiukas": "Tiny", "Leisk mokslininkui Markui tave sumažinti": "Let scientist Mark shrink you", "Musių medžiotojas": "Fly hunter", "Atnešk vorui musę": "Bring the spider a fly", "Lentynos viršūnė": "Top of the shelf", "Užlipk ant knygų lentynos viršaus": "Climb to the top of the bookshelf", "Tyliai kaip pelė": "Quiet as a mouse", "Paimk dalį nuo miegančio katino": "Take the part from the sleeping cat", "Pulto meistras": "Remote master", "Surink visas 6 pulto dalis ir sutaisyk pultą": "Collect all 6 remote parts and fix the remote", "Dingęs mokslininkas": "The missing scientist", "Surask pasiklydusį mokslininką": "Find the lost scientist", "Svetainės paslaptys": "Living room secrets", "Rask visas 3 paslaptis mažiukų pasaulyje": "Find all 3 secrets in the tiny world", "Žaibiškas mažiukas": "Lightning-fast tiny one", "Surink visas 6 pulto dalis per vieną sumažinimą": "Collect all 6 remote parts in a single shrink"});
 Object.assign(I18N_EN,{"procentai pagal": "percentages based on", "žaidėją": "player", "žaidėjų": "players", "internete": "online", "žaidėjų tai įvykdė": "of players did this"});
 Object.assign(I18N_EN,{"rekordas":"record"});
+Object.assign(I18N_EN,{"📱 Telefono valdymas (vairasvirtė ir mygtukai ekrane)":"📱 Phone controls (on-screen joystick and buttons)"});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -6271,6 +6273,7 @@ function buildSettings(){
   $('accWho').textContent=tr('Paskyra')+': '+(CW_USER||'—');$('signOut').onclick=signOut;
   $('lang').value=LANG;$('lang').onchange=e=>{prefs.lang=e.target.value;savePrefs();try{saveGame(true);}catch(er){}location.reload();};
   $('invert').onchange=e=>{prefs.invert=e.target.checked;savePrefs();};
+  $('touchCtl').onchange=e=>{prefs.touch=e.target.checked;savePrefs();if(e.target.checked)enableTouch();else{document.body.classList.remove('touch');TC.joy=null;for(const k of['KeyW','KeyA','KeyS','KeyD'])keys[k]=false;}};
   $('sound').onchange=e=>{prefs.sound=e.target.checked;savePrefs();audioApplyPrefs();if(prefs.sound)sfx('ui');};
   $('music').onchange=e=>{prefs.music=e.target.checked;savePrefs();audioApplyPrefs();};
   $('vol').oninput=e=>{prefs.vol=+e.target.value;savePrefs();audioApplyPrefs();};
@@ -6282,7 +6285,7 @@ function buildSettings(){
   syncSettings();
 }
 function syncSettings(){
-  $('sens').value=prefs.sens;$('invert').checked=prefs.invert;$('shadows').checked=prefs.shadows;$('sound').checked=prefs.sound;$('music').checked=prefs.music;$('vol').value=prefs.vol;
+  $('sens').value=prefs.sens;$('invert').checked=prefs.invert;$('touchCtl').checked=document.body.classList.contains('touch');$('shadows').checked=prefs.shadows;$('sound').checked=prefs.sound;$('music').checked=prefs.music;$('vol').value=prefs.vol;
   [...$('swatches').children].forEach((b,i)=>b.setAttribute('aria-pressed',String(COLORS[i]===prefs.body)));
 
 }
@@ -6346,17 +6349,18 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{keys[e.code]=false;if(SUB.on)subKey(e,false);});
 
 /* ---------- touch / phone controls ---------- */
-const TOUCH=(()=>{try{return /[?&]touch=1/.test(location.search)||matchMedia('(pointer:coarse)').matches||(navigator.maxTouchPoints>0&&'ontouchstart' in window);}catch(e){return false;}})();
+const TOUCH=(()=>{try{if(prefs.touch===false)return false;return prefs.touch===true||/[?&]touch=1/.test(location.search)||matchMedia('(pointer:coarse)').matches||(navigator.maxTouchPoints>0&&'ontouchstart' in window);}catch(e){return false;}})();
+let touchOn=false;
 const TC={joy:null,look:new Map(),pinch:0,run:false};
 function vkey(code,down){dispatchEvent(new KeyboardEvent(down?'keydown':'keyup',{code,key:code,bubbles:true,cancelable:true}));}
 function setJoy(x,y){$('tKnob').style.transform='translate('+(x*46)+'px,'+(y*46)+'px)';const t=.38;keys.KeyW=y<-t;keys.KeyS=y>t;keys.KeyA=x<-t;keys.KeyD=x>t;}
-if(TOUCH){
+function enableTouch(){if(touchOn){document.body.classList.add('touch');return;}touchOn=true;
   document.body.classList.add('touch');
   try{let m=document.querySelector('meta[name=viewport]');if(!m){m=document.createElement('meta');m.name='viewport';document.head.append(m);}m.content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover';}catch(e){}
   const tj=$('tJoy');
   canvas.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;e.preventDefault();if(!started)return;
     try{canvas.setPointerCapture(e.pointerId);}catch(_){}
-    if(!TC.joy&&e.clientX<innerWidth*.42&&e.clientY>innerHeight*.28&&!uiBlocking()){TC.joy={id:e.pointerId,x:e.clientX,y:e.clientY};
+    if(!TC.joy&&e.clientX<innerWidth*.45&&e.clientY>innerHeight*.18&&!uiBlocking()){TC.joy={id:e.pointerId,x:e.clientX,y:e.clientY};
       tj.style.left=(e.clientX-60)+'px';tj.style.top=(e.clientY-60)+'px';tj.style.bottom='auto';tj.classList.add('on');setJoy(0,0);}
     else TC.look.set(e.pointerId,{x:e.clientX,y:e.clientY});},{passive:false});
   canvas.addEventListener('pointermove',e=>{if(e.pointerType!=='touch')return;e.preventDefault();
@@ -6381,7 +6385,11 @@ if(TOUCH){
   /* DJ lanes: tap to hit */
   [...$('djLanes').querySelectorAll('.djl')].forEach((l,i)=>l.addEventListener('pointerdown',e=>{e.preventDefault();if(djGame)djKey(DJ_KEYS[i]);}));
 }
-function updateTouch(){if(!TOUCH)return;const blk=uiBlocking();const tu=$('touchUI');
+if(TOUCH)enableTouch();
+/* v245: phones that do not report themselves as touch devices – switch the touch controls on at the first real touch */
+addEventListener('touchstart',()=>{if(!touchOn&&prefs.touch!==false){enableTouch();$('touchCtl')&&($('touchCtl').checked=true);}},{passive:true,capture:true});
+addEventListener('pointerdown',e=>{if(e.pointerType==='touch'&&!touchOn&&prefs.touch!==false){enableTouch();$('touchCtl')&&($('touchCtl').checked=true);}},{capture:true});
+function updateTouch(){if(!touchOn||!document.body.classList.contains('touch'))return;const blk=uiBlocking();const tu=$('touchUI');
   document.body.classList.toggle('playing',started);
   tu.classList.toggle('off',!started||blk||mapOpen);tu.classList.toggle('car',!!player.inCar);
   $('tClose').hidden=!(started&&!cine&&(blk||mapOpen||chatOpen));

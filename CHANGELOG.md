@@ -3,6 +3,12 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-10 21:33 — v245 Telefono valdymas visada veikia
+
+- Jei telefonas neatpažįstamas kaip telefonas, valdymas ekrane (vairasvirtė kairėje, dairymasis braukiant dešinėje, mygtukai) įsijungia automatiškai vos palietus ekraną.
+- Nustatymuose (Esc / ☰) – naujas jungiklis „📱 Telefono valdymas“: gali jį įjungti ar išjungti rankiniu būdu.
+- Vairasvirtę galima pradėti beveik visoje kairėje ekrano pusėje.
+
 ## 2026-11-09 20:18 — v244 Dovana žaidėjui vytisra
 
 - Žaidėjas **vytisra** prisijungęs gauna 🎁 $100 000 ir telefono žaidimų rekordus: Skraidanti karvė 47, Gaudyk kojines 159, Gyvatėlė 10, Dino bėgikas 38, Šikšnosparnis 21, Debesėlis 27 (jei rekordas jau didesnis – lieka didesnis). Rekordai iškart nusiunčiami į pasaulinę lyderių lentelę.
