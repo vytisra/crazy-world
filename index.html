@@ -219,7 +219,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--mint);outline-o
 @media (max-width:640px){#crowns,.hint{display:none}#stats{min-width:0}}
 /* v248: everything that lists things can be scrolled with a finger */
 #achBox,#emoPanel,.shop-sheet,#settings .sheet,#dialog,.phlist,#phScreen .phpad,#lobList,.overlay{touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#dialog{max-height:calc(100vh - 40px);overflow-y:auto}
+#dialog{box-sizing:border-box;max-height:calc(100vh - 40px);overflow-y:auto}
 #achPanel{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(20,14,40,.55)}
 #achPanel[hidden]{display:none}
 #achBox{background:#fff8e7;color:#1b1430;border:4px solid #1b1430;border-radius:20px;padding:18px 22px;width:min(640px,92vw);max-height:84vh;overflow:auto;box-shadow:0 8px 0 #1b1430}
@@ -551,6 +551,7 @@ Object.assign(I18N_EN,{"procentai pagal": "percentages based on", "žaidėją": 
 Object.assign(I18N_EN,{"rekordas":"record"});
 Object.assign(I18N_EN,{"📱 Telefono valdymas (vairasvirtė ir mygtukai ekrane)":"📱 Phone controls (on-screen joystick and buttons)"});
 Object.assign(I18N_EN,{"Kraunama…":"Loading…","Paruošta!":"Ready!","▶ Žaisti":"▶ Play"});
+Object.assign(I18N_EN,{"Trūksta":"Need","Pirkti":"Buy","Nupirkta":"Owned","Čia gali nusipirkti naują transportą – spausk mygtuką prie norimo. Nupirktą iškviesi klavišu I.":"Here you can buy new vehicles – press the button next to the one you want. Call a bought vehicle with the I key."});
 let i18nRe=null;const i18nCache=new Map();
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!s)return s;const ex=I18N_EN[s];if(ex!=null)return ex;
   const c=i18nCache.get(s);if(c!=null)return c;
@@ -6080,12 +6081,13 @@ function openKing(k){const done=kingDone(k),lamp=k.name==='Džinas';
 function openDialog(d){sfx('ui');
   $('dName').textContent=d.name;$('dRole').textContent=d.role;$('dText').textContent=d.text;
   const dot=$('dDot');dot.style.background=d.color;dot.textContent=d.icon||'';
-  const ul=$('dTasks');ul.innerHTML='';
+  const ul=$('dTasks');ul.innerHTML='';ul.scrollTop=0;$('dialog').scrollTop=0;
   for(const t of d.tasks){const li=document.createElement('li');li.innerHTML='<span></span>';const sp=li.firstChild;
     const b=document.createElement('b');b.textContent=t.b;sp.append(b,document.createTextNode(' – '+t.t));
+    if(t.btn){const bb=document.createElement('button');bb.className='btn sm';bb.style.cssText='margin-left:auto;flex:none;font-size:13px;padding:4px 12px';bb.textContent=t.btn.label;bb.disabled=!!t.btn.disabled;if(t.btn.onClick)bb.onclick=t.btn.onClick;li.append(bb);ul.append(li);continue;}
     const ch=document.createElement('span');ch.className='chip';ch.textContent=t.chip;li.append(ch);ul.append(li);}
   ul.hidden=!d.tasks.length;
-  const act=$('dActions');act.innerHTML='';
+  const act=$('dActions');act.innerHTML='';{const dl=$('dialog');if((d.tasks||[]).length>5&&(d.actions||[]).length)dl.insertBefore(act,ul);else dl.insertBefore(act,$('dInput'));}
   for(const a of d.actions||[]){const b=document.createElement('button');b.className='btn sm'+(a.alt?' alt':'');b.textContent=a.label;b.disabled=!!a.disabled;b.onclick=a.onClick;act.append(b);}
   const di=$('dInput');di.innerHTML='';di.className='';
   if(d.input){di.className='d-input';
@@ -6127,9 +6129,9 @@ function openVehicleShop(){
   for(const it of VEH_SHOP){
     if(!save.owned[it.id]){const lack=it.price-money;actions.push(lack>0?{label:it.name+': trūksta $'+lack,disabled:true}:{label:'Pirkti: '+it.name+' $'+it.price,onClick:()=>buyVehicle(it)});}
   }
-  openDialog({name:'Transporto priemonės',role:'Parduotuvė',color:'#7cc6fe',icon:'$',
-    text:'Čia gali nusipirkti naują transportą. Nupirktą iškviesi klavišu I.',
-    tasks:VEH_SHOP.map(it=>({b:it.name+' – $'+it.price,t:it.desc,chip:save.owned[it.id]?'Nupirkta':'Parduodama'})),actions});
+  openDialog({name:'Transporto priemonės',role:'Parduotuvė · $'+money,color:'#7cc6fe',icon:'$',
+    text:'Čia gali nusipirkti naują transportą – spausk mygtuką prie norimo. Nupirktą iškviesi klavišu I.',
+    tasks:VEH_SHOP.map(it=>{const own=save.owned[it.id],lack=it.price-money;return{b:it.name+' – $'+it.price,t:it.desc,chip:own?'Nupirkta':'',btn:own?{label:'✔ '+tr('Nupirkta'),disabled:true}:lack>0?{label:tr('Trūksta')+' $'+lack,disabled:true}:{label:'🛒 '+tr('Pirkti')+' $'+it.price,onClick:()=>buyVehicle(it)}};}),actions:[]});
 }
 function buyVehicle(it){
   if(money<it.price||save.owned[it.id])return;
@@ -6298,7 +6300,7 @@ canvas.addEventListener('mousedown',e=>{if(uiBlocking())return;if(!locked)tryLoc
 addEventListener('mouseup',e=>{if(e.button===0)mouse.L=false;if(e.button===2)mouse.R=false;});
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('mousemove',e=>{if(!locked||uiBlocking())return;cam.yaw-=e.movementX*.0025*prefs.sens;cam.pitch=clamp(cam.pitch+e.movementY*.0025*prefs.sens*(prefs.invert?-1:1),-.25,1.25);});
-addEventListener('wheel',e=>{if(phoneOpen)return;if(started&&!settingsOpen)cam.dist=clamp(cam.dist+e.deltaY*.01,4,18);},{passive:true});
+addEventListener('wheel',e=>{if(phoneOpen||dialogOpen||achOpen||shopOpen)return;if(started&&!settingsOpen)cam.dist=clamp(cam.dist+e.deltaY*.01,4,18);},{passive:true});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;mouse.L=mouse.R=false;});
 const chatInput=$('chatInput');
 chatInput.addEventListener('keydown',e=>{e.stopPropagation();

@@ -3,6 +3,13 @@
 Žaidimas – failas `index.html` (atsidaro per GitHub Pages).
 Naujausi atnaujinimai – viršuje. Laikas – Lietuvos (Europe/Vilnius).
 
+## 2026-11-12 14:44 — v249 Transporto parduotuvė vėl veikia
+
+- Klaida: transporto stende pirkimo mygtukai buvo po labai ilgu aprašymų sąrašu, todėl jų nesimatė ir nieko nebuvo galima nusipirkti.
+- Dabar prie KIEKVIENOS transporto priemonės yra savo mygtukas „🛒 Pirkti $…“ (arba „Trūksta $…“ / „✔ Nupirkta“), o viršuje rodoma, kiek turi pinigų.
+- Kitose ilgose parduotuvėse (dinozaurų, požemio, debesų) mygtukai rodomi virš sąrašo.
+- Pelės ratukas atidarius langą nebekeičia kameros atstumo.
+
 ## 2026-11-11 20:23 — v248 Braukimas telefone: Crazy TikTok ir sąrašai
 
 - Telefone žaidimo „📱“ programėlėje Crazy TikTok braukiant pirštu aukštyn – kitas vaizdo įrašas, žemyn – ankstesnis; du kartus bakstelėjus – ❤ patinka. Anksčiau telefono naršyklė braukimą „pasiimdavo“ sau ir įrašai nesikeisdavo.
